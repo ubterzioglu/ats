@@ -1,4 +1,5 @@
 import { Analyzer } from "@/components/analyzer";
+import { ComingSoon } from "@/components/coming-soon";
 import { isPersistenceConfigured } from "@/lib/supabase/client";
 
 // Prerendering would freeze isPersistenceConfigured() at image build time, so a
@@ -35,6 +36,8 @@ const DIMENSIONS: ReadonlyArray<{ readonly name: string; readonly weight: number
 ];
 
 export default function HomePage() {
+  if (process.env.NEXT_PUBLIC_COMING_SOON === "true") return <ComingSoon />;
+
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
       <header className="mb-8 border-b border-line pb-6">
