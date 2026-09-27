@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bed: 221 227 232;
+  --sheet: 255 255 255;
+  --ink: 27 36 48;
+  --muted: 90 102 117;
+  --line: 195 204 212;
+  --mark: 200 30 75;
+  --signal: 242 194 48;
+  --caution: 168 106 16;
+  --good: 46 125 91;
+  --shadow: 27 36 48;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bed: 16 22 29;
+    --sheet: 25 33 43;
+    --ink: 231 237 242;
+    --muted: 147 161 176;
+    --line: 44 55 67;
+    --mark: 255 107 142;
+    --signal: 242 194 48;
+    --caution: 226 170 78;
+    --good: 79 185 138;
+    --shadow: 0 0 0;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: rgb(var(--bed));
+    color: rgb(var(--ink));
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-feature-settings: "cv05" 1;
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background-color: rgb(var(--signal) / 0.5);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--ink));
+    outline-offset: 2px;
+  }
+
+  textarea,
+  input,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@layer components {
+  /* The document surface everything in the app sits on. */
+  .sheet {
+    @apply rounded-sheet border border-line bg-sheet shadow-sheet;
+  }
+
+  .field {
+    @apply w-full resize-y rounded-sheet border border-line bg-bed/40 px-3 py-2.5 text-sm leading-relaxed
+      placeholder:text-muted/70 focus:border-ink focus:outline-none;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-sheet border border-ink bg-ink px-4 py-2
+      text-sm font-medium text-sheet transition-opacity hover:opacity-85 disabled:cursor-not-allowed
+      disabled:opacity-40;
+  }
+
+  .btn-quiet {
+    @apply inline-flex items-center justify-center gap-2 rounded-sheet border border-line bg-transparent px-3 py-2
+      text-sm text-muted transition-colors hover:border-ink hover:text-ink disabled:cursor-not-allowed
+      disabled:opacity-40;
+  }
+
+  .rail-label {
+    @apply text-sm font-medium text-ink;
+  }
+
+  /* Ruler ticks behind every measured bar, so a score reads as a measurement. */
+  .ruler {
+    background-image: repeating-linear-gradient(
+      to right,
+      rgb(var(--line)) 0 1px,
+      transparent 1px 10%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
