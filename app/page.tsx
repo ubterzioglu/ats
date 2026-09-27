@@ -1,6 +1,11 @@
 import { Analyzer } from "@/components/analyzer";
 import { isPersistenceConfigured } from "@/lib/supabase/client";
 
+// Prerendering would freeze isPersistenceConfigured() at image build time, so a
+// container started with Supabase credentials would still hide the share button.
+// Rendering per request lets the deployment platform supply them at runtime.
+export const dynamic = "force-dynamic";
+
 const DIMENSIONS: ReadonlyArray<{ readonly name: string; readonly weight: number; readonly what: string }> = [
   {
     name: "Parseability",

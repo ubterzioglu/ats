@@ -5,3 +5,7 @@ node_modules
 !.env.example
 npm-debug.log*
 coverage
+
+# Local agent/worktree scratch dirs; never part of an image.
+.kilo
+.omc
