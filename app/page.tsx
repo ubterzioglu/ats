@@ -7,6 +7,10 @@ import { isPersistenceConfigured } from "@/lib/supabase/client";
 // Rendering per request lets the deployment platform supply them at runtime.
 export const dynamic = "force-dynamic";
 
+// The holding page is the default until launch: opening the analyzer takes the
+// deliberate act of setting NEXT_PUBLIC_COMING_SOON=false, so a fresh or
+// misconfigured deployment can never expose it by accident.
+
 const DIMENSIONS: ReadonlyArray<{ readonly name: string; readonly weight: number; readonly what: string }> = [
   {
     name: "Parseability",
@@ -36,7 +40,7 @@ const DIMENSIONS: ReadonlyArray<{ readonly name: string; readonly weight: number
 ];
 
 export default function HomePage() {
-  if (process.env.NEXT_PUBLIC_COMING_SOON === "true") return <ComingSoon />;
+  if (process.env.NEXT_PUBLIC_COMING_SOON !== "false") return <ComingSoon />;
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
