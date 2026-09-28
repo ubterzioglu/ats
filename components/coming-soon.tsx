@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const CONTACT_EMAIL = "ubterzioglu@gmail.com";
 
 /** What a parser pulls out of a two-column CV: order lost, glyphs dropped. */
@@ -137,6 +139,18 @@ export function ComingSoon() {
           </figcaption>
         </figure>
         </div>
+
+        <figure className="mt-16 sm:mt-20">
+          <Image
+            src="/yakinda-geliyor.png"
+            alt="ATSFreeForAll.com — Yakında geliyor. Tüm özellikleri bedava olarak. Bizi izlemeye devam ediniz."
+            width={1672}
+            height={941}
+            unoptimized
+            priority={false}
+            className="w-full rounded-sheet border border-line"
+          />
+        </figure>
       </main>
     </>
   );
