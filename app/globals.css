@@ -95,6 +95,73 @@
       transparent 1px 10%
     );
   }
+
+  /* The parser sweep. One orchestrated moment: the beam travels down the page,
+     and the designed layout is clipped away behind it to leave the extracted
+     text underneath. Both run on the same timing so they stay locked together. */
+  .scan-beam {
+    animation: scan-beam 7s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .scan-intact {
+    animation: scan-intact 7s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .scan-status {
+    animation: scan-status 2.6s ease-in-out infinite;
+  }
+}
+
+@keyframes scan-beam {
+  0%,
+  6% {
+    top: 0%;
+    opacity: 0;
+  }
+  10%,
+  88% {
+    opacity: 1;
+  }
+  94%,
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes scan-intact {
+  0%,
+  6% {
+    clip-path: inset(0 0 0 0);
+  }
+  94%,
+  100% {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+@keyframes scan-status {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* Without motion the sweep would land on its last frame and the designed layout
+   would never be visible, losing the comparison the image exists to make. Hold
+   it mid-pass instead: half read, half intact. */
+@media (prefers-reduced-motion: reduce) {
+  .scan-beam {
+    top: 52%;
+    opacity: 1;
+  }
+
+  .scan-intact {
+    clip-path: inset(52% 0 0 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
