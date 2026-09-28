@@ -86,6 +86,19 @@ export function scoreStructure(context: ScoreContext): DimensionOutcome {
     });
   }
 
+  if (context.experience.reversed.length > 0) {
+    drafts.push({
+      id: "structure.reversed-dates",
+      severity: "high",
+      title: "A date range ends before it starts",
+      detail:
+        "The end of the period is earlier than its beginning, so no employment record can be built from it and the role is skipped.",
+      fix: "Write the earlier date first: 03/2019 - 08/2022.",
+      cost: 4,
+      evidence: context.experience.reversed.slice(0, 3)
+    });
+  }
+
   if (!isDescending(experienceYears(context))) {
     drafts.push({
       id: "structure.chronology",

@@ -59,6 +59,11 @@ export interface DocumentStats {
   readonly averageBulletWords: number;
   readonly estimatedPages: number;
   readonly years: readonly number[];
+  /**
+   * Total employment in months after concurrent roles are merged, which is how
+   * a tenure filter reads the document rather than how the candidate counts.
+   */
+  readonly experienceMonths: number;
 }
 
 export interface AnalysisResult {
