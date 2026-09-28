@@ -88,7 +88,15 @@ function IntactLayer() {
 
 export function ComingSoon() {
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <>
+      <div className="bg-signal text-ink">
+        <p className="mx-auto flex w-full max-w-6xl items-center gap-2.5 px-4 py-2 text-sm font-medium sm:px-6">
+          <span className="scan-status inline-block h-2 w-2 shrink-0 rounded-full bg-ink" aria-hidden="true" />
+          Coming soon
+        </p>
+      </div>
+
+      <main className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
       <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
         <div>
           <h1 className="font-mono text-3xl font-medium tracking-tight sm:text-4xl">ats readability</h1>
@@ -98,9 +106,8 @@ export function ComingSoon() {
             actually gets, scores what survives, and lists what to fix.
           </p>
 
-          <p className="mt-6 flex items-center gap-2.5 text-sm">
-            <span className="scan-status inline-block h-2 w-2 shrink-0 rounded-full bg-signal" aria-hidden="true" />
-            Coming soon. The CV is read in your browser and never uploaded.
+          <p className="mt-6 max-w-measure text-sm leading-relaxed">
+            The CV is read in your browser and never uploaded.
           </p>
 
           <p className="mt-8 border-t border-line pt-6 text-sm text-muted">
@@ -129,7 +136,8 @@ export function ComingSoon() {
             interleaved, the address broken apart, glyphs the font never embedded.
           </figcaption>
         </figure>
-      </div>
-    </main>
+        </div>
+      </main>
+    </>
   );
 }
