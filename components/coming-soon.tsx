@@ -1,23 +1,4 @@
-import Image from "next/image";
-
-/** Provisional address for the holding page; replace before the launch copy is final. */
-const CONTACT_EMAIL = "asfreeforall@ubterzioglu.de";
-
-interface Weight {
-  readonly name: string;
-  readonly points: number;
-  readonly bar: string;
-  readonly what: string;
-}
-
-/** Bar widths are the point weight over the 25 a dimension can carry at most. */
-const WEIGHTS: ReadonlyArray<Weight> = [
-  { name: "Parseability", points: 25, bar: "w-full", what: "Columns, tables, icon fonts, broken encodings" },
-  { name: "Keyword match", points: 25, bar: "w-full", what: "Terms mined from the job ad you are answering" },
-  { name: "Structure", points: 20, bar: "w-4/5", what: "Headings, dated entries, bullets over paragraphs" },
-  { name: "Impact", points: 20, bar: "w-4/5", what: "Quantified results and ownership verbs" },
-  { name: "Contact", points: 10, bar: "w-2/5", what: "Name, email, phone, location, profile link" }
-];
+const CONTACT_EMAIL = "ubterzioglu@gmail.com";
 
 /** What a parser pulls out of a two-column CV: order lost, glyphs dropped. */
 const PARSED_LINES: ReadonlyArray<{ readonly text: string; readonly lost?: boolean }> = [
@@ -149,41 +130,6 @@ export function ComingSoon() {
           </figcaption>
         </figure>
       </div>
-
-      <section className="mt-16 border-t border-line pt-8 sm:mt-20" aria-labelledby="weights-heading">
-        <h2 id="weights-heading" className="text-sm font-semibold">
-          How the 100 points are split
-        </h2>
-
-        <dl className="mt-6 space-y-4">
-          {WEIGHTS.map((weight) => (
-            <div key={weight.name} className="grid gap-x-4 gap-y-1 sm:grid-cols-[9rem_5rem_minmax(0,1fr)]">
-              <dt className="rail-label">{weight.name}</dt>
-              <div className="ruler flex h-1.5 items-stretch self-center rounded-sm" aria-hidden="true">
-                <div className={`${weight.bar} rounded-sm bg-ink`} />
-              </div>
-              <dd className="text-sm leading-relaxed text-muted">
-                <span className="font-mono text-xs tabular-nums text-ink sm:hidden">{weight.points} </span>
-                {weight.what}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <figure className="mt-16 border-t border-line pt-8 sm:mt-20">
-        <Image
-          src="/bu-aci-geciyor-mu.png"
-          alt="Stencil graffiti of a face beside the handwritten question: bu acı geçiyor mu?"
-          width={895}
-          height={466}
-          unoptimized
-          className="w-full max-w-sm rounded-sheet border border-line"
-        />
-        <figcaption className="mt-3 max-w-measure text-xs leading-relaxed text-muted">
-          Bu acı geçiyor mu? Geçiyor.
-        </figcaption>
-      </figure>
     </main>
   );
 }
