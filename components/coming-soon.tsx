@@ -20,24 +20,49 @@ const WEIGHTS: ReadonlyArray<Weight> = [
 ];
 
 /** What a parser pulls out of a two-column CV: order lost, glyphs dropped. */
+const PARSED_LINES: ReadonlyArray<{ readonly text: string; readonly lost?: boolean }> = [
+  { text: "EXPERIENCE Kubernetes Senior" },
+  { text: "Engineer Docker 2019 - PostgreSQL" },
+  { text: "present Terraform Led the" },
+  { text: "migration of 14 services Go" },
+  { text: "cutting deploy time from 40 CI/CD" },
+  { text: "to 12 minutes React Owned the" },
+  { text: "EDUCATION ??? Python Redis", lost: true },
+  { text: "BSc Computer Science 2014 Rust" },
+  { text: "Technical University AWS Berlin" },
+  { text: "(cid:7)(cid:7) LANGUAGES Terraform", lost: true },
+  { text: "Turkish native German C1 Linux" },
+  { text: "English C2 CERTIFICATIONS Git" },
+  { text: "[image] [image] [image]", lost: true },
+  { text: "AWS Solutions Architect 2023" },
+  { text: "Referenzen auf Anfrage (cid:3)", lost: true }
+];
+
 function ParsedLayer() {
   return (
-    <div className="space-y-[0.4rem] p-5 font-mono text-[0.6rem] leading-snug text-muted sm:p-6 sm:text-[0.68rem]">
+    <div className="flex h-full flex-col gap-[0.35rem] p-5 font-mono text-[0.58rem] leading-snug text-muted sm:p-6 sm:text-[0.66rem]">
       <p className="text-ink">BARIS TERZIOGLU</p>
       <p>
         b a r i s <span className="text-mark">@</span> e x a m p l e . c o m
       </p>
-      <p className="text-mark">(cid:12)(cid:9) +49 151 (cid:3)(cid:3)(cid:3)</p>
-      <p className="pt-2">EXPERIENCE Kubernetes Senior</p>
-      <p>Engineer Docker 2019 - PostgreSQL</p>
-      <p>present Terraform Led the</p>
-      <p>migration of 14 services Go</p>
-      <p className="text-mark">EDUCATION ??? Python React</p>
-      <p>BSc Computer Science CI/CD</p>
-      <p className="pt-2 text-mark">[image] [image] [image]</p>
+      <p className="pb-1 text-mark">(cid:12)(cid:9) +49 151 (cid:3)(cid:3)(cid:3)</p>
+      {PARSED_LINES.map((line) => (
+        <p key={line.text} className={line.lost ? "text-mark" : undefined}>
+          {line.text}
+        </p>
+      ))}
     </div>
   );
 }
+
+/** Widths are literal so the blocks read as ragged prose rather than a chart. */
+const MAIN_COLUMN: ReadonlyArray<{ readonly heading: string; readonly lines: readonly string[] }> = [
+  { heading: "5rem", lines: ["100%", "96%", "88%", "72%"] },
+  { heading: "4rem", lines: ["100%", "92%", "100%", "64%"] },
+  { heading: "6rem", lines: ["94%", "100%", "80%"] }
+];
+
+const SIDE_ROWS: readonly string[] = ["2.5rem", "3.2rem", "2rem", "3.6rem", "2.8rem"];
 
 /** The same page before the parser touches it: two columns, a photo, a table. */
 function IntactLayer() {
@@ -51,24 +76,29 @@ function IntactLayer() {
         </div>
       </div>
 
-      <div className="flex flex-1 gap-4 pt-3">
-        <div className="flex-1 space-y-2">
-          <div className="h-1.5 w-20 rounded-sm bg-signal" />
-          {[0, 1, 2, 3, 4].map((line) => (
-            <div key={line} className="h-1.5 rounded-sm bg-muted/25" />
-          ))}
-          <div className="h-1.5 w-3/4 rounded-sm bg-muted/25" />
-        </div>
-
-        <div className="w-[38%] space-y-2 border-l border-line pl-4">
-          <div className="h-1.5 w-14 rounded-sm bg-signal" />
-          {[0, 1, 2].map((row) => (
-            <div key={row} className="flex gap-1.5">
-              <div className="h-1.5 flex-1 rounded-sm bg-muted/25" />
-              <div className="h-1.5 w-5 rounded-sm bg-good/50" />
+      <div className="flex flex-1 gap-4 pt-4">
+        <div className="flex flex-1 flex-col gap-2.5">
+          {MAIN_COLUMN.map((block, index) => (
+            <div key={`${block.heading}-${index}`} className="space-y-2">
+              <div className="h-1.5 rounded-sm bg-signal" style={{ width: block.heading }} />
+              {block.lines.map((width, line) => (
+                <div key={line} className="h-1.5 rounded-sm bg-muted/30" style={{ width }} />
+              ))}
             </div>
           ))}
-          <div className="h-1.5 w-16 rounded-sm bg-muted/25" />
+        </div>
+
+        <div className="flex w-[38%] flex-col gap-2.5 border-l border-line pl-4">
+          <div className="h-1.5 w-14 rounded-sm bg-signal" />
+          {SIDE_ROWS.map((width, row) => (
+            <div key={row} className="flex items-center gap-1.5">
+              <div className="h-1.5 rounded-sm bg-muted/30" style={{ width }} />
+              <div className="h-1.5 flex-1 rounded-sm bg-good/40" />
+            </div>
+          ))}
+          <div className="mt-1 h-1.5 w-16 rounded-sm bg-signal" />
+          <div className="h-1.5 w-full rounded-sm bg-muted/30" />
+          <div className="h-1.5 w-2/3 rounded-sm bg-muted/30" />
         </div>
       </div>
     </div>
