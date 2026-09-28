@@ -36,14 +36,14 @@ function ParsedLayer() {
   );
 }
 
-/** Widths are literal so the blocks read as ragged prose rather than a chart. */
+/** Ragged widths so the blocks read as prose rather than as a chart. */
 const MAIN_COLUMN: ReadonlyArray<{ readonly heading: string; readonly lines: readonly string[] }> = [
-  { heading: "5rem", lines: ["100%", "96%", "88%", "72%"] },
-  { heading: "4rem", lines: ["100%", "92%", "100%", "64%"] },
-  { heading: "6rem", lines: ["94%", "100%", "80%"] }
+  { heading: "w-20", lines: ["w-full", "w-[96%]", "w-[88%]", "w-[72%]"] },
+  { heading: "w-16", lines: ["w-full", "w-[92%]", "w-full", "w-[64%]"] },
+  { heading: "w-24", lines: ["w-[94%]", "w-full", "w-[80%]"] }
 ];
 
-const SIDE_ROWS: readonly string[] = ["2.5rem", "3.2rem", "2rem", "3.6rem", "2.8rem"];
+const SIDE_ROWS: readonly string[] = ["w-10", "w-[3.2rem]", "w-8", "w-[3.6rem]", "w-[2.8rem]"];
 
 /** The same page before the parser touches it: two columns, a photo, a table. */
 function IntactLayer() {
@@ -61,9 +61,9 @@ function IntactLayer() {
         <div className="flex flex-1 flex-col gap-2.5">
           {MAIN_COLUMN.map((block, index) => (
             <div key={`${block.heading}-${index}`} className="space-y-2">
-              <div className="h-1.5 rounded-sm bg-signal" style={{ width: block.heading }} />
+              <div className={`h-1.5 rounded-sm bg-signal ${block.heading}`} />
               {block.lines.map((width, line) => (
-                <div key={line} className="h-1.5 rounded-sm bg-muted/30" style={{ width }} />
+                <div key={line} className={`h-1.5 rounded-sm bg-muted/30 ${width}`} />
               ))}
             </div>
           ))}
@@ -73,7 +73,7 @@ function IntactLayer() {
           <div className="h-1.5 w-14 rounded-sm bg-signal" />
           {SIDE_ROWS.map((width, row) => (
             <div key={row} className="flex items-center gap-1.5">
-              <div className="h-1.5 rounded-sm bg-muted/30" style={{ width }} />
+              <div className={`h-1.5 shrink-0 rounded-sm bg-muted/30 ${width}`} />
               <div className="h-1.5 flex-1 rounded-sm bg-good/40" />
             </div>
           ))}
@@ -121,7 +121,7 @@ export function ComingSoon() {
               <IntactLayer />
             </div>
 
-            <div className="scan-beam absolute inset-x-0 top-0 z-10 h-px bg-signal shadow-[0_0_14px_3px_rgb(var(--signal)/0.55)]" />
+            <div className="scan-beam absolute inset-x-0 top-0 z-10 h-0.5 bg-signal shadow-[0_0_22px_6px_rgb(var(--signal)/0.7)]" />
           </div>
 
           <figcaption className="mt-3 max-w-measure text-xs leading-relaxed text-muted">
