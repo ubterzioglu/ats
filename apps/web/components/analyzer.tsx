@@ -53,16 +53,35 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     }
   }, []);
 
-  const runAnalysis = useCallback(() => {
+  const runAnalysis = useCallback(async () => {
     if (cvText.trim().length < MIN_CV_CHARS) {
       setError("Add the CV text first — at least a few lines are needed to judge anything.");
       return;
     }
 
+    setReading(true);
     setError(null);
     setShareUrl(null);
-    setResult(analyzeCv({ cvText, jobDescription: jobAd }));
-    setView("report");
+    
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cvText, jobDescription: jobAd }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+      
+      const data = await response.json();
+      setResult(data);
+      setView("report");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to run analysis.");
+    } finally {
+      setReading(false);
+    }
   }, [cvText, jobAd]);
 
   const highlights = useMemo(
