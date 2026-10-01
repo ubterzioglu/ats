@@ -9,6 +9,10 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from services.parser.pdf_extractor import extract_text_from_pdf
 from services.parser.docx_extractor import extract_text_from_docx
+from services.ats_engine.scoring import calculate_ats_score, DEFAULT_SCORING_CONFIG
+from services.ai_agent.agent import AIAgent
+
+ai_agent = AIAgent(model="llama3")
 
 app = FastAPI(
     title="ATS Free For All API",
@@ -61,3 +65,45 @@ async def parse_job_description(text: str = Form(...)):
     """
     # TODO: Pass text to NLP/LLM job description parser
     return JobDescriptionDocument(raw_text=text)
+
+@app.post("/analyze")
+async def analyze_full_pipeline(file: UploadFile = File(...)):
+    """
+    Runs the full pipeline:
+    1. Parse Resume
+    2. Deterministic ATS Scoring
+    3. AI Agent Explanation
+    """
+    filename = file.filename.lower()
+    temp_path = f"/tmp/{file.filename}"
+    
+    try:
+        with open(temp_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+            
+        raw_text = ""
+        if filename.endswith(".pdf"):
+            raw_text = extract_text_from_pdf(temp_path)
+        elif filename.endswith(".docx"):
+            raw_text = extract_text_from_docx(temp_path)
+            
+        # 1. Parse (Stub)
+        resume_data = {"raw_text": raw_text, "skills": ["Stub Skill"]}
+        job_data = {"required_skills": ["Stub Skill", "Missing Skill"]}
+        
+        # 2. Score
+        score = calculate_ats_score(resume=resume_data, job_description=job_data)
+        
+        # 3. AI Explain (This is async, might fail if Ollama is off)
+        explanation = await ai_agent.explain_score(score)
+        
+        return {
+            "score_data": score,
+            "ai_explanation": explanation or "AI explanation unavailable. (Ollama not running or unreachable)"
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
