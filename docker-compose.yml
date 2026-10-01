@@ -38,6 +38,15 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: ats_web
+    restart: unless-stopped
+    depends_on:
+      - api
+
 volumes:
   postgres_data:
   redis_data:
