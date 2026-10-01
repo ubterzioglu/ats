@@ -44,6 +44,8 @@ services:
       dockerfile: Dockerfile
     container_name: ats_web
     restart: unless-stopped
+    environment:
+      - API_URL=http://api:8000
     depends_on:
       - api
 
