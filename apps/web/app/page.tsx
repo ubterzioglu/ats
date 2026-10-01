@@ -51,7 +51,7 @@ export default function HomePage() {
           </div>
           <h3 className="text-xl font-semibold text-ink">Deterministic Parsing</h3>
           <p className="text-muted text-sm leading-relaxed">
-            We don't use LLMs to guess your score. Our parser extracts text and matches skills against a strict taxonomy, just like legacy enterprise systems.
+            We don&apos;t use LLMs to guess your score. Our parser extracts text and matches skills against a strict taxonomy, just like legacy enterprise systems.
           </p>
         </div>
 
