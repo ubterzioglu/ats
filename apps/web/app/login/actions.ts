@@ -15,7 +15,8 @@ export async function login(formData: FormData) {
   });
 
   if (error) {
-    return redirect("/login?message=Kullanıcı adı veya şifre hatalı." as any);
+    const msg = encodeURIComponent("Kullanıcı adı veya şifre hatalı.");
+    return redirect(`/login?message=${msg}` as any);
   }
 
   revalidatePath("/", "layout");
@@ -39,10 +40,12 @@ export async function signup(formData: FormData) {
   });
 
   if (error) {
-    return redirect(("/login?message=Kayıt olurken bir hata oluştu: " + error.message) as any);
+    const msg = encodeURIComponent("Kayıt olurken bir hata oluştu: " + error.message);
+    return redirect(`/login?message=${msg}` as any);
   }
 
-  return redirect("/login?message=Kayıt başarılı! Lütfen e-posta adresinizi doğrulayın." as any);
+  const msg = encodeURIComponent("Kayıt başarılı! Lütfen e-posta adresinizi doğrulayın.");
+  return redirect(`/login?message=${msg}` as any);
 }
 
 export async function logout() {
