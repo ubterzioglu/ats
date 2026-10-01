@@ -1,6 +1,14 @@
+import os
+import shutil
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from packages.schemas.resume import ResumeDocument
 from packages.schemas.job import JobDescriptionDocument
+import sys
+
+# Make services importable
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+from services.parser.pdf_extractor import extract_text_from_pdf
+from services.parser.docx_extractor import extract_text_from_docx
 
 app = FastAPI(
     title="ATS Free For All API",
@@ -16,13 +24,35 @@ async def health_check():
 async def parse_resume(file: UploadFile = File(...)):
     """
     Takes a PDF or DOCX file, extracts text, layout and returns Canonical Resume JSON.
-    (This is a placeholder that returns an empty document currently.)
+    Currently only performs raw text extraction.
     """
-    if not file.filename.endswith((".pdf", ".docx", ".txt")):
+    filename = file.filename.lower()
+    if not filename.endswith((".pdf", ".docx", ".txt")):
         raise HTTPException(status_code=400, detail="Unsupported file type")
     
-    # TODO: Pass file to parser service
-    return ResumeDocument(raw_text=f"Extracted content of {file.filename} will be here.")
+    # Save uploaded file to temp path
+    temp_path = f"/tmp/{file.filename}"
+    try:
+        with open(temp_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+            
+        raw_text = ""
+        if filename.endswith(".pdf"):
+            raw_text = extract_text_from_pdf(temp_path)
+        elif filename.endswith(".docx"):
+            raw_text = extract_text_from_docx(temp_path)
+        elif filename.endswith(".txt"):
+            with open(temp_path, "r", encoding="utf-8") as f:
+                raw_text = f.read()
+                
+        # Return canonical model with raw text
+        return ResumeDocument(raw_text=raw_text)
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
 
 @app.post("/parse/job", response_model=JobDescriptionDocument)
 async def parse_job_description(text: str = Form(...)):
