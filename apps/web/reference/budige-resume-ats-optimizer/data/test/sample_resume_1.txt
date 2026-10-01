@@ -1,0 +1,22 @@
+JANE SMITH
+jane.smith@email.com | 555-987-6543
+linkedin.com/in/janesmith
+
+EXPERIENCE
+Senior Data Analyst at Analytics Corp
+June 2022 - Present
+- Built dashboards using Tableau and Power BI
+- Performed statistical analysis with Python and R
+- Managed team of 3 junior analysts
+
+Data Analyst at Tech Startup
+Jan 2020 - May 2022
+- Created ETL pipelines using SQL and Python
+- Automated reporting processes
+
+EDUCATION
+MS Data Science, State University, 2019
+BS Mathematics, College ABC, 2017
+
+SKILLS
+Python, SQL, Tableau, Power BI, R, Excel, Git

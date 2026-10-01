@@ -1,0 +1,70 @@
+# Sprint 5 golden scoring cases — (resume, JD, expected_score) tuples.
+#
+# Sprint-5 grading threshold #3:
+#   For each case, |actual - expected| ≤ tolerance (default 5).
+#
+# These scores are computed by the Sprint-5 keyword-only pipeline:
+# parse_resume → KeywordAnalyzer → ScoringEngine → Score.overall.
+# When Sprints 6–8 add quantification / formatting / content-quality
+# analyzers + multi-category aggregation, these scores will SHIFT.
+# Re-pin them in those sprints; the ±5 tolerance buffers minor
+# tweaks (e.g., adding a stop-word) without forcing a re-pin every
+# commit.
+
+cases:
+  - name: matched_entry
+    resume: entry_level.md
+    job_description: entry_level_swe.txt
+    expected: 80
+    tolerance: 5
+    note: |
+      Entry-level SWE resume against entry-level SWE JD. Re-pinned
+      in Sprint 7 once formatting + content-quality entered the
+      aggregation (was 76 in keyword-only mode).
+
+  - name: matched_mid
+    resume: mid_level.md
+    job_description: mid_level_backend.txt
+    expected: 92
+    tolerance: 5
+    note: |
+      Mid-level Python/AWS resume against the matching backend JD —
+      strong overlap across all sub-scores. Excellent tier.
+
+  - name: matched_executive
+    resume: executive.md
+    job_description: executive_vp_engineering.txt
+    expected: 95
+    tolerance: 5
+    note: |
+      Engineering VP resume against the VPE JD. Pre-Sprint 7 this
+      pegged at 100 in keyword-only mode; the multi-category
+      aggregation pulls it down slightly (formatting catches
+      em-dash inconsistency + long lines).
+
+  - name: mismatch_executive_to_entry
+    resume: executive.md
+    job_description: entry_level_swe.txt
+    expected: 70
+    tolerance: 5
+    note: |
+      Executive resume against entry-level SWE JD. Pre-Sprint 7 this
+      was 50 (keyword-only). Adding formatting + content quality —
+      both of which measure resume structure independent of
+      JD-fit — raises the floor; Sprint 6 (quantification) and
+      Sprint 8 (proper PRD weights) will tighten the spread. The
+      mismatch IS still recognisable: matched_executive 95 vs
+      mismatch_executive_to_entry 70 — a 25-point penalty for the
+      JD mismatch.
+
+  - name: mismatch_mid_to_designer
+    resume: mid_level.md
+    job_description: product_designer.txt
+    expected: 70
+    tolerance: 5
+    note: |
+      Mid-level backend resume against product-designer JD. Same
+      story as mismatch_executive_to_entry — the keyword score
+      drops sharply (no Figma / design-system overlap) but
+      formatting + content-quality stay high since the resume is
+      well-structured.

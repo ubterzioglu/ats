@@ -1,0 +1,211 @@
+import type { AIConfig } from '../lib/aiProvider'
+
+export interface ResumeData {
+  name: string
+  email: string
+  phone: string
+  location: string
+  summary: string
+  experience: ExperienceItem[]
+  education: EducationItem[]
+  skills: string[]
+  certifications: string[]
+  projects?: ProjectItem[]
+  rawText: string
+}
+
+export interface ProjectItem {
+  name: string
+  description: string
+  technologies?: string[]
+  url?: string
+}
+
+export interface ExperienceItem {
+  title: string
+  company: string
+  startDate: string
+  endDate: string
+  bullets: string[]
+}
+
+export interface EducationItem {
+  degree: string
+  institution: string
+  year: string
+  gpa?: string
+}
+
+export interface JobDescriptionData {
+  title: string
+  company: string
+  requiredSkills: string[]
+  preferredSkills: string[]
+  technologies: string[]
+  certifications: string[]
+  responsibilities: string[]
+  rawText: string
+}
+
+export interface AIKeywordMatch {
+  keyword: string
+  context: string
+  strength: 'strong' | 'moderate' | 'weak'
+}
+
+export interface AIKeywordMissing {
+  keyword: string
+  importance: 'critical' | 'high' | 'medium' | 'low'
+  suggestion: string
+}
+
+export interface KeywordAnalysis {
+  matching: string[]
+  missing: string[]
+  related: string[]
+  coveragePercent: number
+  // AI-enhanced fields — populated when an API key / Ollama is available
+  aiMatching?: AIKeywordMatch[]
+  aiMissing?: AIKeywordMissing[]
+  aiSummary?: string
+  aiCoveragePercent?: number
+}
+
+export interface AtsIssue {
+  type: 'error' | 'warning' | 'info'
+  category: string
+  message: string
+}
+
+export interface AtsScore {
+  overall: number
+  readability: number
+  keywordMatch: number
+  skillsMatch: number
+  completeness: number
+  formatting: number
+  issues: AtsIssue[]
+}
+
+export interface OptimizationOptions {
+  rewriteSummary: boolean
+  includeSkillsSection: boolean
+  includeProjectsSection: boolean
+  improveBullets: boolean
+  integrateKeywords: boolean
+}
+
+export const DEFAULT_OPTIMIZATION_OPTIONS: OptimizationOptions = {
+  rewriteSummary: true,
+  includeSkillsSection: true,
+  includeProjectsSection: true,
+  improveBullets: true,
+  integrateKeywords: true,
+}
+
+export interface OptimizationChange {
+  original: string
+  updated: string
+  reason: string
+  section: string
+}
+
+export interface OptimizedResume {
+  atsVersion: string
+  tailoredVersion: string
+  changes: OptimizationChange[]
+  structuredData: ResumeData
+}
+
+export interface AppState {
+  step: AppStep
+  aiConfig: AIConfig
+  resumeRawText: string
+  resumeData: ResumeData | null
+  jobDescription: string
+  jobData: JobDescriptionData | null
+  keywordAnalysis: KeywordAnalysis | null
+  atsScore: AtsScore | null
+  optimizedResume: OptimizedResume | null
+  coverLetter: string
+  interviewPrediction: InterviewPrediction | null
+  salaryEstimate: SalaryEstimate | null
+  linkedInOptimization: LinkedInOptimization | null
+  isLoading: boolean
+  loadingMessage: string
+  error: string | null
+}
+
+// ─── Interview Prediction ──────────────────────────────────────────────────────
+
+export interface InterviewQuestion {
+  question: string
+  category: 'behavioral' | 'technical' | 'role-specific' | 'culture-fit' | 'situational'
+  difficulty: 'easy' | 'medium' | 'hard'
+  tip: string
+}
+
+export interface InterviewPrediction {
+  questions: InterviewQuestion[]
+  focusAreas: string[]
+  keyStrengths: string[]
+  warningAreas: string[]
+}
+
+// ─── Salary Estimation ────────────────────────────────────────────────────────
+
+export interface SalaryRange {
+  low: number
+  median: number
+  high: number
+  currency: string
+}
+
+export interface SalaryFactor {
+  factor: string
+  impact: 'positive' | 'negative' | 'neutral'
+  note: string
+}
+
+export interface SalaryEstimate {
+  base: SalaryRange
+  totalComp: SalaryRange
+  experienceLevel: string
+  location: string
+  factors: SalaryFactor[]
+  negotiationTips: string[]
+  disclaimer: string
+}
+
+// ─── LinkedIn Optimization ────────────────────────────────────────────────────
+
+export interface LinkedInJobEntry {
+  title: string
+  company: string
+  startDate: string
+  endDate: string
+  isCurrent: boolean
+  optimizedDescription: string  // third-person, active voice; present tense if current
+}
+
+export interface LinkedInOptimization {
+  headline: string       // ≤220 chars — keyword-rich professional headline
+  about: string          // ~2,000 chars — first-person About section
+  jobs: LinkedInJobEntry[]
+}
+
+// ─── App Steps ────────────────────────────────────────────────────────────────
+
+export type AppStep =
+  | 'upload'
+  | 'ats-view'
+  | 'job-description'
+  | 'analysis'
+  | 'interview'
+  | 'salary'
+  | 'optimize'
+  | 'diff'
+  | 'export'
+  | 'linkedin'
+
+export type ExportFormat = 'pdf' | 'docx' | 'txt' | 'md'

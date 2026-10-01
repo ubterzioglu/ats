@@ -1,0 +1,13 @@
+JOHN DOE
+john.doe@email.com | 555-123-4567
+
+EXPERIENCE
+Data Analyst at Tech Corp
+- Analyzed data using Python and SQL
+- Created dashboards with Tableau
+
+EDUCATION  
+MS Computer Science, University ABC, 2024
+
+SKILLS
+Python, SQL, Tableau, Excel

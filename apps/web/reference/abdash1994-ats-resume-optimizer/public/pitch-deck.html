@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATS Resume Optimizer — Pitch Deck</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue: #2563eb; --indigo: #4f46e5; --green: #16a34a;
+    --red: #dc2626; --gray: #111827; --light: #f9fafb;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: white; }
+
+  .slide {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; padding: 60px 40px;
+    text-align: center; position: relative; overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* Slide 1 — Hero */
+  .slide-1 { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%); }
+  .slide-1::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.3) 0%, transparent 70%);
+  }
+  .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.4); border-radius: 999px; padding: 6px 16px; font-size: 13px; color: #a5b4fc; margin-bottom: 32px; }
+  h1.hero { font-size: clamp(40px, 7vw, 80px); font-weight: 900; line-height: 1.05; margin-bottom: 24px; }
+  .gradient { background: linear-gradient(135deg, #60a5fa, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .sub { font-size: clamp(16px, 2.5vw, 22px); color: #94a3b8; max-width: 700px; line-height: 1.6; margin-bottom: 48px; }
+  .stat-row { display: flex; gap: 48px; flex-wrap: wrap; justify-content: center; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 52px; font-weight: 900; color: #60a5fa; line-height: 1; }
+  .stat-label { font-size: 14px; color: #64748b; margin-top: 4px; }
+
+  /* Slide 2 — Problem */
+  .slide-2 { background: linear-gradient(180deg, #0f172a, #1a0a0a); }
+  .slide-title { font-size: clamp(28px, 5vw, 52px); font-weight: 800; margin-bottom: 16px; }
+  .slide-sub { font-size: 18px; color: #94a3b8; margin-bottom: 56px; max-width: 600px; }
+  .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 1000px; width: 100%; text-align: left; }
+  .pain-card { background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.3); border-radius: 16px; padding: 24px; }
+  .pain-icon { font-size: 32px; margin-bottom: 12px; }
+  .pain-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .pain-desc { font-size: 14px; color: #94a3b8; line-height: 1.5; }
+
+  /* Slide 3 — Solution */
+  .slide-3 { background: linear-gradient(180deg, #0f172a, #0a1628); }
+  .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 40px 0; }
+  .flow-step { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.4); border-radius: 12px; padding: 16px 20px; font-size: 14px; font-weight: 600; color: #93c5fd; }
+  .flow-arrow { font-size: 20px; color: #374151; }
+
+  /* Slide 4 — How it works */
+  .slide-4 { background: #0f172a; }
+  .score-demo { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 40px; max-width: 700px; width: 100%; margin: 40px 0; }
+  .score-ring-wrapper { margin-bottom: 32px; }
+  .score-dims { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+  .dim-row { display: flex; align-items: center; gap: 12px; }
+  .dim-label { width: 180px; font-size: 13px; color: #94a3b8; flex-shrink: 0; }
+  .dim-bar-bg { flex: 1; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+  .dim-bar { height: 100%; border-radius: 4px; }
+  .dim-score { width: 36px; text-align: right; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+
+  /* Slide 5 — ATS Coverage */
+  .slide-5 { background: linear-gradient(180deg, #0f172a, #0a0f1a); }
+  .ats-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 800px; margin: 32px 0; }
+  .ats-chip { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 999px; padding: 8px 16px; font-size: 13px; color: #cbd5e1; }
+  .ats-chip.high { border-color: rgba(99,102,241,0.5); background: rgba(99,102,241,0.1); color: #a5b4fc; }
+
+  /* Slide 6 — Tech */
+  .slide-6 { background: #0f172a; }
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 900px; width: 100%; text-align: left; margin: 32px 0; }
+  .tech-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 20px; }
+  .tech-category { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6366f1; font-weight: 700; margin-bottom: 8px; }
+  .tech-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .tech-desc { font-size: 12px; color: #64748b; line-height: 1.4; }
+
+  /* Slide 7 — Privacy */
+  .slide-7 { background: linear-gradient(135deg, #0f172a, #022c22); }
+  .privacy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 900px; width: 100%; margin: 32px 0; }
+  .privacy-card { background: rgba(22,163,74,0.08); border: 1px solid rgba(22,163,74,0.25); border-radius: 14px; padding: 24px; text-align: left; }
+  .check { color: #4ade80; font-size: 20px; margin-bottom: 12px; }
+  .privacy-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .privacy-desc { font-size: 13px; color: #94a3b8; line-height: 1.5; }
+
+  /* Slide 8 — CTA */
+  .slide-8 { background: linear-gradient(135deg, #1e1b4b, #0f172a, #1e3a5f); }
+  .cta-btn { display: inline-block; background: #2563eb; color: white; font-size: 16px; font-weight: 700; padding: 16px 40px; border-radius: 12px; text-decoration: none; margin: 8px; transition: transform 0.2s; }
+  .cta-btn:hover { transform: scale(1.03); }
+  .cta-btn.secondary { background: transparent; border: 2px solid rgba(255,255,255,0.2); color: #94a3b8; }
+
+  /* Nav */
+  .nav { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 100; background: rgba(15,23,42,0.9); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 999px; padding: 8px 16px; }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.2s; text-decoration: none; }
+  .nav-dot:hover { background: #60a5fa; }
+
+  @media (max-width: 600px) {
+    .slide { padding: 40px 20px; }
+    .stat-row { gap: 24px; }
+    .stat-num { font-size: 36px; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Hero -->
+<section class="slide slide-1" id="slide-1">
+  <div style="position:relative;z-index:1;width:100%">
+    <div class="badge">⚡ Free · Private · Offline · No signup</div>
+    <h1 class="hero">Stop Getting Rejected<br>by <span class="gradient">Machines</span></h1>
+    <p class="sub">75% of resumes never reach a human. ATS Resume Optimizer gives you the exact intelligence ATS systems use — and helps you beat them, for free.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">15+</div><div class="stat-label">ATS Systems Covered</div></div>
+      <div class="stat"><div class="stat-num">90%</div><div class="stat-label">Target ATS Pass Rate</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Resume Formats Parsed</div></div>
+      <div class="stat"><div class="stat-num">$0</div><div class="stat-label">Cost to Use</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 2: Problem -->
+<section class="slide slide-2" id="slide-2">
+  <h2 class="slide-title">The Hiring System is <span style="color:#f87171">Broken</span></h2>
+  <p class="slide-sub">You're being judged by software before any human sees your name.</p>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pain-icon">🤖</div>
+      <div class="pain-title">75% Auto-Rejected</div>
+      <div class="pain-desc">Most resumes are eliminated by ATS before a recruiter ever opens them — regardless of qualifications.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">📄</div>
+      <div class="pain-title">Format Kills Careers</div>
+      <div class="pain-desc">Two columns, a table, a Canva PDF — Taleo rejects 41% of complex layouts. Your design is invisible to the machine.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">🔤</div>
+      <div class="pain-title">Exact Keywords or Nothing</div>
+      <div class="pain-desc">You wrote "ML Engineer." The JD says "Machine Learning Engineer." Legacy ATS systems don't know they're the same.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">💸</div>
+      <div class="pain-title">Existing Tools Cost Money</div>
+      <div class="pain-desc">Resume services charge $20–$300/month. Job seekers who need help most can afford it least.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 3: Solution -->
+<section class="slide slide-3" id="slide-3">
+  <h2 class="slide-title">The <span class="gradient">Solution</span></h2>
+  <p class="slide-sub">One tool that does everything — free, private, works on any device, even offline.</p>
+  <div class="flow">
+    <div class="flow-step">📎 Upload Any Format</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">📋 Paste Job Description</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">⚡ Instant ATS Score</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">✏️ Edit &amp; Fix Live</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">⬇️ Download &amp; Apply</div>
+  </div>
+  <p style="color:#64748b;font-size:14px;max-width:600px">Upload PDF, Word, HTML, Markdown, or even a <em>photo</em> of your resume. The engine reads them all, analyzes your JD, and shows you exactly what to fix — ranked by impact.</p>
+</section>
+
+<!-- Slide 4: How It Scores -->
+<section class="slide slide-4" id="slide-4">
+  <h2 class="slide-title">6-Dimension ATS Scoring</h2>
+  <p class="slide-sub">Every score tells you exactly what to fix and how many points you gain.</p>
+  <div class="score-demo">
+    <div class="score-ring-wrapper">
+      <svg width="120" height="120" viewBox="0 0 120 120" style="transform:rotate(-90deg)">
+        <circle cx="60" cy="60" r="45" fill="none" stroke="#1e293b" stroke-width="10"/>
+        <circle cx="60" cy="60" r="45" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round" stroke-dasharray="282.7" stroke-dashoffset="28.3"/>
+      </svg>
+      <div style="margin-top:-80px;margin-bottom:40px">
+        <div style="font-size:36px;font-weight:900;color:#22c55e">90</div>
+        <div style="font-size:12px;color:#64748b">Grade A</div>
+      </div>
+    </div>
+    <div class="score-dims">
+      <div class="dim-row">
+        <div class="dim-label">Keyword Match</div>
+        <div class="dim-bar-bg"><div class="dim-bar" style="width:88%;background:#3b82f6"></div></div>
+        <div class="dim-score" style="color:#3b82f6">88%</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-label">ATS Format</div>
+        <div class="dim-bar-bg"><div class="dim-bar" style="width:95%;background:#22c55e"></div></div>
+        <div class="dim-score" style="color:#22c55e">95%</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-label">Section Completeness</div>
+        <div class="dim-bar-bg"><div class="dim-bar" style="width:100%;background:#22c55e"></div></div>
+        <div class="dim-score" style="color:#22c55e">100%</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-label">Achievement Quality</div>
+        <div class="dim-bar-bg"><div class="dim-bar" style="width:82%;background:#eab308"></div></div>
+        <div class="dim-score" style="color:#eab308">82%</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-label">Contact &amp; Meta</div>
+        <div class="dim-bar-bg"><div class="dim-bar" style="width:100%;background:#22c55e"></div></div>
+        <div class="dim-score" style="color:#22c55e">100%</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-label">Length &amp; Density</div>
+        <div class="dim-bar-bg"><div class="dim-bar" style="width:75%;background:#eab308"></div></div>
+        <div class="dim-score" style="color:#eab308">75%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 5: ATS Coverage -->
+<section class="slide slide-5" id="slide-5">
+  <h2 class="slide-title">Scored Against <span class="gradient">15+ ATS Systems</span></h2>
+  <p class="slide-sub">Each system has different rules. We know them all — and enforce them simultaneously.</p>
+  <div class="ats-grid">
+    <div class="ats-chip high">Taleo (Oracle)</div>
+    <div class="ats-chip high">Workday</div>
+    <div class="ats-chip high">iCIMS</div>
+    <div class="ats-chip high">SAP SuccessFactors</div>
+    <div class="ats-chip">Greenhouse</div>
+    <div class="ats-chip">Lever</div>
+    <div class="ats-chip">ADP Recruiting</div>
+    <div class="ats-chip">Jobvite</div>
+    <div class="ats-chip">BambooHR</div>
+    <div class="ats-chip">SmartRecruiters</div>
+    <div class="ats-chip">Bullhorn</div>
+    <div class="ats-chip">JazzHR</div>
+    <div class="ats-chip">Rippling</div>
+    <div class="ats-chip">Ashby</div>
+    <div class="ats-chip">Workable</div>
+  </div>
+  <p style="font-size:13px;color:#475569;max-width:600px">Purple = high market share (Fortune 500 / Global Enterprise). Rules are research-backed and include format requirements, keyword matching mode, date formats, section name requirements, and known parsing quirks.</p>
+</section>
+
+<!-- Slide 6: Tech -->
+<section class="slide slide-6" id="slide-6">
+  <h2 class="slide-title">Built to Last —<br><span class="gradient">Zero Dependencies on Paid Services</span></h2>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-category">Framework</div>
+      <div class="tech-name">Next.js 16 + TypeScript</div>
+      <div class="tech-desc">App Router, static generation, PWA-ready</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-category">Parsing</div>
+      <div class="tech-name">pdfjs + mammoth + Tesseract.js</div>
+      <div class="tech-desc">All run in browser — no server, no cost</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-category">ATS Engine</div>
+      <div class="tech-name">Custom TF-IDF + Rules DB</div>
+      <div class="tech-desc">15+ ATS systems, 12 role categories, offline</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-category">Storage</div>
+      <div class="tech-name">IndexedDB (idb)</div>
+      <div class="tech-desc">Local persistence, zero cloud dependency</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-category">Deployment</div>
+      <div class="tech-name">Vercel Free Tier</div>
+      <div class="tech-desc">Auto-deploy on GitHub push, global CDN</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-category">Offline</div>
+      <div class="tech-name">Service Worker PWA</div>
+      <div class="tech-desc">Install on any device, works air-gapped</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 7: Privacy -->
+<section class="slide slide-7" id="slide-7">
+  <h2 class="slide-title">Your Resume Stays <span style="color:#4ade80">Yours</span></h2>
+  <p class="slide-sub">Most resume tools upload your data to their servers. We don't have servers.</p>
+  <div class="privacy-grid">
+    <div class="privacy-card">
+      <div class="check">✓</div>
+      <div class="privacy-title">No Server, No Upload</div>
+      <div class="privacy-desc">All parsing, scoring, and editing happens in your browser. Your resume is never transmitted anywhere.</div>
+    </div>
+    <div class="privacy-card">
+      <div class="check">✓</div>
+      <div class="privacy-title">No Account Required</div>
+      <div class="privacy-desc">No signup, no email, no password. Open the app and start immediately.</div>
+    </div>
+    <div class="privacy-card">
+      <div class="check">✓</div>
+      <div class="privacy-title">No Analytics or Tracking</div>
+      <div class="privacy-desc">No Google Analytics, no cookies, no fingerprinting. Nothing.</div>
+    </div>
+    <div class="privacy-card">
+      <div class="check">✓</div>
+      <div class="privacy-title">Works Offline</div>
+      <div class="privacy-desc">After first load, the full app works without internet. Install it as a PWA on any device.</div>
+    </div>
+    <div class="privacy-card">
+      <div class="check">✓</div>
+      <div class="privacy-title">API Keys Stay Local</div>
+      <div class="privacy-desc">Pro AI features use your own key, stored only in localStorage, sent directly to the AI provider.</div>
+    </div>
+    <div class="privacy-card">
+      <div class="check">✓</div>
+      <div class="privacy-title">Open Source</div>
+      <div class="privacy-desc">Every line of code is on GitHub. Verify the privacy claims yourself.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 8: CTA -->
+<section class="slide slide-8" id="slide-8">
+  <div style="position:relative;z-index:1">
+    <div class="badge">🚀 Open Source · MIT License</div>
+    <h2 class="slide-title" style="font-size:clamp(32px,6vw,64px)">Your Next Interview<br>Starts With <span class="gradient">Getting Seen</span></h2>
+    <p class="sub" style="margin:24px auto 48px">Deploy your own instance in 60 seconds. Free forever. No corporate proxy, no subscription, no compromise.</p>
+    <div>
+      <a href="https://vercel.com/new/clone?repository-url=https://github.com/abdash1994/ats-resume-optimizer" class="cta-btn" target="_blank">Deploy to Vercel — Free</a>
+      <a href="https://github.com/abdash1994/ats-resume-optimizer" class="cta-btn secondary" target="_blank">View on GitHub</a>
+    </div>
+    <p style="color:#374151;font-size:13px;margin-top:48px">Built with Next.js · TypeScript · Tailwind CSS · Runs entirely in your browser</p>
+  </div>
+</section>
+
+<!-- Nav dots -->
+<nav class="nav">
+  <a href="#slide-1" class="nav-dot" title="Hero"></a>
+  <a href="#slide-2" class="nav-dot" title="Problem"></a>
+  <a href="#slide-3" class="nav-dot" title="Solution"></a>
+  <a href="#slide-4" class="nav-dot" title="Scoring"></a>
+  <a href="#slide-5" class="nav-dot" title="ATS Coverage"></a>
+  <a href="#slide-6" class="nav-dot" title="Tech"></a>
+  <a href="#slide-7" class="nav-dot" title="Privacy"></a>
+  <a href="#slide-8" class="nav-dot" title="CTA"></a>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+ALEX JOHNSON
+alex.j@email.com | 555-111-2222
+
+EXPERIENCE
+Machine Learning Engineer at AI Startup
+- Built NLP models with spaCy and transformers
+- Deployed models using Flask and Docker
+
+EDUCATION
+BS Computer Science, Tech University, 2020
+
+SKILLS
+Python, spaCy, TensorFlow, Docker, AWS

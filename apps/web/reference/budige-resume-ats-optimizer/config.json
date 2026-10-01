@@ -1,0 +1,25 @@
+{
+  "spacy": {
+    "model": "en_core_web_sm",
+    "ner_model_path": "models/ner_model",
+    "batch_size": 32
+  },
+  "ats": {
+    "scoring_weights": {
+      "keyword_match": 0.4,
+      "skills_match": 0.3,
+      "experience_match": 0.2,
+      "education_match": 0.1
+    },
+    "thresholds": {
+      "excellent": 90,
+      "good": 75,
+      "fair": 60
+    }
+  },
+  "flask": {
+    "port": 5000,
+    "debug": true,
+    "max_file_size_mb": 5
+  }
+}

@@ -1,0 +1,81 @@
+JOB TITLE: Prompt Engineer / AI Prompt Specialist
+
+COMPANY: GenAI Innovations India
+
+LOCATION: Bangalore / Remote
+
+EXPERIENCE: 1-2 years (or fresh graduates with strong AI/LLM knowledge)
+
+JOB DESCRIPTION:
+
+We are looking for a creative and technically skilled Prompt Engineer to design, optimize, and test prompts for Large Language Models (LLMs). You will work closely with AI/ML teams to improve model outputs and create effective prompt strategies for various applications.
+
+KEY RESPONSIBILITIES:
+- Design and optimize prompts for LLMs (GPT, Claude, Llama, Gemini, etc.)
+- Develop prompt templates and frameworks for different use cases
+- Test and evaluate prompt effectiveness and model responses
+- Implement prompt engineering techniques: few-shot learning, chain-of-thought, role-based prompting
+- Create documentation and best practices for prompt design
+- Collaborate with product teams to understand requirements
+- Fine-tune prompt strategies for specific domains
+- Conduct A/B testing on different prompt variations
+- Monitor and improve model accuracy and relevance
+- Stay updated with latest LLM developments and techniques
+
+REQUIRED SKILLS:
+- Strong understanding of Large Language Models (LLMs) and Generative AI
+- Experience with OpenAI GPT, Claude, Llama, or similar models
+- Prompt engineering techniques and best practices
+- Natural Language Processing (NLP) fundamentals
+- Python programming for automation and testing
+- Understanding of AI model behavior and limitations
+- API integration with LLM services
+- Ability to analyze and interpret model outputs
+- Creative problem-solving and experimentation
+- Understanding of context windows and token limits
+
+PREFERRED SKILLS:
+- Experience with LangChain or LlamaIndex frameworks
+- RAG (Retrieval-Augmented Generation) implementation
+- Vector databases: ChromaDB, Pinecone, Weaviate
+- Embeddings and semantic search
+- Fine-tuning experience with open-source models
+- Hugging Face Transformers library
+- Evaluation metrics for LLM outputs
+- JSON and structured output formatting
+- Conversational AI and chatbot development
+- Streamlit or Gradio for UI development
+- Understanding of AI ethics and responsible AI
+- Experience with prompt injection and safety testing
+
+EDUCATIONAL QUALIFICATIONS:
+- Bachelor's degree in Computer Science, AI/ML, Linguistics, or related field
+- Relevant certifications in AI, NLP, or LLMs
+- Strong portfolio of prompt engineering projects
+
+SOFT SKILLS:
+- Exceptional written communication skills
+- Creativity and out-of-the-box thinking
+- Analytical mindset
+- Attention to detail
+- Ability to work independently
+- Patience for iterative testing and refinement
+- Curiosity about AI advancements
+- Strong documentation skills
+
+WHAT WE OFFER:
+- Competitive salary package
+- Remote work flexibility
+- Cutting-edge AI projects
+- Learning and development opportunities
+- Access to latest AI tools and technologies
+- Collaborative and innovative work culture
+- Health benefits
+- Performance-based incentives
+
+IDEAL CANDIDATE PROFILE:
+- Passionate about AI and LLMs
+- Keeps up with latest AI research and trends
+- Has experimented with multiple LLM platforms
+- Can balance creativity with technical precision
+- Understands both technical and business perspectives

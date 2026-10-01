@@ -1,0 +1,22 @@
+{
+  "leadership": ["Led", "Managed", "Directed", "Supervised", "Oversaw", "Spearheaded", "Championed", "Orchestrated", "Guided", "Mentored", "Coached", "Cultivated", "Headed", "Drove", "Pioneered"],
+  "achievement": ["Achieved", "Exceeded", "Surpassed", "Delivered", "Accomplished", "Attained", "Completed", "Secured", "Won", "Earned", "Captured"],
+  "building": ["Built", "Developed", "Created", "Designed", "Engineered", "Architected", "Established", "Founded", "Implemented", "Launched", "Deployed", "Configured", "Constructed"],
+  "improvement": ["Improved", "Enhanced", "Optimized", "Streamlined", "Accelerated", "Boosted", "Increased", "Expanded", "Upgraded", "Modernized", "Transformed", "Revamped", "Refined"],
+  "reduction": ["Reduced", "Decreased", "Cut", "Eliminated", "Minimized", "Lowered", "Saved", "Consolidated", "Automated"],
+  "analysis": ["Analyzed", "Evaluated", "Assessed", "Investigated", "Researched", "Identified", "Diagnosed", "Audited", "Reviewed", "Examined", "Measured", "Tracked", "Monitored"],
+  "collaboration": ["Collaborated", "Partnered", "Coordinated", "Facilitated", "Aligned", "Interfaced", "Liaised", "Supported", "Contributed", "Advised", "Consulted"],
+  "growth": ["Grew", "Scaled", "Expanded", "Generated", "Increased", "Acquired", "Attracted", "Recruited", "Retained"],
+  "technical": ["Programmed", "Coded", "Debugged", "Tested", "Integrated", "Migrated", "Automated", "Scripted", "Configured", "Deployed", "Maintained", "Refactored", "Documented"],
+  "communication": ["Presented", "Authored", "Wrote", "Communicated", "Negotiated", "Persuaded", "Advocated", "Published", "Reported", "Briefed", "Trained"],
+  "innovation": ["Innovated", "Conceptualized", "Ideated", "Prototyped", "Pioneered", "Introduced", "Transformed", "Reimagined", "Modernized"],
+  "finance": ["Forecasted", "Budgeted", "Allocated", "Invested", "Reconciled", "Audited", "Managed", "Generated", "Saved", "Reduced"],
+  "by_level": {
+    "entry": ["Assisted", "Supported", "Contributed", "Helped", "Participated", "Collaborated", "Learned", "Developed", "Created", "Built", "Analyzed", "Researched"],
+    "mid": ["Led", "Developed", "Implemented", "Managed", "Delivered", "Improved", "Optimized", "Collaborated", "Designed", "Built", "Analyzed", "Coordinated"],
+    "senior": ["Architected", "Spearheaded", "Led", "Delivered", "Drove", "Championed", "Established", "Transformed", "Scaled", "Mentored", "Designed", "Pioneered"],
+    "director": ["Directed", "Oversaw", "Established", "Championed", "Drove", "Orchestrated", "Cultivated", "Aligned", "Secured", "Transformed", "Launched"],
+    "vp": ["Envisioned", "Strategized", "Directed", "Transformed", "Secured", "Led", "Built", "Drove", "Championed", "Oversaw"],
+    "c-suite": ["Envisioned", "Founded", "Transformed", "Secured", "Scaled", "Built", "Directed", "Drove", "Grew", "Established"]
+  }
+}

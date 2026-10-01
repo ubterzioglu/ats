@@ -1,0 +1,76 @@
+{
+  "software-engineering": {
+    "entry": ["JavaScript", "Python", "Java", "React", "HTML", "CSS", "Git", "REST API", "SQL", "Node.js", "Data structures", "Algorithms", "Object-oriented programming", "Unit testing", "Agile", "GitHub", "Problem solving", "Debugging", "Documentation", "Code review"],
+    "mid": ["TypeScript", "React", "Node.js", "Python", "AWS", "Docker", "Kubernetes", "CI/CD", "Microservices", "REST APIs", "GraphQL", "PostgreSQL", "Redis", "System design", "Agile/Scrum", "Test-driven development", "Code review", "Performance optimization", "Security best practices"],
+    "senior": ["System architecture", "Distributed systems", "Scalability", "Performance engineering", "Technical leadership", "Mentoring", "API design", "Cloud architecture", "AWS/GCP/Azure", "Kubernetes", "Terraform", "Microservices", "Event-driven architecture", "Domain-driven design", "Technical roadmap", "Engineering strategy"],
+    "staff": ["Principal engineering", "Cross-team leadership", "Technical strategy", "Architecture review", "Organization-wide impact", "Engineering culture", "Technical standards", "Complex system design", "Multi-year roadmap", "Stakeholder management", "Technical hiring"],
+    "director": ["Engineering leadership", "Team building", "Technical vision", "P&L responsibility", "OKR planning", "Cross-functional collaboration", "Vendor management", "Budget management", "Talent development", "Organizational design"],
+    "core_skills": ["Python", "JavaScript", "TypeScript", "Java", "Go", "Rust", "C++", "C#", "Ruby", "PHP", "React", "Angular", "Vue.js", "Node.js", "Django", "Flask", "Spring", "AWS", "GCP", "Azure", "Docker", "Kubernetes", "PostgreSQL", "MySQL", "MongoDB", "Redis", "Elasticsearch", "Kafka", "RabbitMQ", "GraphQL", "REST", "gRPC", "Terraform", "Ansible", "Jenkins", "GitHub Actions", "CI/CD", "Git", "Linux"]
+  },
+  "data-science": {
+    "entry": ["Python", "R", "SQL", "Machine learning", "Statistics", "Data analysis", "Pandas", "NumPy", "Matplotlib", "Scikit-learn", "Jupyter", "Excel", "Data visualization", "A/B testing", "Regression analysis"],
+    "mid": ["Machine learning", "Deep learning", "Python", "SQL", "TensorFlow", "PyTorch", "Spark", "Hadoop", "Feature engineering", "Model deployment", "MLflow", "Airflow", "AWS SageMaker", "Statistical modeling", "NLP", "Computer vision", "Experiment design"],
+    "senior": ["MLOps", "Large language models", "Transformers", "Production ML systems", "Model architecture design", "Research leadership", "Cross-functional partnership", "Business impact measurement", "Advanced statistical methods", "Causal inference"],
+    "core_skills": ["Python", "R", "SQL", "Machine Learning", "Deep Learning", "TensorFlow", "PyTorch", "Scikit-learn", "Spark", "Hadoop", "Tableau", "Power BI", "AWS SageMaker", "GCP Vertex AI", "NLP", "Computer Vision", "Statistics", "A/B Testing", "Feature Engineering", "MLOps", "Airflow", "dbt", "Snowflake", "BigQuery", "Databricks"]
+  },
+  "product-management": {
+    "entry": ["Product roadmap", "User stories", "Agile", "Scrum", "Jira", "Customer research", "Market analysis", "Product analytics", "A/B testing", "Stakeholder communication", "Requirements documentation", "Go-to-market"],
+    "mid": ["Product strategy", "OKRs", "Customer discovery", "Data-driven decision making", "Cross-functional leadership", "Product roadmap", "Market research", "Competitive analysis", "User experience", "Growth metrics", "Revenue impact", "Product analytics"],
+    "senior": ["Product vision", "Business strategy", "Executive stakeholder management", "P&L ownership", "Market positioning", "Organizational influence", "Product-led growth", "Enterprise sales partnership", "Platform strategy"],
+    "core_skills": ["Product Roadmap", "Agile", "Scrum", "Jira", "OKRs", "KPIs", "User Research", "A/B Testing", "Data Analysis", "Go-to-Market", "Competitive Analysis", "Stakeholder Management", "Cross-functional Leadership", "SQL", "Product Analytics", "Customer Discovery", "Market Sizing", "Figma", "User Stories", "Acceptance Criteria"]
+  },
+  "design": {
+    "entry": ["Figma", "UI design", "UX design", "Wireframing", "Prototyping", "User research", "Sketch", "Adobe XD", "Accessibility", "Design systems", "User testing"],
+    "mid": ["Design systems", "User research", "Usability testing", "Information architecture", "Interaction design", "Visual design", "Figma", "Design thinking", "Cross-functional collaboration", "Accessibility (WCAG)", "Component libraries"],
+    "senior": ["Design leadership", "Design strategy", "Team management", "Design operations", "Enterprise UX", "Design systems at scale", "Research leadership", "Stakeholder management"],
+    "core_skills": ["Figma", "Sketch", "Adobe XD", "InVision", "Framer", "User Research", "Usability Testing", "Prototyping", "Wireframing", "Design Systems", "Information Architecture", "Interaction Design", "Visual Design", "Typography", "Color Theory", "Accessibility", "WCAG", "User Journey Mapping", "A/B Testing", "HTML/CSS"]
+  },
+  "finance": {
+    "entry": ["Financial modeling", "Excel", "Accounting", "Budgeting", "Financial analysis", "QuickBooks", "GAAP", "Reconciliation", "Accounts payable", "Accounts receivable", "Financial reporting"],
+    "mid": ["Financial modeling", "DCF analysis", "Valuation", "FP&A", "Budget management", "Variance analysis", "SQL", "Tableau", "GAAP", "IFRS", "Business partnering", "Financial forecasting", "Treasury"],
+    "senior": ["Strategic finance", "M&A", "Capital markets", "Investor relations", "Financial strategy", "Risk management", "Enterprise budgeting", "Board reporting", "P&L ownership"],
+    "core_skills": ["Financial Modeling", "Excel", "PowerPoint", "SQL", "Tableau", "Power BI", "GAAP", "IFRS", "Budgeting", "Forecasting", "FP&A", "DCF", "Valuation", "M&A", "Bloomberg", "Salesforce", "SAP", "Oracle", "QuickBooks", "Accounting", "Audit", "Risk Management", "Treasury", "Variance Analysis"]
+  },
+  "marketing": {
+    "entry": ["Content marketing", "Social media", "SEO", "Google Analytics", "Email marketing", "Copywriting", "HubSpot", "Mailchimp", "Campaign management", "Brand awareness"],
+    "mid": ["Demand generation", "Lead generation", "Marketing automation", "Paid advertising", "SEO/SEM", "Content strategy", "CRM", "HubSpot", "Salesforce", "Marketing analytics", "A/B testing", "Conversion rate optimization"],
+    "senior": ["Marketing strategy", "Growth marketing", "Brand strategy", "Marketing leadership", "Budget management", "Multi-channel campaigns", "Marketing operations", "Revenue attribution", "Go-to-market strategy"],
+    "core_skills": ["HubSpot", "Salesforce", "Marketo", "Google Analytics", "Google Ads", "Facebook Ads", "LinkedIn Ads", "SEO", "SEM", "Content Marketing", "Email Marketing", "Marketing Automation", "CRM", "Demand Generation", "A/B Testing", "Copywriting", "Social Media", "Brand Management", "Product Marketing", "Go-to-Market", "SQL", "Tableau"]
+  },
+  "sales": {
+    "entry": ["Sales development", "Prospecting", "Cold calling", "CRM", "Salesforce", "Quota attainment", "Lead qualification", "Email outreach", "Pipeline management", "Discovery calls"],
+    "mid": ["Account executive", "Enterprise sales", "Consultative selling", "Deal closing", "Contract negotiation", "Customer success", "Upselling", "Cross-selling", "Revenue growth", "Salesforce", "Pipeline management", "Quota achievement"],
+    "senior": ["Sales leadership", "Team management", "Revenue strategy", "Enterprise accounts", "C-suite relationships", "Sales enablement", "Go-to-market strategy", "Territory planning", "Sales forecasting", "P&L management"],
+    "core_skills": ["Salesforce", "HubSpot", "Outreach", "Salesloft", "SalesNavigator", "Enterprise Sales", "B2B Sales", "SaaS Sales", "Consultative Selling", "Negotiation", "Pipeline Management", "Quota Attainment", "Account Management", "Business Development", "CRM", "Revenue Growth", "Prospecting", "Cold Calling", "Customer Success"]
+  },
+  "hr": {
+    "entry": ["Recruiting", "Talent acquisition", "Onboarding", "HRIS", "Workday", "Employee relations", "Benefits administration", "HR policies", "Compliance", "LinkedIn Recruiter"],
+    "mid": ["HRBP", "Talent management", "Performance management", "Compensation", "Benefits", "Employee engagement", "HR strategy", "Change management", "Learning and development", "Succession planning"],
+    "senior": ["HR leadership", "People strategy", "Organizational development", "Culture building", "Executive coaching", "Total rewards", "DEI strategy", "M&A integration", "HR transformation"],
+    "core_skills": ["Workday", "BambooHR", "ATS", "LinkedIn Recruiter", "HRIS", "Onboarding", "Performance Management", "Compensation", "Benefits", "Employee Relations", "Compliance", "FMLA", "ADA", "EEOC", "Recruiting", "Talent Acquisition", "Learning & Development", "HR Business Partner", "Change Management", "DEI"]
+  },
+  "healthcare": {
+    "entry": ["Patient care", "EMR/EHR", "HIPAA", "Clinical documentation", "Medical terminology", "Patient assessment", "CPR certified", "ICD-10", "Epic", "Cerner"],
+    "mid": ["Clinical expertise", "Patient outcomes", "Care coordination", "Quality improvement", "HIPAA compliance", "Electronic health records", "Interdisciplinary collaboration", "Evidence-based practice"],
+    "senior": ["Clinical leadership", "Department management", "Quality metrics", "Patient safety", "Staff development", "Budget oversight", "Regulatory compliance", "Strategic planning"],
+    "core_skills": ["Epic", "Cerner", "HIPAA", "ICD-10", "CPT Coding", "Patient Care", "Clinical Documentation", "EMR/EHR", "Care Coordination", "Quality Improvement", "JCAHO", "CMS", "Interdisciplinary Teams", "Evidence-based Practice", "Case Management", "Patient Safety"]
+  },
+  "operations": {
+    "entry": ["Process improvement", "Project coordination", "Vendor management", "Data analysis", "Excel", "Operations support", "KPI tracking", "Supply chain", "Logistics"],
+    "mid": ["Operations management", "Process optimization", "Six Sigma", "Lean", "Supply chain management", "Vendor management", "Budget management", "Cross-functional coordination", "Project management", "PMP", "Continuous improvement"],
+    "senior": ["Operations leadership", "Strategic operations", "P&L management", "Organizational design", "M&A integration", "Operational excellence", "Technology transformation", "Board reporting"],
+    "core_skills": ["Six Sigma", "Lean", "Kaizen", "PMP", "Agile", "SCRUM", "Supply Chain", "Logistics", "Vendor Management", "SAP", "Oracle", "Salesforce", "Process Improvement", "KPIs", "Budget Management", "Project Management", "ERP", "Inventory Management"]
+  },
+  "customer-success": {
+    "entry": ["Customer support", "Account management", "Onboarding", "CRM", "Salesforce", "Customer satisfaction", "NPS", "CSAT", "Zendesk", "Intercom", "Churn prevention"],
+    "mid": ["Customer success management", "Account growth", "Retention", "Expansion revenue", "QBRs", "Stakeholder management", "Customer health scoring", "Churn mitigation", "Upselling", "Product adoption"],
+    "senior": ["CS leadership", "Team management", "Revenue retention", "Customer success strategy", "Executive relationships", "CS operations", "Product feedback loop", "NRR optimization"],
+    "core_skills": ["Salesforce", "Gainsight", "ChurnZero", "Zendesk", "Intercom", "HubSpot", "Customer Success", "Account Management", "NPS", "CSAT", "NRR", "GRR", "Onboarding", "QBR", "Retention", "Upsell", "Customer Health Score", "ARR", "MRR", "Churn Prevention"]
+  },
+  "legal": {
+    "entry": ["Legal research", "Contract review", "Westlaw", "LexisNexis", "Compliance", "Due diligence", "Legal writing", "Bluebook citation", "Corporate law", "Litigation support"],
+    "mid": ["Contract drafting", "Negotiation", "Compliance management", "Risk assessment", "M&A due diligence", "Intellectual property", "Employment law", "Corporate governance", "Outside counsel management"],
+    "senior": ["Legal strategy", "General counsel support", "Board advisory", "Risk management", "Regulatory compliance", "Cross-border transactions", "Litigation management", "Policy development"],
+    "core_skills": ["Contract Drafting", "Legal Research", "Westlaw", "LexisNexis", "Compliance", "Due Diligence", "Negotiation", "M&A", "Intellectual Property", "Employment Law", "Corporate Law", "Risk Management", "Litigation", "Regulatory Affairs", "Legal Writing", "GDPR", "Privacy Law"]
+  }
+}

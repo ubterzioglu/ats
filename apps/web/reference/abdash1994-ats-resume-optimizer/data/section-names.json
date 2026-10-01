@@ -1,0 +1,48 @@
+{
+  "canonical_sections": {
+    "contact": {
+      "canonical": "Contact Information",
+      "aliases": ["contact", "personal information", "personal details", "contact details", "header", "info", "personal info"]
+    },
+    "summary": {
+      "canonical": "Professional Summary",
+      "aliases": ["summary", "professional summary", "career summary", "profile", "professional profile", "executive summary", "objective", "career objective", "about me", "about", "overview", "introduction", "statement", "professional statement", "bio", "career profile"]
+    },
+    "experience": {
+      "canonical": "Work Experience",
+      "aliases": ["work experience", "professional experience", "experience", "employment", "employment history", "work history", "career history", "positions", "roles", "job history", "professional background", "relevant experience", "relevant work experience"]
+    },
+    "education": {
+      "canonical": "Education",
+      "aliases": ["education", "academic background", "academic history", "educational background", "qualifications", "academic qualifications", "degrees", "schooling", "training and education"]
+    },
+    "skills": {
+      "canonical": "Skills",
+      "aliases": ["skills", "technical skills", "core competencies", "competencies", "key skills", "expertise", "areas of expertise", "proficiencies", "technologies", "tools", "technology stack", "technical expertise", "professional skills", "skill set", "capabilities"]
+    },
+    "certifications": {
+      "canonical": "Certifications",
+      "aliases": ["certifications", "certificates", "professional certifications", "credentials", "licenses", "professional credentials", "accreditations", "licensures"]
+    },
+    "projects": {
+      "canonical": "Projects",
+      "aliases": ["projects", "key projects", "personal projects", "side projects", "notable projects", "selected projects", "portfolio", "project work", "relevant projects"]
+    },
+    "awards": {
+      "canonical": "Awards & Honors",
+      "aliases": ["awards", "honors", "achievements", "recognition", "awards and honors", "accolades", "accomplishments"]
+    },
+    "publications": {
+      "canonical": "Publications",
+      "aliases": ["publications", "papers", "research", "articles", "academic publications", "research papers", "authored works"]
+    },
+    "languages": {
+      "canonical": "Languages",
+      "aliases": ["languages", "language skills", "language proficiency", "spoken languages"]
+    },
+    "volunteer": {
+      "canonical": "Volunteer Experience",
+      "aliases": ["volunteer", "volunteering", "volunteer experience", "community service", "community involvement", "civic engagement", "non-profit work"]
+    }
+  }
+}

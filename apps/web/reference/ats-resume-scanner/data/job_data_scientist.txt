@@ -1,0 +1,68 @@
+JOB TITLE: Data Scientist
+
+COMPANY: DataTech Analytics India
+
+LOCATION: Mumbai / Hybrid
+
+EXPERIENCE: 2-4 years
+
+JOB DESCRIPTION:
+
+We are looking for an analytical and detail-oriented Data Scientist to join our analytics team. You will be responsible for analyzing complex datasets, building predictive models, and delivering actionable insights to drive business decisions.
+
+KEY RESPONSIBILITIES:
+- Analyze large, complex datasets to identify patterns, trends, and insights
+- Develop and implement predictive models and machine learning algorithms
+- Design and conduct A/B tests and experiments
+- Create data visualizations and dashboards for stakeholders
+- Collaborate with business teams to understand requirements and deliver solutions
+- Perform statistical analysis and hypothesis testing
+- Build recommendation systems and forecasting models
+- Communicate findings to technical and non-technical audiences
+- Maintain and optimize existing data pipelines
+
+REQUIRED SKILLS:
+- Strong proficiency in Python and R programming
+- Statistical analysis and hypothesis testing
+- Machine Learning algorithms: regression, classification, clustering
+- Data manipulation libraries: Pandas, NumPy
+- Data visualization: Matplotlib, Seaborn, Plotly, Tableau, or Power BI
+- SQL and database querying (MySQL, PostgreSQL)
+- Experience with Jupyter Notebooks
+- Scikit-learn for model development
+- Feature engineering and selection
+- Model evaluation metrics and validation techniques
+- Understanding of probability and statistics
+- Excel and data analysis
+
+PREFERRED SKILLS:
+- Experience with big data tools (Spark, Hadoop)
+- Cloud platforms: AWS (SageMaker), Azure ML, or GCP
+- Time series analysis and forecasting
+- Deep learning frameworks (TensorFlow, PyTorch)
+- Natural Language Processing (NLP) experience
+- A/B testing and experimental design
+- Version control with Git
+- Docker for containerization
+- Knowledge of ETL processes
+- Business intelligence tools
+
+EDUCATIONAL QUALIFICATIONS:
+- Bachelor's or Master's degree in Statistics, Mathematics, Computer Science, Economics, or related field
+- Certifications in data science or analytics are a plus
+
+SOFT SKILLS:
+- Strong analytical and problem-solving skills
+- Excellent communication and presentation abilities
+- Ability to translate business problems into data solutions
+- Attention to detail
+- Collaborative team player
+- Curiosity and continuous learning mindset
+
+WHAT WE OFFER:
+- Competitive salary package
+- Performance bonuses
+- Flexible work arrangements
+- Professional development and training
+- Health and wellness benefits
+- Modern work environment

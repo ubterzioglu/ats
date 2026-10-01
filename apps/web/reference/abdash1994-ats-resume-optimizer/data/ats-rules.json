@@ -1,0 +1,441 @@
+{
+  "systems": [
+    {
+      "id": "taleo",
+      "name": "Taleo (Oracle)",
+      "market_share": "high",
+      "used_by": "Fortune 500, Enterprise",
+      "preferred_formats": ["docx", "txt"],
+      "avoid_formats": ["pdf"],
+      "parsing_notes": "Legacy parser with 41% parse error rate on complex layouts. CRITICAL: Taleo has a paste-text field (8,000-16,000 char limit) — keyword search often runs against the PASTED TEXT, not the uploaded file. Always fill in the paste field. Keyword exact-match weighted at ~80%. Avoid Canva/InDesign PDFs entirely.",
+      "paste_field_note": "Fill the manual paste field in Taleo forms — keyword matching often runs against pasted text, not parsed file",
+      "parse_error_rate_complex": "41%",
+      "critical_rules": [
+        "single_column_only",
+        "no_tables",
+        "no_headers_footers",
+        "no_images",
+        "no_text_boxes",
+        "plain_fonts_only",
+        "standard_section_names",
+        "chronological_dates"
+      ],
+      "preferred_fonts": ["Times New Roman", "Arial", "Calibri"],
+      "date_format": "MM/YYYY",
+      "scoring_weights": {
+        "keyword_match": 0.40,
+        "format_compliance": 0.30,
+        "section_completeness": 0.20,
+        "other": 0.10
+      },
+      "required_sections": ["contact", "experience", "education", "skills"],
+      "section_name_mapping": {
+        "work experience": "experience",
+        "professional experience": "experience",
+        "employment history": "experience",
+        "academic background": "education",
+        "core competencies": "skills",
+        "technical skills": "skills"
+      }
+    },
+    {
+      "id": "workday",
+      "name": "Workday",
+      "market_share": "high",
+      "used_by": "Enterprise, Large corporations",
+      "preferred_formats": ["docx", "pdf"],
+      "avoid_formats": [],
+      "parsing_notes": "Modern parser, handles DOCX best. Auto-parses education/experience fields. Section headers must be plain text. Semantic keyword matching.",
+      "critical_rules": [
+        "no_tables",
+        "no_columns",
+        "standard_section_names",
+        "bullet_points_preferred",
+        "dates_must_be_parseable"
+      ],
+      "preferred_fonts": ["Calibri", "Arial", "Helvetica"],
+      "date_format": "MM/YYYY or Month YYYY",
+      "scoring_weights": {
+        "keyword_match": 0.35,
+        "format_compliance": 0.25,
+        "section_completeness": 0.25,
+        "other": 0.15
+      },
+      "required_sections": ["contact", "experience", "education", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "greenhouse",
+      "name": "Greenhouse",
+      "market_share": "medium",
+      "used_by": "Tech startups, Mid-size companies",
+      "preferred_formats": ["pdf", "docx"],
+      "avoid_formats": [],
+      "parsing_notes": "IMPORTANT: Greenhouse has NO automated ATS algorithm. Scoring is entirely human-scorecard based. Resume is parsed and displayed to recruiters who score manually against job-specific criteria. Focus on clean readability, correct formatting, and complete sections. Keyword stuffing is counterproductive here — humans read these.",
+      "critical_rules": [
+        "human_scorecard_review",
+        "readability_paramount",
+        "skills_section_required",
+        "linkedin_url_valued",
+        "portfolio_url_valued",
+        "no_keyword_stuffing"
+      ],
+      "preferred_fonts": ["Any readable font"],
+      "date_format": "Any standard format",
+      "scoring_weights": {
+        "format_compliance": 0.40,
+        "section_completeness": 0.35,
+        "keyword_match": 0.15,
+        "other": 0.10
+      },
+      "required_sections": ["contact", "experience", "education", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "icims",
+      "name": "iCIMS",
+      "market_share": "high",
+      "used_by": "Enterprise, Healthcare, Retail",
+      "preferred_formats": ["docx", "pdf"],
+      "avoid_formats": [],
+      "parsing_notes": "Keyword density sensitive. Prefers single-column simple layouts. Exact keyword matching. Section names must be standard.",
+      "critical_rules": [
+        "single_column_only",
+        "no_tables",
+        "high_keyword_density_required",
+        "standard_section_names",
+        "no_special_characters_in_headers"
+      ],
+      "preferred_fonts": ["Times New Roman", "Arial", "Calibri"],
+      "date_format": "MM/YYYY",
+      "scoring_weights": {
+        "keyword_match": 0.45,
+        "format_compliance": 0.25,
+        "section_completeness": 0.20,
+        "other": 0.10
+      },
+      "required_sections": ["contact", "experience", "education", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "lever",
+      "name": "Lever",
+      "market_share": "medium",
+      "used_by": "Tech companies, Startups",
+      "preferred_formats": ["pdf", "docx"],
+      "avoid_formats": [],
+      "parsing_notes": "Handles LinkedIn-style imports well. Semantic keyword matching. GitHub/portfolio links boost score. More forgiving of creative formatting.",
+      "critical_rules": [
+        "github_url_valued",
+        "portfolio_url_valued",
+        "linkedin_url_required",
+        "skills_section_required"
+      ],
+      "preferred_fonts": ["Any"],
+      "date_format": "Any standard format",
+      "scoring_weights": {
+        "keyword_match": 0.30,
+        "section_completeness": 0.30,
+        "format_compliance": 0.15,
+        "other": 0.25
+      },
+      "required_sections": ["contact", "experience", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "successfactors",
+      "name": "SAP SuccessFactors",
+      "market_share": "high",
+      "used_by": "Enterprise, Global corporations",
+      "preferred_formats": ["docx", "pdf"],
+      "avoid_formats": [],
+      "parsing_notes": "Enterprise-grade. Exact section name matching. Strictly chronological order required. Complex multilingual support.",
+      "critical_rules": [
+        "exact_section_names_required",
+        "chronological_order_required",
+        "no_tables",
+        "no_columns",
+        "dates_must_be_exact"
+      ],
+      "preferred_fonts": ["Times New Roman", "Arial"],
+      "date_format": "MM/YYYY",
+      "scoring_weights": {
+        "section_completeness": 0.35,
+        "keyword_match": 0.35,
+        "format_compliance": 0.20,
+        "other": 0.10
+      },
+      "required_sections": ["contact", "summary", "experience", "education", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "jobvite",
+      "name": "Jobvite",
+      "market_share": "medium",
+      "used_by": "Mid-size, Tech",
+      "preferred_formats": ["pdf"],
+      "avoid_formats": [],
+      "parsing_notes": "Social signal-aware. PDF preferred. Date format MM/YYYY strictly. LinkedIn integration. Keyword frequency weighted.",
+      "critical_rules": [
+        "pdf_preferred",
+        "strict_date_format",
+        "linkedin_url_valued",
+        "keyword_frequency_weighted"
+      ],
+      "preferred_fonts": ["Any readable"],
+      "date_format": "MM/YYYY",
+      "scoring_weights": {
+        "keyword_match": 0.40,
+        "format_compliance": 0.25,
+        "section_completeness": 0.20,
+        "other": 0.15
+      },
+      "required_sections": ["contact", "experience", "education", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "adp",
+      "name": "ADP Recruiting Management",
+      "market_share": "medium",
+      "used_by": "SMB to Enterprise, Payroll-integrated",
+      "preferred_formats": ["docx", "txt"],
+      "avoid_formats": ["pdf"],
+      "parsing_notes": "Legacy parser. Single column mandatory. No special characters. Plain text preferred. Very basic keyword matching.",
+      "critical_rules": [
+        "single_column_only",
+        "no_tables",
+        "no_special_characters",
+        "no_images",
+        "no_columns",
+        "plain_text_preferred",
+        "no_headers_footers"
+      ],
+      "preferred_fonts": ["Times New Roman", "Arial"],
+      "date_format": "MM/YYYY",
+      "scoring_weights": {
+        "keyword_match": 0.35,
+        "format_compliance": 0.40,
+        "section_completeness": 0.15,
+        "other": 0.10
+      },
+      "required_sections": ["contact", "experience", "education"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "bamboohr",
+      "name": "BambooHR",
+      "market_share": "medium",
+      "used_by": "SMB",
+      "preferred_formats": ["pdf", "docx"],
+      "avoid_formats": [],
+      "parsing_notes": "Simple, SMB-focused parser. Straightforward keyword matching. Handles most standard formats.",
+      "critical_rules": [
+        "standard_section_names",
+        "no_tables"
+      ],
+      "preferred_fonts": ["Any"],
+      "date_format": "Any standard",
+      "scoring_weights": {
+        "keyword_match": 0.40,
+        "section_completeness": 0.30,
+        "format_compliance": 0.20,
+        "other": 0.10
+      },
+      "required_sections": ["contact", "experience", "education", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "smartrecruiters",
+      "name": "SmartRecruiters",
+      "market_share": "medium",
+      "used_by": "Global enterprises, Modern companies",
+      "preferred_formats": ["pdf", "docx"],
+      "avoid_formats": [],
+      "parsing_notes": "AI-powered parser. Handles columns better than legacy systems. Semantic matching. Modern understanding of resume formats.",
+      "critical_rules": [
+        "ai_semantic_matching",
+        "skills_section_important"
+      ],
+      "preferred_fonts": ["Any"],
+      "date_format": "Any standard",
+      "scoring_weights": {
+        "keyword_match": 0.35,
+        "section_completeness": 0.25,
+        "format_compliance": 0.20,
+        "other": 0.20
+      },
+      "required_sections": ["contact", "experience", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "bullhorn",
+      "name": "Bullhorn",
+      "market_share": "medium",
+      "used_by": "Staffing agencies, Recruiters",
+      "preferred_formats": ["docx", "pdf"],
+      "avoid_formats": [],
+      "parsing_notes": "Staffing-focused. Skills taxonomy matching. Keyword matching via internal skills database. Used heavily by staffing agencies.",
+      "critical_rules": [
+        "skills_taxonomy_match",
+        "clear_skills_section",
+        "standard_date_format"
+      ],
+      "preferred_fonts": ["Any"],
+      "date_format": "MM/YYYY",
+      "scoring_weights": {
+        "keyword_match": 0.45,
+        "section_completeness": 0.30,
+        "format_compliance": 0.15,
+        "other": 0.10
+      },
+      "required_sections": ["contact", "experience", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "jazzhr",
+      "name": "JazzHR",
+      "market_share": "low",
+      "used_by": "SMB",
+      "preferred_formats": ["pdf", "docx"],
+      "avoid_formats": [],
+      "parsing_notes": "SMB-focused. Keyword frequency heavily weighted. Standard layouts work best.",
+      "critical_rules": [
+        "keyword_frequency_high",
+        "standard_section_names"
+      ],
+      "preferred_fonts": ["Any"],
+      "date_format": "Any standard",
+      "scoring_weights": {
+        "keyword_match": 0.50,
+        "section_completeness": 0.25,
+        "format_compliance": 0.15,
+        "other": 0.10
+      },
+      "required_sections": ["contact", "experience", "education", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "rippling",
+      "name": "Rippling",
+      "market_share": "medium",
+      "used_by": "Tech companies, Modern startups",
+      "preferred_formats": ["pdf", "docx"],
+      "avoid_formats": [],
+      "parsing_notes": "Modern parser. Handles most formats well. LinkedIn integration. Skills and experience focused.",
+      "critical_rules": [
+        "linkedin_url_valued",
+        "skills_section_required"
+      ],
+      "preferred_fonts": ["Any"],
+      "date_format": "Any standard",
+      "scoring_weights": {
+        "keyword_match": 0.35,
+        "section_completeness": 0.30,
+        "format_compliance": 0.20,
+        "other": 0.15
+      },
+      "required_sections": ["contact", "experience", "skills"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "ashby",
+      "name": "Ashby",
+      "market_share": "low",
+      "used_by": "Tech startups, Dev-focused companies",
+      "preferred_formats": ["pdf", "docx"],
+      "avoid_formats": [],
+      "parsing_notes": "Developer/startup-focused. GitHub links and portfolio significantly boost score. Skills and projects sections important.",
+      "critical_rules": [
+        "github_url_required_for_engineering",
+        "portfolio_url_valued",
+        "projects_section_valued",
+        "skills_section_required"
+      ],
+      "preferred_fonts": ["Any"],
+      "date_format": "Any standard",
+      "scoring_weights": {
+        "keyword_match": 0.30,
+        "section_completeness": 0.30,
+        "format_compliance": 0.15,
+        "other": 0.25
+      },
+      "required_sections": ["contact", "experience", "skills", "projects"],
+      "section_name_mapping": {}
+    },
+    {
+      "id": "workable",
+      "name": "Workable",
+      "market_share": "medium",
+      "used_by": "SMB to Mid-size, Global",
+      "preferred_formats": ["pdf", "docx"],
+      "avoid_formats": [],
+      "parsing_notes": "AI-assisted parsing. Multilingual support. Standard layouts work best. Skills matching prominent.",
+      "critical_rules": [
+        "clear_section_headers",
+        "skills_section_required",
+        "standard_date_format"
+      ],
+      "preferred_fonts": ["Any"],
+      "date_format": "Month YYYY or MM/YYYY",
+      "scoring_weights": {
+        "keyword_match": 0.38,
+        "section_completeness": 0.28,
+        "format_compliance": 0.22,
+        "other": 0.12
+      },
+      "required_sections": ["contact", "experience", "education", "skills"],
+      "section_name_mapping": {}
+    }
+  ],
+  "universal_rules": {
+    "always_avoid": [
+      "Tables for layout",
+      "Text boxes",
+      "Headers and footers (content, not section headers)",
+      "Images and graphics",
+      "Charts and infographics",
+      "Multiple columns (for most systems)",
+      "Fancy fonts (stick to standard fonts)",
+      "Special Unicode characters in important fields",
+      "Hyperlinks embedded in text (write out URLs)",
+      "Text in shapes",
+      "Watermarks"
+    ],
+    "always_include": [
+      "Full name prominently at top",
+      "Professional email address",
+      "Phone number with country code",
+      "City and State/Country",
+      "LinkedIn URL",
+      "Work Experience section",
+      "Education section",
+      "Skills section"
+    ],
+    "keyword_best_practices": [
+      "Use exact keywords from job description",
+      "Include both spelled-out and acronym versions (e.g., Machine Learning and ML)",
+      "Repeat top keywords 2-4 times naturally",
+      "Place most important keywords in Summary and first bullet of each role",
+      "Match seniority language (e.g., 'led', 'managed', 'architected' for senior roles)",
+      "Include industry-specific terms"
+    ],
+    "bullet_point_rules": [
+      "Start with strong action verb",
+      "Include quantified results where possible (%, $, numbers)",
+      "Keep bullets to 1-2 lines",
+      "Focus on impact not just duties",
+      "Use past tense for previous roles, present for current"
+    ],
+    "section_order": [
+      "Contact Information",
+      "Professional Summary",
+      "Work Experience",
+      "Education",
+      "Skills",
+      "Certifications",
+      "Projects",
+      "Awards",
+      "Publications"
+    ]
+  }
+}

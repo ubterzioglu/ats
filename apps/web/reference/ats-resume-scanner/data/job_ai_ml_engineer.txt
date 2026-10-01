@@ -1,0 +1,61 @@
+JOB TITLE: AI/ML Engineer
+
+COMPANY: Tech Solutions India Pvt Ltd
+
+LOCATION: Bangalore / Remote
+
+EXPERIENCE: 1-3 years
+
+JOB DESCRIPTION:
+
+We are seeking a passionate AI/ML Engineer to join our growing team. The ideal candidate will work on developing and deploying machine learning models for real-world applications.
+
+KEY RESPONSIBILITIES:
+- Design, develop, and deploy machine learning models for various business applications
+- Work with large datasets to extract insights and build predictive models
+- Implement Natural Language Processing (NLP) solutions for text analytics
+- Develop and maintain ML pipelines and workflows
+- Collaborate with cross-functional teams to integrate AI solutions
+- Optimize model performance and scalability
+- Create and maintain technical documentation
+
+REQUIRED SKILLS:
+- Python programming with strong fundamentals
+- Machine Learning frameworks: Scikit-learn, TensorFlow, PyTorch, or Keras
+- Natural Language Processing (NLP) experience
+- Experience with Large Language Models (LLMs) and Generative AI
+- Understanding of deep learning architectures
+- SQL and database management
+- Git and version control
+- Data preprocessing and feature engineering
+- Model evaluation and validation techniques
+
+PREFERRED SKILLS:
+- Experience with cloud platforms (AWS, Azure, GCP)
+- Knowledge of MLOps and model deployment
+- Familiarity with Docker and Kubernetes
+- Experience with RAG (Retrieval-Augmented Generation) systems
+- LangChain, Hugging Face, or similar frameworks
+- Vector databases (ChromaDB, Pinecone, Weaviate)
+- FastAPI or Flask for API development
+- Experience with Streamlit or Gradio for UI development
+- Understanding of transformer architectures
+- Computer vision experience is a plus
+
+EDUCATIONAL QUALIFICATIONS:
+- Bachelor's or Master's degree in Computer Science, Engineering, or related field
+- Online certifications in AI/ML are highly valued
+
+SOFT SKILLS:
+- Strong problem-solving abilities
+- Good communication skills
+- Team collaboration
+- Ability to work independently
+- Continuous learning mindset
+
+WHAT WE OFFER:
+- Competitive salary
+- Work from home flexibility
+- Learning and development opportunities
+- Health insurance
+- Collaborative work environment
