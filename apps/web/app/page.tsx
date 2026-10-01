@@ -28,14 +28,14 @@ export default function HomePage() {
 
         <div className="flex items-center justify-center gap-4 pt-4">
           <Link
-            href="/analyze"
+            href={"/analyze" as any}
             className="inline-flex items-center gap-2 bg-ink text-sheet px-6 py-3 rounded-sheet font-medium transition-transform hover:scale-105 active:scale-95 shadow-sheet"
           >
             Start free analysis
             <ArrowRight size={18} />
           </Link>
           <Link
-            href="/login"
+            href={"/login" as any}
             className="inline-flex items-center gap-2 bg-transparent text-ink border border-line px-6 py-3 rounded-sheet font-medium transition-colors hover:border-ink"
           >
             Sign in to save

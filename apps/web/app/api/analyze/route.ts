@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    
+    // Extract supabase access token from cookies if present
+    const cookieStore = await cookies();
+    const token = cookieStore.get('sb-access-token')?.value || '';
     
     // Forward the request to the Python backend API
     const backendUrl = process.env.API_URL || 'http://localhost:8000';
@@ -11,6 +16,7 @@ export async function POST(request: Request) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...(token && { 'Authorization': `Bearer ${token}` })
       },
       body: JSON.stringify(body),
     });

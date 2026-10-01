@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from packages.schemas.resume import ResumeDocument
 from packages.schemas.job import JobDescriptionDocument
 import sys
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body, Depends
+from pydantic import BaseModel
 
 # Make services importable
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
@@ -12,6 +14,7 @@ from services.parser.pdf_extractor import extract_text_from_pdf
 from services.parser.docx_extractor import extract_text_from_docx
 from services.ats_engine.scoring import calculate_ats_score, DEFAULT_SCORING_CONFIG
 from services.ai_agent.agent import AIAgent
+from apps.api.auth import verify_supabase_token
 
 ai_agent = AIAgent(model="llama3")
 
@@ -65,7 +68,7 @@ class AnalysisInput(BaseModel):
     jobDescription: str = ""
 
 @app.post("/analyze")
-async def analyze_full_pipeline(payload: AnalysisInput):
+async def analyze_full_pipeline(payload: AnalysisInput, token_data: dict = Depends(verify_supabase_token)):
     """
     Runs the full pipeline:
     1. Parse Resume (from raw text)
