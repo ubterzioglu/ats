@@ -27,8 +27,6 @@ services:
       - ./apps/api:/app
       - ./services:/services
       - ./packages:/packages
-    ports:
-      - "8000:8000"
     environment:
       - DATABASE_URL=postgresql+asyncpg://ats_user:ats_password@db:5432/ats_db
       - REDIS_URL=redis://redis:6379/0
