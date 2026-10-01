@@ -22,3 +22,19 @@ Your task:
 2. Incorporate the relevant keywords naturally.
 3. Return ONLY the rewritten bullet point.
 """
+
+PARSE_JOB_DESCRIPTION_PROMPT = """
+You are an expert technical recruiter and ATS specialist.
+Extract the key requirements from the following Job Description text and output ONLY valid JSON.
+Do not wrap the JSON in markdown blocks like ```json.
+
+Schema Required:
+{
+  "title": "Extracted Job Title",
+  "required_skills": ["skill1", "skill2"],
+  "preferred_skills": ["skill3", "skill4"]
+}
+
+Job Description Text:
+{text}
+"""

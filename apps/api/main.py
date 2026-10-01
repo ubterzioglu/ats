@@ -79,12 +79,14 @@ async def analyze_full_pipeline(payload: AnalysisInput, token_data: dict = Depen
         raw_text = payload.cvText
         job_ad = payload.jobDescription
         
-        # 1. Parse (Stub - assumes basic NLP extracts this)
+        # 1. Parse Resume (Stub - assumes basic NLP extracts this)
         resume_data = {"raw_text": raw_text, "skills": ["React", "TypeScript", "Python"]}
-        job_data = {"required_skills": ["React", "Python", "SQL"]}
+        
+        # Parse Job Description with AI Agent
+        job_data = {"required_skills": []}
         if job_ad:
-            # Fake parsing if jobAd is present
-            job_data["required_skills"] = ["React", "Python"]
+            parsed_job = await ai_agent.parse_job_description(job_ad)
+            job_data["required_skills"] = parsed_job.get("required_skills", [])
             
         # 2. Score
         score = calculate_ats_score(resume=resume_data, job_description=job_data)
