@@ -1,15 +1,14 @@
 import os
 import shutil
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body
-from pydantic import BaseModel
-from packages.schemas.resume import ResumeDocument
-from packages.schemas.job import JobDescriptionDocument
 import sys
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body, Depends
 from pydantic import BaseModel
 
-# Make services importable
+# Make workspace roots importable
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
+from packages.schemas.resume import ResumeDocument
+from packages.schemas.job import JobDescriptionDocument
 from services.parser.pdf_extractor import extract_text_from_pdf
 from services.parser.docx_extractor import extract_text_from_docx
 from services.ats_engine.scoring import calculate_ats_score, DEFAULT_SCORING_CONFIG
