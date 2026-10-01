@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
+from pgvector.sqlalchemy import Vector
 from .database import Base
 
 class User(Base):
@@ -91,3 +92,24 @@ class SkillRelation(Base):
     skill_id = Column(Integer, ForeignKey("skills.id"), nullable=False)
     related_skill_id = Column(Integer, ForeignKey("skills.id"), nullable=False)
     relation_type = Column(String, nullable=False) # e.g., 'alias', 'related', 'child'
+
+class SemanticEmbedding(Base):
+    """
+    Stores embeddings for both CV experiences/skills and Job Description requirements
+    to perform fast semantic matching via pgvector.
+    """
+    __tablename__ = "semantic_embeddings"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    # References to parent entities (can be nullable depending on what it belongs to)
+    resume_id = Column(Integer, ForeignKey("resumes.id"), nullable=True)
+    job_description_id = Column(Integer, ForeignKey("job_descriptions.id"), nullable=True)
+    
+    content_text = Column(Text, nullable=False) # The raw string being embedded
+    content_type = Column(String) # e.g. 'cv_experience', 'jd_requirement'
+    
+    # Use standard 1536 (OpenAI) or 4096 (Ollama llama3), 384 for embeddinggemma etc.
+    # We will assume a flexible or common size, e.g., 4096 for Llama3 embeddings
+    embedding = Column(Vector(4096))
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
