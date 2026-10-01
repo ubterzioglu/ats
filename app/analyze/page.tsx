@@ -1,5 +1,6 @@
 import { Analyzer } from "@/components/analyzer";
 import { isPersistenceConfigured } from "@/lib/supabase/client";
+import { logout } from "@/app/login/actions";
 
 // isPersistenceConfigured() reads the environment, which prerendering would
 // freeze at image build time; rendering per request lets the deployment
@@ -37,13 +38,18 @@ const DIMENSIONS: ReadonlyArray<{ readonly name: string; readonly weight: number
 export default function AnalyzePage() {
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
-      <header className="mb-8 border-b border-line pb-6">
-        <h1 className="font-mono text-lg font-medium tracking-tight">ats readability</h1>
-        <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
-          Applicant tracking systems read a CV as text, not as a design. This shows you that text, scores what
-          survives, and lists what to change — in order of how many points each fix is worth. The file is read in
-          your browser and never uploaded.
-        </p>
+      <header className="mb-8 border-b border-line pb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+        <div>
+          <h1 className="font-mono text-lg font-medium tracking-tight">ats readability</h1>
+          <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
+            Applicant tracking systems read a CV as text, not as a design. This shows you that text, scores what
+            survives, and lists what to change — in order of how many points each fix is worth. The file is read in
+            your browser and never uploaded.
+          </p>
+        </div>
+        <form action={logout}>
+          <button className="btn-quiet whitespace-nowrap">Sign out</button>
+        </form>
       </header>
 
       <Analyzer sharingEnabled={isPersistenceConfigured()} />

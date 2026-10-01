@@ -1,0 +1,203 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1790876272456,
+  "projectRoot": "c:\\temp_private\\ats",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "next",
+        "version": "15.5.14",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.1.0",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.1.0",
+        "category": "frontend"
+      },
+      {
+        "name": "vitest",
+        "version": "2.1.9",
+        "category": "testing"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": "npm test",
+    "lintCommand": "npm run lint",
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "eslint . --max-warnings=0",
+      "typecheck": "tsc --noEmit",
+      "test": "vitest run",
+      "test:watch": "vitest",
+      "postinstall": "node scripts/copy-pdf-worker.mjs"
+    }
+  },
+  "conventions": {
+    "namingStyle": "camelCase",
+    "importStyle": null,
+    "testPattern": "*.test.ts",
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "app",
+      "components",
+      "docs",
+      "lib",
+      "public",
+      "scripts",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "app": {
+      "path": "app",
+      "purpose": "Application code",
+      "fileCount": 6,
+      "lastAccessed": 1790876272281,
+      "keyFiles": [
+        "actions.ts",
+        "globals.css",
+        "icon.svg",
+        "layout.tsx",
+        "not-found.tsx"
+      ]
+    },
+    "components": {
+      "path": "components",
+      "purpose": "UI components",
+      "fileCount": 7,
+      "lastAccessed": 1790876272283,
+      "keyFiles": [
+        "analyzer.tsx",
+        "coming-soon.tsx",
+        "document-intake.tsx",
+        "fix-list.tsx",
+        "keyword-panel.tsx"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 3,
+      "lastAccessed": 1790876272412,
+      "keyFiles": [
+        "ats-research.md",
+        "ats-rules.md",
+        "handover-2026-09-28.md"
+      ]
+    },
+    "lib": {
+      "path": "lib",
+      "purpose": "Library code",
+      "fileCount": 1,
+      "lastAccessed": 1790876272413,
+      "keyFiles": [
+        "ui.ts"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 1,
+      "lastAccessed": 1790876272416,
+      "keyFiles": [
+        "yakinda-geliyor.png"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 1,
+      "lastAccessed": 1790876272419,
+      "keyFiles": [
+        "copy-pdf-worker.mjs"
+      ]
+    },
+    "supabase": {
+      "path": "supabase",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1790876272420,
+      "keyFiles": []
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 4,
+      "lastAccessed": 1790876272421,
+      "keyFiles": [
+        "experience.test.ts",
+        "extract.test.ts",
+        "fixtures.ts",
+        "scoring.test.ts"
+      ]
+    },
+    "types": {
+      "path": "types",
+      "purpose": "Type definitions",
+      "fileCount": 1,
+      "lastAccessed": 1790876272423,
+      "keyFiles": [
+        "analysis.ts"
+      ]
+    },
+    "public\\vendor": {
+      "path": "public\\vendor",
+      "purpose": "Third-party code",
+      "fileCount": 1,
+      "lastAccessed": 1790876272430,
+      "keyFiles": [
+        "pdf.worker.min.mjs"
+      ]
+    },
+    "supabase\\migrations": {
+      "path": "supabase\\migrations",
+      "purpose": "Database migrations",
+      "fileCount": 1,
+      "lastAccessed": 1790876272434,
+      "keyFiles": [
+        "0001_ats_reports.sql"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}
