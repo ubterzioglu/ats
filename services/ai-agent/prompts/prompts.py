@@ -38,3 +38,19 @@ Schema Required:
 Job Description Text:
 {text}
 """
+
+PARSE_RESUME_PROMPT = """
+You are an expert ATS parsing engine.
+Extract the structured information from the following Resume/CV text and output ONLY valid JSON.
+Do not wrap the JSON in markdown blocks like ```json.
+
+Schema Required:
+{
+  "skills": ["skill1", "skill2"],
+  "experience_years": 5,
+  "education_level": "Bachelor's"
+}
+
+Resume Text:
+{text}
+"""

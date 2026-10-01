@@ -79,8 +79,12 @@ async def analyze_full_pipeline(payload: AnalysisInput, token_data: dict = Depen
         raw_text = payload.cvText
         job_ad = payload.jobDescription
         
-        # 1. Parse Resume (Stub - assumes basic NLP extracts this)
-        resume_data = {"raw_text": raw_text, "skills": ["React", "TypeScript", "Python"]}
+        # 1. Parse Resume using AI Agent
+        parsed_resume = await ai_agent.parse_resume_data(raw_text)
+        resume_data = {
+            "raw_text": raw_text, 
+            "skills": parsed_resume.get("skills", [])
+        }
         
         # Parse Job Description with AI Agent
         job_data = {"required_skills": []}

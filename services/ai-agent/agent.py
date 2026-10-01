@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Any, Optional
 from .providers.ollama.client import generate_completion
-from .prompts.prompts import EXPLAIN_SCORE_PROMPT, REWRITE_BULLET_PROMPT, PARSE_JOB_DESCRIPTION_PROMPT
+from .prompts.prompts import EXPLAIN_SCORE_PROMPT, REWRITE_BULLET_PROMPT, PARSE_JOB_DESCRIPTION_PROMPT, PARSE_RESUME_PROMPT
 
 class AIAgent:
     def __init__(self, model: str = "llama3"):
@@ -36,10 +36,25 @@ class AIAgent:
         
         try:
             if result:
-                # Basic cleanup in case the LLM returns markdown blocks
                 cleaned = result.replace("```json", "").replace("```", "").strip()
                 return json.loads(cleaned)
         except Exception as e:
             print(f"Failed to parse job description JSON: {e}")
             
         return {"title": None, "required_skills": [], "preferred_skills": []}
+
+    async def parse_resume_data(self, text: str) -> Dict[str, Any]:
+        """
+        Uses LLM to extract structured data (skills, etc.) from raw resume text.
+        """
+        prompt = PARSE_RESUME_PROMPT.format(text=text)
+        result = await generate_completion(prompt=prompt, model=self.model, temperature=0.1)
+        
+        try:
+            if result:
+                cleaned = result.replace("```json", "").replace("```", "").strip()
+                return json.loads(cleaned)
+        except Exception as e:
+            print(f"Failed to parse resume JSON: {e}")
+            
+        return {"skills": [], "experience_years": 0, "education_level": None}
