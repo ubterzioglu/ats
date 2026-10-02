@@ -10,6 +10,7 @@ export const DB_NAME = "ats-local";
 export interface StoreSchema {
   readonly meta: MetaRecord;
   readonly history: HistoryRecord;
+  readonly trail: TrailPoint;
 }
 
 export type StoreName = keyof StoreSchema;
@@ -41,6 +42,23 @@ export interface HistoryDimension {
   readonly max: number;
 }
 
+/**
+ * One score reading inside one working session. Separate from `history`, which
+ * holds one record per visit: the trail records every re-score, including the
+ * ones an applied fix triggers, and those would fill the visit history from a
+ * single sitting.
+ *
+ * Scores only, like history. A session id rather than a timestamp window is
+ * what makes the trail survive a reload: the same id is read back from `meta`
+ * and the series continues.
+ */
+export interface TrailPoint {
+  readonly id: string;
+  readonly sessionId: string;
+  readonly at: number;
+  readonly total: number;
+}
+
 export interface Migration {
   readonly version: number;
   readonly apply: (db: IDBDatabase) => void;
@@ -59,6 +77,13 @@ export const MIGRATIONS: readonly Migration[] = [
       const history = db.createObjectStore("history", { keyPath: "id" });
       history.createIndex("recordedAt", "recordedAt");
     }
+  },
+  {
+    version: 3,
+    apply(db) {
+      const trail = db.createObjectStore("trail", { keyPath: "id" });
+      trail.createIndex("sessionId", "sessionId");
+    }
   }
 ];
 
@@ -67,4 +92,4 @@ export const DB_VERSION = MIGRATIONS.reduce(
   1
 );
 
-export const STORE_NAMES: readonly StoreName[] = ["meta", "history"];
+export const STORE_NAMES: readonly StoreName[] = ["meta", "history", "trail"];

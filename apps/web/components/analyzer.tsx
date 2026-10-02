@@ -19,7 +19,8 @@ import { analyzeCv } from "@/lib/scoring";
 import { draftFixes } from "@/lib/scoring/drafts";
 import { assessDocumentKind, type DocumentKindAssessment } from "@/lib/scoring/gate";
 import { readPreviousRecord, recordAnalysis } from "@/lib/store/history";
-import type { HistoryRecord } from "@/lib/store/schema";
+import type { HistoryRecord, TrailPoint } from "@/lib/store/schema";
+import { appendTrailPoint, readTrail, startNewSession } from "@/lib/store/trail";
 import { cx } from "@/lib/ui";
 import type { AnalysisResult, Finding } from "@/types/analysis";
 
@@ -28,6 +29,7 @@ import { AiStatus } from "./ai-status";
 import { MeasureRail } from "./bench/measure-rail";
 import { AskDock } from "./bench/ask-dock";
 import { ChangeNote } from "./bench/change-note";
+import { ScoreTrail } from "./bench/score-trail";
 import { WorkList } from "./bench/work-list";
 import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
@@ -52,6 +54,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [previous, setPrevious] = useState<AnalysisResult | null>(null);
   const [lastVisit, setLastVisit] = useState<HistoryRecord | null>(null);
   const [change, setChange] = useState<ScoreChange | null>(null);
+  const [trail, setTrail] = useState<readonly TrailPoint[]>([]);
   const [view, setView] = useState<View>("input");
   const [reading, setReading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
@@ -72,6 +75,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     let cancelled = false;
     void readPreviousRecord().then((outcome) => {
       if (!cancelled && outcome.ok) setLastVisit(outcome.value);
+    });
+    // The trail is keyed by a stored session id, so a reload picks the series
+    // back up rather than starting a new one.
+    void readTrail().then((outcome) => {
+      if (!cancelled && outcome.ok) setTrail(outcome.value);
     });
     return () => {
       cancelled = true;
@@ -128,6 +136,9 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         // that refuses local storage simply gets no comparison. DataControls is
         // where that refusal is stated.
         void recordAnalysis(next);
+        void appendTrailPoint(next.total).then((written) => {
+          if (written.ok) setTrail((current) => [...current, written.value]);
+        });
       } catch (cause) {
         setError(cause instanceof Error ? cause.message : t("errors.analysisFailed"));
       }
@@ -230,6 +241,9 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         setPrevious(result);
         setResult(next);
         setChange(result ? describeChange(result, next) : null);
+        void appendTrailPoint(next.total).then((written) => {
+          if (written.ok) setTrail((current) => [...current, written.value]);
+        });
       } catch {
         // The previous result stays on screen; the text edit is still applied.
       }
@@ -302,6 +316,8 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setResult(null);
     setPrevious(null);
     setChange(null);
+    setTrail([]);
+    void startNewSession();
     setShareUrl(null);
     setNotice(null);
     setGate(null);
@@ -502,6 +518,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 comparedTo={previous ? "previousRun" : "lastVisit"}
                 sticky
               />
+              <ScoreTrail points={trail} />
               <KeywordPanel report={result.keywords} hints={hints} coverage={coverage} />
               <AiConsent onReady={setEmbedder} />
               <AiStatus onTierChange={setModelTier} />

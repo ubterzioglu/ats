@@ -7,6 +7,7 @@ export {
   type HistoryDimension,
   type HistoryRecord,
   type MetaRecord,
+  type TrailPoint,
   type StoreName,
   type StoreSchema
 } from "./schema";
@@ -24,3 +25,10 @@ export {
   recordAnalysis,
   toHistoryRecord
 } from "./history";
+export {
+  TRAIL_LIMIT,
+  appendTrailPoint,
+  currentSessionId,
+  readTrail,
+  startNewSession
+} from "./trail";

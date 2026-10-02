@@ -52,7 +52,7 @@ describe("summariseLocalData", () => {
     await seed();
 
     const summary = await summariseLocalData();
-    expect(summary.ok && summary.value).toEqual({ meta: 1, history: 1 });
+    expect(summary.ok && summary.value).toEqual({ meta: 1, history: 1, trail: 0 });
   });
 });
 
@@ -61,7 +61,7 @@ describe("wipeLocalData", () => {
     await seed();
 
     const wiped = await wipeLocalData();
-    expect(wiped.ok && wiped.value).toEqual({ meta: 1, history: 1 });
+    expect(wiped.ok && wiped.value).toEqual({ meta: 1, history: 1, trail: 0 });
 
     const after = await summariseLocalData();
     expect(after.ok && totalRecords(after.value)).toBe(0);

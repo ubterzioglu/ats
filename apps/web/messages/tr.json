@@ -127,6 +127,7 @@
     "nothing": "hiçbir şey",
     "history": "kayıtlı puan",
     "meta": "ayar",
+    "trail": "puan ölçümü",
     "delete": "Yerel veriyi sil",
     "confirm": "Silmek {what} kaldırır. Geri alınamaz.",
     "confirmDelete": "{count} kaydı sil",
@@ -185,6 +186,11 @@
     "high": "Pahalı",
     "medium": "Düzeltmeye değer",
     "low": "Rötuş"
+  },
+  "scoreTrail": {
+    "heading": "Bu oturum",
+    "span": "{count, plural, one {# ölçüm} other {# ölçüm}}",
+    "description": "Bu oturumdaki puan: {count} ölçüm, 100 üzerinden {first} puandan {last} puana."
   },
   "measureRail": {
     "outOf": "/100",

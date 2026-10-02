@@ -127,6 +127,7 @@
     "nothing": "nothing",
     "history": "saved scores",
     "meta": "settings",
+    "trail": "score readings",
     "delete": "Delete local data",
     "confirm": "Deleting removes {what}. It cannot be undone.",
     "confirmDelete": "Delete {count} records",
@@ -185,6 +186,11 @@
     "high": "Costly",
     "medium": "Worth fixing",
     "low": "Polish"
+  },
+  "scoreTrail": {
+    "heading": "This session",
+    "span": "{count, plural, one {# reading} other {# readings}}",
+    "description": "The score across this session: {count} readings, from {first} to {last} out of 100."
   },
   "measureRail": {
     "outOf": "/100",

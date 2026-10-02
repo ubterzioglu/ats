@@ -127,6 +127,7 @@
     "nothing": "nichts",
     "history": "gespeicherte Punktzahlen",
     "meta": "Einstellungen",
+    "trail": "Messwerte",
     "delete": "Lokale Daten löschen",
     "confirm": "Löschen entfernt {what}. Das lässt sich nicht rückgängig machen.",
     "confirmDelete": "{count} Einträge löschen",
@@ -185,6 +186,11 @@
     "high": "Teuer",
     "medium": "Lohnt sich",
     "low": "Feinschliff"
+  },
+  "scoreTrail": {
+    "heading": "Diese Sitzung",
+    "span": "{count, plural, one {# Messung} other {# Messungen}}",
+    "description": "Die Punktzahl in dieser Sitzung: {count} Messungen, von {first} auf {last} von 100."
   },
   "measureRail": {
     "outOf": "/100",
