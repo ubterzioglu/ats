@@ -30,10 +30,13 @@ export interface DimensionScore {
   readonly summary: string;
 }
 
+export type KeywordTier = "required" | "preferred";
+
 export interface KeywordTerm {
   readonly term: string;
   readonly weight: number;
   readonly hits: number;
+  readonly tier?: KeywordTier;
 }
 
 export interface KeywordReport {

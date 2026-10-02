@@ -1,4 +1,4 @@
-import type { KeywordReport, KeywordTerm } from "@/types/analysis";
+import type { KeywordReport, KeywordTerm, KeywordTier } from "@/types/analysis";
 
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
@@ -38,62 +38,127 @@ export function countOccurrences(haystack: string, term: string): number {
 interface Candidate {
   readonly term: string;
   readonly frequency: number;
-  readonly inRequirements: boolean;
+  readonly tier?: KeywordTier;
 }
 
-function requirementTokens(lines: readonly string[]): ReadonlySet<string> {
-  const bulletText = lines.filter(isBulletLine).join(" ");
-  return new Set(tokenize(bulletText));
+/**
+ * Heading vocabulary for the tier state machine, EN/DE/TR. Preferred headings
+ * are tested first: "preferred qualifications" contains "qualifications".
+ */
+const PREFERRED_HEADINGS: readonly string[] = [
+  "nice to have", "nice-to-have", "bonus", "preferred", "preference", "plus",
+  "great if", "great to have", "ideally", "wünschenswert", "wuenschenswert",
+  "von vorteil", "pluspunkt", "idealerweise", "tercihen", "tercih edilen",
+  "tercih sebebi", "artı puan", "arti puan"
+];
+
+const REQUIRED_HEADINGS: readonly string[] = [
+  "requirements", "requirement", "required", "must have", "must-have", "must haves",
+  "qualifications", "what we're looking for", "what we are looking for",
+  "what you'll need", "what you will need", "anforderungen", "dein profil",
+  "ihr profil", "your profile", "aranan nitelikler", "beklenen nitelikler",
+  "genel nitelikler", "gereksinimler", "nitelikler"
+];
+
+const RESPONSIBILITY_HEADINGS: readonly string[] = [
+  "responsibilities", "responsibility", "what you'll do", "what you will do",
+  "what you'll own", "what you will own", "your tasks", "your mission", "the role",
+  "your role", "the opportunity", "deine aufgaben", "ihre aufgaben", "aufgaben",
+  "sorumluluklar", "sorumluluk", "iş tanımı", "is tanimi"
+];
+
+const MAX_HEADING_CHARS = 60;
+
+/** Classifies a heading-shaped line; null means "not a heading". */
+function headingTier(line: string): KeywordTier | "none" | null {
+  if (isBulletLine(line)) return null;
+  const cleaned = line.replace(/[:：]+$/g, "").trim().toLowerCase();
+  if (cleaned.length === 0 || cleaned.length > MAX_HEADING_CHARS) return null;
+  if (PREFERRED_HEADINGS.some((heading) => cleaned.includes(heading))) return "preferred";
+  if (REQUIRED_HEADINGS.some((heading) => cleaned.includes(heading))) return "required";
+  if (RESPONSIBILITY_HEADINGS.some((heading) => cleaned.includes(heading))) return "none";
+  return null;
 }
+
+/** Walks the ad once and remembers the tier in effect on each line. */
+function tierPerLine(lines: readonly string[]): (KeywordTier | undefined)[] {
+  const tiers: (KeywordTier | undefined)[] = [];
+  let current: KeywordTier | undefined;
+  for (const line of lines) {
+    const heading = headingTier(line);
+    if (heading === "none") current = undefined;
+    else if (heading !== null) current = heading;
+    tiers.push(current);
+  }
+  return tiers;
+}
+
+function mergeTier(a: KeywordTier | undefined, b: KeywordTier | undefined): KeywordTier | undefined {
+  if (a === "required" || b === "required") return "required";
+  return a ?? b;
+}
+
+const TIER_WEIGHT: Readonly<Record<KeywordTier, number>> = { required: 1.5, preferred: 0.8 };
 
 function weigh(candidate: Candidate): number {
   const base = Math.pow(candidate.frequency, 0.7);
   const skillBonus = isKnownSkill(candidate.term) ? 2.2 : 1;
-  const requirementBonus = candidate.inRequirements ? 1.25 : 1;
+  const tierMultiplier = candidate.tier ? TIER_WEIGHT[candidate.tier] : 1;
   const phraseBonus = candidate.term.includes(" ") ? 1.15 : 1;
-  return round(base * skillBonus * requirementBonus * phraseBonus, 3);
+  return round(base * skillBonus * tierMultiplier * phraseBonus, 3);
+}
+
+const TIER_RANK: Readonly<Record<KeywordTier, number>> = { required: 0, preferred: 2 };
+
+function tierRank(tier: KeywordTier | undefined): number {
+  return tier ? TIER_RANK[tier] : 1;
 }
 
 /**
  * Mines the job ad for the terms an ATS would index it by: known skills first,
- * then repeated domain words, with requirement bullets weighted higher.
+ * then repeated domain words, tiered by the heading they were listed under.
  */
 export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
   const text = normalizeDocument(jobDescription);
-  const lower = text.toLowerCase();
   const lines = text.split("\n").map((line) => line.trim());
-  const requirements = requirementTokens(lines);
+  const lowerLines = lines.map((line) => line.toLowerCase());
+  const tiers = tierPerLine(lines);
 
   const candidates = new Map<string, Candidate>();
 
   for (const phrase of MULTI_WORD_SKILLS) {
-    const frequency = countOccurrences(lower, phrase);
-    if (frequency === 0) continue;
-    candidates.set(phrase, {
-      term: phrase,
-      frequency,
-      inRequirements: phrase.split(" ").every((word) => requirements.has(word))
+    let frequency = 0;
+    let tier: KeywordTier | undefined;
+    lowerLines.forEach((line, index) => {
+      const hits = countOccurrences(line, phrase);
+      if (hits === 0) return;
+      frequency += hits;
+      tier = mergeTier(tier, tiers[index]);
     });
+    if (frequency === 0) continue;
+    candidates.set(phrase, { term: phrase, frequency, tier });
   }
 
   const frequencies = new Map<string, number>();
+  const tokenTiers = new Map<string, KeywordTier | undefined>();
 
-  for (const line of lines) {
+  lowerLines.forEach((line, index) => {
     const contextual = hasTechContext(line);
-    for (const token of tokenize(line.toLowerCase())) {
+    for (const token of tokenize(line)) {
       const term = canonicalize(token);
       if (isStopword(term) || isJobNoise(term)) continue;
       if (/^\d+$/.test(term)) continue;
       if (term.length < 3 && !isKnownSkill(term)) continue;
       if (isAmbiguousTerm(token) && !contextual) continue;
       frequencies.set(term, (frequencies.get(term) ?? 0) + 1);
+      tokenTiers.set(term, mergeTier(tokenTiers.get(term), tiers[index]));
     }
-  }
+  });
 
   for (const [term, frequency] of frequencies) {
     if (!isKnownSkill(term) && frequency < 2) continue;
     if (candidates.has(term)) continue;
-    candidates.set(term, { term, frequency, inRequirements: requirements.has(term) });
+    candidates.set(term, { term, frequency, tier: tokenTiers.get(term) });
   }
 
   const phrases = [...candidates.keys()].filter((term) => term.includes(" "));
@@ -105,8 +170,13 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
   }
 
   return [...candidates.values()]
-    .map((candidate) => ({ term: candidate.term, weight: weigh(candidate), hits: 0 }))
-    .sort((a, b) => b.weight - a.weight)
+    .map((candidate) => ({
+      term: candidate.term,
+      weight: weigh(candidate),
+      hits: 0,
+      ...(candidate.tier ? { tier: candidate.tier } : {})
+    }))
+    .sort((a, b) => tierRank(a.tier) - tierRank(b.tier) || b.weight - a.weight)
     .slice(0, MAX_TERMS);
 }
 
