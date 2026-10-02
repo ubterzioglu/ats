@@ -29,11 +29,11 @@ Extract the key requirements from the following Job Description text and output 
 Do not wrap the JSON in markdown blocks like ```json.
 
 Schema Required:
-{
+{{
   "title": "Extracted Job Title",
   "required_skills": ["skill1", "skill2"],
   "preferred_skills": ["skill3", "skill4"]
-}
+}}
 
 Job Description Text:
 {text}
@@ -45,11 +45,11 @@ Extract the structured information from the following Resume/CV text and output 
 Do not wrap the JSON in markdown blocks like ```json.
 
 Schema Required:
-{
+{{
   "skills": ["skill1", "skill2"],
   "experience_years": 5,
   "education_level": "Bachelor's"
-}
+}}
 
 Resume Text:
 {text}

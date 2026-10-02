@@ -1,22 +1,29 @@
 import os
-from fastapi import Request, HTTPException, Security
+from typing import Optional
+
+from fastapi import HTTPException, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
 
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "") # Provide via ENV
 
-security = HTTPBearer()
+# auto_error=False: the product is usable without an account, so a missing
+# Authorization header must reach the handler as "anonymous" rather than a 403.
+security = HTTPBearer(auto_error=False)
 
-def verify_supabase_token(credentials: HTTPAuthorizationCredentials = Security(security)):
+def verify_supabase_token(
+    credentials: Optional[HTTPAuthorizationCredentials] = Security(security),
+):
     """
     Verifies the JWT token from Supabase Auth.
     """
-    token = credentials.credentials
-    if not SUPABASE_JWT_SECRET:
-        # If no secret is configured, allow bypass for MVP/dev (or fail strict based on preference)
-        # We will bypass if env is missing as per "Free For All" initial state, but typically you'd raise here.
+    if credentials is None or not SUPABASE_JWT_SECRET:
+        # No secret configured means no identity can be proven; callers get the
+        # anonymous principal and must not treat it as authenticated.
         return {"sub": "anonymous", "role": "anon"}
-        
+
+    token = credentials.credentials
+
     try:
         payload = jwt.decode(
             token,

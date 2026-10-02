@@ -1,6 +1,7 @@
 import os
 import shutil
 import sys
+import tempfile
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body, Depends
 from pydantic import BaseModel
 
@@ -13,7 +14,7 @@ from services.parser.pdf_extractor import extract_text_from_pdf
 from services.parser.docx_extractor import extract_text_from_docx
 from services.ats_engine.scoring import calculate_ats_score, DEFAULT_SCORING_CONFIG
 from services.ai_agent.agent import AIAgent
-from apps.api.auth import verify_supabase_token
+from auth import verify_supabase_token
 
 ai_agent = AIAgent(model="llama3")
 
@@ -33,12 +34,15 @@ async def parse_resume(file: UploadFile = File(...)):
     Takes a PDF or DOCX file, extracts text, layout and returns Canonical Resume JSON.
     Currently only performs raw text extraction.
     """
-    filename = file.filename.lower()
+    filename = (file.filename or "").lower()
     if not filename.endswith((".pdf", ".docx", ".txt")):
         raise HTTPException(status_code=400, detail="Unsupported file type")
-    
-    # Save uploaded file to temp path
-    temp_path = f"/tmp/{file.filename}"
+
+    # The client controls the filename, so it never reaches the path. A generated
+    # name in a private directory keeps "../" and collisions out of the write.
+    suffix = os.path.splitext(filename)[1]
+    handle, temp_path = tempfile.mkstemp(suffix=suffix)
+    os.close(handle)
     try:
         with open(temp_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
@@ -61,7 +65,6 @@ async def parse_resume(file: UploadFile = File(...)):
         if os.path.exists(temp_path):
             os.remove(temp_path)
 
-@app.post("/parse/job", response_model=JobDescriptionDocument)
 class AnalysisInput(BaseModel):
     cvText: str
     jobDescription: str = ""
