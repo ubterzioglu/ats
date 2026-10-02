@@ -110,6 +110,67 @@ Sorumluluklar
 - Test otomasyon süreçlerinin iyileştirilmesi
 `;
 
+export const DE_CV = `Umut Baris Terzioglu
+Senior QA Automatisierungsingenieur
+Berlin, Deutschland
+umut@example.com
++49 151 2345678
+linkedin.com/in/example
+
+Zusammenfassung
+Erfahrener QA-Ingenieur mit 9 Jahren in Testautomatisierung und Qualitätssicherung für Versicherungsplattformen.
+
+Berufserfahrung
+
+Senior QA Automatisierungsingenieur, Adesso SE
+01/2021 - heute
+- Entwickelte eine Playwright- und TypeScript-Regressionssuite mit 420 Fällen und reduzierte einen 6-stündigen manuellen Zyklus auf 35 Minuten.
+- Migrierte 180 alte Selenium-Tests zu Playwright und verantwortete die Test-Automatisierung im Release-Zug.
+- Automatisierte die Release-Verifizierung in GitLab CI und reduzierte fehlgeschlagene Releases um 40%.
+- Betreute 4 Junior-Tester bis zur ISTQB-Zertifizierung.
+
+QA Ingenieur, Beispiel GmbH
+03/2017 - 12/2020
+- Entwarf die API-Teststrategie mit REST Assured und Postman über 12 Dienste.
+- Führte Xray-Reporting in Jira ein und verbesserte das Projekt Management im Release-Team.
+- Senkte die Regressions-Fluchtrate über vier Releases von 11% auf 3%.
+
+Ausbildung
+
+BSc Computertechnik, Technische Universität Istanbul
+09/2011 - 06/2015
+
+Kenntnisse
+Playwright, Selenium, TypeScript, Java, REST Assured, Postman, SQL, Docker, Kubernetes, GitLab CI, Jenkins, Jira, Xray, Agile, Scrum, Softwareentwicklung, Daten Analyse
+
+Zertifikate
+ISTQB Certified Tester Advanced Level, 2019
+
+Sprachen
+Türkisch (Muttersprache), Englisch (C1), Deutsch (C1)
+`;
+
+export const DE_JOB_AD = `Senior QA Automatisierungsingenieur (m/w/d)
+
+Wir suchen einen erfahrenen Ingenieur für die Testautomatisierung unserer Versicherungsplattform.
+
+Dein Profil
+- Mehrjährige Erfahrung mit Playwright oder Cypress in der Testautomatisierung
+- Sehr gute TypeScript-Kenntnisse
+- Erfahrung mit CI/CD-Pipelines, idealerweise GitLab CI
+- Kenntnisse in Docker und Kubernetes
+- Erfahrung mit API-Tests und REST Assured
+- Kenntnisse in Datenanalyse und SQL
+- ISTQB-Zertifizierung von Vorteil
+- Erfahrung in agilen Teams und im Projektmanagement
+
+Deine Aufgaben
+- Weiterentwicklung der Playwright-Regressionstestsuite
+- Ausbau der API-Testabdeckung und der Testautomatisierung
+- Unterstützung bei der Datenanalyse der Testergebnisse
+- Verbesserung der Pipeline-Stabilität und des Berichtswesens
+`;
+
 export const JOB_AD = `Senior Test Automation Engineer (f/m/d)
 
 We are looking for a senior engineer to own our automated regression testing.

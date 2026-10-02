@@ -3,6 +3,7 @@ import type { DocumentLanguage, KeywordReport, KeywordTerm, KeywordTier } from "
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { formatDuration } from "./experience";
+import { germanVariants } from "./german";
 import { extractExperienceRequirement } from "./job-ad";
 import { detectLanguage } from "./language";
 import { lineSection, sectionRanges } from "./sections";
@@ -45,25 +46,28 @@ function countByTurkishKey(haystack: string, term: string): number {
 }
 
 /**
- * Literal variant counting, extended for Turkish. Turkish is agglutinative:
- * the ad says "geliştirme", the CV says "geliştirdim", and no literal pattern
- * pairs them. When the document or the term is Turkish, tokens are matched on
- * their stem key as well, and the stem hits top up the canonical variant.
+ * Literal variant counting, extended for Turkish and German. Turkish is
+ * agglutinative: the ad says "geliştirme", the CV says "geliştirdim", and no
+ * literal pattern pairs them, so Turkish tokens are matched on their stem key
+ * as well. German compounds: the ad says "Testautomatisierung", the CV says
+ * "Test-Automatisierung", so each term also carries its split and joined
+ * surface forms. Stem hits top up the canonical variant.
  */
 export function countOccurrencesByVariant(
   haystack: string,
   term: string,
   language?: DocumentLanguage
 ): VariantCount[] {
+  const variants = [...new Set([...variantsOf(term), ...germanVariants(term)])];
   const totals = new Map<string, number>();
   for (const line of haystack.split("\n")) {
-    for (const variant of variantsOf(term)) {
+    for (const variant of variants) {
       if (isAmbiguousTerm(variant) && !hasTechContext(line)) continue;
       const matches = line.match(termPattern(variant));
       if (matches) totals.set(variant, (totals.get(variant) ?? 0) + matches.length);
     }
   }
-  const counts = variantsOf(term).map((variant) => ({
+  const counts = variants.map((variant) => ({
     variant,
     hits: totals.get(variant) ?? 0
   }));
