@@ -1,6 +1,7 @@
 import { isGrounded } from "@/lib/ai/grounding";
 
 import type { ChatMessage, JsonSchema, LLMProvider } from "../providers/types";
+import { SchemaViolationError } from "../schema";
 
 /**
  * Tailoring suggestions for one vacancy. The hard rule is the product's
@@ -104,12 +105,25 @@ export async function suggestTailoring(
   ];
 
   let payload: TailorSuggestion[] | null = null;
+  let violation: SchemaViolationError | null = null;
   for (let attempt = 0; attempt < 2 && payload === null; attempt += 1) {
-    payload = validateTailorPayload(
-      await model.structured<unknown>(TAILOR_SCHEMA, messages, signal ? { signal } : {})
-    );
+    try {
+      payload = validateTailorPayload(
+        await model.structured<unknown>(TAILOR_SCHEMA, messages, signal ? { signal } : {})
+      );
+      if (payload === null) {
+        violation = new SchemaViolationError([
+          { path: "suggestions", message: "expected an array of {term, evidence, suggestion}" }
+        ]);
+      }
+    } catch (error) {
+      if (!(error instanceof SchemaViolationError)) throw error;
+      violation = error;
+    }
   }
-  if (payload === null) throw new Error("The model did not return the requested shape.");
+  if (payload === null) {
+    throw violation ?? new SchemaViolationError([]);
+  }
 
   return payload.filter((entry) => {
     // The suggestion may only use vocabulary the CV already contains. The

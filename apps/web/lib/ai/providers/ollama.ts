@@ -1,3 +1,4 @@
+import { parseStructuredPayload } from "../schema";
 import type { ChatMessage, ChatOptions, JsonSchema, LLMProvider, ProviderHealth } from "./types";
 
 /**
@@ -74,11 +75,7 @@ class OllamaProvider implements LLMProvider {
     options?: ChatOptions
   ): Promise<T> {
     const content = await this.request(messages, schema, options);
-    try {
-      return JSON.parse(content) as T;
-    } catch {
-      throw new Error("Ollama returned something that is not JSON.");
-    }
+    return parseStructuredPayload<T>(content, schema);
   }
 
   private async request(

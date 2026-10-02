@@ -1,3 +1,4 @@
+import { parseStructuredPayload } from "../schema";
 import type { ChatMessage, ChatOptions, JsonSchema, LLMProvider, ProviderHealth } from "./types";
 
 /**
@@ -81,11 +82,7 @@ class BuiltinProvider implements LLMProvider {
       responseConstraint: schema,
       ...promptOptions(options)
     });
-    try {
-      return JSON.parse(raw) as T;
-    } catch {
-      throw new Error("The built-in model returned something that is not JSON.");
-    }
+    return parseStructuredPayload<T>(raw, schema);
   }
 
   // The system prompt is baked into the session; recreating only when it

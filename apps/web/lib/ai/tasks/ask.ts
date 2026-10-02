@@ -1,6 +1,7 @@
 import type { AnalysisResult } from "@/types/analysis";
 
 import type { ChatMessage, JsonSchema, LLMProvider } from "../providers/types";
+import { SchemaViolationError } from "../schema";
 
 /**
  * Question answering over the report. The model receives the serialized
@@ -79,15 +80,28 @@ export async function askAboutReport(
     { role: "user", content: question }
   ];
 
+  let violation: SchemaViolationError | null = null;
   for (let attempt = 0; attempt < 2; attempt += 1) {
-    const payload = await model.structured<unknown>(
-      ANSWER_SCHEMA,
-      messages,
-      signal ? { signal } : {}
-    );
-    if (isRecord(payload) && typeof payload.answer === "string" && payload.answer.trim().length > 0) {
-      return payload.answer.trim();
+    try {
+      const payload = await model.structured<unknown>(
+        ANSWER_SCHEMA,
+        messages,
+        signal ? { signal } : {}
+      );
+      if (
+        isRecord(payload) &&
+        typeof payload.answer === "string" &&
+        payload.answer.trim().length > 0
+      ) {
+        return payload.answer.trim();
+      }
+      violation = new SchemaViolationError([
+        { path: "answer", message: "expected a non-empty string" }
+      ]);
+    } catch (error) {
+      if (!(error instanceof SchemaViolationError)) throw error;
+      violation = error;
     }
   }
-  throw new Error("The model could not answer from the report.");
+  throw violation ?? new SchemaViolationError([]);
 }

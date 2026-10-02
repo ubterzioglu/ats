@@ -1,6 +1,7 @@
 import type { Finding } from "@/types/analysis";
 
 import type { ChatMessage, JsonSchema, LLMProvider } from "../providers/types";
+import { SchemaViolationError } from "../schema";
 
 /**
  * Explaining a finding gets the smallest context that can do the job: the
@@ -63,14 +64,23 @@ export async function explainFinding(
     }
   ];
 
+  let violation: SchemaViolationError | null = null;
   for (let attempt = 0; attempt < 2; attempt += 1) {
-    const payload = await model.structured<unknown>(
-      EXPLAIN_SCHEMA,
-      messages,
-      signal ? { signal } : {}
-    );
-    const explanation = validateExplanation(payload);
-    if (explanation) return explanation;
+    try {
+      const payload = await model.structured<unknown>(
+        EXPLAIN_SCHEMA,
+        messages,
+        signal ? { signal } : {}
+      );
+      const explanation = validateExplanation(payload);
+      if (explanation) return explanation;
+      violation = new SchemaViolationError([
+        { path: "", message: "expected non-empty 'why' and 'nextStep' strings" }
+      ]);
+    } catch (error) {
+      if (!(error instanceof SchemaViolationError)) throw error;
+      violation = error;
+    }
   }
-  throw new Error("The model could not explain this finding.");
+  throw violation ?? new SchemaViolationError([]);
 }

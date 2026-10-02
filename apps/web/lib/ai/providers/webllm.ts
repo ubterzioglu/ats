@@ -1,3 +1,4 @@
+import { parseStructuredPayload } from "../schema";
 import type { ChatMessage, ChatOptions, JsonSchema, LLMProvider, ProviderHealth } from "./types";
 
 /**
@@ -139,11 +140,7 @@ export function startWebLlm(
             options?: ChatOptions
           ): Promise<T> {
             const text = await generate(messages, schema, options);
-            try {
-              return JSON.parse(text) as T;
-            } catch {
-              throw new Error("The local model returned something that is not JSON.");
-            }
+            return parseStructuredPayload<T>(text, schema);
           },
           terminate(): void {
             terminated = true;

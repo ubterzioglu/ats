@@ -1,6 +1,7 @@
 import { isGrounded } from "@/lib/ai/grounding";
 
 import type { ChatMessage, JsonSchema, LLMProvider } from "../providers/types";
+import { SchemaViolationError } from "../schema";
 
 /**
  * Bullet rewriting. The model restates weak bullets as claims; the grounding
@@ -111,17 +112,30 @@ export async function rewriteBullets(
   ];
 
   let pairs: RewritePair[] | null = null;
+  let violation: SchemaViolationError | null = null;
   // One retry at temperature 0: if the shape is wrong twice, the tier cannot
-  // do this job and the caller should say so.
+  // do this job and the caller gets a rejection it can show the user as-is.
   for (let attempt = 0; attempt < 2 && pairs === null; attempt += 1) {
-    const payload = await model.structured<unknown>(
-      REWRITE_SCHEMA,
-      messages,
-      signal ? { signal } : {}
-    );
-    pairs = validateRewritePayload(payload);
+    try {
+      const payload = await model.structured<unknown>(
+        REWRITE_SCHEMA,
+        messages,
+        signal ? { signal } : {}
+      );
+      pairs = validateRewritePayload(payload);
+      if (pairs === null) {
+        violation = new SchemaViolationError([
+          { path: "rewrites", message: "expected an array of {original, rewritten} string pairs" }
+        ]);
+      }
+    } catch (error) {
+      if (!(error instanceof SchemaViolationError)) throw error;
+      violation = error;
+    }
   }
-  if (pairs === null) throw new Error("The model did not return the requested shape.");
+  if (pairs === null) {
+    throw violation ?? new SchemaViolationError([]);
+  }
 
   const sourceByText = new Map(sources.map((source) => [normalize(source), source]));
   const grounded: RewritePair[] = [];
