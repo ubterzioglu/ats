@@ -479,7 +479,7 @@ Opens the funnel and lays the ground the rest needs. No new product surface. Not
 
 ### Store — `lib/store/`
 
-Built once. Modules C, D, E, F and G all depend on it.
+Part of Phase 0. Built once; modules C, D, E, F and G all depend on it, and so does `P0.4`.
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
@@ -637,8 +637,8 @@ The reason candidates come back; the module that closes the loop. Local-only in 
 
 | Phase | Estimate | Batches | Why here |
 |---|---|---|---|
-| **0 — Quick wins** | 1–2 weeks | P0.1–P0.7 | Opens the funnel, costs nothing, unblocks the visual work |
-| **1 — Deepen the engine** | 5–7 weeks | ST.1–3, V.1–V.10, C.2–C.3, A.1–A.4, J.1–J.7 | Multiplies the existing strength and needs no AI. Contains the visual language merged with Module C |
+| **0 — Groundwork** | 2–3 weeks | P0.1–P0.7, ST.1–ST.3 | Opens the funnel and lays the ground the rest needs. The store belongs here: five modules depend on it, and `P0.4` already does |
+| **1 — Deepen the engine** | 5–7 weeks | V.1–V.10, C.2–C.3, A.1–A.4, J.1–J.7 | Multiplies the existing strength and needs no AI. Contains the visual language merged with Module C |
 | **2 — Semantic layer** | 2–3 weeks | B.1–B.3, F.1–F.5 | Stays in the browser; separates the product from alternatives |
 | **3 — Builder** | 4–6 weeks | E.1–E.10 | The largest user value and the reason to return |
 | **4 — AI layers** | 3–4 weeks | L.1–L.4, D.1–D.7 | Added safely once the deterministic base is in place |
