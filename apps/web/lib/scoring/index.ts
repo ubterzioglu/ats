@@ -49,7 +49,7 @@ export function analyzeCv(input: AnalysisInput): AnalysisResult {
   const jobDescription = input.jobDescription ?? "";
 
   const parseability = scoreParseability(context);
-  const contact = scoreContact(context);
+  const contact = scoreContact(context, input.market);
   const structure = scoreStructure(context);
   const keywords = scoreKeywords(context, jobDescription);
   const impact = scoreImpact(context);

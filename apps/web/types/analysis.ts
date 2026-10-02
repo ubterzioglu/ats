@@ -11,6 +11,14 @@ export type Band = "excellent" | "good" | "fair" | "risky";
 
 export type DocumentLanguage = "en" | "de" | "tr";
 
+/**
+ * The job market the CV is aimed at. Norms for photos, dates of birth and
+ * military service differ by market, not by the language the document happens
+ * to be written in, so the caller may state it explicitly; the engine falls
+ * back to the document language.
+ */
+export type TargetMarket = DocumentLanguage;
+
 export interface Finding {
   readonly id: string;
   readonly dimension: DimensionId;
@@ -87,4 +95,5 @@ export interface AnalysisResult {
 export interface AnalysisInput {
   readonly cvText: string;
   readonly jobDescription?: string;
+  readonly market?: TargetMarket;
 }

@@ -1,5 +1,8 @@
+import type { TargetMarket } from "@/types/analysis";
+
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
+import { marketFindings } from "./market";
 
 export const CONTACT_MAX = 10;
 
@@ -17,7 +20,7 @@ function looksLikeName(line: string): boolean {
 }
 
 /** Contact data is the one thing an ATS must lift out of the document. */
-export function scoreContact(context: ScoreContext): DimensionOutcome {
+export function scoreContact(context: ScoreContext, market?: TargetMarket): DimensionOutcome {
   const { raw, lines } = context;
   const drafts: FindingDraft[] = [];
 
@@ -76,6 +79,10 @@ export function scoreContact(context: ScoreContext): DimensionOutcome {
       cost: 2
     });
   }
+
+  // Market norms judge the personal-data block; without an explicit choice
+  // the document's own language stands in for its market.
+  drafts.push(...marketFindings(context, market ?? context.language));
 
   return buildOutcome("contact", "Contact", CONTACT_MAX, drafts, (score) =>
     score >= 9
