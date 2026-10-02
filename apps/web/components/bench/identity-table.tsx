@@ -60,8 +60,15 @@ export function IdentityTable({ cvText, findings, onSelectLine }: IdentityTableP
           )}
 
           {field.reason ? (
-            <p className="mt-0.5 text-micro leading-relaxed text-caution">
-              {t(`reason.${field.reason}`)}
+            <p
+              className={cx(
+                "mt-1 max-w-measure text-micro leading-relaxed",
+                field.status === "missing" ? "text-muted" : "text-caution"
+              )}
+            >
+              {field.candidate !== undefined
+                ? t("reason.rejected-candidate", { candidate: field.candidate })
+                : t(`reason.${field.reason}`)}
             </p>
           ) : null}
         </dd>

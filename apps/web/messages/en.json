@@ -187,8 +187,10 @@
     },
     "reason": {
       "not-located": "The checks count this as present, but no clean value could be lifted out of the text.",
-      "split-across-lines": "The value is broken across two lines, so a parser may read only part of it.",
-      "buried-in-a-run": "The value sits inside a long unbroken line, where a parser can run it together with its neighbours."
+      "split-across-lines": "This only reads correctly once two lines are joined, so a parser sees two fragments and uses neither.",
+      "buried-in-a-run": "The value sits inside a long unbroken line, where a parser can run it together with its neighbours.",
+      "nothing-resembling": "Nothing in the document resembles this field.",
+      "rejected-candidate": "Something close is in the document, but a parser would not accept it: {candidate}"
     }
   },
   "keywordPanel": {

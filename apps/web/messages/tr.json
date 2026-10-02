@@ -187,8 +187,10 @@
     },
     "reason": {
       "not-located": "Kontroller bunu mevcut sayıyor ama metinden temiz bir değer çıkarılamadı.",
-      "split-across-lines": "Değer iki satıra bölünmüş, ayrıştırıcı yalnızca bir kısmını okuyabilir.",
-      "buried-in-a-run": "Değer uzun ve bölünmemiş bir satırın içinde; ayrıştırıcı onu komşularıyla birleştirebilir."
+      "split-across-lines": "Bu ancak iki satır birleştirilince doğru okunuyor; ayrıştırıcı iki parça görüyor ve hiçbirini kullanmıyor.",
+      "buried-in-a-run": "Değer uzun ve bölünmemiş bir satırın içinde; ayrıştırıcı onu komşularıyla birleştirebilir.",
+      "nothing-resembling": "Belgede bu alana benzeyen hiçbir şey yok.",
+      "rejected-candidate": "Belgede buna yakın bir şey var ama ayrıştırıcı kabul etmez: {candidate}"
     }
   },
   "keywordPanel": {

@@ -58,6 +58,58 @@ describe("readIdentity", () => {
     expect(fields.every((field) => field.status === "missing")).toBe(true);
   });
 
+  it("gives every field that is not found a reason", () => {
+    // A.3's acceptance, as an invariant rather than a spot check: no row in
+    // this table may say "missing" or "suspect" without saying why.
+    const documents = [
+      COMPLETE,
+      "",
+      "Ayse Yilmaz",
+      "ayse@example.com\n+90 555 000 00 00",
+      ["EXPERIENCE", "Senior QA Engineer, Acme, 2021 - present"].join("\n")
+    ];
+
+    for (const text of documents) {
+      const result = analyzeCv({ cvText: text });
+      for (const field of readIdentity(text, result.findings)) {
+        if (field.status === "found") continue;
+        expect(field.reason, `${field.id} in a document with no reason`).toBeDefined();
+      }
+    }
+  });
+
+  it("explains a missing field by the near-miss that was rejected", () => {
+    // An address with no top-level domain: a reader sees an email, a parser
+    // does not, and saying so is more use than "no email address found".
+    const text = "Ayse Yilmaz\nayse@example\n+90 555 000 00 00";
+    const result = analyzeCv({ cvText: text });
+    const email = readIdentity(text, result.findings).find((field) => field.id === "email");
+
+    expect(email?.status).toBe("missing");
+    expect(email?.reason).toBe("rejected-candidate");
+    expect(email?.candidate).toBe("ayse@example");
+  });
+
+  it("says nothing resembles the field when nothing does", () => {
+    const text = ["EXPERIENCE", "Senior QA Engineer, Acme, 2021 - present"].join("\n");
+    const result = analyzeCv({ cvText: text });
+    const profile = readIdentity(text, result.findings).find((field) => field.id === "profile");
+
+    expect(profile?.status).toBe("missing");
+    expect(profile?.reason).toBe("nothing-resembling");
+    expect(profile?.candidate).toBeUndefined();
+  });
+
+  it("detects a value broken across two lines", () => {
+    // A column split leaves a parser with two fragments and no usable field.
+    const text = "Ayse Yilmaz\nayse@example.\ncom\n+90 555 000 00 00";
+    const email = readIdentity(text, []).find((field) => field.id === "email");
+
+    expect(email?.status).toBe("suspect");
+    expect(email?.reason).toBe("split-across-lines");
+    expect(email?.value).toBe("ayse@example.com");
+  });
+
   it("calls a field suspect when the engine accepts it but nothing legible is there", () => {
     // No line reads as a name pair, but the engine raised no name finding.
     const fields = readIdentity("ayse@example.com\n+90 555 000 00 00", []);
