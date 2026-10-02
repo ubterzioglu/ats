@@ -73,7 +73,7 @@ named here.
 2. **Reports saved by the old UI, rendered by the new one.** `/r/[token]` loads persisted reports.
    Fields added later will be absent on old rows. → tests in **V.9**.
 3. **Documents far outside the expected size.** A 20-page CV, a 15,000-word job ad, a CV pasted as
-   one line. Module C promises re-scoring under 300 ms. → tests in **C.1**.
+   one line. Module C promises re-scoring under 300 ms. → tests in **V.6**.
 4. **Every AI path unavailable.** Consent declined, WebGPU missing, Ollama offline or blocking the
    origin, BYOK key rejected, model download cancelled mid-way. Every AI surface must degrade to the
    deterministic product rather than block it. → tests in **L.2** and **L.4**.
@@ -135,7 +135,7 @@ scheduled as **E.1a**.
 | **V.3** | **Landing reset.** Delete `parse-sweep.tsx`; new `bench-preview.tsx` hero showing real ordered findings with point values. Weights section reset. | M | V.2 | Hero communicates the product without animation; reduced-motion clean |
 | **V.4** | **Analyze input view reset.** CV and job-ad surfaces in the new system. | S | V.2 | Visual parity of function, new system |
 | **V.5** | **`bench/measure-rail.tsx`.** `score-rail.tsx` becomes the sticky instrument. Condensed width via the `wdth` axis. Meters animate once on first render only. | M | V.2 | Deltas still shown; no motion on re-render |
-| **V.6** | **`bench/work-list.tsx` + `bench/work-item.tsx`.** The spine. Numbered, value-ordered findings with evidence and point value. **This is the merge point with Module C** — see Merge Decision. | L | V.2, V.5 | Eight panels reduced to spine + rail; every finding reachable |
+| **V.6** | **`bench/work-list.tsx` + `bench/work-item.tsx`.** The spine. Numbered, value-ordered findings with evidence and point value, **and** in-place editing with instant re-scoring. Module C's core is built here, not bolted on later — see Merge Decision. Absorbs the former `C.1`. Includes the document-size tests from Review Focus 3. | L | V.2, V.5 | Eight panels reduced to spine + rail; every finding reachable and editable; re-score under 300 ms on a mid-range laptop for a realistic CV |
 | **V.7** | **`bench/ask-dock.tsx`.** `report-chat.tsx` becomes a persistent strip. | M | V.6 | Reachable from anywhere in the report |
 | **V.8** | **Keyword panel + coverage fold-in.** `coverage-map.tsx` absorbed into `keyword-panel.tsx`. | M | V.2 | One panel, both reports |
 | **V.9** | **Remaining surfaces.** `/r/[token]` (read-only spine, no AI, no dock), `/login`, `not-found`, `coming-soon`. Includes the old-report compatibility test from Review Focus 2. | M | V.6 | A report saved by the old UI renders |
@@ -145,8 +145,8 @@ scheduled as **E.1a**.
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **C.1** | **Inline edit and instant re-score.** Edit from inside a work item; the engine re-runs and the rail moves. Includes the document-size tests from Review Focus 3. | M | V.6 | Re-score under 300 ms on a mid-range laptop for a realistic CV |
-| **C.2** | **Per-change delta.** "+4 · Keyword match", naming which finding closed. | S | C.1, ST.2 | Every score change attributable to a finding |
+| ~~C.1~~ | **Merged into `V.6`.** Inline editing and instant re-scoring are built with the work item rather than added to it. | — | — | See `V.6` |
+| **C.2** | **Per-change delta.** "+4 · Keyword match", naming which finding closed. | S | V.6, ST.2 | Every score change attributable to a finding |
 | **C.3** | **Session score history.** A plot of the score across the session. | M | C.2, ST.2 | Survives reload |
 
 ### Module A — Parse view 2.0
@@ -294,7 +294,7 @@ P0.5 ──► P0.6, P0.7
                    ├─► V.4
                    ├─► V.5 ─► V.6 ─┬─► V.7
                    │               ├─► V.9
-                   │               └─► C.1 ─► C.2 ─► C.3
+                   │               └─► C.2 ─► C.3
                    └─► V.8 ─► A.1 ─► A.2 ─► A.3 ─► A.4
 ST.1 ─┬─► ST.2 ─► C.2
       ├─► ST.3 ─► G.5
@@ -328,11 +328,12 @@ with instant re-scoring and a per-change before/after difference. The spec's spi
 value-ordered work list where each item carries its evidence, its point value and its fix. These are
 one component.
 
-**Recommendation: merge, at `V.6`.**
+**Decided: merge, at `V.6`.**
 
-- `V.6` builds `work-item.tsx` with evidence and point value.
-- `C.1` adds editing and re-scoring to that same component.
-- `C.2` adds the delta.
+- `V.6` builds `work-item.tsx` once, with evidence, point value, in-place editing and instant
+  re-scoring together. The former `C.1` is absorbed here.
+- `C.2` adds the per-change delta on top.
+- `C.3` adds session history.
 
 Building them separately means building the spine twice: either Module C lands on the old
 eight-panel layout and is then rebuilt during the redesign, or the redesign ships read-only work
@@ -350,13 +351,22 @@ living document.
 
 | # | Question | Blocks | Why it cannot be answered from the repo |
 |---|---|---|---|
-| 2 | Should the merge at `V.6` proceed? | V.6, C.1 | Product sequencing call. Recommendation above. |
+None outstanding.
 
-**Resolved.** The live deployment does build the `api` service, so the Python API runs in production
-but is unused — its only caller was the dead proxy route that P0.2 removes. The site has no users
-yet, so retiring it needs no staged rollout. P0.3 is unblocked.
+**Resolved — deployment.** The live deployment does build the `api` service, so the Python API runs
+in production but is unused: its only caller was the dead proxy route that P0.2 removes. The site has
+no users yet, so retiring it needs no staged rollout. P0.3 is unblocked.
 
-Nothing blocks `P0.1`, `P0.2`, `P0.3`, `P0.4` or `P0.5`; all can start immediately.
+**Resolved — the V.6 merge is approved.** `work-item.tsx` is written once, carrying both the new
+presentation (evidence line, point value) and Module C's editing with instant re-scoring. `C.1` is
+therefore folded into `V.6` rather than reopening the component; `C.2` (delta) and `C.3` (session
+history) remain separate batches on top.
+
+Nothing blocks `P0.1`, `P0.2`, `P0.3`, `P0.4` or `P0.5`.
+
+**Still to record:** `ROADMAP.md` has no phase for the visual language work, and this merge pulls it
+forward into Phase 1. That change belongs in the roadmap, which describes itself as a living
+document. Not yet applied.
 
 ---
 
