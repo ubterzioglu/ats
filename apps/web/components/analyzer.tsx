@@ -6,6 +6,7 @@ import { createShareLink } from "@/app/actions";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
 import { buildMarkdownReport } from "@/lib/report/markdown";
 import { analyzeCv } from "@/lib/scoring";
+import { assessDocumentKind, type DocumentKindAssessment } from "@/lib/scoring/gate";
 import { cx } from "@/lib/ui";
 import type { AnalysisResult } from "@/types/analysis";
 
@@ -31,6 +32,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [view, setView] = useState<View>("input");
   const [reading, setReading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [gate, setGate] = useState<DocumentKindAssessment | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -56,22 +58,32 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
   // Scoring runs here, in the browser. Sending the text to a server would break
   // the promise printed on the front page and in the privacy contract.
-  const runAnalysis = useCallback(() => {
-    if (cvText.trim().length < MIN_CV_CHARS) {
-      setError("Add the CV text first — at least a few lines are needed to judge anything.");
-      return;
-    }
+  const runAnalysis = useCallback(
+    (force = false) => {
+      if (cvText.trim().length < MIN_CV_CHARS) {
+        setError("Add the CV text first — at least a few lines are needed to judge anything.");
+        return;
+      }
 
-    setError(null);
-    setShareUrl(null);
+      const assessment = assessDocumentKind(cvText);
+      if (!assessment.confident && !force) {
+        setGate(assessment);
+        return;
+      }
 
-    try {
-      setResult(analyzeCv({ cvText, jobDescription: jobAd }));
-      setView("report");
-    } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "The analysis could not be completed.");
-    }
-  }, [cvText, jobAd]);
+      setGate(null);
+      setError(null);
+      setShareUrl(null);
+
+      try {
+        setResult(analyzeCv({ cvText, jobDescription: jobAd }));
+        setView("report");
+      } catch (cause) {
+        setError(cause instanceof Error ? cause.message : "The analysis could not be completed.");
+      }
+    },
+    [cvText, jobAd]
+  );
 
   const highlights = useMemo(
     () => (result ? result.keywords.matched.map((term) => term.term) : []),
@@ -124,6 +136,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setResult(null);
     setShareUrl(null);
     setNotice(null);
+    setGate(null);
     setError(null);
     setView("input");
   }
@@ -181,6 +194,23 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         </p>
       ) : null}
 
+      {gate ? (
+        <div
+          role="alert"
+          className="rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm"
+        >
+          <p className="text-caution">{gate.reason}</p>
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <button type="button" className="btn-quiet" onClick={() => runAnalysis(true)}>
+              Score anyway
+            </button>
+            <button type="button" className="btn-quiet" onClick={() => setGate(null)}>
+              Back to the text
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       {view === "input" ? (
         <div className="grid gap-5 lg:grid-cols-2">
           <section className="sheet space-y-4 p-5 sm:p-6">
@@ -222,7 +252,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             />
 
             <div className="flex flex-wrap items-center gap-3">
-              <button type="button" className="btn" onClick={runAnalysis} disabled={reading}>
+              <button type="button" className="btn" onClick={() => runAnalysis()} disabled={reading}>
                 {reading ? "Reading the file…" : "Analyze"}
               </button>
               <button type="button" className="btn-quiet" onClick={clearAll}>
