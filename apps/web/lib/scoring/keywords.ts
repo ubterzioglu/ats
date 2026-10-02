@@ -6,7 +6,7 @@ import { formatDuration } from "./experience";
 import { extractExperienceRequirement } from "./job-ad";
 import { lineSection, sectionRanges } from "./sections";
 import { isJobNoise, isStopword } from "./stopwords";
-import { MULTI_WORD_SKILLS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill, variantsOf } from "./taxonomy";
+import { MULTI_WORD_SKILLS, SYNONYMS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill, variantsOf } from "./taxonomy";
 import { clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
 
 export const KEYWORDS_MAX = 25;
@@ -127,6 +127,165 @@ function tierRank(tier: KeywordTier | undefined): number {
 }
 
 /**
+ * Common sentence-opening words that are prose, not products. A capitalised
+ * word at the start of a bullet is a verb far more often than it is a brand.
+ */
+const PROSE_WORDS: ReadonlySet<string> = new Set(
+  `build design own run lead manage create develop maintain improve join help support
+   drive ensure deliver collaborate partner keep make use write review take bring
+   present model extend deploy operate monitor provide define plan organize coordinate
+   mentor learn grow become start launch ship scale automate hire train handle move
+   apply contact send check explore love enjoy want need require expect offer include
+   work strengthen deepen shape craft`
+    .split(/\s+/)
+    .filter(Boolean)
+);
+
+const PHRASE_RX = /[A-Z][\p{L}\d+#.&']*(?:\s+[A-Z][\p{L}\d+#.&']*){1,3}/gu;
+const ACRONYM_RX = /\b[A-Z][A-Z0-9]{1,5}\b/g;
+const PROPER_RX = /\b[A-Z][\p{Ll}]{2,}\b/gu;
+const CAMEL_RX = /\b(?:[A-Z][\p{Ll}\d]+){2,}[\p{L}\d]*\b|\b[\p{Ll}][\p{Ll}\d]*[A-Z][\p{L}\d]*\b/gu;
+const HYPHEN_RX = /\b[\p{Ll}][\p{Ll}\d]*(?:-[\p{Ll}][\p{Ll}\d]*){1,3}\b/gu;
+const LOWERCASE_WORD_RX = /\b[\p{Ll}][\p{L}\d+#']*/gu;
+
+/** Multi-word synonym aliases, mapped to their canonical taxonomy term. */
+const PHRASE_ALIASES: ReadonlyMap<string, string> = (() => {
+  const map = new Map<string, string>();
+  for (const [canonical, aliases] of Object.entries(SYNONYMS)) {
+    for (const alias of aliases) {
+      if (alias.includes(" ")) map.set(alias, canonical);
+    }
+  }
+  return map;
+})();
+
+interface Discovery {
+  readonly tier: KeywordTier | undefined;
+  readonly minFrequency: number;
+}
+
+function isProseWord(word: string): boolean {
+  return PROSE_WORDS.has(word) || isStopword(word) || isJobNoise(word);
+}
+
+const BULLET_PREFIX_RX = /^([-*•▪●■▶‣⁃∙·➤➜✔✓★◦○]|\d+[.)])\s+/;
+
+/** Counts line-opening capitalised words whose lowercase form exists elsewhere. */
+function proseCapitalCounts(
+  lines: readonly string[],
+  lowercaseVocab: ReadonlySet<string>
+): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const line of lines) {
+    const first = line.replace(BULLET_PREFIX_RX, "").match(/^[\p{L}][\p{L}\d+#']*/u)?.[0];
+    if (!first) continue;
+    if (!/\p{Lu}/u.test(first[0] ?? "")) continue;
+    const lower = first.toLowerCase();
+    if (!lowercaseVocab.has(lower)) continue;
+    counts.set(lower, (counts.get(lower) ?? 0) + 1);
+  }
+  return counts;
+}
+
+function buildLowercaseVocab(lines: readonly string[]): Set<string> {
+  const vocab = new Set<string>();
+  for (const line of lines) {
+    for (const word of line.match(LOWERCASE_WORD_RX) ?? []) {
+      vocab.add(word.toLowerCase());
+    }
+  }
+  return vocab;
+}
+
+/**
+ * Finds the terms no taxonomy knows: capitalised phrases, acronyms, camelCase
+ * product names and hyphenated compounds. A word capitalised only because it
+ * opens a sentence - its lowercase form appears elsewhere in the ad - is prose
+ * and gets dropped; "Snowflake" and "OpenTelemetry" stay.
+ */
+function discoverTerms(
+  lines: readonly string[],
+  lowerLines: readonly string[],
+  tiers: readonly (KeywordTier | undefined)[],
+  candidates: ReadonlyMap<string, Candidate>,
+  lowercaseVocab: ReadonlySet<string>
+): Map<string, Discovery> {
+  const lower = lowerLines.join("\n");
+  const titleIndex = lines.findIndex((line) => line.length > 0);
+  const discovered = new Map<string, Discovery>();
+
+  const known = (term: string): boolean => candidates.has(term) || discovered.has(term);
+  const offer = (raw: string, minFrequency: number, tier: KeywordTier | undefined): void => {
+    const trimmed = raw.replace(/^[^\p{L}\d]+|[.,;:!?]+$/gu, "");
+    if (trimmed.length < 2) return;
+    const term = trimmed.includes(" ")
+      ? PHRASE_ALIASES.get(trimmed.toLowerCase()) ?? trimmed.toLowerCase()
+      : canonicalize(trimmed.toLowerCase());
+    if (known(term)) return;
+    discovered.set(term, { tier, minFrequency });
+  };
+
+  lines.forEach((line, index) => {
+    if (index === titleIndex || line.length === 0) return;
+    if (headingTier(line) !== null) return;
+
+    const tier = tiers[index];
+    const claimed: [number, number][] = [];
+
+    PHRASE_RX.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = PHRASE_RX.exec(line)) !== null) {
+      const span: [number, number] = [match.index, match.index + match[0].length];
+      claimed.push(span);
+      const words = match[0].split(/\s+/);
+      const firstWord = (words[0] ?? "").toLowerCase();
+      if (isProseWord(firstWord) || lowercaseVocab.has(firstWord)) continue;
+      if (words.some((word) => isProseWord(word.toLowerCase()))) continue;
+      offer(match[0], 2, tier);
+    }
+
+    CAMEL_RX.lastIndex = 0;
+    while ((match = CAMEL_RX.exec(line)) !== null) {
+      offer(match[0].toLowerCase(), 1, tier);
+    }
+
+    ACRONYM_RX.lastIndex = 0;
+    while ((match = ACRONYM_RX.exec(line)) !== null) {
+      const term = match[0].toLowerCase();
+      if (isProseWord(term)) continue;
+      offer(term, 2, tier);
+    }
+
+    const bulletEnd = line.match(/^([-*•▪●■▶‣⁃∙·➤➜✔✓★◦○]|\d+[.)])\s+/)?.[0].length ?? 0;
+    PROPER_RX.lastIndex = 0;
+    while ((match = PROPER_RX.exec(line)) !== null) {
+      const at = match.index;
+      const width = match[0].length;
+      if (claimed.some(([start, end]) => at < end && at + width > start)) continue;
+      const term = match[0].toLowerCase();
+      if (isProseWord(term)) continue;
+      const sentenceStart =
+        at === 0 || at === bulletEnd || /[.!?]\s+$/.test(line.slice(0, at));
+      if (sentenceStart && lowercaseVocab.has(term)) continue;
+      offer(term, 2, tier);
+    }
+
+    HYPHEN_RX.lastIndex = 0;
+    while ((match = HYPHEN_RX.exec(lowerLines[index] ?? "")) !== null) {
+      const parts = match[0].split("-");
+      if (parts.some((part) => isProseWord(part) || isAmbiguousTerm(part))) continue;
+      offer(match[0], 2, tier);
+    }
+  });
+
+  for (const [term, discovery] of discovered) {
+    if (countOccurrences(lower, term) < discovery.minFrequency) discovered.delete(term);
+  }
+
+  return discovered;
+}
+
+/**
  * Mines the job ad for the terms an ATS would index it by: known skills first,
  * then repeated domain words, tiered by the heading they were listed under.
  */
@@ -135,6 +294,7 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
   const lines = text.split("\n").map((line) => line.trim());
   const lowerLines = lines.map((line) => line.toLowerCase());
   const tiers = tierPerLine(lines);
+  const lowercaseVocab = buildLowercaseVocab(lines);
 
   const candidates = new Map<string, Candidate>();
 
@@ -167,10 +327,31 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
     }
   });
 
+  // A word capitalised only because it opens its line, whose lowercase form
+  // appears elsewhere in the ad, is prose - that occurrence should not push
+  // the word over the repeated-domain-word bar.
+  for (const [term, count] of proseCapitalCounts(lines, lowercaseVocab)) {
+    const existing = frequencies.get(term);
+    if (existing === undefined) continue;
+    if (existing - count <= 0) frequencies.delete(term);
+    else frequencies.set(term, existing - count);
+  }
+
   for (const [term, frequency] of frequencies) {
+    if (frequency <= 0) continue;
     if (!isKnownSkill(term) && frequency < 2) continue;
     if (candidates.has(term)) continue;
     candidates.set(term, { term, frequency, tier: tokenTiers.get(term) });
+  }
+
+  const discovered = discoverTerms(lines, lowerLines, tiers, candidates, lowercaseVocab);
+  const lower = lowerLines.join("\n");
+  for (const [term, discovery] of discovered) {
+    candidates.set(term, {
+      term,
+      frequency: countOccurrences(lower, term),
+      tier: discovery.tier
+    });
   }
 
   const phrases = [...candidates.keys()].filter((term) => term.includes(" "));
