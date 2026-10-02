@@ -3,267 +3,267 @@
     "name": "ats readability"
   },
   "languageSwitcher": {
-    "label": "Language"
+    "label": "Sprache"
   },
   "metadata": {
-    "defaultTitle": "ATS readability — see your CV the way the parser does",
+    "defaultTitle": "ATS readability — sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest",
     "titleTemplate": "%s · ATS readability",
-    "description": "Read a CV the way an applicant tracking system reads it: what parses, what is missing, and which terms from the job ad never appear. Runs entirely in the browser.",
+    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Läuft vollständig im Browser.",
     "openGraphTitle": "ATS readability",
-    "openGraphDescription": "See your CV the way the parser does. Nothing is uploaded.",
-    "sharedReportTitle": "Shared report"
+    "openGraphDescription": "Sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest. Nichts wird hochgeladen.",
+    "sharedReportTitle": "Geteilter Bericht"
   },
   "common": {
-    "signIn": "Sign in",
-    "signOut": "Sign out",
-    "signInToSave": "Sign in to save reports",
-    "disclaimer": "The checks are heuristics built from how mainstream parsers behave, not a reproduction of any named vendor. A good score means nothing is standing between your CV and a human reader; it is not a prediction that you will be invited."
+    "signIn": "Anmelden",
+    "signOut": "Abmelden",
+    "signInToSave": "Anmelden, um Berichte zu speichern",
+    "disclaimer": "Die Prüfungen sind Heuristiken aus dem Verhalten gängiger Parser, nicht der Nachbau eines bestimmten Anbieters. Eine gute Punktzahl heißt, dass nichts mehr zwischen Ihrem Lebenslauf und einem menschlichen Leser steht; sie sagt nicht voraus, dass Sie eingeladen werden."
   },
   "home": {
-    "headline": "Your CV is read as text, not as a design.",
-    "lede": "An applicant tracking system throws away your layout and keeps whatever text it can pull out. This shows you that text, scores what survived out of 100, and lists what to change — ordered by how many points each fix is worth.",
-    "analyzeCta": "Analyze a CV",
-    "privacyNote": "The file is read in your browser and scored there. It is never uploaded.",
-    "methodHeading": "How the 100 points are split",
-    "methodIntro": "Each dimension starts at its full weight and loses points only to a named finding, so the report can always tell you where a missing point went.",
-    "methodNoBlackBox": "Nothing here is a black box: every deduction names the line it came from and what to write instead.",
+    "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Gestaltung.",
+    "lede": "Ein Bewerbermanagementsystem verwirft Ihr Layout und behält den Text, den es herausziehen kann. Hier sehen Sie diesen Text, bekommen eine Punktzahl von 100 für das, was übrig bleibt, und eine Liste dessen, was zu ändern ist — sortiert danach, wie viele Punkte jede Korrektur wert ist.",
+    "analyzeCta": "Lebenslauf analysieren",
+    "privacyNote": "Die Datei wird in Ihrem Browser gelesen und dort bewertet. Sie wird nie hochgeladen.",
+    "methodHeading": "Wie sich die 100 Punkte aufteilen",
+    "methodIntro": "Jede Dimension startet mit ihrem vollen Gewicht und verliert Punkte nur an einen benannten Befund. So kann der Bericht immer sagen, wohin ein fehlender Punkt gegangen ist.",
+    "methodNoBlackBox": "Hier ist nichts eine Blackbox: Jeder Abzug nennt die Zeile, aus der er stammt, und was stattdessen dort stehen sollte.",
     "dimensions": {
       "parseability": {
-        "name": "Parseability",
-        "what": "Whether the text layer survives extraction at all: columns, tables, icon fonts, broken encodings."
+        "name": "Lesbarkeit für den Parser",
+        "what": "Ob die Textebene die Extraktion überhaupt übersteht: Spalten, Tabellen, Icon-Schriften, kaputte Kodierungen."
       },
       "keywords": {
-        "name": "Keyword match",
-        "what": "Coverage of the terms mined from the job ad, weighted by how central each one is to the posting."
+        "name": "Begriffsabdeckung",
+        "what": "Abdeckung der aus der Stellenanzeige gewonnenen Begriffe, gewichtet danach, wie zentral jeder für die Ausschreibung ist."
       },
       "impact": {
-        "name": "Impact",
-        "what": "Quantified results and ownership verbs, measured against responsibility filler."
+        "name": "Wirkung",
+        "what": "Quantifizierte Ergebnisse und Verben der Verantwortung, gemessen gegen Aufgabenfüllsel."
       },
       "structure": {
-        "name": "Structure",
-        "what": "Headings a parser can map to fields, dated entries in reverse order, bullets instead of paragraphs."
+        "name": "Struktur",
+        "what": "Überschriften, die ein Parser auf Felder abbilden kann, datierte Einträge in umgekehrter Reihenfolge, Stichpunkte statt Absätze."
       },
       "contact": {
-        "name": "Contact",
-        "what": "The identity fields every system stores: name, email, phone, location, profile link."
+        "name": "Kontakt",
+        "what": "Die Identitätsfelder, die jedes System speichert: Name, E-Mail, Telefon, Ort, Profillink."
       }
     }
   },
   "analyze": {
-    "heading": "See what the parser gets",
-    "lede": "Upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad."
+    "heading": "Sehen Sie, was der Parser bekommt",
+    "lede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber schicken. Der Text unten ist das, was ein Bewerbermanagementsystem extrahieren würde — korrigieren Sie ihn, falls die Extraktion schiefging, und bewerten Sie ihn dann gegen die Anzeige."
   },
   "login": {
-    "heading": "Sign in",
-    "lede": "Your CV is read and scored in your browser. The account only keeps your share links.",
-    "emailLabel": "Email",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
+    "heading": "Anmelden",
+    "lede": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Das Konto speichert nur Ihre Freigabelinks.",
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "sie@beispiel.de",
+    "passwordLabel": "Passwort",
     "passwordPlaceholder": "••••••••",
-    "submit": "Sign in",
-    "createAccount": "Create an account",
-    "whatThisChecks": "What this checks",
+    "submit": "Anmelden",
+    "createAccount": "Konto erstellen",
+    "whatThisChecks": "Was hier geprüft wird",
     "messages": {
-      "invalidCredentials": "That email and password do not match an account.",
-      "signupFailed": "The account could not be created. Check the address and try again.",
-      "checkYourEmail": "Account created. Confirm your email address to sign in.",
-      "linkExpired": "That confirmation link is no longer valid. Sign in to have a new one sent."
+      "invalidCredentials": "Diese E-Mail und dieses Passwort passen zu keinem Konto.",
+      "signupFailed": "Das Konto konnte nicht erstellt werden. Prüfen Sie die Adresse und versuchen Sie es erneut.",
+      "checkYourEmail": "Konto erstellt. Bestätigen Sie Ihre E-Mail-Adresse, um sich anzumelden.",
+      "linkExpired": "Dieser Bestätigungslink gilt nicht mehr. Melden Sie sich an, damit ein neuer verschickt wird."
     }
   },
   "notFound": {
     "code": "404",
-    "heading": "Nothing here",
-    "body": "A shared report lives for 30 days and then deletes itself. This one has either expired or never existed.",
-    "cta": "Analyze a CV"
+    "heading": "Hier ist nichts",
+    "body": "Ein geteilter Bericht lebt 30 Tage und löscht sich dann selbst. Dieser ist entweder abgelaufen oder hat nie existiert.",
+    "cta": "Lebenslauf analysieren"
   },
   "analyzer": {
-    "sections": "Sections",
-    "tabInput": "Document and job ad",
-    "tabReport": "Report",
-    "startOver": "Start over",
-    "scoreAnyway": "Score anyway",
-    "backToText": "Back to the text",
-    "cvHeading": "The CV",
-    "cvLede": "Upload the exact file you send to employers. Whatever comes out below is what a parser gets.",
-    "extractedLabel": "Extracted text — edit it if something is off",
-    "extractedPlaceholder": "Paste the CV text here if you would rather not upload a file.",
-    "adHeading": "The job ad",
-    "adLede": "Optional, and the single biggest change to the result. With an ad the keyword score is measured against that vacancy instead of a generic skill list.",
-    "adPlaceholder": "Paste the full posting, including the requirements list.",
-    "readingFile": "Reading the file…",
-    "analyze": "Analyze",
-    "previewLabel": "preview",
+    "sections": "Bereiche",
+    "tabInput": "Dokument und Stellenanzeige",
+    "tabReport": "Bericht",
+    "startOver": "Von vorn beginnen",
+    "scoreAnyway": "Trotzdem bewerten",
+    "backToText": "Zurück zum Text",
+    "cvHeading": "Der Lebenslauf",
+    "cvLede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber schicken. Was unten herauskommt, ist das, was ein Parser bekommt.",
+    "extractedLabel": "Extrahierter Text — korrigieren Sie ihn, wenn etwas nicht stimmt",
+    "extractedPlaceholder": "Fügen Sie den Text des Lebenslaufs hier ein, wenn Sie lieber keine Datei hochladen.",
+    "adHeading": "Die Stellenanzeige",
+    "adLede": "Optional und die größte einzelne Änderung am Ergebnis. Mit einer Anzeige wird die Begriffsabdeckung gegen diese Stelle gemessen statt gegen eine allgemeine Liste.",
+    "adPlaceholder": "Fügen Sie die vollständige Ausschreibung ein, einschließlich der Anforderungsliste.",
+    "readingFile": "Datei wird gelesen…",
+    "analyze": "Analysieren",
+    "previewLabel": "Vorschau",
     "previewOutOf": "/100",
-    "clear": "Clear",
-    "downloadReport": "Download report",
-    "copied": "Copied",
-    "copyAsText": "Copy as text",
-    "creatingLink": "Creating link…",
-    "createShareLink": "Create share link",
-    "editAndRerun": "Edit and re-run",
-    "shareNote": "Shareable for 30 days, scores only — no CV text is stored:",
-    "parserCaption": "{words} words · {lines} lines · {language}",
+    "clear": "Leeren",
+    "downloadReport": "Bericht herunterladen",
+    "copied": "Kopiert",
+    "copyAsText": "Als Text kopieren",
+    "creatingLink": "Link wird erstellt…",
+    "createShareLink": "Freigabelink erstellen",
+    "editAndRerun": "Bearbeiten und erneut ausführen",
+    "shareNote": "30 Tage teilbar, nur Punktzahlen — es wird kein Text des Lebenslaufs gespeichert:",
+    "parserCaption": "{words} Wörter · {lines} Zeilen · {language}",
     "errors": {
-      "fileUnreadable": "That file could not be read.",
-      "tooShort": "Add the CV text first — at least a few lines are needed to judge anything.",
-      "analysisFailed": "The analysis could not be completed.",
-      "clipboard": "The clipboard is not available here. Download the report instead.",
-      "shareAuthRequired": "Sign in to create a share link. The analysis itself needs no account.",
-      "shareEnvMissing": "Sharing needs Supabase credentials. Everything else works without them.",
-      "shareFailed": "The link could not be created. The report is still yours to download."
+      "fileUnreadable": "Diese Datei konnte nicht gelesen werden.",
+      "tooShort": "Fügen Sie zuerst den Text des Lebenslaufs ein — für eine Beurteilung braucht es mindestens ein paar Zeilen.",
+      "analysisFailed": "Die Analyse konnte nicht abgeschlossen werden.",
+      "clipboard": "Die Zwischenablage ist hier nicht verfügbar. Laden Sie stattdessen den Bericht herunter.",
+      "shareAuthRequired": "Melden Sie sich an, um einen Freigabelink zu erstellen. Die Analyse selbst braucht kein Konto.",
+      "shareEnvMissing": "Für die Freigabe werden Supabase-Zugangsdaten gebraucht. Alles andere funktioniert ohne sie.",
+      "shareFailed": "Der Link konnte nicht erstellt werden. Der Bericht gehört weiterhin Ihnen und lässt sich herunterladen."
     }
   },
   "dataControls": {
-    "heading": "Stored on this device",
-    "counting": "Counting what is stored here…",
-    "holds": "This browser holds {what}. Your CV is not among it: nothing here keeps the document or any line from it.",
-    "nothing": "nothing",
-    "history": "saved scores",
-    "meta": "settings",
-    "delete": "Delete local data",
-    "confirm": "Deleting removes {what}. It cannot be undone.",
-    "confirmDelete": "Delete {count} records",
-    "keep": "Keep them",
-    "deleting": "Deleting…",
-    "deleted": "Deleted {count} records. This browser now holds nothing from this site.",
-    "countAgain": "Count again"
+    "heading": "Auf diesem Gerät gespeichert",
+    "counting": "Es wird gezählt, was hier gespeichert ist…",
+    "holds": "Dieser Browser hält {what}. Ihr Lebenslauf ist nicht darunter: Hier wird weder das Dokument noch eine Zeile daraus aufbewahrt.",
+    "nothing": "nichts",
+    "history": "gespeicherte Punktzahlen",
+    "meta": "Einstellungen",
+    "delete": "Lokale Daten löschen",
+    "confirm": "Löschen entfernt {what}. Das lässt sich nicht rückgängig machen.",
+    "confirmDelete": "{count} Einträge löschen",
+    "keep": "Behalten",
+    "deleting": "Wird gelöscht…",
+    "deleted": "{count} Einträge gelöscht. Dieser Browser hält jetzt nichts mehr von dieser Seite.",
+    "countAgain": "Erneut zählen"
   },
   "rewriteDiff": {
-    "heading": "Rewrite weak bullets",
-    "lede": "The local model restates {count, plural, one {# responsibility bullet} other {# responsibility bullets}} as claims. Invented facts are filtered out before you see them; everything unknown stays a visible [quantify: …].",
-    "cancel": "Cancel",
-    "propose": "Propose rewrites",
-    "warmingUp": "Warming up the model…",
-    "progress": "{percent}% {text}",
-    "nothingUsable": "The model returned nothing usable. The deterministic drafts below still work.",
-    "rewriteFailed": "Rewriting failed.",
-    "stale": "The text changed since this proposal was made; regenerate the proposals.",
-    "apply": "Apply and re-score",
-    "discard": "Discard"
+    "heading": "Schwache Stichpunkte umschreiben",
+    "lede": "Das lokale Modell formuliert {count, plural, one {# Aufgabenstichpunkt} other {# Aufgabenstichpunkte}} als Aussage um. Erfundene Angaben werden herausgefiltert, bevor Sie sie sehen; alles Unbekannte bleibt als sichtbares [quantify: …] stehen.",
+    "cancel": "Abbrechen",
+    "propose": "Umschreibungen vorschlagen",
+    "warmingUp": "Das Modell startet…",
+    "progress": "{percent} % {text}",
+    "nothingUsable": "Das Modell hat nichts Brauchbares geliefert. Die deterministischen Entwürfe unten funktionieren weiterhin.",
+    "rewriteFailed": "Das Umschreiben ist fehlgeschlagen.",
+    "stale": "Der Text hat sich seit diesem Vorschlag geändert; erzeugen Sie die Vorschläge neu.",
+    "apply": "Übernehmen und neu bewerten",
+    "discard": "Verwerfen"
   },
   "keywordPanel": {
-    "headingFromAd": "Terms from the job ad",
-    "headingBaseline": "Skill terms found in the CV",
-    "covered": " % covered",
-    "tierRequired": "The ad requires these",
-    "tierOther": "Also indexed from the ad",
-    "tierPreferred": "Nice to have according to the ad",
-    "recognised": "Recognised in the CV",
-    "noTerms": "No recognisable skill terms. Name the tools and methods you work with.",
-    "pasteAd": "Paste a job ad to replace this inventory with a real match score against one vacancy.",
-    "statusFound": "FOUND",
-    "statusAlias": "ALIAS",
-    "statusMissing": "MISSING",
-    "statusPartial": "PARTIAL",
-    "titlePartial": "PARTIAL: the CV says something close - \"{passage}\" ({percent}% similar)",
-    "titleAlias": "matched in the CV as \"{alias}\"",
-    "titleMissing": "never appears in the CV"
+    "headingFromAd": "Begriffe aus der Stellenanzeige",
+    "headingBaseline": "Im Lebenslauf gefundene Fachbegriffe",
+    "covered": " % abgedeckt",
+    "tierRequired": "Die Anzeige verlangt diese",
+    "tierOther": "Ebenfalls aus der Anzeige erfasst",
+    "tierPreferred": "Laut Anzeige wünschenswert",
+    "recognised": "Im Lebenslauf erkannt",
+    "noTerms": "Keine erkennbaren Fachbegriffe. Nennen Sie die Werkzeuge und Methoden, mit denen Sie arbeiten.",
+    "pasteAd": "Fügen Sie eine Stellenanzeige ein, um diese Aufstellung durch eine echte Übereinstimmung mit einer Stelle zu ersetzen.",
+    "statusFound": "GEFUNDEN",
+    "statusAlias": "SYNONYM",
+    "statusMissing": "FEHLT",
+    "statusPartial": "TEILWEISE",
+    "titlePartial": "TEILWEISE: Der Lebenslauf sagt etwas Ähnliches - \"{passage}\" ({percent} % ähnlich)",
+    "titleAlias": "im Lebenslauf als \"{alias}\" gefunden",
+    "titleMissing": "kommt im Lebenslauf nicht vor"
   },
   "reportChat": {
-    "heading": "Ask about this report",
-    "lede": "The local model answers from the report below your score - not from the CV, and not from anything beyond what the checks found.",
-    "noAnswer": "No answer - see the error below.",
-    "roleUser": "You",
-    "roleModel": "Model",
-    "waiting": "Waiting for the model…",
-    "placeholder": "Why did keywords cost so much?",
-    "inputLabel": "Question about the report",
-    "cancel": "Cancel",
-    "ask": "Ask",
-    "failed": "The model could not answer."
+    "heading": "Zu diesem Bericht nachfragen",
+    "lede": "Das lokale Modell antwortet aus dem Bericht unter Ihrer Punktzahl - nicht aus dem Lebenslauf und nicht über das hinaus, was die Prüfungen gefunden haben.",
+    "noAnswer": "Keine Antwort - siehe den Fehler unten.",
+    "roleUser": "Sie",
+    "roleModel": "Modell",
+    "waiting": "Warten auf das Modell…",
+    "placeholder": "Warum haben die Begriffe so viele Punkte gekostet?",
+    "inputLabel": "Frage zum Bericht",
+    "cancel": "Abbrechen",
+    "ask": "Fragen",
+    "failed": "Das Modell konnte nicht antworten."
   },
   "severity": {
-    "critical": "Blocks parsing",
-    "high": "Costly",
-    "medium": "Worth fixing",
-    "low": "Polish"
+    "critical": "Verhindert das Auslesen",
+    "high": "Teuer",
+    "medium": "Lohnt sich",
+    "low": "Feinschliff"
   },
   "scoreRail": {
     "outOf": "/100",
-    "previousRun": "the previous run",
-    "lastVisit": "your last visit",
-    "gainedSince": "gained since {label}",
-    "lostSince": "lost since {label}",
-    "meterLabel": "{dimension}: {score} of {max}"
+    "previousRun": "dem vorigen Durchlauf",
+    "lastVisit": "Ihrem letzten Besuch",
+    "gainedSince": "gewonnen seit {label}",
+    "lostSince": "verloren seit {label}",
+    "meterLabel": "{dimension}: {score} von {max}"
   },
   "fixList": {
-    "emptyHeading": "Nothing to fix",
-    "emptyBody": "Every check passed. Run the CV against the next job ad to see how the keyword match holds up.",
-    "heading": "What to fix, most expensive first",
-    "summary": "{count, plural, one {# finding} other {# findings}} · {points} pts",
-    "cost": "−{cost} pts",
-    "showLine": "Show this line in the parsed text",
-    "showEvidence": "Show what was found",
-    "hideEvidence": "Hide what was found"
+    "emptyHeading": "Nichts zu korrigieren",
+    "emptyBody": "Alle Prüfungen bestanden. Lassen Sie den Lebenslauf gegen die nächste Stellenanzeige laufen, um zu sehen, wie die Begriffsabdeckung sich hält.",
+    "heading": "Was zu korrigieren ist, das Teuerste zuerst",
+    "summary": "{count, plural, one {# Befund} other {# Befunde}} · {points} Punkte",
+    "cost": "−{cost} Punkte",
+    "showLine": "Diese Zeile im ausgelesenen Text zeigen",
+    "showEvidence": "Zeigen, was gefunden wurde",
+    "hideEvidence": "Verbergen, was gefunden wurde"
   },
   "aiStatus": {
-    "detecting": "Checking what this machine can run locally…",
-    "heading": "Text model",
-    "lede": "Rewriting and explanations need a text model. Every option runs on your machine; none of them sees your CV until you ask for one of them.",
+    "detecting": "Es wird geprüft, was dieser Rechner lokal ausführen kann…",
+    "heading": "Textmodell",
+    "lede": "Umschreiben und Erklärungen brauchen ein Textmodell. Jede Option läuft auf Ihrem Rechner; keine davon sieht Ihren Lebenslauf, bevor Sie darum bitten.",
     "size": "~{sizeMb} MB",
-    "active": "active",
-    "probing": "Probing localhost:11434…",
-    "ollamaUnreachable": "Ollama did not answer on localhost:11434. Start it, and set OLLAMA_ORIGINS to include this site."
+    "active": "aktiv",
+    "probing": "localhost:11434 wird geprüft…",
+    "ollamaUnreachable": "Ollama hat auf localhost:11434 nicht geantwortet. Starten Sie es und tragen Sie diese Seite in OLLAMA_ORIGINS ein."
   },
   "aiConsent": {
-    "ready": "Semantic model ready.",
-    "readyDetail": "Hints below run locally against the parsed text; scores are unaffected.",
-    "heading": "Semantic hints (optional)",
-    "lede": "A small language model can point out near-misses the literal matcher cannot see - like a CV saying “Postgres” where the ad says “PostgreSQL”. It runs entirely in your browser ({model}, about {sizeMb} MB, downloaded once and cached). Your CV text is never sent anywhere, and scores never change - hints are advice, not measurement.",
-    "progressLabel": "Model download progress",
-    "cancel": "Cancel",
-    "tryAgain": "Try again",
-    "download": "Download model",
-    "downloadFailed": "The model could not be downloaded."
+    "ready": "Semantisches Modell bereit.",
+    "readyDetail": "Die Hinweise unten laufen lokal gegen den ausgelesenen Text; die Punktzahlen bleiben unberührt.",
+    "heading": "Semantische Hinweise (optional)",
+    "lede": "Ein kleines Sprachmodell kann Beinahe-Treffer zeigen, die der wörtliche Abgleich nicht sieht - etwa wenn der Lebenslauf „Postgres“ sagt und die Anzeige „PostgreSQL“. Es läuft vollständig in Ihrem Browser ({model}, etwa {sizeMb} MB, einmal heruntergeladen und zwischengespeichert). Ihr Text wird nirgendwohin geschickt, und die Punktzahlen ändern sich nie - Hinweise sind Rat, keine Messung.",
+    "progressLabel": "Fortschritt des Modell-Downloads",
+    "cancel": "Abbrechen",
+    "tryAgain": "Erneut versuchen",
+    "download": "Modell herunterladen",
+    "downloadFailed": "Das Modell konnte nicht heruntergeladen werden."
   },
   "parserView": {
-    "heading": "What the parser read",
-    "truncated": "[…truncated for display]"
+    "heading": "Was der Parser gelesen hat",
+    "truncated": "[…für die Anzeige gekürzt]"
   },
   "parseSweep": {
-    "caption": "Two columns and a sidebar, read top to bottom",
-    "fileReadout": "pdf · 1 page",
+    "caption": "Zwei Spalten und eine Seitenleiste, von oben nach unten gelesen",
+    "fileReadout": "pdf · 1 Seite",
     "sample": {
-      "name": "John Doe",
-      "role": "QA Engineer · SDET",
-      "experience": "Experience",
-      "skills": "Skills",
-      "education": "Education",
-      "extracted": "JOHN DOE QA Engineer | SDET\nSpringfield  john@example.com  +1 555 ...\n\nEXPERIENCE   Senior QA Engineer\nBuilt an API regression suite in Java and\nREST Assured; cut release testing from\nthree days to four hours.\nLed the migration of 240 manual cases to\nautomated coverage.\n\nSKILLS  Selenium, Java, REST Assured, CI/CD\n\nEDUCATION  BSc Computer Engineering, 2019"
+      "name": "Jonas Weber",
+      "role": "QA-Ingenieur · SDET",
+      "experience": "Berufserfahrung",
+      "skills": "Kenntnisse",
+      "education": "Ausbildung",
+      "extracted": "JONAS WEBER QA-Ingenieur | SDET\nMünchen  jonas@beispiel.de  +49 151 ...\n\nBERUFSERFAHRUNG   Senior QA-Ingenieur\nBaute eine API-Regressionssuite in Java und\nREST Assured auf; verkürzte den Releasetest\nvon drei Tagen auf vier Stunden.\nLeitete die Migration von 240 manuellen\nFällen in die Automatisierung.\n\nKENNTNISSE  Selenium, Java, REST Assured, CI/CD\n\nAUSBILDUNG  B.Sc. Technische Informatik, 2019"
     }
   },
   "coverageMap": {
-    "heading": "What the CV never addresses",
-    "lede": "The ad in {chunks, plural, one {# chunk} other {# chunks}}, each compared against the whole CV by the local model. These stay below {threshold}% similarity to anything you wrote. Advice, not measurement - the score is unchanged.",
-    "allCovered": "Every part of the ad has a close counterpart in the CV.",
-    "bestMatch": "best match {percent}%",
-    "more": "{count} more weakly covered chunks."
+    "heading": "Worauf der Lebenslauf nie eingeht",
+    "lede": "Die Anzeige in {chunks, plural, one {# Abschnitt} other {# Abschnitten}}, jeder vom lokalen Modell mit dem gesamten Lebenslauf verglichen. Diese bleiben unter {threshold} % Ähnlichkeit zu allem, was Sie geschrieben haben. Rat, keine Messung - die Punktzahl bleibt unverändert.",
+    "allCovered": "Zu jedem Teil der Anzeige gibt es im Lebenslauf eine nahe Entsprechung.",
+    "bestMatch": "beste Übereinstimmung {percent} %",
+    "more": "{count} weitere schwach abgedeckte Abschnitte."
   },
   "findingExplain": {
-    "explain": "Explain with the local model",
-    "loading": "Asking the local model…",
-    "error": "The model could not answer - try again"
+    "explain": "Mit dem lokalen Modell erklären",
+    "loading": "Das lokale Modell wird gefragt…",
+    "error": "Das Modell konnte nicht antworten - erneut versuchen"
   },
   "fixDrafts": {
-    "heading": "Rewrite drafts",
-    "ledeBefore": "Responsibility phrasing rewritten as a claim.",
+    "heading": "Entwürfe zum Umschreiben",
+    "ledeBefore": "Aufgabenformulierungen als Aussage umgeschrieben.",
     "quantifyToken": "[quantify: …]",
-    "ledeAfter": "marks the part only you can fill in. Applying a draft re-runs the analysis so the score rail shows the difference.",
-    "apply": "Apply and re-score",
-    "more": "{count} more drafts appear as you resolve these."
+    "ledeAfter": "markiert den Teil, den nur Sie ausfüllen können. Einen Entwurf zu übernehmen startet die Analyse neu, sodass die Punkteleiste den Unterschied zeigt.",
+    "apply": "Übernehmen und neu bewerten",
+    "more": "{count} weitere Entwürfe erscheinen, sobald diese erledigt sind."
   },
   "documentIntake": {
-    "pagesRead": "{source} · {pages, plural, one {# page} other {# pages}} read",
-    "drop": "Drop a CV here",
-    "formats": "PDF, DOCX or plain text, up to 10 MB. It is read in this browser and never sent anywhere.",
-    "reading": "Reading…",
-    "chooseAnother": "Choose another file",
-    "choose": "Choose a file"
+    "pagesRead": "{source} · {pages, plural, one {# Seite} other {# Seiten}} gelesen",
+    "drop": "Lebenslauf hier ablegen",
+    "formats": "PDF, DOCX oder reiner Text, bis 10 MB. Die Datei wird in diesem Browser gelesen und nirgendwohin geschickt.",
+    "reading": "Wird gelesen…",
+    "chooseAnother": "Andere Datei wählen",
+    "choose": "Datei wählen"
   },
   "sharedReport": {
-    "eyebrow": "shared report · {date}",
-    "lede": "Scores and advice only. The CV itself was never stored.",
-    "cta": "Run your own CV through it"
+    "eyebrow": "geteilter Bericht · {date}",
+    "lede": "Nur Punktzahlen und Hinweise. Der Lebenslauf selbst wurde nie gespeichert.",
+    "cta": "Den eigenen Lebenslauf durchlaufen lassen"
   }
 }
