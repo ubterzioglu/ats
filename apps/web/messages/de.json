@@ -149,6 +149,26 @@
     "apply": "Übernehmen und neu bewerten",
     "discard": "Verwerfen"
   },
+  "entriesTable": {
+    "heading": "Einträge, wie der Parser sie getrennt hat",
+    "lede": "Jeder datierte Eintrag, den der Parser auseinandernehmen konnte, und welche Abschnitte er überhaupt erkannt hat.",
+    "noEntries": "Kein datierter Eintrag ließ sich trennen. Ein Parser, der keinen Zeitraum findet, kann aus dem Dokument keinen Werdegang bauen.",
+    "noTitle": "keine Position gelesen",
+    "noRange": "kein Zeitraum",
+    "unusable": "Das Ende dieses Zeitraums liegt vor seinem Beginn, ein Parser kann damit nichts anfangen.",
+    "showLine": "Diese Zeile zeigen",
+    "sectionsHeading": "Erkannte Abschnitte",
+    "sectionFound": "gefunden",
+    "sectionMissing": "fehlt",
+    "sections": {
+      "summary": "Profil",
+      "experience": "Berufserfahrung",
+      "education": "Ausbildung",
+      "skills": "Kenntnisse",
+      "languages": "Sprachen",
+      "certifications": "Zertifikate"
+    }
+  },
   "identityTable": {
     "heading": "Was der Parser als Ihre Daten gelesen hat",
     "lede": "Die Identitätsfelder, die jedes Bewerbermanagementsystem speichert. Jedes wird so gezeigt, wie der Parser es ausgelesen hat.",

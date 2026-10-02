@@ -29,6 +29,7 @@ import { AiStatus } from "./ai-status";
 import { MeasureRail } from "./bench/measure-rail";
 import { AskDock } from "./bench/ask-dock";
 import { ChangeNote } from "./bench/change-note";
+import { EntriesTable } from "./bench/entries-table";
 import { IdentityTable } from "./bench/identity-table";
 import { ScoreTrail } from "./bench/score-trail";
 import { WorkList } from "./bench/work-list";
@@ -523,6 +524,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               <IdentityTable
                 cvText={cvText}
                 findings={result.findings}
+                onSelectLine={setMarkedLine}
+              />
+              <EntriesTable
+                cvText={cvText}
+                sections={result.sections}
                 onSelectLine={setMarkedLine}
               />
               <KeywordPanel report={result.keywords} hints={hints} coverage={coverage} />

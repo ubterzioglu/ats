@@ -149,6 +149,26 @@
     "apply": "Uygula ve yeniden puanla",
     "discard": "Vazgeç"
   },
+  "entriesTable": {
+    "heading": "Ayrıştırıcının ayırdığı hâliyle kayıtlar",
+    "lede": "Ayrıştırıcının ayırabildiği her tarihli kayıt ve hangi bölümleri tanıyabildiği.",
+    "noEntries": "Hiçbir tarihli kayıt ayrılamadı. Tarih aralığı bulamayan bir ayrıştırıcı belgeden çalışma geçmişi kuramaz.",
+    "noTitle": "unvan okunamadı",
+    "noRange": "aralık yok",
+    "unusable": "Bu aralığın sonu başlangıcından önce geliyor, ayrıştırıcı bunu hiç kullanamaz.",
+    "showLine": "Bu satırı göster",
+    "sectionsHeading": "Tanınan bölümler",
+    "sectionFound": "var",
+    "sectionMissing": "yok",
+    "sections": {
+      "summary": "Özet",
+      "experience": "Deneyim",
+      "education": "Eğitim",
+      "skills": "Beceriler",
+      "languages": "Diller",
+      "certifications": "Sertifikalar"
+    }
+  },
   "identityTable": {
     "heading": "Ayrıştırıcının bilgileriniz olarak okuduğu",
     "lede": "Her aday takip sisteminin sakladığı kimlik alanları. Her biri ayrıştırıcının çıkardığı hâliyle gösteriliyor.",

@@ -149,6 +149,26 @@
     "apply": "Apply and re-score",
     "discard": "Discard"
   },
+  "entriesTable": {
+    "heading": "Entries as the parser separated them",
+    "lede": "Each dated entry the parser could pull apart, and which sections it recognised at all.",
+    "noEntries": "No dated entry could be separated. A parser that cannot find a date range cannot build an employment history from the document.",
+    "noTitle": "no title read",
+    "noRange": "no range",
+    "unusable": "The end of this range precedes its start, so a parser cannot use it at all.",
+    "showLine": "Show this line",
+    "sectionsHeading": "Sections recognised",
+    "sectionFound": "found",
+    "sectionMissing": "missing",
+    "sections": {
+      "summary": "Summary",
+      "experience": "Experience",
+      "education": "Education",
+      "skills": "Skills",
+      "languages": "Languages",
+      "certifications": "Certifications"
+    }
+  },
   "identityTable": {
     "heading": "What the parser read as your details",
     "lede": "The identity fields every applicant tracking system stores. Each one is shown as the parser extracted it.",
