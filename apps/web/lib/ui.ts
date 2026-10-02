@@ -1,12 +1,7 @@
 import type { Severity } from "@/types/analysis";
 
-export const SEVERITY_LABEL: Readonly<Record<Severity, string>> = {
-  critical: "Blocks parsing",
-  high: "Costly",
-  medium: "Worth fixing",
-  low: "Polish"
-};
-
+// The words for each severity live in the message catalog under `severity`.
+// Only the tones belong here.
 export const SEVERITY_EDGE: Readonly<Record<Severity, string>> = {
   critical: "bg-mark",
   high: "bg-mark/55",
@@ -24,7 +19,7 @@ export const SEVERITY_TEXT: Readonly<Record<Severity, string>> = {
 export function barTone(score: number, max: number): string {
   const share = max > 0 ? score / max : 0;
   if (share >= 0.85) return "bg-good";
-  if (share >= 0.6) return "bg-accent";
+  if (share >= 0.6) return "bg-action";
   return "bg-mark";
 }
 

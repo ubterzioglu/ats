@@ -6,31 +6,45 @@ const config: Config = {
     extend: {
       colors: {
         bed: "rgb(var(--bed) / <alpha-value>)",
-        sheet: "rgb(var(--sheet) / <alpha-value>)",
+        bench: {
+          DEFAULT: "rgb(var(--bench) / <alpha-value>)",
+          sunk: "rgb(var(--bench-sunk) / <alpha-value>)",
+          raised: "rgb(var(--bench-raised) / <alpha-value>)"
+        },
         ink: "rgb(var(--ink) / <alpha-value>)",
         muted: "rgb(var(--muted) / <alpha-value>)",
         line: "rgb(var(--line) / <alpha-value>)",
-        accent: "rgb(var(--accent) / <alpha-value>)",
-        mark: "rgb(var(--mark) / <alpha-value>)",
-        signal: "rgb(var(--signal) / <alpha-value>)",
+        action: "rgb(var(--action) / <alpha-value>)",
+        // Edges, flow and glow only. Never text on light - that is `live-ink`.
+        live: {
+          DEFAULT: "rgb(var(--live) / <alpha-value>)",
+          ink: "rgb(var(--live-ink) / <alpha-value>)"
+        },
+        good: "rgb(var(--good) / <alpha-value>)",
         caution: "rgb(var(--caution) / <alpha-value>)",
-        good: "rgb(var(--good) / <alpha-value>)"
+        mark: "rgb(var(--mark) / <alpha-value>)"
       },
       fontFamily: {
-        serif: ["var(--font-serif)", "Georgia", "serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"]
       },
-      // Radius encodes scale rather than being one value everywhere: the page
+      // Radius encodes scale rather than being one value everywhere: the work
       // surface, the controls on it, and the terms inside those are different
       // sizes of thing.
       borderRadius: {
-        sheet: "12px",
-        control: "7px",
-        chip: "4px"
+        surface: "10px",
+        control: "6px",
+        chip: "3px"
       },
-      boxShadow: {
-        sheet: "0 1px 2px rgb(var(--shadow) / 0.05), 0 16px 40px -24px rgb(var(--shadow) / 0.22)"
+      fontSize: {
+        display: ["clamp(2.25rem, 5vw, 3rem)", { lineHeight: "1.05", letterSpacing: "-0.03em" }],
+        score: ["clamp(3.5rem, 8vw, 5rem)", { lineHeight: "1", letterSpacing: "-0.02em" }],
+        micro: ["0.8125rem", { lineHeight: "1.5" }]
+      },
+      // 4-based, as the system specifies. Tailwind's own scale already covers
+      // these; the named steps are here so the spacing rule is readable.
+      spacing: {
+        18: "4.5rem"
       },
       maxWidth: {
         measure: "68ch"

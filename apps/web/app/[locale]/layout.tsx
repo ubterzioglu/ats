@@ -2,32 +2,29 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Source_Serif_4 } from "next/font/google";
+import { DM_Mono, Instrument_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { routing } from "@/i18n/routing";
+import { THEME_SCRIPT } from "@/lib/theme";
 
 import "../globals.css";
 
-// Headings and running prose. A CV is a document, and the serif says so before
-// any copy does.
-const serif = Source_Serif_4({
+// Everything the interface says. No `weight` list and an explicit `wdth` axis:
+// requesting fixed weights serves static instances, and the width axis - which
+// the rail uses to mark dense data labels - would silently fall back to normal.
+const sans = Instrument_Sans({
   subsets: ["latin", "latin-ext"],
-  weight: ["400", "600"],
-  variable: "--font-serif",
-  display: "swap"
-});
-
-const sans = IBM_Plex_Sans({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
+  axes: ["wdth"],
   variable: "--font-sans",
   display: "swap"
 });
 
-// Reserved for what the parser produced: extracted text, counts, matched terms.
-const mono = IBM_Plex_Mono({
+// Reserved for what the machine produced: extracted text, counts, matched
+// terms, point values. latin-ext, because extracted Turkish and German CV text
+// renders in it.
+const mono = DM_Mono({
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500"],
   variable: "--font-mono",
@@ -65,8 +62,13 @@ export async function generateMetadata({
   };
 }
 
+// Both values, so the browser chrome follows the theme instead of staying at
+// the light canvas colour once dark exists.
 export const viewport: Viewport = {
-  themeColor: "#F6F7FA"
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F3F5F8" },
+    { media: "(prefers-color-scheme: dark)", color: "#12161D" }
+  ]
 };
 
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
@@ -78,7 +80,10 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+    <html lang={locale} className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
         <Script

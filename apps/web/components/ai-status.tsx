@@ -29,7 +29,7 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
 
   if (!statuses) {
     return (
-      <section className="sheet px-5 py-4 sm:px-6">
+      <section className="bench px-5 py-4 sm:px-6">
         <p className="text-sm text-muted">{t("detecting")}</p>
       </section>
     );
@@ -56,7 +56,7 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
   }
 
   return (
-    <section className="sheet px-5 py-4 sm:px-6" aria-labelledby="ai-tier-heading">
+    <section className="bench px-5 py-4 sm:px-6" aria-labelledby="ai-tier-heading">
       <h2 id="ai-tier-heading" className="text-sm font-semibold">
         {t("heading")}
       </h2>
@@ -77,7 +77,7 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
                 className={cx(
                   "w-full rounded-control border px-3 py-2 text-left transition-colors",
                   active === status.tier
-                    ? "border-accent bg-accent/[0.07]"
+                    ? "border-action bg-action/[0.07]"
                     : "border-line hover:border-muted disabled:cursor-not-allowed disabled:opacity-45"
                 )}
               >

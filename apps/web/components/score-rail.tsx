@@ -39,8 +39,7 @@ function Delta({ value, title }: DeltaProps) {
 }
 
 /**
- * The hero. A score is a measurement, so it is drawn against a ruler rather
- * than as a dial, and every dimension carries the sentence that explains it.
+ * The hero. A score is a measurement, so it is drawn flat and still rather than as a dial, and every dimension carries the sentence that explains it.
  * On a re-run the rail also shows what each measurement moved by.
  */
 export function ScoreRail({ result, previous, comparedTo = "previousRun" }: ScoreRailProps) {
@@ -51,7 +50,7 @@ export function ScoreRail({ result, previous, comparedTo = "previousRun" }: Scor
     t(value > 0 ? "gainedSince" : "lostSince", { label: t(comparedTo) });
 
   return (
-    <section className="sheet overflow-hidden" aria-labelledby="score-heading">
+    <section className="bench overflow-hidden" aria-labelledby="score-heading">
       <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b border-line px-5 py-6 sm:px-7 sm:py-7">
         <h2 id="score-heading" className="flex items-baseline gap-2.5">
           <span className="font-mono text-6xl font-medium tabular-nums leading-none tracking-tight sm:text-7xl">
@@ -63,7 +62,7 @@ export function ScoreRail({ result, previous, comparedTo = "previousRun" }: Scor
         <p className="max-w-measure text-sm leading-relaxed text-muted sm:text-right">{result.bandLabel}</p>
       </div>
 
-      <div className="ruler h-1.5 border-b border-line bg-bed/60">
+      <div className="h-1.5 border-b border-line bg-bench-sunk">
         <div className={`h-full ${barTone(result.total, 100)}`} style={{ width: `${result.total}%` }} />
       </div>
 
@@ -81,7 +80,7 @@ export function ScoreRail({ result, previous, comparedTo = "previousRun" }: Scor
 
               <div className="order-3 sm:order-none sm:self-start sm:pt-1">
                 <div
-                  className="ruler h-2 overflow-hidden rounded-full border border-line bg-sheet"
+                  className="h-2 overflow-hidden rounded-full border border-line bg-bench"
                   role="meter"
                   aria-valuenow={dimension.score}
                   aria-valuemin={0}

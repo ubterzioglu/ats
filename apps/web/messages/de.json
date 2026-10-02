@@ -5,6 +5,12 @@
   "languageSwitcher": {
     "label": "Sprache"
   },
+  "theme": {
+    "label": "Darstellung",
+    "light": "Hell",
+    "system": "System",
+    "dark": "Dunkel"
+  },
   "metadata": {
     "defaultTitle": "ATS readability — sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest",
     "titleTemplate": "%s · ATS readability",

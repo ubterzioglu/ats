@@ -12,28 +12,28 @@ export function ParseSweep() {
   const t = useTranslations("parseSweep");
 
   return (
-    <figure className="sheet relative overflow-hidden" aria-labelledby="sweep-caption">
+    <figure className="bench relative overflow-hidden" aria-labelledby="sweep-caption">
       <div className="relative h-[18rem] sm:h-[19rem]">
         {/* What the parser yields. Sits underneath, revealed as the beam passes. */}
-        <div className="absolute inset-0 overflow-hidden bg-bed/60 px-5 py-5 sm:px-6">
+        <div className="absolute inset-0 overflow-hidden bg-bench-sunk px-5 py-5 sm:px-6">
           <pre className="whitespace-pre-wrap font-mono text-[11px] leading-[1.75] text-muted sm:text-xs">
             {t("sample.extracted")}
           </pre>
         </div>
 
         {/* The document as its author designed it. */}
-        <div className="scan-intact absolute inset-0 bg-sheet px-5 py-5 sm:px-6">
+        <div className="absolute inset-0 bg-bench px-5 py-5 sm:px-6">
           <div className="flex gap-4">
-            <div className="h-11 w-11 shrink-0 rounded-full bg-bed" />
+            <div className="h-11 w-11 shrink-0 rounded-full bg-bench-sunk" />
             <div className="min-w-0 flex-1">
-              <p className="font-serif text-base font-semibold leading-tight">{t("sample.name")}</p>
+              <p className="text-base font-semibold leading-tight">{t("sample.name")}</p>
               <p className="text-[11px] text-muted">{t("sample.role")}</p>
             </div>
           </div>
 
           <div className="mt-5 grid grid-cols-[1fr_5.5rem] gap-5">
             <div className="space-y-3">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">{t("sample.experience")}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-action">{t("sample.experience")}</p>
               <div className="space-y-1.5">
                 <div className="h-1.5 w-full rounded-full bg-line" />
                 <div className="h-1.5 w-[92%] rounded-full bg-line" />
@@ -47,7 +47,7 @@ export function ParseSweep() {
             </div>
 
             <div className="space-y-2 border-l border-line pl-4">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">{t("sample.skills")}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-action">{t("sample.skills")}</p>
               {DESIGNED_SKILLS.map((skill) => (
                 <p key={skill} className="truncate text-[10px] text-muted">
                   {skill}
@@ -57,7 +57,7 @@ export function ParseSweep() {
           </div>
 
           <div className="mt-5">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">{t("sample.education")}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-action">{t("sample.education")}</p>
             <div className="mt-2.5 space-y-1.5">
               <div className="h-1.5 w-full rounded-full bg-line" />
               <div className="h-1.5 w-[80%] rounded-full bg-line" />
@@ -67,8 +67,8 @@ export function ParseSweep() {
         </div>
 
         {/* The read head. */}
-        <div aria-hidden className="scan-beam absolute inset-x-0 h-px bg-accent">
-          <div className="absolute inset-x-0 -top-10 h-10 bg-gradient-to-b from-transparent to-accent/12" />
+        <div aria-hidden className="absolute inset-x-0 h-px bg-action">
+          <div className="absolute inset-x-0 -top-10 h-10 bg-gradient-to-b from-transparent to-action/12" />
         </div>
       </div>
 

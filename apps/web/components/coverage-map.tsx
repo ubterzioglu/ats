@@ -21,7 +21,7 @@ export function CoverageMap({ report }: CoverageMapProps) {
   const t = useTranslations("coverageMap");
 
   return (
-    <section className="sheet overflow-hidden" aria-labelledby="coverage-heading">
+    <section className="bench overflow-hidden" aria-labelledby="coverage-heading">
       <div className="border-b border-line px-5 py-4 sm:px-6">
         <h2 id="coverage-heading" className="text-base font-semibold">
           {t("heading")}

@@ -5,6 +5,12 @@
   "languageSwitcher": {
     "label": "Dil"
   },
+  "theme": {
+    "label": "Tema",
+    "light": "Açık",
+    "system": "Sistem",
+    "dark": "Koyu"
+  },
   "metadata": {
     "defaultTitle": "ATS readability — CV'nizi ayrıştırıcının gördüğü gibi görün",
     "titleTemplate": "%s · ATS readability",

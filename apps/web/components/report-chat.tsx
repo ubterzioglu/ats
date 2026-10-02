@@ -68,7 +68,7 @@ export function ReportChat({ tier, result }: ReportChatProps) {
   }
 
   return (
-    <section className="sheet overflow-hidden" aria-labelledby="report-chat-heading">
+    <section className="bench overflow-hidden" aria-labelledby="report-chat-heading">
       <div className="border-b border-line px-5 py-4 sm:px-6">
         <h2 id="report-chat-heading" className="text-base font-semibold">
           {t("heading")}

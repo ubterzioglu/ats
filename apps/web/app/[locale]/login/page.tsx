@@ -22,12 +22,12 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <div className="mx-auto flex min-h-dvh w-full max-w-sm flex-col justify-center px-4 py-12">
       <Link
         href="/"
-        className="font-mono text-sm font-medium tracking-tight transition-colors hover:text-accent"
+        className="font-mono text-sm font-medium tracking-tight transition-colors hover:text-action"
       >
         {brand("name")}
       </Link>
 
-      <div className="sheet mt-6 p-7">
+      <div className="bench mt-6 p-7">
         <h1 className="text-xl font-semibold">{t("heading")}</h1>
         <p className="mt-1.5 text-sm leading-relaxed text-muted">{t("lede")}</p>
 

@@ -20,7 +20,7 @@ export function FixDrafts({ text, onApply }: FixDraftsProps) {
   if (drafts.length === 0) return null;
 
   return (
-    <section className="sheet overflow-hidden" aria-labelledby="drafts-heading">
+    <section className="bench overflow-hidden" aria-labelledby="drafts-heading">
       <div className="border-b border-line px-5 py-4 sm:px-6">
         <h2 id="drafts-heading" className="text-base font-semibold">
           {t("heading")}

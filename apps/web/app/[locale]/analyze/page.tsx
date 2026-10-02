@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { Analyzer } from "@/components/analyzer";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Link } from "@/i18n/navigation";
 import { isPersistenceConfigured } from "@/lib/supabase/client";
 import { createClient } from "@/lib/supabase/server";
@@ -41,11 +42,12 @@ export default async function AnalyzePage({ params }: AnalyzePageProps) {
       <header className="flex items-center justify-between gap-4 border-b border-line py-5">
         <Link
           href="/"
-          className="font-mono text-sm font-medium tracking-tight transition-colors hover:text-accent"
+          className="font-mono text-sm font-medium tracking-tight transition-colors hover:text-action"
         >
           {brand("name")}
         </Link>
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <LanguageSwitcher />
           {signedIn ? (
             <form action={logout}>

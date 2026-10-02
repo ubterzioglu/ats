@@ -52,7 +52,7 @@ function IntactLayer() {
   return (
     <div className="flex h-full flex-col p-5 sm:p-6">
       <div className="flex items-start gap-3 border-b border-line pb-3">
-        <div className="h-10 w-10 shrink-0 rounded-sheet bg-ink/15" />
+        <div className="h-10 w-10 shrink-0 rounded-bench bg-ink/15" />
         <div className="min-w-0 flex-1 space-y-1.5 pt-0.5">
           <div className="h-2.5 w-28 rounded-sm bg-ink/70" />
           <div className="h-1.5 w-36 rounded-sm bg-muted/40" />
@@ -63,7 +63,7 @@ function IntactLayer() {
         <div className="flex flex-1 flex-col gap-2.5">
           {MAIN_COLUMN.map((block, index) => (
             <div key={`${block.heading}-${index}`} className="space-y-2">
-              <div className={`h-1.5 rounded-sm bg-signal ${block.heading}`} />
+              <div className={`h-1.5 rounded-sm bg-action/20 ${block.heading}`} />
               {block.lines.map((width, line) => (
                 <div key={line} className={`h-1.5 rounded-sm bg-muted/30 ${width}`} />
               ))}
@@ -72,14 +72,14 @@ function IntactLayer() {
         </div>
 
         <div className="flex w-[38%] flex-col gap-2.5 border-l border-line pl-4">
-          <div className="h-1.5 w-14 rounded-sm bg-signal" />
+          <div className="h-1.5 w-14 rounded-sm bg-action/20" />
           {SIDE_ROWS.map((width, row) => (
             <div key={row} className="flex items-center gap-1.5">
               <div className={`h-1.5 shrink-0 rounded-sm bg-muted/30 ${width}`} />
               <div className="h-1.5 flex-1 rounded-sm bg-good/40" />
             </div>
           ))}
-          <div className="mt-1 h-1.5 w-16 rounded-sm bg-signal" />
+          <div className="mt-1 h-1.5 w-16 rounded-sm bg-action/20" />
           <div className="h-1.5 w-full rounded-sm bg-muted/30" />
           <div className="h-1.5 w-2/3 rounded-sm bg-muted/30" />
         </div>
@@ -91,9 +91,9 @@ function IntactLayer() {
 export function ComingSoon() {
   return (
     <>
-      <div className="bg-signal text-ink">
+      <div className="bg-action/20 text-ink">
         <p className="mx-auto flex w-full max-w-6xl items-center gap-2.5 px-4 py-2 text-sm font-medium sm:px-6">
-          <span className="scan-status inline-block h-2 w-2 shrink-0 rounded-full bg-ink" aria-hidden="true" />
+          <span className="inline-block h-2 w-2 shrink-0 rounded-full bg-ink" aria-hidden="true" />
           Coming soon
         </p>
       </div>
@@ -121,16 +121,16 @@ export function ComingSoon() {
         </div>
 
         <figure className="m-0">
-          <div className="sheet relative isolate aspect-[4/5] overflow-hidden sm:aspect-[5/4] lg:aspect-[4/5]">
+          <div className="bench relative isolate aspect-[4/5] overflow-hidden sm:aspect-[5/4] lg:aspect-[4/5]">
             <div className="absolute inset-0">
               <ParsedLayer />
             </div>
 
-            <div className="scan-intact absolute inset-0 bg-sheet">
+            <div className="absolute inset-0 bg-bench">
               <IntactLayer />
             </div>
 
-            <div className="scan-beam absolute inset-x-0 top-0 z-10 h-0.5 bg-signal shadow-[0_0_22px_6px_rgb(var(--signal)/0.7)]" />
+            <div className="absolute inset-x-0 top-0 z-10 h-0.5 bg-action/20 shadow-[0_0_22px_6px_rgb(var(--action)/0.35)]" />
           </div>
 
           <figcaption className="mt-3 max-w-measure text-xs leading-relaxed text-muted">
@@ -148,7 +148,7 @@ export function ComingSoon() {
             height={941}
             unoptimized
             priority={false}
-            className="w-full rounded-sheet border border-line"
+            className="w-full rounded-bench border border-line"
           />
         </figure>
       </main>

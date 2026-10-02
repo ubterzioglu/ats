@@ -2,26 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-/* The product is a machine reading a page. Light only: a dark canvas would undo
-   the one metaphor everything here rests on. */
+/* The product is a workbench: a repair list ordered by value, with a local
+   model that drafts the repairs. Measurement is matte and still; the AI is the
+   only live thing on the screen. `live` therefore appears nowhere except
+   AI-produced output and AI-working state - if it leaks into a focus ring the
+   split stops teaching anything. */
 :root {
-  --bed: 246 247 250;
-  --sheet: 255 255 255;
-  --ink: 24 30 42;
-  --muted: 102 112 130;
-  --line: 226 230 237;
-  --accent: 42 74 196;
-  --mark: 198 40 56;
-  --signal: 250 214 80;
-  --caution: 170 100 14;
-  --good: 20 125 95;
-  --shadow: 24 30 42;
+  --bed: 243 245 248;
+  --bench: 255 255 255;
+  --bench-sunk: 247 249 251;
+  --bench-raised: 255 255 255;
+  --ink: 15 20 30;
+  --muted: 92 102 120;
+  --line: 221 226 234;
+  --action: 26 88 224;
+  --live: 0 190 214;
+  --live-ink: 0 110 128;
+  --good: 17 122 92;
+  --caution: 166 98 10;
+  --mark: 196 38 54;
+}
+
+/* Depth here is a four-step graphite ladder rather than a near-black canvas
+   with one bright accent, which is a known generic cluster. Cyan stays
+   confined to the AI. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bed: 18 22 29;
+    --bench-sunk: 22 27 35;
+    --bench: 27 32 41;
+    --bench-raised: 35 41 52;
+    --ink: 232 236 243;
+    --muted: 150 160 176;
+    --line: 48 56 69;
+    --action: 110 160 255;
+    --live: 34 211 238;
+    --live-ink: 103 224 243;
+    --good: 52 199 150;
+    --caution: 226 159 56;
+    --mark: 255 118 128;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bed: 18 22 29;
+  --bench-sunk: 22 27 35;
+  --bench: 27 32 41;
+  --bench-raised: 35 41 52;
+  --ink: 232 236 243;
+  --muted: 150 160 176;
+  --line: 48 56 69;
+  --action: 110 160 255;
+  --live: 34 211 238;
+  --live-ink: 103 224 243;
+  --good: 52 199 150;
+  --caution: 226 159 56;
+  --mark: 255 118 128;
 }
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
     color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+    }
   }
 
   body {
@@ -31,21 +83,21 @@
     min-height: 100dvh;
   }
 
-  /* Running prose is set in the serif; the interface chrome stays in the sans.
-     Mono is reserved for what the parser produced. */
+  /* One family for everything the interface says. Mono is reserved for values
+     the machine produced, so it is never applied here. */
   h1,
   h2,
   h3 {
-    font-family: var(--font-serif), Georgia, serif;
-    letter-spacing: -0.012em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   ::selection {
-    background-color: rgb(var(--signal) / 0.55);
+    background-color: rgb(var(--action) / 0.22);
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--accent));
+    outline: 2px solid rgb(var(--action));
     outline-offset: 2px;
     border-radius: 2px;
   }
@@ -59,99 +111,126 @@
 }
 
 @layer components {
-  /* The document surface everything in the app sits on. The only shadow in the
-     system: nothing nested inside a sheet casts one. */
-  .sheet {
-    @apply rounded-sheet border border-line bg-sheet shadow-sheet;
+  /* The work surface. Depth comes from the surface ladder and a 1px top
+     highlight, not from shadow blur: identical rounded cards sharing one soft
+     grey shadow is the generic SaaS-card pattern. */
+  .bench {
+    @apply rounded-surface border border-line bg-bench;
+
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.55);
+  }
+
+  :root[data-theme="dark"] .bench,
+  :root[data-theme="dark"] .bench-sunk {
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .bench,
+    :root:not([data-theme="light"]) .bench-sunk {
+      box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+    }
+  }
+
+  .bench-sunk {
+    @apply rounded-surface border border-line bg-bench-sunk;
+  }
+
+  /* The one bold element and the system's only glow: an animated edge shown
+     while a model is generating. Nothing else in the product may use `live`. */
+  .live-edge {
+    position: relative;
+  }
+
+  .live-edge::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      110deg,
+      rgb(var(--live) / 0) 20%,
+      rgb(var(--live) / 0.9) 50%,
+      rgb(var(--live) / 0) 80%
+    );
+    background-size: 220% 100%;
+    animation: live-sweep 2.4s linear infinite;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
   .field {
-    @apply w-full resize-y rounded-control border border-line bg-bed/50 px-3.5 py-2.5 text-sm leading-relaxed
-      transition-colors placeholder:text-muted/70 focus:border-accent focus:bg-sheet focus:outline-none;
+    @apply w-full resize-y rounded-control border border-line bg-bench-sunk px-3.5 py-2.5 text-sm
+      leading-relaxed transition-colors placeholder:text-muted/70 focus:border-action focus:bg-bench
+      focus:outline-none;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-control bg-accent px-4 py-2.5 text-sm
-      font-medium text-sheet transition-colors hover:bg-ink disabled:cursor-not-allowed
-      disabled:bg-muted/50;
+    @apply inline-flex items-center justify-center gap-2 rounded-control bg-action px-4 py-2.5 text-sm
+      font-medium text-bench transition-colors hover:bg-ink hover:text-bench
+      disabled:cursor-not-allowed disabled:bg-muted/50;
   }
 
   .btn-quiet {
-    @apply inline-flex items-center justify-center gap-2 rounded-control border border-line bg-sheet px-3.5 py-2.5
-      text-sm text-ink transition-colors hover:border-ink/35 hover:bg-bed disabled:cursor-not-allowed
-      disabled:opacity-40;
+    @apply inline-flex items-center justify-center gap-2 rounded-control border border-line bg-bench px-3.5
+      py-2.5 text-sm text-ink transition-colors hover:border-ink/35 hover:bg-bench-sunk
+      disabled:cursor-not-allowed disabled:opacity-40;
   }
 
   .rail-label {
     @apply text-sm font-medium text-ink;
   }
 
-  /* A score is a measurement, so every bar is drawn against tick marks. */
-  .ruler {
-    background-image: repeating-linear-gradient(
-      to right,
-      rgb(var(--line)) 0 1px,
-      transparent 1px 10%
-    );
-  }
-
   /* Small type that belongs to the machine rather than the interface: counts,
-     file names, extracted terms. */
+     file names, extracted terms, point values. */
   .readout {
-    @apply font-mono text-xs tabular-nums text-muted;
+    @apply font-mono text-[0.8125rem] tabular-nums text-muted;
   }
 
-  /* The parser sweep. One orchestrated moment: the beam travels down the page,
-     and the designed layout is clipped away behind it to leave the extracted
-     text underneath. Both run on the same timing so they stay locked together. */
-  .scan-beam {
-    animation: scan-beam 7s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  /* Width is information here, not decoration: condensed marks the dense data
+     labels in the rail, normal width carries prose. */
+  .condensed {
+    font-stretch: 92%;
+    font-variation-settings: "wdth" 92;
   }
 
-  .scan-intact {
-    animation: scan-intact 7s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  /* A meter fills once, on first render, and never moves again. Measurement
+     that re-animates reads as decoration. */
+  .meter-fill {
+    animation: meter-fill 520ms cubic-bezier(0.2, 0.7, 0.3, 1) 1;
   }
 }
 
-@keyframes scan-beam {
-  0%,
-  6% {
-    top: 0%;
-    opacity: 0;
+@keyframes live-sweep {
+  from {
+    background-position: 160% 0;
   }
-  10%,
-  88% {
-    opacity: 1;
-  }
-  94%,
-  100% {
-    top: 100%;
-    opacity: 0;
+  to {
+    background-position: -60% 0;
   }
 }
 
-@keyframes scan-intact {
-  0%,
-  6% {
-    clip-path: inset(0 0 0 0);
+@keyframes meter-fill {
+  from {
+    transform: scaleX(0);
   }
-  94%,
-  100% {
-    clip-path: inset(100% 0 0 0);
+  to {
+    transform: scaleX(1);
   }
 }
 
-/* Without motion the sweep would land on its last frame and the designed layout
-   would never be visible, losing the comparison the image exists to make. Hold
-   it mid-pass instead: half read, half intact. */
+/* Reduced motion removes the live edge animation and the meter fill. The edge
+   itself stays visible, because it is what says which part of the screen the
+   model wrote - that is meaning, not decoration. */
 @media (prefers-reduced-motion: reduce) {
-  .scan-beam {
-    top: 52%;
-    opacity: 1;
-  }
-
-  .scan-intact {
-    clip-path: inset(52% 0 0 0);
+  .live-edge::after {
+    animation: none;
+    background: linear-gradient(110deg, rgb(var(--live) / 0.5), rgb(var(--live) / 0.9));
   }
 
   *,

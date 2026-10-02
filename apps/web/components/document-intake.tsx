@@ -36,7 +36,7 @@ export function DocumentIntake({ extraction, busy, onFile }: DocumentIntakeProps
       onDrop={handleDrop}
       className={cx(
         "flex flex-col items-center justify-center gap-3 rounded-control border border-dashed px-6 py-10 text-center transition-colors",
-        dragging ? "border-accent bg-accent/[0.06]" : "border-line bg-bed/50"
+        dragging ? "border-action bg-action/[0.06]" : "border-line bg-bench-sunk"
       )}
     >
       <input

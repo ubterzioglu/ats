@@ -19,7 +19,7 @@ function statusOf(term: KeywordTerm): Status {
 }
 
 const CHIP_STYLE: Readonly<Record<Status, string>> = {
-  found: "border-line bg-signal/30 text-ink",
+  found: "border-line bg-action/[0.10] text-ink",
   alias: "border-caution/40 bg-caution/[0.08] text-ink",
   missing: "border-mark/35 bg-mark/[0.06] text-mark"
 };
@@ -78,7 +78,7 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
   const hintByTerm = new Map((hints ?? []).map((hint) => [hint.term, hint]));
 
   return (
-    <section className="sheet overflow-hidden" aria-labelledby="keywords-heading">
+    <section className="bench overflow-hidden" aria-labelledby="keywords-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
         <h2 id="keywords-heading" className="text-base font-semibold">
           {t(matchedFromAd ? "headingFromAd" : "headingBaseline")}
@@ -92,8 +92,8 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
       </div>
 
       {matchedFromAd ? (
-        <div className="ruler h-1.5 border-b border-line bg-bed/60">
-          <div className="h-full bg-accent" style={{ width: `${coverage}%` }} />
+        <div className="h-1.5 border-b border-line bg-bench-sunk">
+          <div className="h-full bg-action" style={{ width: `${coverage}%` }} />
         </div>
       ) : null}
 
@@ -129,7 +129,7 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
                 {report.matched.map((term) => (
                   <li
                     key={term.term}
-                    className="rounded-chip border border-line bg-signal/30 px-2 py-1 font-mono text-xs"
+                    className="rounded-chip border border-line bg-action/[0.10] px-2 py-1 font-mono text-xs"
                   >
                     {term.term}
                     {term.hits > 1 ? <span className="ml-1 text-muted">×{term.hits}</span> : null}

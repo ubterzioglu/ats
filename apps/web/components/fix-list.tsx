@@ -17,7 +17,7 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
 
   if (findings.length === 0) {
     return (
-      <section className="sheet p-5 sm:p-6">
+      <section className="bench p-5 sm:p-6">
         <h2 className="text-base font-semibold">{t("emptyHeading")}</h2>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
           {t("emptyBody")}
@@ -29,7 +29,7 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
   const recoverable = findings.reduce((sum, finding) => sum + finding.cost, 0);
 
   return (
-    <section className="sheet overflow-hidden" aria-labelledby="fixes-heading">
+    <section className="bench overflow-hidden" aria-labelledby="fixes-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
         <h2 id="fixes-heading" className="text-base font-semibold">
           {t("heading")}
@@ -52,7 +52,7 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
                 {onSelectEvidence && finding.evidence && finding.evidence.length > 0 ? (
                   <button
                     type="button"
-                    className="text-left font-sans text-sm font-semibold underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+                    className="text-left font-sans text-sm font-semibold underline decoration-line underline-offset-4 transition-colors hover:decoration-action"
                     title={t("showLine")}
                     onClick={() => onSelectEvidence(finding.evidence?.[0] ?? "")}
                   >
@@ -69,7 +69,7 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
 
               <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{finding.detail}</p>
 
-              <p className="mt-3 max-w-measure border-l-2 border-accent/30 pl-3 text-sm leading-relaxed">
+              <p className="mt-3 max-w-measure border-l-2 border-action/30 pl-3 text-sm leading-relaxed">
                 {finding.fix}
               </p>
 
@@ -89,12 +89,12 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
                             type="button"
                             title={t("showLine")}
                             onClick={() => onSelectEvidence(line)}
-                            className="block w-full overflow-x-auto whitespace-pre rounded-chip bg-bed px-3 py-2 text-left font-mono text-xs text-muted transition-colors hover:bg-accent/15 hover:text-ink"
+                            className="block w-full overflow-x-auto whitespace-pre rounded-chip bg-bench-sunk px-3 py-2 text-left font-mono text-xs text-muted transition-colors hover:bg-action/15 hover:text-ink"
                           >
                             {line}
                           </button>
                         ) : (
-                          <span className="block overflow-x-auto whitespace-pre rounded-chip bg-bed px-3 py-2 font-mono text-xs text-muted">
+                          <span className="block overflow-x-auto whitespace-pre rounded-chip bg-bench-sunk px-3 py-2 font-mono text-xs text-muted">
                             {line}
                           </span>
                         )}

@@ -5,6 +5,12 @@
   "languageSwitcher": {
     "label": "Language"
   },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "system": "System",
+    "dark": "Dark"
+  },
   "metadata": {
     "defaultTitle": "ATS readability — see your CV the way the parser does",
     "titleTemplate": "%s · ATS readability",

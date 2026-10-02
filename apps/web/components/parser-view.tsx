@@ -30,7 +30,7 @@ function renderLine(line: string, pattern: RegExp | null, key: number) {
   const parts = pattern ? line.split(pattern) : [line];
   return parts.map((part, index) =>
     index % 2 === 1 ? (
-      <mark key={`${part}-${key}-${index}`} className="rounded-chip bg-signal/55 px-0.5 text-ink">
+      <mark key={`${part}-${key}-${index}`} className="rounded-chip bg-action/20 px-0.5 text-ink">
         {part}
       </mark>
     ) : (
@@ -68,7 +68,7 @@ export function ParserView({ text, highlights, caption, markedLine }: ParserView
   }, [markedIndex, needle]);
 
   return (
-    <section className="sheet flex min-h-0 flex-col overflow-hidden" aria-labelledby="parser-heading">
+    <section className="bench flex min-h-0 flex-col overflow-hidden" aria-labelledby="parser-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
         <h2 id="parser-heading" className="text-base font-semibold">
           {t("heading")}
@@ -76,7 +76,7 @@ export function ParserView({ text, highlights, caption, markedLine }: ParserView
         <span className="readout">{caption}</span>
       </div>
 
-      <pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words bg-bed/40 px-5 py-4 font-mono text-xs leading-relaxed text-muted sm:px-6">
+      <pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words bg-bench-sunk px-5 py-4 font-mono text-xs leading-relaxed text-muted sm:px-6">
         {lines.map((line, index) => (
           <span
             key={`line-${index}`}
@@ -84,7 +84,7 @@ export function ParserView({ text, highlights, caption, markedLine }: ParserView
             id={index === markedIndex ? "marked-line" : undefined}
             className={cx(
               "block",
-              index === markedIndex && "-mx-1.5 rounded-chip bg-accent/20 px-1.5 text-ink"
+              index === markedIndex && "-mx-1.5 rounded-chip bg-action/20 px-1.5 text-ink"
             )}
           >
             {renderLine(line, pattern, index)}

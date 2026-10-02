@@ -105,7 +105,7 @@ export function RewriteDiff({ tier, cvText, knownSkills, onApply }: RewriteDiffP
   if (weak.length === 0 && proposals.length === 0) return null;
 
   return (
-    <section className="sheet overflow-hidden" aria-labelledby="rewrite-heading">
+    <section className="bench overflow-hidden" aria-labelledby="rewrite-heading">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4 sm:px-6">
         <div>
           <h2 id="rewrite-heading" className="text-base font-semibold">
@@ -139,7 +139,7 @@ export function RewriteDiff({ tier, cvText, knownSkills, onApply }: RewriteDiffP
           {proposals.map((prepared) => (
             <li key={prepared.bullet.lineIndex} className="px-5 py-4 sm:px-6">
               <div className="grid gap-3 md:grid-cols-2">
-                <p className="rounded-chip bg-bed px-3 py-2 font-mono text-xs leading-relaxed text-muted line-through decoration-mark/40">
+                <p className="rounded-chip bg-bench-sunk px-3 py-2 font-mono text-xs leading-relaxed text-muted line-through decoration-mark/40">
                   {prepared.bullet.content}
                 </p>
                 <p className="rounded-chip border border-line px-3 py-2 font-mono text-xs leading-relaxed text-ink">

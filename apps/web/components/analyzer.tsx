@@ -275,7 +275,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <nav
-          className="inline-flex rounded-control border border-line bg-sheet p-1"
+          className="inline-flex rounded-control border border-line bg-bench p-1"
           aria-label={t("sections")}
         >
           {(["input", "report"] as const).map((tab) => (
@@ -287,7 +287,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               aria-current={view === tab ? "page" : undefined}
               className={cx(
                 "rounded-[4px] px-3.5 py-1.5 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40",
-                view === tab ? "bg-ink text-sheet" : "text-muted hover:text-ink"
+                view === tab ? "bg-ink text-bench" : "text-muted hover:text-ink"
               )}
             >
               {t(tab === "input" ? "tabInput" : "tabReport")}
@@ -295,7 +295,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 <span
                   className={cx(
                     "ml-2 font-mono text-xs tabular-nums",
-                    view === tab ? "text-sheet/70" : "text-muted"
+                    view === tab ? "text-bench/70" : "text-muted"
                   )}
                 >
                   {result.total}
@@ -343,7 +343,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
       {view === "input" ? (
         <div className="grid gap-5 lg:grid-cols-2">
-          <section className="sheet space-y-4 p-5 sm:p-6">
+          <section className="bench space-y-4 p-5 sm:p-6">
             <div>
               <h2 className="text-base font-semibold">{t("cvHeading")}</h2>
               <p className="mt-1.5 max-w-measure text-sm leading-relaxed text-muted">
@@ -365,7 +365,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             </label>
           </section>
 
-          <section className="sheet flex flex-col gap-4 p-5 sm:p-6">
+          <section className="bench flex flex-col gap-4 p-5 sm:p-6">
             <div>
               <h2 className="text-base font-semibold">{t("adHeading")}</h2>
               <p className="mt-1.5 max-w-measure text-sm leading-relaxed text-muted">
@@ -424,9 +424,9 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           </div>
 
           {shareUrl ? (
-            <p className="rounded-control border border-line bg-sheet px-4 py-3 text-sm">
+            <p className="rounded-control border border-line bg-bench px-4 py-3 text-sm">
               {t("shareNote")}{" "}
-              <a className="font-mono text-accent underline underline-offset-2" href={shareUrl}>
+              <a className="font-mono text-action underline underline-offset-2" href={shareUrl}>
                 {shareUrl}
               </a>
             </p>

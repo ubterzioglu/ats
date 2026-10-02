@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { ParseSweep } from "@/components/parse-sweep";
 
 const DIMENSIONS: ReadonlyArray<{ readonly key: string; readonly weight: number }> = [
@@ -29,6 +30,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <header className="flex items-center justify-between gap-4 py-5">
         <span className="font-mono text-sm font-medium tracking-tight">{brand("name")}</span>
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <LanguageSwitcher />
           <Link href="/login" className="text-sm text-muted transition-colors hover:text-ink">
             {common("signIn")}
@@ -87,9 +89,9 @@ export default async function HomePage({ params }: HomePageProps) {
                   </div>
                   <div
                     aria-hidden
-                    className="ruler mt-2 h-1.5 overflow-hidden rounded-full border border-line bg-sheet"
+                    className="ruler mt-2 h-1.5 overflow-hidden rounded-full border border-line bg-bench"
                   >
-                    <div className="h-full bg-accent/70" style={{ width: `${dimension.weight}%` }} />
+                    <div className="h-full bg-action/70" style={{ width: `${dimension.weight}%` }} />
                   </div>
                   <dd className="mt-2.5 max-w-measure text-sm leading-relaxed text-muted">
                     {t(`dimensions.${dimension.key}.what`)}
