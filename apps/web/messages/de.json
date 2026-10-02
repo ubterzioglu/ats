@@ -60,6 +60,139 @@
     "heading": "Sehen Sie, was der Parser bekommt",
     "lede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber schicken. Der Text unten ist das, was ein Bewerbermanagementsystem extrahieren würde — korrigieren Sie ihn, falls die Extraktion schiefging, und bewerten Sie ihn dann gegen die Anzeige."
   },
+  "editor": {
+    "title": "Lebenslauf erstellen",
+    "lede": "Jedes Feld, das ein Bewerbermanagementsystem speichern kann. Nichts wird für Sie ausgefüllt, und ein Feld, das Sie leeren, wird entfernt statt leer stehen gelassen.",
+    "datePlaceholder": "2021 oder 2021-03",
+    "onePerLine": "Eines pro Zeile.",
+    "moveUp": "Nach oben",
+    "moveDown": "Nach unten",
+    "remove": "Entfernen",
+    "addTo": "Zu {section} hinzufügen",
+    "saved": "Auf diesem Gerät gespeichert",
+    "saving": "Wird gespeichert…",
+    "saveFailed": "Dieser Browser hat lokale Speicherung abgelehnt, der Entwurf wird nicht behalten. Laden Sie ihn herunter, bevor Sie gehen.",
+    "exportJson": "JSON Resume herunterladen",
+    "importJson": "Ein JSON Resume öffnen",
+    "importFailed": "Diese Datei ist kein JSON Resume, das dieser Editor lesen kann.",
+    "clear": "Mit leerem Lebenslauf beginnen",
+    "confirmClear": "Alle Felder leeren? Das lässt sich nicht rückgängig machen.",
+    "keep": "Weiter bearbeiten",
+    "analyze": "Diesen Lebenslauf bewerten",
+    "fields": {
+      "basics": {
+        "_label": "Grunddaten",
+        "name": "Name",
+        "label": "Kurzprofil",
+        "image": "Foto-URL",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "url": "Website",
+        "summary": "Zusammenfassung",
+        "location": {
+          "_label": "Ort",
+          "address": "Straße",
+          "postalCode": "Postleitzahl",
+          "city": "Stadt",
+          "countryCode": "Ländercode",
+          "region": "Region"
+        },
+        "profiles": {
+          "_label": "Profile",
+          "network": "Netzwerk",
+          "username": "Benutzername",
+          "url": "Website"
+        }
+      },
+      "work": {
+        "_label": "Berufserfahrung",
+        "name": "Arbeitgeber",
+        "position": "Position",
+        "url": "Website",
+        "startDate": "Beginn",
+        "endDate": "Ende",
+        "summary": "Zusammenfassung",
+        "highlights": "Erfolge"
+      },
+      "volunteer": {
+        "_label": "Ehrenamt",
+        "organization": "Organisation",
+        "position": "Position",
+        "url": "Website",
+        "startDate": "Beginn",
+        "endDate": "Ende",
+        "summary": "Zusammenfassung",
+        "highlights": "Erfolge"
+      },
+      "education": {
+        "_label": "Ausbildung",
+        "institution": "Einrichtung",
+        "url": "Website",
+        "area": "Fachrichtung",
+        "studyType": "Abschluss",
+        "startDate": "Beginn",
+        "endDate": "Ende",
+        "score": "Note",
+        "courses": "Kurse"
+      },
+      "awards": {
+        "_label": "Auszeichnungen",
+        "title": "Titel",
+        "date": "Datum",
+        "awarder": "Verliehen von",
+        "summary": "Zusammenfassung"
+      },
+      "publications": {
+        "_label": "Publikationen",
+        "name": "Titel",
+        "publisher": "Verlag",
+        "releaseDate": "Erschienen",
+        "url": "Website",
+        "summary": "Zusammenfassung"
+      },
+      "skills": {
+        "_label": "Kenntnisse",
+        "name": "Kenntnis",
+        "level": "Niveau",
+        "keywords": "Schlagwörter"
+      },
+      "languages": {
+        "_label": "Sprachen",
+        "language": "Sprache",
+        "fluency": "Niveau"
+      },
+      "interests": {
+        "_label": "Interessen",
+        "name": "Interesse",
+        "keywords": "Schlagwörter"
+      },
+      "references": {
+        "_label": "Referenzen",
+        "name": "Name",
+        "reference": "Referenztext"
+      },
+      "projects": {
+        "_label": "Projekte",
+        "name": "Projekt",
+        "isActive": "Läuft noch",
+        "description": "Beschreibung",
+        "highlights": "Erfolge",
+        "keywords": "Schlagwörter",
+        "startDate": "Beginn",
+        "endDate": "Ende",
+        "url": "Website",
+        "roles": "Rollen",
+        "entity": "Organisation",
+        "type": "Art"
+      },
+      "meta": {
+        "_label": "Dokument",
+        "canonical": "Kanonische URL",
+        "version": "Version",
+        "lastModified": "Zuletzt geändert"
+      }
+    }
+  },
   "login": {
     "heading": "Anmelden",
     "lede": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Das Konto speichert nur Ihre Freigabelinks.",

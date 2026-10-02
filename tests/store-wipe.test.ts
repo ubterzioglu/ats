@@ -52,7 +52,15 @@ describe("summariseLocalData", () => {
     await seed();
 
     const summary = await summariseLocalData();
-    expect(summary.ok && summary.value).toEqual({ meta: 1, history: 1, trail: 0 });
+    if (!summary.ok) throw new Error("the summary did not read");
+
+    // Driven by STORE_NAMES rather than a literal, so adding a store does not
+    // fail a test that has nothing to say about it.
+    expect(summary.value.meta).toBe(1);
+    expect(summary.value.history).toBe(1);
+    for (const name of STORE_NAMES.filter((store) => store !== "meta" && store !== "history")) {
+      expect(summary.value[name], `${name} should be empty`).toBe(0);
+    }
   });
 });
 
@@ -61,7 +69,10 @@ describe("wipeLocalData", () => {
     await seed();
 
     const wiped = await wipeLocalData();
-    expect(wiped.ok && wiped.value).toEqual({ meta: 1, history: 1, trail: 0 });
+    if (!wiped.ok) throw new Error("the wipe did not run");
+    expect(wiped.value.meta).toBe(1);
+    expect(wiped.value.history).toBe(1);
+    expect(Object.keys(wiped.value).sort()).toEqual([...STORE_NAMES].sort());
 
     const after = await summariseLocalData();
     expect(after.ok && totalRecords(after.value)).toBe(0);

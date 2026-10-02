@@ -60,6 +60,139 @@
     "heading": "See what the parser gets",
     "lede": "Upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad."
   },
+  "editor": {
+    "title": "Build a CV",
+    "lede": "Every field an applicant tracking system can store. Nothing is filled in for you, and a field you clear is removed rather than left empty.",
+    "datePlaceholder": "2021 or 2021-03",
+    "onePerLine": "One per line.",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "remove": "Remove",
+    "addTo": "Add to {section}",
+    "saved": "Saved on this device",
+    "saving": "Saving…",
+    "saveFailed": "This browser refused local storage, so the draft is not kept. Download it before you leave.",
+    "exportJson": "Download JSON Resume",
+    "importJson": "Open a JSON Resume",
+    "importFailed": "That file is not a JSON Resume this editor can read.",
+    "clear": "Start an empty CV",
+    "confirmClear": "Clear every field? This cannot be undone.",
+    "keep": "Keep editing",
+    "analyze": "Score this CV",
+    "fields": {
+      "basics": {
+        "_label": "Basics",
+        "name": "Name",
+        "label": "Headline",
+        "image": "Photo URL",
+        "email": "Email",
+        "phone": "Phone",
+        "url": "Website",
+        "summary": "Summary",
+        "location": {
+          "_label": "Location",
+          "address": "Street address",
+          "postalCode": "Postal code",
+          "city": "City",
+          "countryCode": "Country code",
+          "region": "Region"
+        },
+        "profiles": {
+          "_label": "Profiles",
+          "network": "Network",
+          "username": "Username",
+          "url": "Website"
+        }
+      },
+      "work": {
+        "_label": "Work",
+        "name": "Employer",
+        "position": "Position",
+        "url": "Website",
+        "startDate": "Start",
+        "endDate": "End",
+        "summary": "Summary",
+        "highlights": "Achievements"
+      },
+      "volunteer": {
+        "_label": "Volunteering",
+        "organization": "Organisation",
+        "position": "Position",
+        "url": "Website",
+        "startDate": "Start",
+        "endDate": "End",
+        "summary": "Summary",
+        "highlights": "Achievements"
+      },
+      "education": {
+        "_label": "Education",
+        "institution": "Institution",
+        "url": "Website",
+        "area": "Field of study",
+        "studyType": "Qualification",
+        "startDate": "Start",
+        "endDate": "End",
+        "score": "Grade",
+        "courses": "Courses"
+      },
+      "awards": {
+        "_label": "Awards",
+        "title": "Title",
+        "date": "Date",
+        "awarder": "Awarded by",
+        "summary": "Summary"
+      },
+      "publications": {
+        "_label": "Publications",
+        "name": "Title",
+        "publisher": "Publisher",
+        "releaseDate": "Published",
+        "url": "Website",
+        "summary": "Summary"
+      },
+      "skills": {
+        "_label": "Skills",
+        "name": "Skill",
+        "level": "Level",
+        "keywords": "Keywords"
+      },
+      "languages": {
+        "_label": "Languages",
+        "language": "Language",
+        "fluency": "Fluency"
+      },
+      "interests": {
+        "_label": "Interests",
+        "name": "Interest",
+        "keywords": "Keywords"
+      },
+      "references": {
+        "_label": "References",
+        "name": "Name",
+        "reference": "Reference"
+      },
+      "projects": {
+        "_label": "Projects",
+        "name": "Project",
+        "isActive": "Still active",
+        "description": "Description",
+        "highlights": "Achievements",
+        "keywords": "Keywords",
+        "startDate": "Start",
+        "endDate": "End",
+        "url": "Website",
+        "roles": "Roles",
+        "entity": "Organisation",
+        "type": "Type"
+      },
+      "meta": {
+        "_label": "Document",
+        "canonical": "Canonical URL",
+        "version": "Version",
+        "lastModified": "Last modified"
+      }
+    }
+  },
   "login": {
     "heading": "Sign in",
     "lede": "Your CV is read and scored in your browser. The account only keeps your share links.",

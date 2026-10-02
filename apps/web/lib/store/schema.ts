@@ -11,6 +11,7 @@ export interface StoreSchema {
   readonly meta: MetaRecord;
   readonly history: HistoryRecord;
   readonly trail: TrailPoint;
+  readonly drafts: DraftRecord;
 }
 
 export type StoreName = keyof StoreSchema;
@@ -59,6 +60,17 @@ export interface TrailPoint {
   readonly total: number;
 }
 
+/**
+ * The CV being built, kept on this device and nowhere else. One record, because
+ * variants are D.1's job and a second draft before then would be a feature
+ * nobody asked for with no way to tell the two apart.
+ */
+export interface DraftRecord {
+  readonly id: string;
+  readonly updatedAt: number;
+  readonly resume: unknown;
+}
+
 export interface Migration {
   readonly version: number;
   readonly apply: (db: IDBDatabase) => void;
@@ -84,6 +96,12 @@ export const MIGRATIONS: readonly Migration[] = [
       const trail = db.createObjectStore("trail", { keyPath: "id" });
       trail.createIndex("sessionId", "sessionId");
     }
+  },
+  {
+    version: 4,
+    apply(db) {
+      db.createObjectStore("drafts", { keyPath: "id" });
+    }
   }
 ];
 
@@ -92,4 +110,4 @@ export const DB_VERSION = MIGRATIONS.reduce(
   1
 );
 
-export const STORE_NAMES: readonly StoreName[] = ["meta", "history", "trail"];
+export const STORE_NAMES: readonly StoreName[] = ["meta", "history", "trail", "drafts"];

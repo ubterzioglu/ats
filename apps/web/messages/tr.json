@@ -60,6 +60,139 @@
     "heading": "Ayrıştırıcı ne alıyor görün",
     "lede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıdaki metin, bir aday takip sisteminin çıkaracağı metindir — çıkarım yanlış gittiyse düzeltin, sonra ilana karşı puanlayın."
   },
+  "editor": {
+    "title": "CV oluştur",
+    "lede": "Bir aday takip sisteminin saklayabileceği her alan. Hiçbiri sizin yerinize doldurulmuyor ve temizlediğiniz bir alan boş bırakılmak yerine kaldırılıyor.",
+    "datePlaceholder": "2021 veya 2021-03",
+    "onePerLine": "Her satıra bir tane.",
+    "moveUp": "Yukarı taşı",
+    "moveDown": "Aşağı taşı",
+    "remove": "Kaldır",
+    "addTo": "{section} bölümüne ekle",
+    "saved": "Bu cihaza kaydedildi",
+    "saving": "Kaydediliyor…",
+    "saveFailed": "Bu tarayıcı yerel depolamayı reddetti, taslak saklanmıyor. Ayrılmadan önce indirin.",
+    "exportJson": "JSON Resume indir",
+    "importJson": "Bir JSON Resume aç",
+    "importFailed": "Bu dosya, bu editörün okuyabileceği bir JSON Resume değil.",
+    "clear": "Boş bir CV ile başla",
+    "confirmClear": "Her alan temizlensin mi? Geri alınamaz.",
+    "keep": "Düzenlemeye devam et",
+    "analyze": "Bu CV'yi puanla",
+    "fields": {
+      "basics": {
+        "_label": "Temel bilgiler",
+        "name": "Ad",
+        "label": "Başlık",
+        "image": "Fotoğraf adresi",
+        "email": "E-posta",
+        "phone": "Telefon",
+        "url": "Web sitesi",
+        "summary": "Özet",
+        "location": {
+          "_label": "Konum",
+          "address": "Açık adres",
+          "postalCode": "Posta kodu",
+          "city": "Şehir",
+          "countryCode": "Ülke kodu",
+          "region": "Bölge"
+        },
+        "profiles": {
+          "_label": "Profiller",
+          "network": "Ağ",
+          "username": "Kullanıcı adı",
+          "url": "Web sitesi"
+        }
+      },
+      "work": {
+        "_label": "Deneyim",
+        "name": "İşveren",
+        "position": "Pozisyon",
+        "url": "Web sitesi",
+        "startDate": "Başlangıç",
+        "endDate": "Bitiş",
+        "summary": "Özet",
+        "highlights": "Başarılar"
+      },
+      "volunteer": {
+        "_label": "Gönüllülük",
+        "organization": "Kurum",
+        "position": "Pozisyon",
+        "url": "Web sitesi",
+        "startDate": "Başlangıç",
+        "endDate": "Bitiş",
+        "summary": "Özet",
+        "highlights": "Başarılar"
+      },
+      "education": {
+        "_label": "Eğitim",
+        "institution": "Kurum",
+        "url": "Web sitesi",
+        "area": "Alan",
+        "studyType": "Derece",
+        "startDate": "Başlangıç",
+        "endDate": "Bitiş",
+        "score": "Not",
+        "courses": "Dersler"
+      },
+      "awards": {
+        "_label": "Ödüller",
+        "title": "Başlık",
+        "date": "Tarih",
+        "awarder": "Veren",
+        "summary": "Özet"
+      },
+      "publications": {
+        "_label": "Yayınlar",
+        "name": "Başlık",
+        "publisher": "Yayıncı",
+        "releaseDate": "Yayın tarihi",
+        "url": "Web sitesi",
+        "summary": "Özet"
+      },
+      "skills": {
+        "_label": "Beceriler",
+        "name": "Beceri",
+        "level": "Seviye",
+        "keywords": "Anahtar kelimeler"
+      },
+      "languages": {
+        "_label": "Diller",
+        "language": "Dil",
+        "fluency": "Seviye"
+      },
+      "interests": {
+        "_label": "İlgi alanları",
+        "name": "İlgi alanı",
+        "keywords": "Anahtar kelimeler"
+      },
+      "references": {
+        "_label": "Referanslar",
+        "name": "Ad",
+        "reference": "Referans metni"
+      },
+      "projects": {
+        "_label": "Projeler",
+        "name": "Proje",
+        "isActive": "Hâlâ sürüyor",
+        "description": "Açıklama",
+        "highlights": "Başarılar",
+        "keywords": "Anahtar kelimeler",
+        "startDate": "Başlangıç",
+        "endDate": "Bitiş",
+        "url": "Web sitesi",
+        "roles": "Roller",
+        "entity": "Kurum",
+        "type": "Tür"
+      },
+      "meta": {
+        "_label": "Belge",
+        "canonical": "Kanonik adres",
+        "version": "Sürüm",
+        "lastModified": "Son değişiklik"
+      }
+    }
+  },
   "login": {
     "heading": "Giriş yap",
     "lede": "CV'niz tarayıcınızda okunur ve puanlanır. Hesap yalnızca paylaşım bağlantılarınızı tutar.",

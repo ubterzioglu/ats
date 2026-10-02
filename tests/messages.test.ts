@@ -28,11 +28,15 @@ function flatten(value: Catalog, prefix = ""): Map<string, string> {
 }
 
 /**
- * Keys that are deliberately the same in every language: the product name,
- * numerals, a token the model emits verbatim, and masked input placeholders.
- * Everything else identical to the English is an untranslated string.
+ * Values that are deliberately identical to the English, named per locale.
+ *
+ * Per locale, not globally: "Name is the same word in German" is a claim worth
+ * recording, and exempting the key everywhere would also stop the test noticing
+ * if the Turkish ever regressed to "Name".
  */
-const SHARED_VERBATIM: ReadonlySet<string> = new Set([
+const EVERY_LOCALE: readonly string[] = [
+  // The product name, numerals, a token the model emits verbatim, and a masked
+  // input placeholder.
   "brand.name",
   "metadata.titleTemplate",
   "metadata.openGraphTitle",
@@ -44,15 +48,36 @@ const SHARED_VERBATIM: ReadonlySet<string> = new Set([
   "benchPreview.worth",
   "workItem.worth",
   "aiStatus.size",
-  "fixDrafts.quantifyToken",
-  // Turkish for "Model" is "Model", and German for "System" is "System".
-  // Real collisions, not missed strings.
-  "askDock.roleModel",
-  "theme.system",
-  // German for "Name" is "Name", and "Profil" differs from "Profile" only in
-  // English. Real collisions, not missed strings.
-  "identityTable.fields.name"
-]);
+  "fixDrafts.quantifyToken"
+];
+
+const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
+  // Turkish for "Model" is "Model".
+  tr: new Set([...EVERY_LOCALE, "askDock.roleModel"]),
+  // German and English share a great many short nouns, and most of the editor's
+  // field labels are short nouns: Name, Position, Region, Organisation, URL,
+  // Website, Version, System.
+  de: new Set([
+    ...EVERY_LOCALE,
+    "theme.system",
+    "identityTable.fields.name",
+    "editor.fields.basics.name",
+    "editor.fields.basics.url",
+    "editor.fields.basics.location.region",
+    "editor.fields.basics.profiles.url",
+    "editor.fields.work.position",
+    "editor.fields.work.url",
+    "editor.fields.volunteer.organization",
+    "editor.fields.volunteer.position",
+    "editor.fields.volunteer.url",
+    "editor.fields.education.url",
+    "editor.fields.publications.url",
+    "editor.fields.references.name",
+    "editor.fields.projects.url",
+    "editor.fields.projects.entity",
+    "editor.fields.meta.version"
+  ])
+};
 
 const english = flatten(en as Catalog);
 
@@ -69,8 +94,9 @@ describe.each(LOCALES)("the %s catalog", (locale, catalog) => {
   });
 
   it("leaves no key untranslated", () => {
+    const verbatim = VERBATIM[locale] ?? new Set<string>();
     const untranslated = [...english].filter(
-      ([key, value]) => !SHARED_VERBATIM.has(key) && translated.get(key) === value
+      ([key, value]) => !verbatim.has(key) && translated.get(key) === value
     );
 
     expect(untranslated.map(([key]) => key)).toEqual([]);
