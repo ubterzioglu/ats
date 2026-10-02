@@ -1,0 +1,7 @@
+{
+  "tool_name": "PowerShell",
+  "tool_input_preview": "{\"command\":\"cd C:\\\\temp_private\\\\ats\\\\apps\\\\web\\\\components; $p='ai-consent.tsx'; $t=Get-Content $p -Raw;\\n$t=$t.Replace('import { useCallback, useRef, useState } from \\\"react\\\";', 'import { useTransl...",
+  "error": "Exit code 1\nInvoke-Expression: The string is missing the terminator: \".",
+  "timestamp": "2026-10-02T14:49:11.372Z",
+  "retry_count": 1
+}

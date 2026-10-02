@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import type { KeywordReport, KeywordTerm, KeywordTier } from "@/types/analysis";
 
 import type { PartialMatchHint } from "@/lib/ai/semantic-match";
@@ -22,13 +24,8 @@ const CHIP_STYLE: Readonly<Record<Status, string>> = {
   missing: "border-mark/35 bg-mark/[0.06] text-mark"
 };
 
-const STATUS_LABEL: Readonly<Record<Status, string>> = {
-  found: "FOUND",
-  alias: "ALIAS",
-  missing: "MISSING"
-};
-
 function TermChip({ term, hint }: { readonly term: KeywordTerm; readonly hint?: PartialMatchHint }) {
+  const t = useTranslations("keywordPanel");
   const status = statusOf(term);
   return (
     <li
@@ -38,32 +35,43 @@ function TermChip({ term, hint }: { readonly term: KeywordTerm; readonly hint?: 
       )}
       title={
         hint
-          ? `PARTIAL: the CV says something close - "${hint.passage}" (${Math.round(
-              hint.similarity * 100
-            )}% similar)`
+          ? t("titlePartial", {
+              passage: hint.passage,
+              percent: Math.round(hint.similarity * 100)
+            })
           : status === "alias"
-            ? `matched in the CV as "${term.alias}"`
+            ? t("titleAlias", { alias: term.alias ?? "" })
             : status === "missing"
-              ? "never appears in the CV"
+              ? t("titleMissing")
               : undefined
       }
     >
       {term.term}
       {status === "found" && term.hits > 1 ? <span className="ml-1 text-muted">×{term.hits}</span> : null}
       <span className="ml-1.5 text-[10px] tracking-wide text-muted">
-        {hint ? "PARTIAL" : STATUS_LABEL[status]}
+        {hint
+          ? t("statusPartial")
+          : status === "found"
+            ? t("statusFound")
+            : status === "alias"
+              ? t("statusAlias")
+              : t("statusMissing")}
       </span>
     </li>
   );
 }
 
-const TIER_GROUPS: ReadonlyArray<{ readonly tier: KeywordTier | undefined; readonly label: string }> = [
-  { tier: "required", label: "The ad requires these" },
-  { tier: undefined, label: "Also indexed from the ad" },
-  { tier: "preferred", label: "Nice to have according to the ad" }
+const TIER_GROUPS: ReadonlyArray<{
+  readonly tier: KeywordTier | undefined;
+  readonly labelKey: "tierRequired" | "tierOther" | "tierPreferred";
+}> = [
+  { tier: "required", labelKey: "tierRequired" },
+  { tier: undefined, labelKey: "tierOther" },
+  { tier: "preferred", labelKey: "tierPreferred" }
 ];
 
 export function KeywordPanel({ report, hints }: KeywordPanelProps) {
+  const t = useTranslations("keywordPanel");
   const matchedFromAd = report.source === "job-description";
   const coverage = Math.round(report.coverage * 100);
   const all = matchedFromAd ? [...report.matched, ...report.missing] : [];
@@ -73,12 +81,12 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
     <section className="sheet overflow-hidden" aria-labelledby="keywords-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
         <h2 id="keywords-heading" className="text-base font-semibold">
-          {matchedFromAd ? "Terms from the job ad" : "Skill terms found in the CV"}
+          {t(matchedFromAd ? "headingFromAd" : "headingBaseline")}
         </h2>
         {matchedFromAd ? (
           <span className="font-mono text-sm tabular-nums">
             {coverage}
-            <span className="text-muted"> % covered</span>
+            <span className="text-muted">{t("covered")}</span>
           </span>
         ) : null}
       </div>
@@ -91,14 +99,14 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
 
       <div className="space-y-6 px-5 py-5 sm:px-6">
         {matchedFromAd
-          ? TIER_GROUPS.map(({ tier, label }) => {
+          ? TIER_GROUPS.map(({ tier, labelKey }) => {
               const terms = all
                 .filter((term) => term.tier === tier)
                 .sort((a, b) => b.weight - a.weight);
               if (terms.length === 0) return null;
               return (
-                <div key={label}>
-                  <h3 className="text-xs font-medium text-muted">{label}</h3>
+                <div key={labelKey}>
+                  <h3 className="text-xs font-medium text-muted">{t(labelKey)}</h3>
                   <ul className="mt-2.5 flex flex-wrap gap-1.5">
                     {terms.map((term) => (
                       <TermChip key={term.term} term={term} hint={hintByTerm.get(term.term)} />
@@ -111,10 +119,10 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
 
         {!matchedFromAd ? (
           <div>
-            <h3 className="text-xs font-medium text-muted">Recognised in the CV</h3>
+            <h3 className="text-xs font-medium text-muted">{t("recognised")}</h3>
             {report.matched.length === 0 ? (
               <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
-                No recognisable skill terms. Name the tools and methods you work with.
+                {t("noTerms")}
               </p>
             ) : (
               <ul className="mt-2.5 flex flex-wrap gap-1.5">
@@ -130,7 +138,7 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
               </ul>
             )}
             <p className="mt-6 max-w-measure text-sm leading-relaxed text-muted">
-              Paste a job ad to replace this inventory with a real match score against one vacancy.
+              {t("pasteAd")}
             </p>
           </div>
         ) : null}

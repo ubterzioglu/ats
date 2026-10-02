@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Fragment, useEffect, useRef } from "react";
 
 import { cx } from "@/lib/ui";
@@ -49,6 +50,7 @@ function evidenceNeedle(markedLine: string): string {
  * a person can act on.
  */
 export function ParserView({ text, highlights, caption, markedLine }: ParserViewProps) {
+  const t = useTranslations("parserView");
   const markedRef = useRef<HTMLSpanElement | null>(null);
   const clipped = text.length > MAX_RENDERED;
   const body = clipped ? text.slice(0, MAX_RENDERED) : text;
@@ -69,7 +71,7 @@ export function ParserView({ text, highlights, caption, markedLine }: ParserView
     <section className="sheet flex min-h-0 flex-col overflow-hidden" aria-labelledby="parser-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
         <h2 id="parser-heading" className="text-base font-semibold">
-          What the parser read
+          {t("heading")}
         </h2>
         <span className="readout">{caption}</span>
       </div>
@@ -89,7 +91,7 @@ export function ParserView({ text, highlights, caption, markedLine }: ParserView
             {line.length === 0 ? " " : null}
           </span>
         ))}
-        {clipped ? "\n\n[…truncated for display]" : null}
+        {clipped ? `\n\n${t("truncated")}` : null}
       </pre>
     </section>
   );

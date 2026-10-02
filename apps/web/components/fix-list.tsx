@@ -1,5 +1,7 @@
+import { useTranslations } from "next-intl";
+
 import type { Finding } from "@/types/analysis";
-import { SEVERITY_EDGE, SEVERITY_LABEL, SEVERITY_TEXT } from "@/lib/ui";
+import { SEVERITY_EDGE, SEVERITY_TEXT } from "@/lib/ui";
 
 import { FindingExplainButton, type ExplanationView } from "./finding-explain";
 
@@ -10,12 +12,15 @@ interface FixListProps {
 }
 
 export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
+  const t = useTranslations("fixList");
+  const severity = useTranslations("severity");
+
   if (findings.length === 0) {
     return (
       <section className="sheet p-5 sm:p-6">
-        <h2 className="text-base font-semibold">Nothing to fix</h2>
+        <h2 className="text-base font-semibold">{t("emptyHeading")}</h2>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
-          Every check passed. Run the CV against the next job ad to see how the keyword match holds up.
+          {t("emptyBody")}
         </p>
       </section>
     );
@@ -27,10 +32,10 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
     <section className="sheet overflow-hidden" aria-labelledby="fixes-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
         <h2 id="fixes-heading" className="text-base font-semibold">
-          What to fix, most expensive first
+          {t("heading")}
         </h2>
         <span className="readout">
-          {findings.length} {findings.length === 1 ? "finding" : "findings"} · {recoverable} pts
+          {t("summary", { count: findings.length, points: recoverable })}
         </span>
       </div>
 
@@ -48,7 +53,7 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
                   <button
                     type="button"
                     className="text-left font-sans text-sm font-semibold underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
-                    title="Show this line in the parsed text"
+                    title={t("showLine")}
                     onClick={() => onSelectEvidence(finding.evidence?.[0] ?? "")}
                   >
                     {finding.title}
@@ -57,9 +62,9 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
                   <h3 className="font-sans text-sm font-semibold">{finding.title}</h3>
                 )}
                 <span className={`font-mono text-xs tabular-nums ${SEVERITY_TEXT[finding.severity]}`}>
-                  −{finding.cost} pts
+                  {t("cost", { cost: finding.cost })}
                 </span>
-                <span className="text-xs text-muted">{SEVERITY_LABEL[finding.severity]}</span>
+                <span className="text-xs text-muted">{severity(finding.severity)}</span>
               </div>
 
               <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{finding.detail}</p>
@@ -73,8 +78,8 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
               {finding.evidence && finding.evidence.length > 0 ? (
                 <details className="group mt-3">
                   <summary className="cursor-pointer list-none text-xs text-muted transition-colors hover:text-ink">
-                    <span className="group-open:hidden">Show what was found</span>
-                    <span className="hidden group-open:inline">Hide what was found</span>
+                    <span className="group-open:hidden">{t("showEvidence")}</span>
+                    <span className="hidden group-open:inline">{t("hideEvidence")}</span>
                   </summary>
                   <ul className="mt-2 space-y-1">
                     {finding.evidence.map((line) => (
@@ -82,7 +87,7 @@ export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
                         {onSelectEvidence ? (
                           <button
                             type="button"
-                            title="Show this line in the parsed text"
+                            title={t("showLine")}
                             onClick={() => onSelectEvidence(line)}
                             className="block w-full overflow-x-auto whitespace-pre rounded-chip bg-bed px-3 py-2 text-left font-mono text-xs text-muted transition-colors hover:bg-accent/15 hover:text-ink"
                           >

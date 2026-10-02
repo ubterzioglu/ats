@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 
 import { acquireModel } from "@/lib/ai/model";
@@ -21,6 +22,7 @@ interface DisplayTurn extends AskTurn {
  * only. Rendered only when a text-model tier is active.
  */
 export function ReportChat({ tier, result }: ReportChatProps) {
+  const t = useTranslations("reportChat");
   const [turns, setTurns] = useState<readonly DisplayTurn[]>([]);
   const [question, setQuestion] = useState("");
   const [busy, setBusy] = useState(false);
@@ -51,7 +53,7 @@ export function ReportChat({ tier, result }: ReportChatProps) {
       setTurns((current) => [...current, { role: "assistant", content: answer }]);
     } catch (cause) {
       if (!controller.signal.aborted) {
-        setError(cause instanceof Error ? cause.message : "The model could not answer.");
+        setError(cause instanceof Error ? cause.message : t("failed"));
         setTurns((current) => [...current, { role: "assistant", content: "", failed: true }]);
       }
     } finally {
@@ -69,11 +71,10 @@ export function ReportChat({ tier, result }: ReportChatProps) {
     <section className="sheet overflow-hidden" aria-labelledby="report-chat-heading">
       <div className="border-b border-line px-5 py-4 sm:px-6">
         <h2 id="report-chat-heading" className="text-base font-semibold">
-          Ask about this report
+          {t("heading")}
         </h2>
         <p className="mt-1 max-w-measure text-sm leading-relaxed text-muted">
-          The local model answers from the report below your score - not from the CV, and not from
-          anything beyond what the checks found.
+          {t("lede")}
         </p>
       </div>
 
@@ -82,12 +83,12 @@ export function ReportChat({ tier, result }: ReportChatProps) {
           {turns.map((turn, index) =>
             turn.failed ? (
               <li key={`turn-${index}`} className="px-5 py-3 text-sm text-mark sm:px-6">
-                No answer - see the error below.
+                {t("noAnswer")}
               </li>
             ) : (
               <li key={`turn-${index}`} className="px-5 py-3 sm:px-6">
                 <p className="font-mono text-xs uppercase tracking-wide text-muted">
-                  {turn.role === "user" ? "You" : "Model"}
+                  {t(turn.role === "user" ? "roleUser" : "roleModel")}
                 </p>
                 <p className="mt-1 max-w-measure text-sm leading-relaxed">{turn.content}</p>
               </li>
@@ -103,17 +104,17 @@ export function ReportChat({ tier, result }: ReportChatProps) {
           className="field min-w-0 flex-1 text-sm"
           value={question}
           onChange={(event) => setQuestion(event.target.value)}
-          placeholder={busy ? "Waiting for the model…" : "Why did keywords cost so much?"}
+          placeholder={t(busy ? "waiting" : "placeholder")}
           disabled={busy}
-          aria-label="Question about the report"
+          aria-label={t("inputLabel")}
         />
         {busy ? (
           <button type="button" className="btn-quiet" onClick={cancel}>
-            Cancel
+            {t("cancel")}
           </button>
         ) : (
           <button type="submit" className="btn" disabled={question.trim().length === 0}>
-            Ask
+            {t("ask")}
           </button>
         )}
       </form>

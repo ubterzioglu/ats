@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { detectTier, probeOllama } from "@/lib/ai/detect";
@@ -16,6 +17,7 @@ interface AiStatusProps {
  * probe in the product - a version ping to localhost, on a user action.
  */
 export function AiStatus({ onTierChange }: AiStatusProps) {
+  const t = useTranslations("aiStatus");
   const [statuses, setStatuses] = useState<TierStatus[] | null>(null);
   const [active, setActive] = useState<ModelTier>("none");
   const [probing, setProbing] = useState(false);
@@ -28,7 +30,7 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
   if (!statuses) {
     return (
       <section className="sheet px-5 py-4 sm:px-6">
-        <p className="text-sm text-muted">Checking what this machine can run locally…</p>
+        <p className="text-sm text-muted">{t("detecting")}</p>
       </section>
     );
   }
@@ -45,9 +47,7 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
         )
       );
       if (!reachable) {
-        setNote(
-          "Ollama did not answer on localhost:11434. Start it, and set OLLAMA_ORIGINS to include this site."
-        );
+        setNote(t("ollamaUnreachable"));
         return;
       }
     }
@@ -58,11 +58,10 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
   return (
     <section className="sheet px-5 py-4 sm:px-6" aria-labelledby="ai-tier-heading">
       <h2 id="ai-tier-heading" className="text-sm font-semibold">
-        Text model
+        {t("heading")}
       </h2>
       <p className="mt-1 max-w-measure text-xs leading-relaxed text-muted">
-        Rewriting and explanations need a text model. Every option runs on your machine; none of
-        them sees your CV until you ask for one of them.
+        {t("lede")}
       </p>
 
       <ul className="mt-3 space-y-2">
@@ -85,10 +84,12 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
                 <span className="flex flex-wrap items-baseline gap-x-2">
                   <span className="text-sm font-medium">{status.label}</span>
                   {status.sizeMb ? (
-                    <span className="font-mono text-xs text-muted">~{status.sizeMb} MB</span>
+                    <span className="font-mono text-xs text-muted">
+                      {t("size", { sizeMb: status.sizeMb })}
+                    </span>
                   ) : null}
                   {active === status.tier ? (
-                    <span className="font-mono text-xs text-good">active</span>
+                    <span className="font-mono text-xs text-good">{t("active")}</span>
                   ) : null}
                 </span>
                 <span className="mt-0.5 block text-xs leading-relaxed text-muted">
@@ -100,7 +101,7 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
         })}
       </ul>
 
-      {probing ? <p className="mt-2 text-xs text-muted">Probing localhost:11434…</p> : null}
+      {probing ? <p className="mt-2 text-xs text-muted">{t("probing")}</p> : null}
       {note ? <p className="mt-2 text-xs text-caution">{note}</p> : null}
     </section>
   );

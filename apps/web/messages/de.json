@@ -2,6 +2,9 @@
   "brand": {
     "name": "ats readability"
   },
+  "languageSwitcher": {
+    "label": "Language"
+  },
   "metadata": {
     "defaultTitle": "ATS readability — see your CV the way the parser does",
     "titleTemplate": "%s · ATS readability",
@@ -73,6 +76,190 @@
     "heading": "Nothing here",
     "body": "A shared report lives for 30 days and then deletes itself. This one has either expired or never existed.",
     "cta": "Analyze a CV"
+  },
+  "analyzer": {
+    "sections": "Sections",
+    "tabInput": "Document and job ad",
+    "tabReport": "Report",
+    "startOver": "Start over",
+    "scoreAnyway": "Score anyway",
+    "backToText": "Back to the text",
+    "cvHeading": "The CV",
+    "cvLede": "Upload the exact file you send to employers. Whatever comes out below is what a parser gets.",
+    "extractedLabel": "Extracted text — edit it if something is off",
+    "extractedPlaceholder": "Paste the CV text here if you would rather not upload a file.",
+    "adHeading": "The job ad",
+    "adLede": "Optional, and the single biggest change to the result. With an ad the keyword score is measured against that vacancy instead of a generic skill list.",
+    "adPlaceholder": "Paste the full posting, including the requirements list.",
+    "readingFile": "Reading the file…",
+    "analyze": "Analyze",
+    "previewLabel": "preview",
+    "previewOutOf": "/100",
+    "clear": "Clear",
+    "downloadReport": "Download report",
+    "copied": "Copied",
+    "copyAsText": "Copy as text",
+    "creatingLink": "Creating link…",
+    "createShareLink": "Create share link",
+    "editAndRerun": "Edit and re-run",
+    "shareNote": "Shareable for 30 days, scores only — no CV text is stored:",
+    "parserCaption": "{words} words · {lines} lines · {language}",
+    "errors": {
+      "fileUnreadable": "That file could not be read.",
+      "tooShort": "Add the CV text first — at least a few lines are needed to judge anything.",
+      "analysisFailed": "The analysis could not be completed.",
+      "clipboard": "The clipboard is not available here. Download the report instead.",
+      "shareAuthRequired": "Sign in to create a share link. The analysis itself needs no account.",
+      "shareEnvMissing": "Sharing needs Supabase credentials. Everything else works without them.",
+      "shareFailed": "The link could not be created. The report is still yours to download."
+    }
+  },
+  "dataControls": {
+    "heading": "Stored on this device",
+    "counting": "Counting what is stored here…",
+    "holds": "This browser holds {what}. Your CV is not among it: nothing here keeps the document or any line from it.",
+    "nothing": "nothing",
+    "history": "saved scores",
+    "meta": "settings",
+    "delete": "Delete local data",
+    "confirm": "Deleting removes {what}. It cannot be undone.",
+    "confirmDelete": "Delete {count} records",
+    "keep": "Keep them",
+    "deleting": "Deleting…",
+    "deleted": "Deleted {count} records. This browser now holds nothing from this site.",
+    "countAgain": "Count again"
+  },
+  "rewriteDiff": {
+    "heading": "Rewrite weak bullets",
+    "lede": "The local model restates {count, plural, one {# responsibility bullet} other {# responsibility bullets}} as claims. Invented facts are filtered out before you see them; everything unknown stays a visible [quantify: …].",
+    "cancel": "Cancel",
+    "propose": "Propose rewrites",
+    "warmingUp": "Warming up the model…",
+    "progress": "{percent}% {text}",
+    "nothingUsable": "The model returned nothing usable. The deterministic drafts below still work.",
+    "rewriteFailed": "Rewriting failed.",
+    "stale": "The text changed since this proposal was made; regenerate the proposals.",
+    "apply": "Apply and re-score",
+    "discard": "Discard"
+  },
+  "keywordPanel": {
+    "headingFromAd": "Terms from the job ad",
+    "headingBaseline": "Skill terms found in the CV",
+    "covered": " % covered",
+    "tierRequired": "The ad requires these",
+    "tierOther": "Also indexed from the ad",
+    "tierPreferred": "Nice to have according to the ad",
+    "recognised": "Recognised in the CV",
+    "noTerms": "No recognisable skill terms. Name the tools and methods you work with.",
+    "pasteAd": "Paste a job ad to replace this inventory with a real match score against one vacancy.",
+    "statusFound": "FOUND",
+    "statusAlias": "ALIAS",
+    "statusMissing": "MISSING",
+    "statusPartial": "PARTIAL",
+    "titlePartial": "PARTIAL: the CV says something close - \"{passage}\" ({percent}% similar)",
+    "titleAlias": "matched in the CV as \"{alias}\"",
+    "titleMissing": "never appears in the CV"
+  },
+  "reportChat": {
+    "heading": "Ask about this report",
+    "lede": "The local model answers from the report below your score - not from the CV, and not from anything beyond what the checks found.",
+    "noAnswer": "No answer - see the error below.",
+    "roleUser": "You",
+    "roleModel": "Model",
+    "waiting": "Waiting for the model…",
+    "placeholder": "Why did keywords cost so much?",
+    "inputLabel": "Question about the report",
+    "cancel": "Cancel",
+    "ask": "Ask",
+    "failed": "The model could not answer."
+  },
+  "severity": {
+    "critical": "Blocks parsing",
+    "high": "Costly",
+    "medium": "Worth fixing",
+    "low": "Polish"
+  },
+  "scoreRail": {
+    "outOf": "/100",
+    "previousRun": "the previous run",
+    "lastVisit": "your last visit",
+    "gainedSince": "gained since {label}",
+    "lostSince": "lost since {label}",
+    "meterLabel": "{dimension}: {score} of {max}"
+  },
+  "fixList": {
+    "emptyHeading": "Nothing to fix",
+    "emptyBody": "Every check passed. Run the CV against the next job ad to see how the keyword match holds up.",
+    "heading": "What to fix, most expensive first",
+    "summary": "{count, plural, one {# finding} other {# findings}} · {points} pts",
+    "cost": "−{cost} pts",
+    "showLine": "Show this line in the parsed text",
+    "showEvidence": "Show what was found",
+    "hideEvidence": "Hide what was found"
+  },
+  "aiStatus": {
+    "detecting": "Checking what this machine can run locally…",
+    "heading": "Text model",
+    "lede": "Rewriting and explanations need a text model. Every option runs on your machine; none of them sees your CV until you ask for one of them.",
+    "size": "~{sizeMb} MB",
+    "active": "active",
+    "probing": "Probing localhost:11434…",
+    "ollamaUnreachable": "Ollama did not answer on localhost:11434. Start it, and set OLLAMA_ORIGINS to include this site."
+  },
+  "aiConsent": {
+    "ready": "Semantic model ready.",
+    "readyDetail": "Hints below run locally against the parsed text; scores are unaffected.",
+    "heading": "Semantic hints (optional)",
+    "lede": "A small language model can point out near-misses the literal matcher cannot see - like a CV saying “Postgres” where the ad says “PostgreSQL”. It runs entirely in your browser ({model}, about {sizeMb} MB, downloaded once and cached). Your CV text is never sent anywhere, and scores never change - hints are advice, not measurement.",
+    "progressLabel": "Model download progress",
+    "cancel": "Cancel",
+    "tryAgain": "Try again",
+    "download": "Download model",
+    "downloadFailed": "The model could not be downloaded."
+  },
+  "parserView": {
+    "heading": "What the parser read",
+    "truncated": "[…truncated for display]"
+  },
+  "parseSweep": {
+    "caption": "Two columns and a sidebar, read top to bottom",
+    "fileReadout": "pdf · 1 page",
+    "sample": {
+      "name": "John Doe",
+      "role": "QA Engineer · SDET",
+      "experience": "Experience",
+      "skills": "Skills",
+      "education": "Education",
+      "extracted": "JOHN DOE QA Engineer | SDET\nSpringfield  john@example.com  +1 555 ...\n\nEXPERIENCE   Senior QA Engineer\nBuilt an API regression suite in Java and\nREST Assured; cut release testing from\nthree days to four hours.\nLed the migration of 240 manual cases to\nautomated coverage.\n\nSKILLS  Selenium, Java, REST Assured, CI/CD\n\nEDUCATION  BSc Computer Engineering, 2019"
+    }
+  },
+  "coverageMap": {
+    "heading": "What the CV never addresses",
+    "lede": "The ad in {chunks, plural, one {# chunk} other {# chunks}}, each compared against the whole CV by the local model. These stay below {threshold}% similarity to anything you wrote. Advice, not measurement - the score is unchanged.",
+    "allCovered": "Every part of the ad has a close counterpart in the CV.",
+    "bestMatch": "best match {percent}%",
+    "more": "{count} more weakly covered chunks."
+  },
+  "findingExplain": {
+    "explain": "Explain with the local model",
+    "loading": "Asking the local model…",
+    "error": "The model could not answer - try again"
+  },
+  "fixDrafts": {
+    "heading": "Rewrite drafts",
+    "ledeBefore": "Responsibility phrasing rewritten as a claim.",
+    "quantifyToken": "[quantify: …]",
+    "ledeAfter": "marks the part only you can fill in. Applying a draft re-runs the analysis so the score rail shows the difference.",
+    "apply": "Apply and re-score",
+    "more": "{count} more drafts appear as you resolve these."
+  },
+  "documentIntake": {
+    "pagesRead": "{source} · {pages, plural, one {# page} other {# pages}} read",
+    "drop": "Drop a CV here",
+    "formats": "PDF, DOCX or plain text, up to 10 MB. It is read in this browser and never sent anywhere.",
+    "reading": "Reading…",
+    "chooseAnother": "Choose another file",
+    "choose": "Choose a file"
   },
   "sharedReport": {
     "eyebrow": "shared report · {date}",

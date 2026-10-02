@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRef, useState, type DragEvent } from "react";
 
 import type { ExtractionResult } from "@/lib/extract";
@@ -14,6 +15,7 @@ interface DocumentIntakeProps {
 const ACCEPT = ".pdf,.docx,.txt,.md,application/pdf,text/plain";
 
 export function DocumentIntake({ extraction, busy, onFile }: DocumentIntakeProps) {
+  const t = useTranslations("documentIntake");
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
 
@@ -53,21 +55,23 @@ export function DocumentIntake({ extraction, busy, onFile }: DocumentIntakeProps
         <>
           <p className="font-mono text-sm text-ink">{extraction.fileName}</p>
           <p className="readout">
-            {extraction.source.toUpperCase()} · {extraction.pages} page
-            {extraction.pages === 1 ? "" : "s"} read
+            {t("pagesRead", {
+              source: extraction.source.toUpperCase(),
+              pages: extraction.pages
+            })}
           </p>
         </>
       ) : (
         <>
-          <p className="text-sm">Drop a CV here</p>
+          <p className="text-sm">{t("drop")}</p>
           <p className="max-w-[34ch] text-xs leading-relaxed text-muted">
-            PDF, DOCX or plain text, up to 10 MB. It is read in this browser and never sent anywhere.
+            {t("formats")}
           </p>
         </>
       )}
 
       <button type="button" className="btn-quiet mt-1" disabled={busy} onClick={() => inputRef.current?.click()}>
-        {busy ? "Reading…" : extraction ? "Choose another file" : "Choose a file"}
+        {t(busy ? "reading" : extraction ? "chooseAnother" : "choose")}
       </button>
     </div>
   );

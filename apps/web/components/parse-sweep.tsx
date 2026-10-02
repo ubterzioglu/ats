@@ -1,20 +1,6 @@
-const DESIGNED_SKILLS: readonly string[] = ["Selenium", "Java", "REST Assured", "CI/CD"];
+import { useTranslations } from "next-intl";
 
-const EXTRACTED: readonly string[] = [
-  "OZAN SARIBALIOGLU QA Engineer | SDET",
-  "Istanbul  ozan@example.com  +90 545 ...",
-  "",
-  "EXPERIENCE   Senior QA Engineer",
-  "Built an API regression suite in Java and",
-  "REST Assured; cut release testing from",
-  "three days to four hours.",
-  "Led the migration of 240 manual cases to",
-  "automated coverage.",
-  "",
-  "SKILLS  Selenium, Java, REST Assured, CI/CD",
-  "",
-  "EDUCATION  BSc Computer Engineering, 2019"
-];
+const DESIGNED_SKILLS: readonly string[] = ["Selenium", "Java", "REST Assured", "CI/CD"];
 
 /**
  * The product's whole argument in one image: a designed CV is swept by the
@@ -23,13 +9,15 @@ const EXTRACTED: readonly string[] = [
  * side by side — you watch one become the other.
  */
 export function ParseSweep() {
+  const t = useTranslations("parseSweep");
+
   return (
     <figure className="sheet relative overflow-hidden" aria-labelledby="sweep-caption">
       <div className="relative h-[18rem] sm:h-[19rem]">
         {/* What the parser yields. Sits underneath, revealed as the beam passes. */}
         <div className="absolute inset-0 overflow-hidden bg-bed/60 px-5 py-5 sm:px-6">
           <pre className="whitespace-pre-wrap font-mono text-[11px] leading-[1.75] text-muted sm:text-xs">
-            {EXTRACTED.join("\n")}
+            {t("sample.extracted")}
           </pre>
         </div>
 
@@ -38,14 +26,14 @@ export function ParseSweep() {
           <div className="flex gap-4">
             <div className="h-11 w-11 shrink-0 rounded-full bg-bed" />
             <div className="min-w-0 flex-1">
-              <p className="font-serif text-base font-semibold leading-tight">Ozan Sarıbalıoğlu</p>
-              <p className="text-[11px] text-muted">QA Engineer · SDET</p>
+              <p className="font-serif text-base font-semibold leading-tight">{t("sample.name")}</p>
+              <p className="text-[11px] text-muted">{t("sample.role")}</p>
             </div>
           </div>
 
           <div className="mt-5 grid grid-cols-[1fr_5.5rem] gap-5">
             <div className="space-y-3">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">Experience</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">{t("sample.experience")}</p>
               <div className="space-y-1.5">
                 <div className="h-1.5 w-full rounded-full bg-line" />
                 <div className="h-1.5 w-[92%] rounded-full bg-line" />
@@ -59,7 +47,7 @@ export function ParseSweep() {
             </div>
 
             <div className="space-y-2 border-l border-line pl-4">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">Skills</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">{t("sample.skills")}</p>
               {DESIGNED_SKILLS.map((skill) => (
                 <p key={skill} className="truncate text-[10px] text-muted">
                   {skill}
@@ -69,7 +57,7 @@ export function ParseSweep() {
           </div>
 
           <div className="mt-5">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">Education</p>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">{t("sample.education")}</p>
             <div className="mt-2.5 space-y-1.5">
               <div className="h-1.5 w-full rounded-full bg-line" />
               <div className="h-1.5 w-[80%] rounded-full bg-line" />
@@ -88,8 +76,8 @@ export function ParseSweep() {
         id="sweep-caption"
         className="flex items-center justify-between gap-4 border-t border-line px-5 py-3 text-xs text-muted sm:px-6"
       >
-        <span>Two columns and a sidebar, read top to bottom</span>
-        <span className="readout">pdf · 1 page</span>
+        <span>{t("caption")}</span>
+        <span className="readout">{t("fileReadout")}</span>
       </figcaption>
     </figure>
   );

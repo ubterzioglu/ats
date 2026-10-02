@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 
 import { createShareLink } from "@/app/actions";
@@ -40,6 +41,7 @@ interface AnalyzerProps {
 const MIN_CV_CHARS = 120;
 
 export function Analyzer({ sharingEnabled }: AnalyzerProps) {
+  const t = useTranslations("analyzer");
   const [cvText, setCvText] = useState("");
   const [jobAd, setJobAd] = useState("");
   const [extraction, setExtraction] = useState<ExtractionResult | null>(null);
@@ -83,19 +85,19 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       setCvText(output.text);
       setNotice(output.warning ?? null);
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "That file could not be read.");
+      setError(cause instanceof Error ? cause.message : t("errors.fileUnreadable"));
       setExtraction(null);
     } finally {
       setReading(false);
     }
-  }, []);
+  }, [t]);
 
   // Scoring runs here, in the browser. Sending the text to a server would break
   // the promise printed on the front page and in the privacy contract.
   const runAnalysis = useCallback(
     (force = false) => {
       if (cvText.trim().length < MIN_CV_CHARS) {
-        setError("Add the CV text first — at least a few lines are needed to judge anything.");
+        setError(t("errors.tooShort"));
         return;
       }
 
@@ -122,10 +124,10 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         // where that refusal is stated.
         void recordAnalysis(next);
       } catch (cause) {
-        setError(cause instanceof Error ? cause.message : "The analysis could not be completed.");
+        setError(cause instanceof Error ? cause.message : t("errors.analysisFailed"));
       }
     },
-    [cvText, jobAd, result]
+    [cvText, jobAd, result, t]
   );
 
   const highlights = useMemo(
@@ -232,7 +234,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
-      setError("The clipboard is not available here. Download the report instead.");
+      setError(t("errors.clipboard"));
     }
   }
 
@@ -246,14 +248,10 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         return;
       }
       if (outcome.state === "auth-required") {
-        setError("Sign in to create a share link. The analysis itself needs no account.");
+        setError(t("errors.shareAuthRequired"));
         return;
       }
-      setError(
-        outcome.state === "env-missing"
-          ? "Sharing needs Supabase credentials. Everything else works without them."
-          : "The link could not be created. The report is still yours to download."
-      );
+      setError(t(outcome.state === "env-missing" ? "errors.shareEnvMissing" : "errors.shareFailed"));
     });
   }
 
@@ -278,7 +276,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <nav
           className="inline-flex rounded-control border border-line bg-sheet p-1"
-          aria-label="Sections"
+          aria-label={t("sections")}
         >
           {(["input", "report"] as const).map((tab) => (
             <button
@@ -292,7 +290,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 view === tab ? "bg-ink text-sheet" : "text-muted hover:text-ink"
               )}
             >
-              {tab === "input" ? "Document and job ad" : "Report"}
+              {t(tab === "input" ? "tabInput" : "tabReport")}
               {tab === "report" && result ? (
                 <span
                   className={cx(
@@ -309,7 +307,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
         {result ? (
           <button type="button" className="text-sm text-muted transition-colors hover:text-ink" onClick={clearAll}>
-            Start over
+            {t("startOver")}
           </button>
         ) : null}
       </div>
@@ -334,10 +332,10 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           <p className="text-caution">{gate.reason}</p>
           <div className="mt-3 flex flex-wrap items-center gap-3">
             <button type="button" className="btn-quiet" onClick={() => runAnalysis(true)}>
-              Score anyway
+              {t("scoreAnyway")}
             </button>
             <button type="button" className="btn-quiet" onClick={() => setGate(null)}>
-              Back to the text
+              {t("backToText")}
             </button>
           </div>
         </div>
@@ -347,21 +345,21 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         <div className="grid gap-5 lg:grid-cols-2">
           <section className="sheet space-y-4 p-5 sm:p-6">
             <div>
-              <h2 className="text-base font-semibold">The CV</h2>
+              <h2 className="text-base font-semibold">{t("cvHeading")}</h2>
               <p className="mt-1.5 max-w-measure text-sm leading-relaxed text-muted">
-                Upload the exact file you send to employers. Whatever comes out below is what a parser gets.
+                {t("cvLede")}
               </p>
             </div>
 
             <DocumentIntake extraction={extraction} busy={reading} onFile={handleFile} />
 
             <label className="block">
-              <span className="text-sm font-medium">Extracted text — edit it if something is off</span>
+              <span className="text-sm font-medium">{t("extractedLabel")}</span>
               <textarea
                 className="field mt-2 min-h-[16rem] font-mono text-xs"
                 value={cvText}
                 onChange={(event) => setCvText(event.target.value)}
-                placeholder="Paste the CV text here if you would rather not upload a file."
+                placeholder={t("extractedPlaceholder")}
                 spellCheck={false}
               />
             </label>
@@ -369,10 +367,9 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
           <section className="sheet flex flex-col gap-4 p-5 sm:p-6">
             <div>
-              <h2 className="text-base font-semibold">The job ad</h2>
+              <h2 className="text-base font-semibold">{t("adHeading")}</h2>
               <p className="mt-1.5 max-w-measure text-sm leading-relaxed text-muted">
-                Optional, and the single biggest change to the result. With an ad the keyword score is
-                measured against that vacancy instead of a generic skill list.
+                {t("adLede")}
               </p>
             </div>
 
@@ -380,20 +377,21 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               className="field min-h-[20rem] flex-1 text-sm"
               value={jobAd}
               onChange={(event) => setJobAd(event.target.value)}
-              placeholder="Paste the full posting, including the requirements list."
+              placeholder={t("adPlaceholder")}
             />
 
             <div className="flex flex-wrap items-center gap-3">
               <button type="button" className="btn" onClick={() => runAnalysis()} disabled={reading}>
-                {reading ? "Reading the file…" : "Analyze"}
+                {t(reading ? "readingFile" : "analyze")}
               </button>
               {previewTotal !== null ? (
                 <span className="readout" aria-live="polite">
-                  preview <span className="text-ink tabular-nums">{previewTotal}</span>/100
+                  {t("previewLabel")} <span className="text-ink tabular-nums">{previewTotal}</span>
+                  {t("previewOutOf")}
                 </span>
               ) : null}
               <button type="button" className="btn-quiet" onClick={clearAll}>
-                Clear
+                {t("clear")}
               </button>
             </div>
           </section>
@@ -405,29 +403,29 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           <ScoreRail
             result={result}
             previous={previous ?? lastVisit}
-            comparisonLabel={previous ? "the previous run" : "your last visit"}
+            comparedTo={previous ? "previousRun" : "lastVisit"}
           />
 
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" className="btn-quiet" onClick={downloadReport}>
-              Download report
+              {t("downloadReport")}
             </button>
             <button type="button" className="btn-quiet" onClick={copyReport}>
-              {copied ? "Copied" : "Copy as text"}
+              {t(copied ? "copied" : "copyAsText")}
             </button>
             {sharingEnabled ? (
               <button type="button" className="btn-quiet" onClick={share} disabled={sharing}>
-                {sharing ? "Creating link…" : "Create share link"}
+                {t(sharing ? "creatingLink" : "createShareLink")}
               </button>
             ) : null}
             <button type="button" className="btn-quiet" onClick={() => setView("input")}>
-              Edit and re-run
+              {t("editAndRerun")}
             </button>
           </div>
 
           {shareUrl ? (
             <p className="rounded-control border border-line bg-sheet px-4 py-3 text-sm">
-              Shareable for 30 days, scores only — no CV text is stored:{" "}
+              {t("shareNote")}{" "}
               <a className="font-mono text-accent underline underline-offset-2" href={shareUrl}>
                 {shareUrl}
               </a>
@@ -462,7 +460,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 text={cvText}
                 highlights={highlights}
                 markedLine={markedLine}
-                caption={`${result.stats.words} words · ${result.stats.lines} lines · ${result.language.toUpperCase()}`}
+                caption={t("parserCaption", {
+                  words: result.stats.words,
+                  lines: result.stats.lines,
+                  language: result.language.toUpperCase()
+                })}
               />
               <DataControls />
             </div>

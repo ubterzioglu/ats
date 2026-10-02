@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import type { AnalysisResult, DimensionId } from "@/types/analysis";
 import { barTone } from "@/lib/ui";
 
@@ -14,17 +16,22 @@ export interface ScoreComparison {
 interface ScoreRailProps {
   readonly result: AnalysisResult;
   readonly previous?: ScoreComparison | null;
-  /** Says what the delta is measured against. Defaults to the previous run. */
-  readonly comparisonLabel?: string;
+  /** Names what the delta is measured against. Defaults to the previous run. */
+  readonly comparedTo?: "previousRun" | "lastVisit";
 }
 
-function Delta({ value, label }: { readonly value: number; readonly label: string }) {
+interface DeltaProps {
+  readonly value: number;
+  readonly title: string;
+}
+
+function Delta({ value, title }: DeltaProps) {
   if (value === 0) return null;
   const positive = value > 0;
   return (
     <span
       className={`ml-2 font-mono text-sm tabular-nums ${positive ? "text-good" : "text-mark"}`}
-      title={`${positive ? "gained" : "lost"} since ${label}`}
+      title={title}
     >
       {positive ? `+${value}` : `−${Math.abs(value)}`}
     </span>
@@ -36,12 +43,12 @@ function Delta({ value, label }: { readonly value: number; readonly label: strin
  * than as a dial, and every dimension carries the sentence that explains it.
  * On a re-run the rail also shows what each measurement moved by.
  */
-export function ScoreRail({
-  result,
-  previous,
-  comparisonLabel = "the previous run"
-}: ScoreRailProps) {
+export function ScoreRail({ result, previous, comparedTo = "previousRun" }: ScoreRailProps) {
+  const t = useTranslations("scoreRail");
   const totalDelta = previous ? result.total - previous.total : 0;
+
+  const deltaTitle = (value: number) =>
+    t(value > 0 ? "gainedSince" : "lostSince", { label: t(comparedTo) });
 
   return (
     <section className="sheet overflow-hidden" aria-labelledby="score-heading">
@@ -50,8 +57,8 @@ export function ScoreRail({
           <span className="font-mono text-6xl font-medium tabular-nums leading-none tracking-tight sm:text-7xl">
             {result.total}
           </span>
-          <span className="font-mono text-base text-muted">/100</span>
-          {previous ? <Delta value={totalDelta} label={comparisonLabel} /> : null}
+          <span className="font-mono text-base text-muted">{t("outOf")}</span>
+          {previous ? <Delta value={totalDelta} title={deltaTitle(totalDelta)} /> : null}
         </h2>
         <p className="max-w-measure text-sm leading-relaxed text-muted sm:text-right">{result.bandLabel}</p>
       </div>
@@ -79,7 +86,11 @@ export function ScoreRail({
                   aria-valuenow={dimension.score}
                   aria-valuemin={0}
                   aria-valuemax={dimension.max}
-                  aria-label={`${dimension.label}: ${dimension.score} of ${dimension.max}`}
+                  aria-label={t("meterLabel", {
+                    dimension: dimension.label,
+                    score: dimension.score,
+                    max: dimension.max
+                  })}
                 >
                   <div
                     className={`h-full ${barTone(dimension.score, dimension.max)}`}
@@ -91,7 +102,7 @@ export function ScoreRail({
 
               <dd className="readout sm:pt-0.5 sm:text-right">
                 <span className="text-ink">{dimension.score}</span>/{dimension.max}
-                {previousDimension ? <Delta value={delta} label={comparisonLabel} /> : null}
+                {previousDimension ? <Delta value={delta} title={deltaTitle(delta)} /> : null}
               </dd>
             </div>
           );

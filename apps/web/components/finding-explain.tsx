@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { Finding } from "@/types/analysis";
@@ -20,6 +21,7 @@ interface FindingExplainButtonProps {
  * explain callback, so this never appears there.
  */
 export function FindingExplainButton({ finding, explain }: FindingExplainButtonProps) {
+  const t = useTranslations("findingExplain");
   const [state, setState] = useState<"idle" | "loading" | "error">("idle");
   const [explanation, setExplanation] = useState<ExplanationView | null>(null);
 
@@ -49,11 +51,7 @@ export function FindingExplainButton({ finding, explain }: FindingExplainButtonP
           onClick={run}
           disabled={state === "loading"}
         >
-          {state === "loading"
-            ? "Asking the local model…"
-            : state === "error"
-              ? "The model could not answer - try again"
-              : "Explain with the local model"}
+          {t(state === "loading" ? "loading" : state === "error" ? "error" : "explain")}
         </button>
       )}
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback, useRef, useState } from "react";
 
 import {
@@ -22,6 +23,7 @@ type Phase = "idle" | "loading" | "ready" | "error";
  * for, and a cancel terminates the worker mid-download.
  */
 export function AiConsent({ onReady }: AiConsentProps) {
+  const t = useTranslations("aiConsent");
   const [phase, setPhase] = useState<Phase>("idle");
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +49,7 @@ export function AiConsent({ onReady }: AiConsentProps) {
       onReady(embedder);
     } catch (cause) {
       setPhase("error");
-      setError(cause instanceof Error ? cause.message : "The model could not be downloaded.");
+      setError(cause instanceof Error ? cause.message : t("downloadFailed"));
     }
   }
 
@@ -62,8 +64,7 @@ export function AiConsent({ onReady }: AiConsentProps) {
     return (
       <section className="sheet px-5 py-4 sm:px-6">
         <p className="text-sm text-muted">
-          <span className="font-medium text-good">Semantic model ready.</span> Hints below run
-          locally against the parsed text; scores are unaffected.
+          <span className="font-medium text-good">{t("ready")}</span> {t("readyDetail")}
         </p>
       </section>
     );
@@ -73,14 +74,10 @@ export function AiConsent({ onReady }: AiConsentProps) {
     <section className="sheet space-y-3 px-5 py-4 sm:px-6" aria-labelledby="ai-consent-heading">
       <div>
         <h2 id="ai-consent-heading" className="text-base font-semibold">
-          Semantic hints (optional)
+          {t("heading")}
         </h2>
         <p className="mt-1.5 max-w-measure text-sm leading-relaxed text-muted">
-          A small language model can point out near-misses the literal matcher cannot see - like a
-          CV saying &ldquo;Postgres&rdquo; where the ad says &ldquo;PostgreSQL&rdquo;. It runs
-          entirely in your browser ({EMBED_MODEL_LABEL}, about {EMBED_MODEL_SIZE_MB} MB, downloaded
-          once and cached). Your CV text is never sent anywhere, and scores never change - hints
-          are advice, not measurement.
+          {t("lede", { model: EMBED_MODEL_LABEL, sizeMb: EMBED_MODEL_SIZE_MB })}
         </p>
       </div>
 
@@ -94,20 +91,20 @@ export function AiConsent({ onReady }: AiConsentProps) {
               aria-valuenow={progress}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-label="Model download progress"
+              aria-label={t("progressLabel")}
             />
           </div>
           <div className="flex items-center gap-3">
             <span className="font-mono text-xs tabular-nums text-muted">{progress}%</span>
             <button type="button" className="btn-quiet" onClick={cancel}>
-              Cancel
+              {t("cancel")}
             </button>
           </div>
         </div>
       ) : (
         <div className="flex flex-wrap items-center gap-3">
           <button type="button" className="btn" onClick={download}>
-            {phase === "error" ? "Try again" : "Download model"}
+            {t(phase === "error" ? "tryAgain" : "download")}
           </button>
         </div>
       )}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useRef, useState } from "react";
 
 import { acquireModel } from "@/lib/ai/model";
@@ -36,6 +37,7 @@ function normalize(text: string): string {
  * score rail shows exactly what the sentence was worth.
  */
 export function RewriteDiff({ tier, cvText, knownSkills, onApply }: RewriteDiffProps) {
+  const t = useTranslations("rewriteDiff");
   const weak = useMemo(() => selectWeakBullets(cvText), [cvText]);
   const [proposals, setProposals] = useState<readonly PreparedRewrite[]>([]);
   const [busy, setBusy] = useState(false);
@@ -51,7 +53,7 @@ export function RewriteDiff({ tier, cvText, knownSkills, onApply }: RewriteDiffP
     abortRef.current = controller;
     try {
       const session = await acquireModel(tier, (event) =>
-        setProgress(`${event.progress}% ${event.text}`.trim())
+        setProgress(t("progress", { percent: event.progress, text: event.text }).trim())
       );
       const pairs: RewritePair[] = await rewriteBullets(
         session.model,
@@ -68,18 +70,18 @@ export function RewriteDiff({ tier, cvText, knownSkills, onApply }: RewriteDiffP
         })
       );
       if (byOriginal.size === 0) {
-        setError("The model returned nothing usable. The deterministic drafts below still work.");
+        setError(t("nothingUsable"));
       }
     } catch (cause) {
       if (!controller.signal.aborted) {
-        setError(cause instanceof Error ? cause.message : "Rewriting failed.");
+        setError(cause instanceof Error ? cause.message : t("rewriteFailed"));
       }
     } finally {
       setBusy(false);
       setProgress(null);
       abortRef.current = null;
     }
-  }, [tier, weak, knownSkills]);
+  }, [tier, weak, knownSkills, t]);
 
   function cancel() {
     abortRef.current?.abort();
@@ -90,7 +92,7 @@ export function RewriteDiff({ tier, cvText, knownSkills, onApply }: RewriteDiffP
   function apply(prepared: PreparedRewrite) {
     const next = applyRewrite(cvText, prepared.bullet, prepared.rewritten);
     if (!next) {
-      setError("The text changed since this proposal was made; regenerate the proposals.");
+      setError(t("stale"));
       return;
     }
     setProposals((current) =>
@@ -107,28 +109,26 @@ export function RewriteDiff({ tier, cvText, knownSkills, onApply }: RewriteDiffP
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4 sm:px-6">
         <div>
           <h2 id="rewrite-heading" className="text-base font-semibold">
-            Rewrite weak bullets
+            {t("heading")}
           </h2>
           <p className="mt-1 max-w-measure text-sm leading-relaxed text-muted">
-            The local model restates {weak.length} responsibility bullet
-            {weak.length === 1 ? "" : "s"} as claims. Invented facts are filtered out before you
-            see them; everything unknown stays a visible [quantify: …].
+            {t("lede", { count: weak.length })}
           </p>
         </div>
         {busy ? (
           <button type="button" className="btn-quiet" onClick={cancel}>
-            Cancel
+            {t("cancel")}
           </button>
         ) : (
           <button type="button" className="btn" onClick={propose} disabled={weak.length === 0}>
-            Propose rewrites
+            {t("propose")}
           </button>
         )}
       </div>
 
       {busy ? (
         <p className="px-5 py-4 font-mono text-xs text-muted sm:px-6">
-          {progress ?? "Warming up the model…"}
+          {progress ?? t("warmingUp")}
         </p>
       ) : null}
 
@@ -148,7 +148,7 @@ export function RewriteDiff({ tier, cvText, knownSkills, onApply }: RewriteDiffP
               </div>
               <div className="mt-3 flex flex-wrap gap-3">
                 <button type="button" className="btn-quiet" onClick={() => apply(prepared)}>
-                  Apply and re-score
+                  {t("apply")}
                 </button>
                 <button
                   type="button"
@@ -159,7 +159,7 @@ export function RewriteDiff({ tier, cvText, knownSkills, onApply }: RewriteDiffP
                     )
                   }
                 >
-                  Discard
+                  {t("discard")}
                 </button>
               </div>
             </li>
