@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { ParseSweep } from "@/components/parse-sweep";
+import { BenchPreview } from "@/components/bench-preview";
 
 const DIMENSIONS: ReadonlyArray<{ readonly key: string; readonly weight: number }> = [
   { key: "parseability", weight: 25 },
@@ -41,7 +41,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <main>
         <section className="grid items-center gap-10 py-10 lg:grid-cols-[1fr_minmax(0,27rem)] lg:gap-14 lg:py-16">
           <div>
-            <h1 className="max-w-[14ch] text-4xl font-semibold leading-[1.08] sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-[16ch] text-display font-semibold">
               {t("headline")}
             </h1>
 
@@ -63,13 +63,13 @@ export default async function HomePage({ params }: HomePageProps) {
             </p>
           </div>
 
-          <ParseSweep />
+          <BenchPreview />
         </section>
 
         <section className="border-t border-line py-12 lg:py-16" aria-labelledby="method-heading">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-16">
             <div className="lg:sticky lg:top-10 lg:self-start">
-              <h2 id="method-heading" className="text-2xl font-semibold">
+              <h2 id="method-heading" className="text-h2 font-semibold">
                 {t("methodHeading")}
               </h2>
               <p className="mt-4 max-w-measure text-sm leading-relaxed text-muted">
@@ -85,15 +85,16 @@ export default async function HomePage({ params }: HomePageProps) {
                 <div key={dimension.key}>
                   <div className="flex items-baseline justify-between gap-4">
                     <dt className="text-sm font-medium">{t(`dimensions.${dimension.key}.name`)}</dt>
-                    <span className="readout text-ink">{dimension.weight}</span>
+                    <span className="font-mono text-micro tabular-nums text-ink">
+                      {dimension.weight}
+                    </span>
                   </div>
-                  <div
-                    aria-hidden
-                    className="ruler mt-2 h-1.5 overflow-hidden rounded-full border border-line bg-bench"
-                  >
-                    <div className="h-full bg-action/70" style={{ width: `${dimension.weight}%` }} />
+                  {/* A weight, not a score: drawn in ink rather than in the
+                      action colour, which belongs to things you can press. */}
+                  <div aria-hidden className="mt-2 h-1 overflow-hidden rounded-chip bg-bench-sunk">
+                    <div className="h-full bg-ink/70" style={{ width: `${dimension.weight}%` }} />
                   </div>
-                  <dd className="mt-2.5 max-w-measure text-sm leading-relaxed text-muted">
+                  <dd className="mt-3 max-w-measure text-sm leading-relaxed text-muted">
                     {t(`dimensions.${dimension.key}.what`)}
                   </dd>
                 </div>

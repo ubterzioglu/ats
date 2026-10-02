@@ -227,16 +227,24 @@
     "heading": "Was der Parser gelesen hat",
     "truncated": "[…für die Anzeige gekürzt]"
   },
-  "parseSweep": {
-    "caption": "Zwei Spalten und eine Seitenleiste, von oben nach unten gelesen",
-    "fileReadout": "pdf · 1 Seite",
-    "sample": {
-      "name": "Jonas Weber",
-      "role": "QA-Ingenieur · SDET",
-      "experience": "Berufserfahrung",
-      "skills": "Kenntnisse",
-      "education": "Ausbildung",
-      "extracted": "JONAS WEBER QA-Ingenieur | SDET\nMünchen  jonas@beispiel.de  +49 151 ...\n\nBERUFSERFAHRUNG   Senior QA-Ingenieur\nBaute eine API-Regressionssuite in Java und\nREST Assured auf; verkürzte den Releasetest\nvon drei Tagen auf vier Stunden.\nLeitete die Migration von 240 manuellen\nFällen in die Automatisierung.\n\nKENNTNISSE  Selenium, Java, REST Assured, CI/CD\n\nAUSBILDUNG  B.Sc. Technische Informatik, 2019"
+  "benchPreview": {
+    "outOf": "/100",
+    "potential": "{score}, sobald diese behoben sind",
+    "worth": "+{points}",
+    "caption": "Ein echter Bericht, sortiert nach dem Wert jeder Korrektur.",
+    "items": {
+      "columns": {
+        "title": "Zwei Spalten zerstören die Textebene",
+        "evidence": "Senior QA-Ingenieur    München    2021 - heute"
+      },
+      "phone": {
+        "title": "Keine Telefonnummer",
+        "evidence": "jonas.weber@beispiel.de · linkedin.com/in/jonasweber"
+      },
+      "kubernetes": {
+        "title": "\"Kubernetes\" kommt nicht vor",
+        "evidence": "die Anzeige nennt es viermal, zweimal unter Anforderungen"
+      }
     }
   },
   "coverageMap": {

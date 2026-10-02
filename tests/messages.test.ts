@@ -40,10 +40,14 @@ const SHARED_VERBATIM: ReadonlySet<string> = new Set([
   "notFound.code",
   "analyzer.previewOutOf",
   "scoreRail.outOf",
+  "benchPreview.outOf",
+  "benchPreview.worth",
   "aiStatus.size",
   "fixDrafts.quantifyToken",
-  // Turkish for "Model" is "Model". A real collision, not a missed string.
-  "reportChat.roleModel"
+  // Turkish for "Model" is "Model", and German for "System" is "System".
+  // Real collisions, not missed strings.
+  "reportChat.roleModel",
+  "theme.system"
 ]);
 
 const english = flatten(en as Catalog);

@@ -227,16 +227,24 @@
     "heading": "What the parser read",
     "truncated": "[…truncated for display]"
   },
-  "parseSweep": {
-    "caption": "Two columns and a sidebar, read top to bottom",
-    "fileReadout": "pdf · 1 page",
-    "sample": {
-      "name": "John Doe",
-      "role": "QA Engineer · SDET",
-      "experience": "Experience",
-      "skills": "Skills",
-      "education": "Education",
-      "extracted": "JOHN DOE QA Engineer | SDET\nSpringfield  john@example.com  +1 555 ...\n\nEXPERIENCE   Senior QA Engineer\nBuilt an API regression suite in Java and\nREST Assured; cut release testing from\nthree days to four hours.\nLed the migration of 240 manual cases to\nautomated coverage.\n\nSKILLS  Selenium, Java, REST Assured, CI/CD\n\nEDUCATION  BSc Computer Engineering, 2019"
+  "benchPreview": {
+    "outOf": "/100",
+    "potential": "{score} once these are fixed",
+    "worth": "+{points}",
+    "caption": "A real report, ordered by what each fix is worth.",
+    "items": {
+      "columns": {
+        "title": "Two columns break the text layer",
+        "evidence": "Senior QA Engineer    Istanbul    2021 - present"
+      },
+      "phone": {
+        "title": "No phone number",
+        "evidence": "ayse.yilmaz@example.com · linkedin.com/in/ayseyilmaz"
+      },
+      "kubernetes": {
+        "title": "\"Kubernetes\" never appears",
+        "evidence": "the ad names it four times, twice under requirements"
+      }
     }
   },
   "coverageMap": {

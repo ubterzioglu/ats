@@ -227,16 +227,24 @@
     "heading": "Ayrıştırıcının okuduğu",
     "truncated": "[…görüntü için kısaltıldı]"
   },
-  "parseSweep": {
-    "caption": "İki sütun ve bir kenar çubuğu, yukarıdan aşağıya okunuyor",
-    "fileReadout": "pdf · 1 sayfa",
-    "sample": {
-      "name": "Ayşe Yılmaz",
-      "role": "Test Mühendisi · SDET",
-      "experience": "Deneyim",
-      "skills": "Beceriler",
-      "education": "Eğitim",
-      "extracted": "AYŞE YILMAZ Test Mühendisi | SDET\nİstanbul  ayse@ornek.com  +90 555 ...\n\nDENEYİM   Kıdemli Test Mühendisi\nJava ve REST Assured ile bir API regresyon\npaketi kurdu; sürüm testini üç günden\ndört saate indirdi.\n240 manuel senaryonun otomasyona\ngeçişini yönetti.\n\nBECERİLER  Selenium, Java, REST Assured, CI/CD\n\nEĞİTİM  Bilgisayar Mühendisliği Lisans, 2019"
+  "benchPreview": {
+    "outOf": "/100",
+    "potential": "bunlar düzelince {score}",
+    "worth": "+{points}",
+    "caption": "Gerçek bir rapor, her düzeltmenin değerine göre sıralanmış.",
+    "items": {
+      "columns": {
+        "title": "İki sütun metin katmanını bozuyor",
+        "evidence": "Kıdemli Test Mühendisi    İstanbul    2021 - halen"
+      },
+      "phone": {
+        "title": "Telefon numarası yok",
+        "evidence": "ayse.yilmaz@ornek.com · linkedin.com/in/ayseyilmaz"
+      },
+      "kubernetes": {
+        "title": "\"Kubernetes\" hiç geçmiyor",
+        "evidence": "ilan dört kez anıyor, ikisi gereksinimler altında"
+      }
     }
   },
   "coverageMap": {
