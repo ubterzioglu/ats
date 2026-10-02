@@ -33,6 +33,9 @@ const BUZZWORD_RX =
 const HEDGING_RX =
   /(familiar with|exposed to|exposure to|some experience with|basic understanding of|working knowledge of|have used|have worked with|helped to|tried to|participated in|took part in|played a role in|had a hand in|got introduced to|contributed somewhat|grundkenntnisse|basiskenntnisse|erste erfahrungen|erste erfahrung|einblicke in|mitgewirkt|unterstutzung bei|unterstützung bei|temel duzeyde|temel düzeyde|temel seviye|asinalik|aşinalık|bilgi sahibi)/i;
 
+const INFLATED_RX =
+  /(spearheaded|leveraged|utilized|utilised|harnessed|in order to|tasked with|due to the fact that|on a daily basis)/gi;
+
 const FIRST_PERSON_RX = /\b(i|my|me|ich|mein|meine|meinen|ben|benim)\b/gi;
 
 const QUANTIFIED_RX =
@@ -142,6 +145,19 @@ export function scoreImpact(context: ScoreContext): DimensionOutcome {
       detail: `${generic} bullet(s) still open with a responsibility phrase.`,
       fix: "Swap them for an action verb.",
       cost: 1
+    });
+  }
+
+  const inflated = [...new Set((raw.match(INFLATED_RX) ?? []).map((match) => match.toLowerCase()))];
+  if (inflated.length > 0) {
+    drafts.push({
+      id: "impact.inflated-language",
+      severity: "low",
+      title: "Inflated verbs and filler padding",
+      detail: `${inflated.join(", ")} add words without adding facts. Plain verbs read as more credible, and shorter bullets survive the six-second scan.`,
+      fix: 'Swap each one for the plain verb: "led", "used", "to". Delete the filler outright.',
+      cost: 1,
+      evidence: inflated.slice(0, 5)
     });
   }
 
