@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 
 import { createShareLink } from "@/app/actions";
+import { buildCoverageMap, type CoverageMapReport } from "@/lib/ai/coverage-map";
 import type { Embedder } from "@/lib/ai/embeddings";
 import { findPartialMatches, toPassages, type PartialMatchHint } from "@/lib/ai/semantic-match";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
@@ -13,6 +14,7 @@ import { cx } from "@/lib/ui";
 import type { AnalysisResult } from "@/types/analysis";
 
 import { AiConsent } from "./ai-consent";
+import { CoverageMap } from "./coverage-map";
 import { DocumentIntake } from "./document-intake";
 import { FixDrafts } from "./fix-drafts";
 import { FixList } from "./fix-list";
@@ -41,6 +43,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [markedLine, setMarkedLine] = useState<string | null>(null);
   const [embedder, setEmbedder] = useState<Embedder | null>(null);
   const [hints, setHints] = useState<readonly PartialMatchHint[]>([]);
+  const [coverage, setCoverage] = useState<CoverageMapReport | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -89,6 +92,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         setPrevious(result);
         setResult(next);
         setHints([]);
+        setCoverage(null);
         setView("report");
       } catch (cause) {
         setError(cause instanceof Error ? cause.message : "The analysis could not be completed.");
@@ -108,22 +112,36 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   useEffect(() => {
     if (!embedder || !result || result.keywords.source !== "job-description") return;
     const missing = result.keywords.missing.map((term) => term.term);
-    if (missing.length === 0) {
-      setHints([]);
-      return;
-    }
+    if (missing.length === 0) setHints([]);
     let cancelled = false;
-    findPartialMatches(embedder, missing, toPassages(cvText))
-      .then((found) => {
-        if (!cancelled) setHints(found);
-      })
-      .catch(() => {
-        if (!cancelled) setHints([]);
-      });
+
+    const hintWork =
+      missing.length === 0
+        ? Promise.resolve()
+        : findPartialMatches(embedder, missing, toPassages(cvText))
+            .then((found) => {
+              if (!cancelled) setHints(found);
+            })
+            .catch(() => {
+              if (!cancelled) setHints([]);
+            });
+
+    const coverageWork =
+      jobAd.trim().length < MIN_CV_CHARS
+        ? Promise.resolve()
+        : buildCoverageMap(embedder, cvText, jobAd)
+            .then((report) => {
+              if (!cancelled) setCoverage(report);
+            })
+            .catch(() => {
+              if (!cancelled) setCoverage(null);
+            });
+
+    void Promise.allSettled([hintWork, coverageWork]);
     return () => {
       cancelled = true;
     };
-  }, [embedder, result, cvText]);
+  }, [embedder, result, cvText, jobAd]);
 
   // Applying a rewrite draft edits the text and immediately re-measures it,
   // so the score rail can show what that one sentence was worth.
@@ -210,6 +228,8 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setNotice(null);
     setGate(null);
     setMarkedLine(null);
+    setHints([]);
+    setCoverage(null);
     setError(null);
     setView("input");
   }
@@ -380,6 +400,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             <div className="space-y-5">
               <KeywordPanel report={result.keywords} hints={hints} />
               <AiConsent onReady={setEmbedder} />
+              {coverage && coverage.adChunks > 0 ? <CoverageMap report={coverage} /> : null}
               <ParserView
                 text={cvText}
                 highlights={highlights}
