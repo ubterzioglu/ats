@@ -7,6 +7,8 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["tests/**/*.test.ts"]
+    // The suite lives at the repo root, one level above this workspace, while
+    // the `@/` alias above still resolves into it.
+    include: ["../../tests/**/*.test.ts"]
   }
 });
