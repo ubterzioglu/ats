@@ -45,7 +45,7 @@ Nice to have
     ],
     acceptable: [
       "terraform", "prometheus", "grafana", "observability", "payments", "backend",
-      "apis", "event", "streams", "fraud", "detection", "platform", "production",
+      "api", "event", "streams", "fraud", "detection", "platform", "production",
       "development", "schemas", "mobile", "fintech"
     ],
     forbidden: ["r"]
@@ -78,7 +78,8 @@ Preferred
     ],
     acceptable: [
       "kafka", "pipelines", "analytics", "streaming", "batch", "reporting", "data",
-      "quality", "orchestration", "analysts", "platform", "tooling", "jobs"
+      "quality", "orchestration", "analysts", "platform", "tooling", "jobs",
+      "business intelligence"
     ],
     forbidden: []
   },
@@ -110,7 +111,7 @@ Wünschenswert
     ],
     acceptable: [
       "playwright", "docker", "api", "pipelines", "tests", "testfälle", "integration",
-      "qualitätssicherung", "zertifizierung", "produktteam"
+      "quality assurance", "zertifizierung", "produktteam"
     ],
     forbidden: []
   },
@@ -176,7 +177,8 @@ Bonus
     acceptable: [
       "golang", "infrastructure", "incident", "response", "postmortems", "platform",
       "engineering", "networking", "scripting", "clusters", "cloud", "marketplace",
-      "reliability", "load", "balancing", "internals", "code", "optimisation", "cost"
+      "reliability", "load", "balancing", "internals", "code", "optimisation", "cost",
+      "infrastructure as code"
     ],
     forbidden: []
   }

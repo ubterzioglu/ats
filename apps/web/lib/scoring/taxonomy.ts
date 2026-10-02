@@ -14,18 +14,21 @@ export const SKILL_TAXONOMY: readonly string[] = [
   // web / frontend
   "react", "next.js", "vue", "nuxt", "angular", "svelte", "redux", "tailwind",
   "html", "css", "sass", "webpack", "vite", "graphql", "rest", "grpc", "websocket",
+  "user interface", "user experience",
   // backend / platform
   "node.js", "express", "nestjs", "spring", "spring boot", "django", "flask",
-  "fastapi", "laravel", ".net", "asp.net", "rails", "microservices", "api design",
-  "message queue", "kafka", "rabbitmq", "redis", "elasticsearch",
+  "fastapi", "laravel", ".net", "asp.net", "rails", "microservices", "api",
+  "api design", "message queue", "kafka", "rabbitmq", "redis", "elasticsearch",
+  "nosql", "oop",
   // data
   "postgresql", "mysql", "mssql", "oracle", "mongodb", "dynamodb", "snowflake",
   "bigquery", "databricks", "spark", "hadoop", "airflow", "dbt", "etl", "data warehouse",
-  "pandas", "numpy", "power bi", "tableau", "looker",
+  "pandas", "numpy", "power bi", "tableau", "looker", "business intelligence", "dba",
   // cloud / devops
   "aws", "azure", "gcp", "google cloud", "docker", "kubernetes", "helm", "terraform",
   "ansible", "jenkins", "github actions", "gitlab ci", "argocd", "ci/cd", "linux",
-  "nginx", "prometheus", "grafana", "datadog", "observability", "sre",
+  "nginx", "prometheus", "grafana", "datadog", "observability", "sre", "devops",
+  "infrastructure as code",
   // qa / testing
   "qa", "quality assurance", "test automation", "selenium", "playwright", "cypress",
   "appium", "ranorex", "testng", "junit", "pytest", "jest", "vitest", "cucumber",
@@ -36,6 +39,7 @@ export const SKILL_TAXONOMY: readonly string[] = [
   // ai / ml
   "machine learning", "deep learning", "pytorch", "tensorflow", "scikit-learn",
   "nlp", "llm", "langchain", "rag", "prompt engineering", "computer vision", "mlops",
+  "ai",
   // security
   "owasp", "penetration testing", "iso 27001", "gdpr", "soc 2", "threat modeling",
   "sast", "dast", "iam", "oauth", "saml", "zero trust",
@@ -46,7 +50,8 @@ export const SKILL_TAXONOMY: readonly string[] = [
   // business / other
   "sap", "salesforce", "erp", "crm", "excel", "vba", "project management", "pmp",
   "prince2", "budgeting", "forecasting", "procurement", "supply chain", "logistics",
-  "customer success", "b2b", "b2c", "seo", "sem", "copywriting", "figma", "ux research"
+  "customer success", "b2b", "b2c", "seo", "sem", "copywriting", "figma", "ux research",
+  "saas", "paas", "iaas", "mvp", "roi"
 ];
 
 export const SKILL_SET: ReadonlySet<string> = new Set(SKILL_TAXONOMY);
@@ -59,23 +64,131 @@ export function isKnownSkill(term: string): boolean {
   return SKILL_SET.has(term);
 }
 
-/** Terms that ATS keyword matching treats as equivalent. */
+/**
+ * Terms that ATS keyword matching treats as equivalent: acronym <-> expansion,
+ * spelling variants and established translations. Only true synonyms belong
+ * here; "agile" and "scrum" are related, not equivalent, and stay separate.
+ * Every key must be a member of SKILL_TAXONOMY (tests/taxonomy-synonyms.test.ts
+ * enforces it), and no alias may serve two keys.
+ */
 export const SYNONYMS: Readonly<Record<string, readonly string[]>> = {
-   "golang": ["go"],
-   "node.js": ["nodejs", "node"],
-   "next.js": ["nextjs"],
-   "ci/cd": ["cicd", "ci"],
-   "quality assurance": ["qa"],
-   "test automation": ["automated testing", "testautomatisierung", "test otomasyonu"],
-   "google cloud": ["gcp"],
-   "postgresql": ["postgres"],
-   "kubernetes": ["k8s"],
-   "javascript": ["js"],
-   "typescript": ["ts"],
-   "machine learning": ["ml"],
-   "continuous integration": ["ci"],
-   "user experience": ["ux"],
-   "spring boot": ["springboot"]
+  // languages & runtimes
+  "golang": ["go"],
+  "c#": ["csharp", "c sharp"],
+  "c++": ["cplusplus", "c plus plus"],
+  "javascript": ["js"],
+  "typescript": ["ts"],
+  "node.js": ["nodejs", "node"],
+  ".net": ["dotnet", "dot net"],
+  // web & frontend
+  "react": ["reactjs", "react.js"],
+  "vue": ["vuejs", "vue.js"],
+  "next.js": ["nextjs"],
+  "express": ["expressjs", "express.js"],
+  "nestjs": ["nest.js"],
+  "fastapi": ["fast api"],
+  "html": ["html5", "hypertext markup language"],
+  "css": ["css3", "cascading style sheets"],
+  "user interface": ["ui", "benutzeroberfläche", "kullanıcı arayüzü"],
+  "user experience": ["ux", "kullanıcı deneyimi"],
+  // backend & platform
+  "api": ["apis", "application programming interface"],
+  "microservices": ["micro-services", "microservice", "mikroservis"],
+  "spring boot": ["springboot", "spring-boot"],
+  "rabbitmq": ["rabbit mq"],
+  "mongodb": ["mongo"],
+  "mssql": ["sql server", "microsoft sql server"],
+  "sql": ["structured query language"],
+  "nosql": ["no-sql", "non-relational database"],
+  "elasticsearch": ["elastic search", "elastic-search"],
+  "oop": ["object oriented programming", "object-oriented programming"],
+  // data
+  "postgresql": ["postgres"],
+  "etl": ["extract transform load", "extract-transform-load"],
+  "data warehouse": ["data warehousing", "data-warehouse", "veri ambarı"],
+  "kafka": ["apache kafka"],
+  "spark": ["apache spark"],
+  "airflow": ["apache airflow"],
+  "hadoop": ["apache hadoop"],
+  "bigquery": ["big query"],
+  "dynamodb": ["dynamo db"],
+  "power bi": ["powerbi", "microsoft power bi"],
+  "business intelligence": ["bi", "iş zekası"],
+  "scikit-learn": ["sklearn", "scikit learn"],
+  "dba": ["database administrator", "database administration"],
+  // cloud & devops
+  "aws": ["amazon web services"],
+  "azure": ["microsoft azure"],
+  "google cloud": ["gcp", "google cloud platform"],
+  "kubernetes": ["k8s", "k8"],
+  "terraform": ["hashicorp terraform"],
+  "argocd": ["argo cd", "argo-cd"],
+  "gitlab ci": ["gitlab-ci", "gitlab ci/cd"],
+  "ci/cd": ["cicd", "ci", "continuous integration", "continuous delivery", "continuous deployment"],
+  "devops": ["dev ops", "dev-ops", "development operations"],
+  "sre": ["site reliability engineering"],
+  "infrastructure as code": ["iac"],
+  "observability": ["gözlemlenebilirlik"],
+  // qa & testing
+  "quality assurance": ["qa", "qualitätssicherung", "kalite güvencesi"],
+  "test automation": ["automated testing", "testautomatisierung", "test otomasyonu"],
+  "tdd": ["test driven development", "test-driven development"],
+  "bdd": ["behavior driven development", "behaviour driven development", "behavior-driven development"],
+  "regression testing": ["regressionstest", "regresyon testi"],
+  "load testing": ["lasttest", "yük testi"],
+  "performance testing": ["leistungstest", "performans testi"],
+  "penetration testing": ["pentest", "pentesting", "pen testing"],
+  "smoke test": ["smoke testing"],
+  "test case": ["test cases", "testfall"],
+  "test plan": ["test plans"],
+  "soapui": ["soap ui"],
+  "cross-browser": ["cross browser"],
+  // ai & ml
+  "ai": ["artificial intelligence", "künstliche intelligenz", "yapay zeka"],
+  "machine learning": ["ml", "maschinelles lernen", "makine öğrenmesi"],
+  "deep learning": ["deeplearning", "deep-learning"],
+  "nlp": ["natural language processing", "doğal dil işleme"],
+  "llm": ["large language model", "large language models"],
+  "rag": ["retrieval augmented generation", "retrieval-augmented generation"],
+  "mlops": ["machine learning operations"],
+  // security
+  "gdpr": ["dsgvo", "general data protection regulation"],
+  "soc 2": ["soc2", "soc 2 type ii"],
+  "iso 27001": ["iso27001"],
+  "sast": ["static application security testing"],
+  "dast": ["dynamic application security testing"],
+  "iam": ["identity and access management"],
+  "zero trust": ["zero-trust"],
+  "threat modeling": ["threat modelling"],
+  // ways of working
+  "agile": ["agil", "çevik"],
+  "scrum master": ["scrummaster"],
+  "product owner": ["product-owner"],
+  "code review": ["code-review", "kod incelemesi"],
+  "pair programming": ["pair-programming"],
+  "project management": ["projektmanagement", "proje yönetimi"],
+  "pmp": ["project management professional"],
+  "okr": ["objectives and key results"],
+  "kpi": ["key performance indicator", "key performance indicators"],
+  "jira": ["atlassian jira"],
+  "confluence": ["atlassian confluence"],
+  // business
+  "saas": ["software as a service"],
+  "paas": ["platform as a service"],
+  "iaas": ["infrastructure as a service"],
+  "crm": ["customer relationship management"],
+  "erp": ["enterprise resource planning"],
+  "mvp": ["minimum viable product"],
+  "roi": ["return on investment"],
+  "b2b": ["business to business"],
+  "b2c": ["business to consumer"],
+  "seo": ["search engine optimization", "search engine optimisation"],
+  "sem": ["search engine marketing"],
+  "salesforce": ["sales force"],
+  "excel": ["microsoft excel", "ms excel"],
+  "vba": ["visual basic for applications"],
+  "supply chain": ["supply-chain", "tedarik zinciri"],
+  "procurement": ["satın alma"]
 };
 
 /**
