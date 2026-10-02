@@ -2,11 +2,9 @@ import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { STANDARD_PRESENT, collectDateFormats } from "./experience";
 import { SECTION_DEFINITIONS, sectionLabel } from "./sections";
+import { caseFold } from "./text";
 
 export const STRUCTURE_MAX = 20;
-
-const DATE_RANGE =
-  /((0?[1-9]|1[0-2])[./-](19|20)\d{2}|(19|20)\d{2})\s*(-|to|bis|until|present|heute|current|halen|devam)\s*((0?[1-9]|1[0-2])[./-](19|20)\d{2}|(19|20)\d{2}|present|heute|today|current|now|halen|devam ediyor)/i;
 
 function experienceYears(context: ScoreContext): number[] {
   const experience = context.sections.find((section) => section.id === "experience");
@@ -40,7 +38,7 @@ function isDescending(years: readonly number[]): boolean {
 
 /** Does the document carry the shape an ATS expects to map onto its fields? */
 export function scoreStructure(context: ScoreContext): DimensionOutcome {
-  const { sections, stats, raw } = context;
+  const { sections, stats } = context;
   const drafts: FindingDraft[] = [];
   const present = new Set(sections.map((section) => section.id));
 
@@ -76,7 +74,7 @@ export function scoreStructure(context: ScoreContext): DimensionOutcome {
       fix: "Date every role as MM/YYYY - MM/YYYY.",
       cost: 4
     });
-  } else if (!DATE_RANGE.test(raw)) {
+  } else if (context.experience.periods.length === 0 && context.experience.reversed.length === 0) {
     drafts.push({
       id: "structure.date-format",
       severity: "medium",
@@ -101,7 +99,7 @@ export function scoreStructure(context: ScoreContext): DimensionOutcome {
   }
 
   const nonstandardPresent = dateFormats.presentForms.filter(
-    (form) => !STANDARD_PRESENT.has(form.toLowerCase())
+    (form) => !STANDARD_PRESENT.has(caseFold(form))
   );
   if (nonstandardPresent.length > 0) {
     drafts.push({

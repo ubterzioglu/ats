@@ -7,6 +7,8 @@
  * a job and a concurrent freelance engagement has one span of time, not two.
  */
 
+import { caseFold } from "./text";
+
 export interface Period {
   /** Months since year 0, so comparisons and differences are plain integers. */
   readonly start: number;
@@ -23,35 +25,55 @@ export interface ExperienceReport {
   readonly overlapping: boolean;
 }
 
-const PRESENT =
-  /^(present|current|now|today|ongoing|heute|aktuell|laufend|jetzt|halen|devam|bugun|bugün)$/i;
+/**
+ * The spellings of "still working here" across the three languages, including
+ * the multi-word Turkish and German phrases ("devam ediyor", "bis heute").
+ * Compared case-folded and with the trailing punctuation already stripped.
+ */
+const PRESENT_PHRASES: ReadonlySet<string> = new Set([
+  "present", "current", "now", "today", "ongoing", "continuing", "to date",
+  "heute", "aktuell", "laufend", "jetzt", "derzeit", "bis heute", "bis jetzt",
+  "zur zeit", "fortlaufend",
+  "halen", "hâlen", "devam", "devam ediyor", "devam etmekte",
+  "halen devam ediyor", "hala devam ediyor", "hâlen devam ediyor",
+  "bugun", "bugün", "şu an", "su an", "bugüne kadar", "bugune kadar",
+  "günümüze kadar"
+]);
 
 const MONTH_NAMES: Readonly<Record<string, number>> = {
-  jan: 1, january: 1, januar: 1, ocak: 1,
-  feb: 2, february: 2, februar: 2, subat: 2, şubat: 2,
-  mar: 3, march: 3, marz: 3, märz: 3, mart: 3,
-  apr: 4, april: 4, nisan: 4,
+  jan: 1, january: 1, januar: 1, jän: 1, ocak: 1, oca: 1,
+  feb: 2, february: 2, februar: 2, subat: 2, şubat: 2, sub: 2, şub: 2,
+  mar: 3, march: 3, marz: 3, märz: 3, mär: 3, mrz: 3, mart: 3,
+  apr: 4, april: 4, nisan: 4, nis: 4,
   may: 5, mai: 5, mayis: 5, mayıs: 5,
-  jun: 6, june: 6, juni: 6, haziran: 6,
-  jul: 7, july: 7, juli: 7, temmuz: 7,
-  aug: 8, august: 8, agustos: 8, ağustos: 8,
-  sep: 9, sept: 9, september: 9, eylul: 9, eylül: 9,
-  oct: 10, october: 10, okt: 10, oktober: 10, ekim: 10,
-  nov: 11, november: 11, kasim: 11, kasım: 11,
-  dec: 12, december: 12, dez: 12, dezember: 12, aralik: 12, aralık: 12
+  jun: 6, june: 6, juni: 6, haziran: 6, haz: 6,
+  jul: 7, july: 7, juli: 7, temmuz: 7, tem: 7,
+  aug: 8, august: 8, agustos: 8, ağustos: 8, agu: 8, ağu: 8,
+  sep: 9, sept: 9, september: 9, eylul: 9, eylül: 9, eyl: 9,
+  oct: 10, october: 10, okt: 10, oktober: 10, ekim: 10, eki: 10,
+  nov: 11, november: 11, kasim: 11, kasım: 11, kas: 11,
+  dec: 12, december: 12, dez: 12, dezember: 12, aralik: 12, aralık: 12, ara: 12
 };
 
 const SEPARATOR = /\s*(?:-|–|—|to|bis|until|als|ile)\s*/i;
 const YEAR = /^(19|20)\d{2}$/;
 
 const RANGE_RX =
-  /((?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|[\p{L}]+\.?\s+(?:19|20)\d{2}|(?:19|20)\d{2})\s*(?:-|–|—|to|bis|until|als|ile)\s*([\p{L}]+\.?\s+(?:19|20)\d{2}|(?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|(?:19|20)\d{2}|[\p{L}]+)/iu;
+  /((?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|[\p{L}]+\.?\s+(?:19|20)\d{2}|(?:19|20)\d{2})\s*(?:-|–|—|to|bis|until|als|ile)\s*([\p{L}]+\.?\s+(?:19|20)\d{2}|(?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|(?:19|20)\d{2}|[\p{L}]+(?:\s+[\p{L}]+){0,2})/iu;
 
 /**
  * The "present" spellings a parser is built to expect. Others parse here but
  * are unusual enough that stricter systems drop the endpoint.
  */
-export const STANDARD_PRESENT: ReadonlySet<string> = new Set(["present", "heute", "halen"]);
+export const STANDARD_PRESENT: ReadonlySet<string> = new Set([
+  "present", "heute", "halen", "hâlen", "devam", "devam ediyor",
+  "devam etmekte", "halen devam ediyor", "hala devam ediyor",
+  "derzeit", "aktuell", "laufend", "bis heute"
+]);
+
+export function isPresentPhrase(raw: string): boolean {
+  return PRESENT_PHRASES.has(caseFold(raw.trim().replace(/[.,;)]+$/g, "")));
+}
 
 export type DateFormatKind = "iso-year-month" | "month-year-word" | "year-only" | "present" | "unknown";
 
@@ -59,11 +81,11 @@ export type DateFormatKind = "iso-year-month" | "month-year-word" | "year-only" 
 export function classifyDateShape(raw: string): DateFormatKind {
   const token = raw.trim().replace(/[.,;)]+$/, "");
   if (token.length === 0) return "unknown";
-  if (PRESENT.test(token)) return "present";
+  if (isPresentPhrase(token)) return "present";
   if (/^(?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}$/.test(token)) return "iso-year-month";
   if (/^(?:19|20)\d{2}\s*[-./]\s*(?:0?[1-9]|1[0-2])$/.test(token)) return "iso-year-month";
   const named = token.match(/^([\p{L}]+)\.?\s+((?:19|20)\d{2})$/u);
-  if (named && MONTH_NAMES[(named[1] ?? "").toLowerCase()] !== undefined) return "month-year-word";
+  if (named && MONTH_NAMES[caseFold(named[1] ?? "")] !== undefined) return "month-year-word";
   if (YEAR.test(token)) return "year-only";
   return "unknown";
 }
@@ -105,7 +127,7 @@ function parseEndpoint(raw: string, now: Date): { readonly value: number; readon
   const token = raw.trim().replace(/[.,;)]+$/, "");
   if (token.length === 0) return null;
 
-  if (PRESENT.test(token)) {
+  if (isPresentPhrase(token)) {
     return { value: monthsSinceZero(now.getFullYear(), now.getMonth() + 1), open: true };
   }
 
@@ -118,7 +140,7 @@ function parseEndpoint(raw: string, now: Date): { readonly value: number; readon
 
   const named = token.match(/^([\p{L}]+)\.?\s+((?:19|20)\d{2})$/u);
   if (named) {
-    const month = MONTH_NAMES[(named[1] ?? "").toLowerCase()];
+    const month = MONTH_NAMES[caseFold(named[1] ?? "")];
     const year = Number(named[2]);
     if (month !== undefined) return { value: monthsSinceZero(year, month), open: false };
   }
