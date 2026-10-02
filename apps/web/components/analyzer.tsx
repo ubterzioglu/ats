@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState, useTransition } from "react"
 import { createShareLink } from "@/app/actions";
 import { buildCoverageMap, type CoverageMapReport } from "@/lib/ai/coverage-map";
 import type { Embedder } from "@/lib/ai/embeddings";
+import type { ModelTier } from "@/lib/ai/providers/types";
 import { findPartialMatches, toPassages, type PartialMatchHint } from "@/lib/ai/semantic-match";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
 import { buildMarkdownReport } from "@/lib/report/markdown";
@@ -21,6 +22,7 @@ import { FixDrafts } from "./fix-drafts";
 import { FixList } from "./fix-list";
 import { KeywordPanel } from "./keyword-panel";
 import { ParserView } from "./parser-view";
+import { RewriteDiff } from "./rewrite-diff";
 import { ScoreRail } from "./score-rail";
 
 type View = "input" | "report";
@@ -43,6 +45,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [gate, setGate] = useState<DocumentKindAssessment | null>(null);
   const [markedLine, setMarkedLine] = useState<string | null>(null);
   const [embedder, setEmbedder] = useState<Embedder | null>(null);
+  const [modelTier, setModelTier] = useState<ModelTier>("none");
   const [hints, setHints] = useState<readonly PartialMatchHint[]>([]);
   const [coverage, setCoverage] = useState<CoverageMapReport | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -395,13 +398,21 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
             <div className="space-y-5">
               <FixList findings={result.findings} onSelectEvidence={setMarkedLine} />
+              <RewriteDiff
+                tier={modelTier}
+                cvText={cvText}
+                knownSkills={[...result.keywords.matched, ...result.keywords.missing].map(
+                  (term) => term.term
+                )}
+                onApply={applyAndRescore}
+              />
               <FixDrafts text={cvText} onApply={applyAndRescore} />
             </div>
 
             <div className="space-y-5">
               <KeywordPanel report={result.keywords} hints={hints} />
               <AiConsent onReady={setEmbedder} />
-              <AiStatus />
+              <AiStatus onTierChange={setModelTier} />
               {coverage && coverage.adChunks > 0 ? <CoverageMap report={coverage} /> : null}
               <ParserView
                 text={cvText}
