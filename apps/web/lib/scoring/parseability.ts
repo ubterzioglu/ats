@@ -7,6 +7,24 @@ export const PARSEABILITY_MAX = 25;
 const PRIVATE_USE = /[-]/g;
 const EMOJI = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu;
 
+/** Basic Latin letters, Latin-1 Supplement letters and Latin Extended-A. */
+const LATIN_LETTER =
+  /[\u0041-\u005A\u0061-\u007A\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F]/;
+const ANY_LETTER = /\p{L}/u;
+const GARBLED_THRESHOLD = 0.3;
+const MIN_LETTERS_FOR_GARBLED_CHECK = 50;
+
+function garbledLetters(raw: string): { readonly outside: number; readonly letters: number } {
+  let letters = 0;
+  let outside = 0;
+  for (const char of raw) {
+    if (!ANY_LETTER.test(char)) continue;
+    letters += 1;
+    if (!LATIN_LETTER.test(char)) outside += 1;
+  }
+  return { outside, letters };
+}
+
 function countMatches(text: string, pattern: RegExp): number {
   const matches = text.match(pattern);
   return matches ? matches.length : 0;
@@ -109,6 +127,23 @@ export function scoreParseability(context: ScoreContext): DimensionOutcome {
       detail: "The text layer contains replacement or CID placeholders, so characters are lost on extraction.",
       fix: "Embed the fonts when exporting, or export through a different PDF writer.",
       cost: 7
+    });
+  }
+
+  const garbled = garbledLetters(raw);
+  if (
+    garbled.letters >= MIN_LETTERS_FOR_GARBLED_CHECK &&
+    ratio(garbled.outside, garbled.letters) > GARBLED_THRESHOLD
+  ) {
+    drafts.push({
+      id: "parse.garbled-text",
+      severity: "high",
+      title: "Most of the text sits outside the Latin character blocks",
+      detail: `${Math.round(
+        ratio(garbled.outside, garbled.letters) * 100
+      )}% of the ${garbled.letters} letters read are outside Basic Latin, Latin-1 Supplement and Latin Extended-A. For a CV written in a European language that points at a broken text layer, such as a font subset mapped onto the wrong code points.`,
+      fix: "Re-export the CV with embedded fonts, or rebuild the file from the source document.",
+      cost: 6
     });
   }
 
