@@ -108,6 +108,32 @@ export function coreSectionIds(): string[] {
   return SECTION_DEFINITIONS.filter((section) => section.core).map((section) => section.id);
 }
 
+export interface SectionRange {
+  readonly id: string;
+  /** Inclusive first line of the section, the heading itself. */
+  readonly start: number;
+  /** Exclusive last line: the next heading, or the end of the document. */
+  readonly end: number;
+}
+
+export function sectionRanges(
+  sections: readonly DetectedSection[],
+  lineCount: number
+): SectionRange[] {
+  return sections.map((section, index) => {
+    const next = sections[index + 1];
+    return {
+      id: section.id,
+      start: section.line,
+      end: next ? next.line : lineCount
+    };
+  });
+}
+
+export function lineSection(ranges: readonly SectionRange[], line: number): string | undefined {
+  return ranges.find((range) => line >= range.start && line < range.end)?.id;
+}
+
 export function sectionLabel(id: string): string {
   return SECTION_DEFINITIONS.find((section) => section.id === id)?.label ?? id;
 }

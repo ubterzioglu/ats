@@ -4,6 +4,7 @@ import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { formatDuration } from "./experience";
 import { extractExperienceRequirement } from "./job-ad";
+import { lineSection, sectionRanges } from "./sections";
 import { isJobNoise, isStopword } from "./stopwords";
 import { MULTI_WORD_SKILLS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill, variantsOf } from "./taxonomy";
 import { clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
@@ -320,6 +321,37 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
       cost: 1,
       evidence: aliasOnly.slice(0, 5)
     });
+  }
+
+  const ranges = sectionRanges(context.sections, context.lines.length);
+  const hasSkillsSection = ranges.some((range) => range.id === "skills");
+  if (hasSkillsSection) {
+    const listedOnly: string[] = [];
+    for (const term of matched) {
+      let inSkills = 0;
+      let elsewhere = 0;
+      context.lines.forEach((line, index) => {
+        const hits = countOccurrences(line.toLowerCase(), term.term);
+        if (hits === 0) return;
+        if (lineSection(ranges, index) === "skills") inSkills += hits;
+        else elsewhere += hits;
+      });
+      if (inSkills > 0 && elsewhere === 0) listedOnly.push(term.term);
+    }
+
+    if (listedOnly.length > 0) {
+      drafts.push({
+        id: "keywords.listed-only",
+        severity: "low",
+        title: "Some matched terms exist only as list items",
+        detail: `These terms appear in the skills list but in no sentence about actual work: ${listedOnly
+          .slice(0, 6)
+          .join(", ")}. A list item carries no evidence, and both parsers and recruiters weight a term used in context higher.`,
+        fix: "Work the strongest of these into an experience bullet that shows where and how you used it.",
+        cost: listedOnly.length >= 4 ? 2 : 1,
+        evidence: listedOnly.slice(0, 6)
+      });
+    }
   }
 
   const requirement = extractExperienceRequirement(jd);
