@@ -225,6 +225,10 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         setError(null);
         return;
       }
+      if (outcome.state === "auth-required") {
+        setError("Sign in to create a share link. The analysis itself needs no account.");
+        return;
+      }
       setError(
         outcome.state === "env-missing"
           ? "Sharing needs Supabase credentials. Everything else works without them."

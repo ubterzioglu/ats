@@ -1,41 +1,11 @@
-import { type NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
 import { updateSession } from "@/lib/supabase/middleware";
-import { createServerClient } from "@supabase/ssr";
 
+// No route is gated here. Analysis runs for anyone; sign-in is required only
+// where a report is written to the server, which `createShareLink` enforces.
 export async function middleware(request: NextRequest) {
-  // Update the session in cookies
-  const response = await updateSession(request);
-
-  // Check if the route is protected
-  const isProtectedRoute = request.nextUrl.pathname.startsWith("/analyze");
-
-  if (isProtectedRoute) {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
-
-    const supabase = createServerClient(url, anonKey, {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll() {
-          // Handled by updateSession
-        },
-      },
-    });
-
-    const { data: { user } } = await supabase.auth.getUser();
-
-    // If no user is logged in, redirect to the login page
-    if (!user) {
-      const loginUrl = request.nextUrl.clone();
-      loginUrl.pathname = "/login";
-      loginUrl.searchParams.set("redirectedFrom", request.nextUrl.pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-  }
-
-  return response;
+  return updateSession(request);
 }
 
 export const config = {

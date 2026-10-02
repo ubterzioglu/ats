@@ -3,22 +3,41 @@ import Link from "next/link";
 import { Analyzer } from "@/components/analyzer";
 import { logout } from "@/app/login/actions";
 import { isPersistenceConfigured } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 
 // isPersistenceConfigured() reads the environment, which prerendering would
 // freeze at image build time; rendering per request lets the deployment
 // platform supply credentials at runtime.
 export const dynamic = "force-dynamic";
 
-export default function AnalyzePage() {
+async function hasSession(): Promise<boolean> {
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.auth.getUser();
+    return data.user !== null;
+  } catch {
+    return false;
+  }
+}
+
+export default async function AnalyzePage() {
+  const signedIn = await hasSession();
+
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
       <header className="flex items-center justify-between gap-4 border-b border-line py-5">
         <Link href="/" className="font-mono text-sm font-medium tracking-tight transition-colors hover:text-accent">
           ats readability
         </Link>
-        <form action={logout}>
-          <button className="text-sm text-muted transition-colors hover:text-ink">Sign out</button>
-        </form>
+        {signedIn ? (
+          <form action={logout}>
+            <button className="text-sm text-muted transition-colors hover:text-ink">Sign out</button>
+          </form>
+        ) : (
+          <Link href="/login" className="text-sm text-muted transition-colors hover:text-ink">
+            Sign in to save reports
+          </Link>
+        )}
       </header>
 
       <main className="py-8 sm:py-10">
