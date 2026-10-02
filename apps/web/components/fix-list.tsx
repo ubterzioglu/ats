@@ -1,12 +1,15 @@
 import type { Finding } from "@/types/analysis";
 import { SEVERITY_EDGE, SEVERITY_LABEL, SEVERITY_TEXT } from "@/lib/ui";
 
+import { FindingExplainButton, type ExplanationView } from "./finding-explain";
+
 interface FixListProps {
   readonly findings: readonly Finding[];
   readonly onSelectEvidence?: (line: string) => void;
+  readonly explain?: (finding: Finding) => Promise<ExplanationView>;
 }
 
-export function FixList({ findings, onSelectEvidence }: FixListProps) {
+export function FixList({ findings, onSelectEvidence, explain }: FixListProps) {
   if (findings.length === 0) {
     return (
       <section className="sheet p-5 sm:p-6">
@@ -64,6 +67,8 @@ export function FixList({ findings, onSelectEvidence }: FixListProps) {
               <p className="mt-3 max-w-measure border-l-2 border-accent/30 pl-3 text-sm leading-relaxed">
                 {finding.fix}
               </p>
+
+              {explain ? <FindingExplainButton finding={finding} explain={explain} /> : null}
 
               {finding.evidence && finding.evidence.length > 0 ? (
                 <details className="group mt-3">

@@ -5,14 +5,16 @@ import { useCallback, useEffect, useMemo, useState, useTransition } from "react"
 import { createShareLink } from "@/app/actions";
 import { buildCoverageMap, type CoverageMapReport } from "@/lib/ai/coverage-map";
 import type { Embedder } from "@/lib/ai/embeddings";
+import { acquireModel } from "@/lib/ai/model";
 import type { ModelTier } from "@/lib/ai/providers/types";
 import { findPartialMatches, toPassages, type PartialMatchHint } from "@/lib/ai/semantic-match";
+import { explainFinding } from "@/lib/ai/tasks/explain";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
 import { buildMarkdownReport } from "@/lib/report/markdown";
 import { analyzeCv } from "@/lib/scoring";
 import { assessDocumentKind, type DocumentKindAssessment } from "@/lib/scoring/gate";
 import { cx } from "@/lib/ui";
-import type { AnalysisResult } from "@/types/analysis";
+import type { AnalysisResult, Finding } from "@/types/analysis";
 
 import { AiConsent } from "./ai-consent";
 import { AiStatus } from "./ai-status";
@@ -146,6 +148,14 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       cancelled = true;
     };
   }, [embedder, result, cvText, jobAd]);
+
+  const explainLocally = useCallback(
+    async (finding: Finding) => {
+      const session = await acquireModel(modelTier);
+      return explainFinding(session.model, finding);
+    },
+    [modelTier]
+  );
 
   // Applying a rewrite draft edits the text and immediately re-measures it,
   // so the score rail can show what that one sentence was worth.
@@ -397,7 +407,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
             <div className="space-y-5">
-              <FixList findings={result.findings} onSelectEvidence={setMarkedLine} />
+              <FixList
+                findings={result.findings}
+                onSelectEvidence={setMarkedLine}
+                explain={modelTier === "none" ? undefined : explainLocally}
+              />
               <RewriteDiff
                 tier={modelTier}
                 cvText={cvText}
