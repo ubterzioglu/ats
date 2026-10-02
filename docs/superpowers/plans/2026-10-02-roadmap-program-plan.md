@@ -100,7 +100,7 @@ Opens the funnel and lays the ground the rest needs. No new product surface.
 |---|---|---|---|---|
 | **P0.1** | **Remove the login gate.** Drop the `/analyze` protection block in [`middleware.ts`](../../../apps/web/middleware.ts) (keep `updateSession`). Sign-in becomes required only for saving and sharing. Align the landing copy. | S | — | `/analyze` reachable signed out, full analysis runs; share still asks for sign-in |
 | **P0.2** | **Delete the dead analyze proxy.** Remove `app/api/analyze/route.ts`. Nothing references it; it is a live endpoint that forwards a request body to a server backend and contradicts the privacy contract. | S | — | Route gone; no reference to `API_URL` remains in `apps/web` |
-| **P0.3** | **Retire the rejected server tree.** Delete `apps/api/`, `services/`, `packages/`, the empty `infra/` and `data/`. Reduce `docker-compose.yml` to the `web` service. **Blocked until the deployment question is answered** (see Open Decisions). | S | P0.2 | `docker compose up` builds and serves the web app alone |
+| **P0.3** | **Retire the rejected server tree.** Delete `apps/api/`, `services/`, `packages/`, and the empty `infra/` and `data/`. Reduce `docker-compose.yml` to the `web` service, dropping `api`, `db`, `redis`, their volumes, and the `depends_on`/`API_URL` wiring on `web`. The deployment does currently build `api`, but the site has no users yet, so this needs no staged rollout or deployment window. | M | P0.2 | `docker compose up` builds and serves the web app alone; repository holds one architecture |
 | **P0.4** | **Archive the superseded technical plan.** Move `ATS_Free_For_All_TECHNICAL_PLAN.md` to `docs/archive/` with a header pointing at ROADMAP §9. Update the links in `ROADMAP.md`. | S | — | No link in `ROADMAP.md` is broken |
 | **P0.5** | **i18n infrastructure.** Add `next-intl`. English as default locale. Locale routing and a language switcher. No translation yet — this batch only moves existing strings into message catalogs. | M | — | Every user-facing string in `app/` and `components/` resolves through the catalog; English output byte-identical to today |
 | **P0.6** | **Turkish translation.** | M | P0.5 | Full UI in Turkish; no untranslated keys |
@@ -350,10 +350,13 @@ living document.
 
 | # | Question | Blocks | Why it cannot be answered from the repo |
 |---|---|---|---|
-| 1 | Does atsfreeforall.com deploy through `docker-compose.yml`, building the `api` service? | **P0.3** | Git history shows Coolify work ("remove api host port binding for coolify deployment"). If the live deployment builds `api`, removing it changes the deployment. |
 | 2 | Should the merge at `V.6` proceed? | V.6, C.1 | Product sequencing call. Recommendation above. |
 
-`P0.1`, `P0.2`, `P0.4` and `P0.5` are blocked by neither and can start immediately.
+**Resolved.** The live deployment does build the `api` service, so the Python API runs in production
+but is unused — its only caller was the dead proxy route that P0.2 removes. The site has no users
+yet, so retiring it needs no staged rollout. P0.3 is unblocked.
+
+Nothing blocks `P0.1`, `P0.2`, `P0.3`, `P0.4` or `P0.5`; all can start immediately.
 
 ---
 
