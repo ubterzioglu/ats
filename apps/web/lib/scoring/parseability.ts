@@ -14,6 +14,40 @@ const ANY_LETTER = /\p{L}/u;
 const GARBLED_THRESHOLD = 0.3;
 const MIN_LETTERS_FOR_GARBLED_CHECK = 50;
 
+/**
+ * The character pairs UTF-8 produces when its bytes are decoded as CP1252:
+ * ş reads as "ÅŸ", İ as "Ä°", ö as "Ã¶", ß as "ÃŸ". None of these pairs
+ * occurs in correctly decoded text, so even a few of them mean the Turkish and
+ * German letters were destroyed on the way out of the PDF. Built from code
+ * points because the pairs are indistinguishable by eye.
+ */
+const MOJIBAKE_PAIRS: readonly (readonly [number, number])[] = [
+  [0x00c5, 0x0178], // ş
+  [0x00c5, 0x017e], // Ş
+  [0x00c4, 0x0178], // ğ
+  [0x00c4, 0x017e], // Ğ
+  [0x00c4, 0x00b1], // ı
+  [0x00c4, 0x00b0], // İ
+  [0x00c3, 0x00b6], // ö
+  [0x00c3, 0x2013], // Ö
+  [0x00c3, 0x00bc], // ü
+  [0x00c3, 0x0153], // Ü
+  [0x00c3, 0x00a4], // ä
+  [0x00c3, 0x201e], // Ä
+  [0x00c3, 0x0178], // ß
+  [0x00c3, 0x00a7], // ç
+  [0x00c3, 0x2021], // Ç
+  [0x00c3, 0x00a2], // â
+  [0x00c3, 0x00ae], // î
+  [0x00c3, 0x00bb] // û
+];
+
+const MOJIBAKE = new RegExp(
+  MOJIBAKE_PAIRS.map(([lead, trail]) => String.fromCharCode(lead, trail)).join("|"),
+  "g"
+);
+const MOJIBAKE_THRESHOLD = 2;
+
 function garbledLetters(raw: string): { readonly outside: number; readonly letters: number } {
   let letters = 0;
   let outside = 0;
@@ -127,6 +161,19 @@ export function scoreParseability(context: ScoreContext): DimensionOutcome {
       detail: "The text layer contains replacement or CID placeholders, so characters are lost on extraction.",
       fix: "Embed the fonts when exporting, or export through a different PDF writer.",
       cost: 7
+    });
+  }
+
+  const mojibake = countMatches(raw, MOJIBAKE);
+  if (mojibake >= MOJIBAKE_THRESHOLD) {
+    drafts.push({
+      id: "parse.mojibake",
+      severity: "high",
+      title: "Turkish or German letters were decoded with the wrong code page",
+      detail: `${mojibake} mojibake sequences appear in the text layer - the two-character artefacts a UTF-8 document leaves when something reads it as CP1252. Every special letter of a Turkish or German CV is destroyed with it, so names, headings and skills stop matching.`,
+      fix: "Re-export the PDF with embedded fonts from the source document, or save the text through an editor that detects UTF-8 before uploading.",
+      cost: 5,
+      evidence: lines.filter((line) => line.match(MOJIBAKE) !== null).slice(0, 3)
     });
   }
 
