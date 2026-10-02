@@ -22,7 +22,7 @@ export const SECTION_DEFINITIONS: readonly SectionDefinition[] = [
     label: "Experience",
     core: true,
     pattern:
-      /^(work\s+|professional\s+|relevant\s+|employment\s+)?(experience|history|employment|career\s+history|berufserfahrung|beruflicher\s+werdegang|werdegang|praxiserfahrung|is\s+deneyimi|iş\s+deneyimi|deneyim|calisma\s+gecmisi|çalışma\s+geçmişi)\b/i
+      /^(work\s+|professional\s+|relevant\s+|employment\s+)?(experience|history|employment|career\s+history|berufserfahrung|beruflicher\s+werdegang|werdegang|praxiserfahrung|is\s+deneyimi|iş\s+deneyimi|mesleki\s+deneyim|deneyim|calisma\s+gecmisi|çalışma\s+geçmişi)\b/i
   },
   {
     id: "education",
@@ -36,7 +36,7 @@ export const SECTION_DEFINITIONS: readonly SectionDefinition[] = [
     label: "Skills",
     core: true,
     pattern:
-      /^(technical\s+|core\s+|key\s+|it[-\s])?(skills|competencies|expertise|tech\s+stack|technologies|toolbox|kenntnisse|faehigkeiten|fähigkeiten|kompetenzen|technische\s+kenntnisse|yetenekler|beceriler|yetkinlikler|teknik\s+beceriler)\b/i
+      /^(technical\s+|core\s+|key\s+|it[-\s])?(skills|competencies|expertise|tech\s+stack|technologies|toolbox|kenntnisse|faehigkeiten|fähigkeiten|kompetenzen|technische\s+kenntnisse|personal\s+skills|persönliche\s+fähigkeiten|yetenekler|beceriler|yetkinlikler|kişisel\s+beceriler|mesleki\s+beceriler|teknik\s+beceriler)\b/i
   },
   {
     id: "certifications",

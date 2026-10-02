@@ -1,5 +1,6 @@
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
+import { detectEuropass } from "./europass";
 import { STANDARD_PRESENT, collectDateFormats } from "./experience";
 import { SECTION_DEFINITIONS, sectionLabel } from "./sections";
 import { caseFold } from "./text";
@@ -134,6 +135,21 @@ export function scoreStructure(context: ScoreContext): DimensionOutcome {
       detail: "Most systems assume the first role listed is the current one and rank seniority from it.",
       fix: "Put the newest role first and work backwards.",
       cost: 3
+    });
+  }
+
+  const europass = detectEuropass(context);
+  if (europass.detected) {
+    drafts.push({
+      id: "structure.europass",
+      severity: "medium",
+      title: europass.branded ? "This is a Europass CV" : "This looks like a Europass CV",
+      detail: `The Europass template fixes every entry into a two-column table with a label cell on the left${
+        europass.branded ? "" : ` - ${europass.markerCount} of its section labels appear here`
+      }. Parsers that read across the columns weld the labels into the answers, and the frame cannot be tightened when the document runs long.`,
+      fix: "Rebuild the CV in a single column with plain headings. Keep the content; drop the template.",
+      cost: 2,
+      evidence: europass.evidence
     });
   }
 
