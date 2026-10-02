@@ -36,10 +36,16 @@ const config: Config = {
         control: "6px",
         chip: "3px"
       },
+      // The scale from the system, so a heading is named by its role rather
+      // than reached for by eye. Base 16px, roughly a major third.
       fontSize: {
         display: ["clamp(2.25rem, 5vw, 3rem)", { lineHeight: "1.05", letterSpacing: "-0.03em" }],
         score: ["clamp(3.5rem, 8vw, 5rem)", { lineHeight: "1", letterSpacing: "-0.02em" }],
-        micro: ["0.8125rem", { lineHeight: "1.5" }]
+        h1: ["2rem", { lineHeight: "1.15", letterSpacing: "-0.025em" }],
+        h2: ["1.5rem", { lineHeight: "1.2", letterSpacing: "-0.02em" }],
+        h3: ["1.1875rem", { lineHeight: "1.3", letterSpacing: "-0.015em" }],
+        micro: ["0.8125rem", { lineHeight: "1.5" }],
+        readout: ["0.8125rem", { lineHeight: "1.5" }]
       },
       // 4-based, as the system specifies. Tailwind's own scale already covers
       // these; the named steps are here so the spacing rule is readable.

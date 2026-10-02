@@ -286,7 +286,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               onClick={() => setView(tab)}
               aria-current={view === tab ? "page" : undefined}
               className={cx(
-                "rounded-[4px] px-3.5 py-1.5 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40",
+                "rounded-chip px-4 py-2 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40",
                 view === tab ? "bg-ink text-bench" : "text-muted hover:text-ink"
               )}
             >
@@ -294,7 +294,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               {tab === "report" && result ? (
                 <span
                   className={cx(
-                    "ml-2 font-mono text-xs tabular-nums",
+                    "ml-2 font-mono text-micro tabular-nums",
                     view === tab ? "text-bench/70" : "text-muted"
                   )}
                 >
@@ -342,59 +342,66 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       ) : null}
 
       {view === "input" ? (
-        <div className="grid gap-5 lg:grid-cols-2">
-          <section className="bench space-y-4 p-5 sm:p-6">
-            <div>
-              <h2 className="text-base font-semibold">{t("cvHeading")}</h2>
-              <p className="mt-1.5 max-w-measure text-sm leading-relaxed text-muted">
-                {t("cvLede")}
-              </p>
-            </div>
+        <div className="space-y-5">
+          <div className="grid gap-5 lg:grid-cols-2">
+            <section className="bench space-y-4 p-5 sm:p-6">
+              <div>
+                <h2 className="text-h3 font-semibold">{t("cvHeading")}</h2>
+                <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
+                  {t("cvLede")}
+                </p>
+              </div>
 
-            <DocumentIntake extraction={extraction} busy={reading} onFile={handleFile} />
+              <DocumentIntake extraction={extraction} busy={reading} onFile={handleFile} />
 
-            <label className="block">
-              <span className="text-sm font-medium">{t("extractedLabel")}</span>
-              <textarea
-                className="field mt-2 min-h-[16rem] font-mono text-xs"
-                value={cvText}
-                onChange={(event) => setCvText(event.target.value)}
-                placeholder={t("extractedPlaceholder")}
-                spellCheck={false}
-              />
-            </label>
-          </section>
-
-          <section className="bench flex flex-col gap-4 p-5 sm:p-6">
-            <div>
-              <h2 className="text-base font-semibold">{t("adHeading")}</h2>
-              <p className="mt-1.5 max-w-measure text-sm leading-relaxed text-muted">
-                {t("adLede")}
-              </p>
-            </div>
-
-            <textarea
-              className="field min-h-[20rem] flex-1 text-sm"
-              value={jobAd}
-              onChange={(event) => setJobAd(event.target.value)}
-              placeholder={t("adPlaceholder")}
-            />
-
-            <div className="flex flex-wrap items-center gap-3">
-              <button type="button" className="btn" onClick={() => runAnalysis()} disabled={reading}>
-                {t(reading ? "readingFile" : "analyze")}
-              </button>
-              {previewTotal !== null ? (
-                <span className="readout" aria-live="polite">
-                  {t("previewLabel")} <span className="text-ink tabular-nums">{previewTotal}</span>
-                  {t("previewOutOf")}
+              <label className="block">
+                <span className="condensed text-micro font-medium text-muted">
+                  {t("extractedLabel")}
                 </span>
-              ) : null}
-              <button type="button" className="btn-quiet" onClick={clearAll}>
-                {t("clear")}
-              </button>
-            </div>
-          </section>
+                <textarea
+                  className="field mt-2 min-h-[16rem] font-mono text-xs"
+                  value={cvText}
+                  onChange={(event) => setCvText(event.target.value)}
+                  placeholder={t("extractedPlaceholder")}
+                  spellCheck={false}
+                />
+              </label>
+            </section>
+
+            <section className="bench flex flex-col gap-4 p-5 sm:p-6">
+              <div>
+                <h2 className="text-h3 font-semibold">{t("adHeading")}</h2>
+                <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
+                  {t("adLede")}
+                </p>
+              </div>
+
+              <textarea
+                className="field min-h-[20rem] flex-1 text-sm"
+                value={jobAd}
+                onChange={(event) => setJobAd(event.target.value)}
+                placeholder={t("adPlaceholder")}
+              />
+            </section>
+          </div>
+
+          {/* The action belongs to both surfaces above it, so it sits under
+              both rather than inside the second column. */}
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" className="btn" onClick={() => runAnalysis()} disabled={reading}>
+              {t(reading ? "readingFile" : "analyze")}
+            </button>
+            <button type="button" className="btn-quiet" onClick={clearAll}>
+              {t("clear")}
+            </button>
+            {previewTotal !== null ? (
+              <span className="text-micro text-muted" aria-live="polite">
+                {t("previewLabel")}{" "}
+                <span className="font-mono tabular-nums text-ink">{previewTotal}</span>
+                <span className="font-mono tabular-nums">{t("previewOutOf")}</span>
+              </span>
+            ) : null}
+          </div>
         </div>
       ) : null}
 
