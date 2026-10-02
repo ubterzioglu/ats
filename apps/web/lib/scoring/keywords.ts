@@ -2,6 +2,8 @@ import type { KeywordReport, KeywordTerm, KeywordTier } from "@/types/analysis";
 
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
+import { formatDuration } from "./experience";
+import { extractExperienceRequirement } from "./job-ad";
 import { isJobNoise, isStopword } from "./stopwords";
 import { MULTI_WORD_SKILLS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill, variantsOf } from "./taxonomy";
 import { clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
@@ -286,6 +288,25 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
       cost: KEYWORDS_MAX - rawScore,
       evidence: headline
     });
+  }
+
+  const requirement = extractExperienceRequirement(jd);
+  if (requirement && context.experience.periods.length > 0) {
+    const gapMonths = requirement.years * 12 - context.experience.months;
+    if (gapMonths >= 6) {
+      drafts.push({
+        id: "keywords.experience-gap",
+        severity: gapMonths >= 24 ? "high" : "medium",
+        title: `The ad asks for ${requirement.years}+ years; the parsed dates add up to less`,
+        detail: `The date ranges in the CV total ${formatDuration(
+          context.experience.months,
+          context.language
+        )}. A tenure filter compares exactly these two numbers before a human reads anything.`,
+        fix: "If the total understates your real experience, make the timeline complete: concurrent roles, trimmed older roles and unexplained gaps all read as less time.",
+        cost: gapMonths >= 24 ? 3 : 2,
+        evidence: [requirement.source]
+      });
+    }
   }
 
   const overused = matched.filter((term) => term.hits > STUFFING_THRESHOLD);
