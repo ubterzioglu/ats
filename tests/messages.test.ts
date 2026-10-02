@@ -39,7 +39,7 @@ const SHARED_VERBATIM: ReadonlySet<string> = new Set([
   "login.passwordPlaceholder",
   "notFound.code",
   "analyzer.previewOutOf",
-  "scoreRail.outOf",
+  "measureRail.outOf",
   "benchPreview.outOf",
   "benchPreview.worth",
   "aiStatus.size",

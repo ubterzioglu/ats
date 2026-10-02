@@ -185,7 +185,7 @@
     "medium": "Düzeltmeye değer",
     "low": "Rötuş"
   },
-  "scoreRail": {
+  "measureRail": {
     "outOf": "/100",
     "previousRun": "önceki çalıştırma",
     "lastVisit": "son ziyaretiniz",

@@ -29,7 +29,7 @@ import { KeywordPanel } from "./keyword-panel";
 import { ParserView } from "./parser-view";
 import { ReportChat } from "./report-chat";
 import { RewriteDiff } from "./rewrite-diff";
-import { ScoreRail } from "./score-rail";
+import { MeasureRail } from "./bench/measure-rail";
 
 type View = "input" | "report";
 
@@ -406,12 +406,6 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
       {view === "report" && result ? (
         <div className="space-y-5">
-          <ScoreRail
-            result={result}
-            previous={previous ?? lastVisit}
-            comparedTo={previous ? "previousRun" : "lastVisit"}
-          />
-
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" className="btn-quiet" onClick={downloadReport}>
               {t("downloadReport")}
@@ -458,6 +452,12 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             </div>
 
             <div className="space-y-5">
+              <MeasureRail
+                result={result}
+                previous={previous ?? lastVisit}
+                comparedTo={previous ? "previousRun" : "lastVisit"}
+                sticky
+              />
               <KeywordPanel report={result.keywords} hints={hints} coverage={coverage} />
               <AiConsent onReady={setEmbedder} />
               <AiStatus onTierChange={setModelTier} />

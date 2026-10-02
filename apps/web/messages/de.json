@@ -185,7 +185,7 @@
     "medium": "Lohnt sich",
     "low": "Feinschliff"
   },
-  "scoreRail": {
+  "measureRail": {
     "outOf": "/100",
     "previousRun": "dem vorigen Durchlauf",
     "lastVisit": "Ihrem letzten Besuch",

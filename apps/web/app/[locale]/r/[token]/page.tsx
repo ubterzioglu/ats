@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { FixList } from "@/components/fix-list";
 import { KeywordPanel } from "@/components/keyword-panel";
-import { ScoreRail } from "@/components/score-rail";
+import { MeasureRail } from "@/components/bench/measure-rail";
 import { Link } from "@/i18n/navigation";
 import { loadReport } from "@/lib/supabase/reports";
 
@@ -43,7 +43,7 @@ export default async function SharedReportPage({ params }: SharedReportPageProps
       </header>
 
       <div className="space-y-5">
-        <ScoreRail result={report} />
+        <MeasureRail result={report} />
         <FixList findings={report.findings} />
         <KeywordPanel report={report.keywords} />
       </div>

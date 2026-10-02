@@ -185,7 +185,7 @@
     "medium": "Worth fixing",
     "low": "Polish"
   },
-  "scoreRail": {
+  "measureRail": {
     "outOf": "/100",
     "previousRun": "the previous run",
     "lastVisit": "your last visit",
