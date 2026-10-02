@@ -1,13 +1,15 @@
-import type { KeywordReport, KeywordTerm, KeywordTier } from "@/types/analysis";
+import type { DocumentLanguage, KeywordReport, KeywordTerm, KeywordTier } from "@/types/analysis";
 
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { formatDuration } from "./experience";
 import { extractExperienceRequirement } from "./job-ad";
+import { detectLanguage } from "./language";
 import { lineSection, sectionRanges } from "./sections";
 import { isJobNoise, isStopword } from "./stopwords";
 import { MULTI_WORD_SKILLS, SYNONYMS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill, variantsOf } from "./taxonomy";
-import { clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
+import { caseFold, clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
+import { hasTurkishCharacters, matchKeyTurkish } from "./turkish";
 
 export const KEYWORDS_MAX = 25;
 
@@ -31,7 +33,28 @@ export interface VariantCount {
   readonly hits: number;
 }
 
-export function countOccurrencesByVariant(haystack: string, term: string): VariantCount[] {
+/** Counts tokens whose Turkish stem-and-fold key equals the term's. */
+function countByTurkishKey(haystack: string, term: string): number {
+  const key = matchKeyTurkish(term);
+  if (key.length === 0) return 0;
+  let hits = 0;
+  for (const token of tokenize(haystack)) {
+    if (matchKeyTurkish(token) === key) hits += 1;
+  }
+  return hits;
+}
+
+/**
+ * Literal variant counting, extended for Turkish. Turkish is agglutinative:
+ * the ad says "geliştirme", the CV says "geliştirdim", and no literal pattern
+ * pairs them. When the document or the term is Turkish, tokens are matched on
+ * their stem key as well, and the stem hits top up the canonical variant.
+ */
+export function countOccurrencesByVariant(
+  haystack: string,
+  term: string,
+  language?: DocumentLanguage
+): VariantCount[] {
   const totals = new Map<string, number>();
   for (const line of haystack.split("\n")) {
     for (const variant of variantsOf(term)) {
@@ -40,11 +63,33 @@ export function countOccurrencesByVariant(haystack: string, term: string): Varia
       if (matches) totals.set(variant, (totals.get(variant) ?? 0) + matches.length);
     }
   }
-  return variantsOf(term).map((variant) => ({ variant, hits: totals.get(variant) ?? 0 }));
+  const counts = variantsOf(term).map((variant) => ({
+    variant,
+    hits: totals.get(variant) ?? 0
+  }));
+
+  const turkish = language === "tr" || hasTurkishCharacters(term);
+  if (turkish && !term.includes(" ")) {
+    const stemHits = countByTurkishKey(haystack, term);
+    const literalHits = counts.reduce((sum, entry) => sum + entry.hits, 0);
+    const canonical = counts[0];
+    if (canonical !== undefined && stemHits > literalHits) {
+      counts[0] = { variant: canonical.variant, hits: canonical.hits + stemHits - literalHits };
+    }
+  }
+
+  return counts;
 }
 
-export function countOccurrences(haystack: string, term: string): number {
-  return countOccurrencesByVariant(haystack, term).reduce((sum, entry) => sum + entry.hits, 0);
+export function countOccurrences(
+  haystack: string,
+  term: string,
+  language?: DocumentLanguage
+): number {
+  return countOccurrencesByVariant(haystack, term, language).reduce(
+    (sum, entry) => sum + entry.hits,
+    0
+  );
 }
 
 interface Candidate {
@@ -84,7 +129,7 @@ const MAX_HEADING_CHARS = 60;
 /** Classifies a heading-shaped line; null means "not a heading". */
 function headingTier(line: string): KeywordTier | "none" | null {
   if (isBulletLine(line)) return null;
-  const cleaned = line.replace(/[:：]+$/g, "").trim().toLowerCase();
+  const cleaned = caseFold(line.replace(/[:：]+$/g, "").trim());
   if (cleaned.length === 0 || cleaned.length > MAX_HEADING_CHARS) return null;
   if (PREFERRED_HEADINGS.some((heading) => cleaned.includes(heading))) return "preferred";
   if (REQUIRED_HEADINGS.some((heading) => cleaned.includes(heading))) return "required";
@@ -291,8 +336,9 @@ function discoverTerms(
  */
 export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
   const text = normalizeDocument(jobDescription);
+  const language = detectLanguage(text);
   const lines = text.split("\n").map((line) => line.trim());
-  const lowerLines = lines.map((line) => line.toLowerCase());
+  const lowerLines = lines.map((line) => caseFold(line));
   const tiers = tierPerLine(lines);
   const lowercaseVocab = buildLowercaseVocab(lines);
 
@@ -302,7 +348,7 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
     let frequency = 0;
     let tier: KeywordTier | undefined;
     lowerLines.forEach((line, index) => {
-      const hits = countOccurrences(line, phrase);
+      const hits = countOccurrences(line, phrase, language);
       if (hits === 0) return;
       frequency += hits;
       tier = mergeTier(tier, tiers[index]);
@@ -311,8 +357,12 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
     candidates.set(phrase, { term: phrase, frequency, tier });
   }
 
+  // A Turkish ad repeats a domain word in different inflections
+  // ("deneyim ... deneyimi ... deneyimine"), so frequencies are tallied on the
+  // stem key while the shortest surface seen is kept for display and matching.
   const frequencies = new Map<string, number>();
   const tokenTiers = new Map<string, KeywordTier | undefined>();
+  const surfaces = new Map<string, string>();
 
   lowerLines.forEach((line, index) => {
     const contextual = hasTechContext(line);
@@ -320,10 +370,13 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
       const term = canonicalize(token);
       if (isStopword(term) || isJobNoise(term)) continue;
       if (/^\d+$/.test(term)) continue;
-      if (term.length < 3 && !isKnownSkill(term)) continue;
+      const key = language === "tr" ? matchKeyTurkish(term) : term;
+      if (key.length < 3 && !isKnownSkill(key)) continue;
       if (isAmbiguousTerm(token) && !contextual) continue;
-      frequencies.set(term, (frequencies.get(term) ?? 0) + 1);
-      tokenTiers.set(term, mergeTier(tokenTiers.get(term), tiers[index]));
+      frequencies.set(key, (frequencies.get(key) ?? 0) + 1);
+      tokenTiers.set(key, mergeTier(tokenTiers.get(key), tiers[index]));
+      const known = surfaces.get(key);
+      if (known === undefined || term.length < known.length) surfaces.set(key, term);
     }
   });
 
@@ -331,17 +384,19 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
   // appears elsewhere in the ad, is prose - that occurrence should not push
   // the word over the repeated-domain-word bar.
   for (const [term, count] of proseCapitalCounts(lines, lowercaseVocab)) {
-    const existing = frequencies.get(term);
+    const key = language === "tr" ? matchKeyTurkish(term) : term;
+    const existing = frequencies.get(key);
     if (existing === undefined) continue;
-    if (existing - count <= 0) frequencies.delete(term);
-    else frequencies.set(term, existing - count);
+    if (existing - count <= 0) frequencies.delete(key);
+    else frequencies.set(key, existing - count);
   }
 
-  for (const [term, frequency] of frequencies) {
+  for (const [key, frequency] of frequencies) {
     if (frequency <= 0) continue;
-    if (!isKnownSkill(term) && frequency < 2) continue;
-    if (candidates.has(term)) continue;
-    candidates.set(term, { term, frequency, tier: tokenTiers.get(term) });
+    if (!isKnownSkill(key) && frequency < 2) continue;
+    const surface = surfaces.get(key) ?? key;
+    if (candidates.has(surface)) continue;
+    candidates.set(surface, { term: surface, frequency, tier: tokenTiers.get(key) });
   }
 
   const discovered = discoverTerms(lines, lowerLines, tiers, candidates, lowercaseVocab);
@@ -349,7 +404,7 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
   for (const [term, discovery] of discovered) {
     candidates.set(term, {
       term,
-      frequency: countOccurrences(lower, term),
+      frequency: countOccurrences(lower, term, language),
       tier: discovery.tier
     });
   }
@@ -377,18 +432,18 @@ function baselineTerms(context: ScoreContext): KeywordTerm[] {
   const found: KeywordTerm[] = [];
 
   for (const skill of MULTI_WORD_SKILLS) {
-    const hits = countOccurrences(context.lower, skill);
+    const hits = countOccurrences(context.lower, skill, context.language);
     if (hits > 0) found.push({ term: skill, weight: 1, hits });
   }
 
   for (const line of context.lines) {
     const contextual = hasTechContext(line);
-    for (const token of tokenize(line.toLowerCase())) {
+    for (const token of tokenize(line)) {
       const term = canonicalize(token);
       if (!isKnownSkill(term) || term.includes(" ")) continue;
       if (isAmbiguousTerm(token) && !contextual) continue;
       if (found.some((entry) => entry.term === term)) continue;
-      found.push({ term, weight: 1, hits: countOccurrences(context.lower, term) });
+      found.push({ term, weight: 1, hits: countOccurrences(context.lower, term, context.language) });
     }
   }
 
@@ -450,7 +505,7 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
   const terms = extractJobKeywords(jd);
   const scored = terms.map((term) => ({
     ...term,
-    hits: countOccurrences(context.lower, term.term)
+    hits: countOccurrences(context.lower, term.term, context.language)
   }));
 
   const matched = scored.filter((term) => term.hits > 0);
@@ -483,7 +538,7 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
 
   const aliasFor = new Map<string, string>();
   for (const term of matched) {
-    const counts = countOccurrencesByVariant(context.lower, term.term);
+    const counts = countOccurrencesByVariant(context.lower, term.term, context.language);
     const canonical = counts.find((entry) => entry.variant === term.term);
     const viaAlias = counts.find((entry) => entry.variant !== term.term && entry.hits > 0);
     if ((canonical?.hits ?? 0) === 0 && viaAlias) {
@@ -517,7 +572,7 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
       let inSkills = 0;
       let elsewhere = 0;
       context.lines.forEach((line, index) => {
-        const hits = countOccurrences(line.toLowerCase(), term.term);
+        const hits = countOccurrences(caseFold(line), term.term, context.language);
         if (hits === 0) return;
         if (lineSection(ranges, index) === "skills") inSkills += hits;
         else elsewhere += hits;

@@ -1,6 +1,6 @@
 import type { DetectedSection } from "@/types/analysis";
 
-import { isBulletLine } from "./text";
+import { caseFold, isBulletLine } from "./text";
 
 interface SectionDefinition {
   readonly id: string;
@@ -84,7 +84,9 @@ export function detectSections(lines: readonly string[]): DetectedSection[] {
   lines.forEach((line, index) => {
     if (!looksLikeHeading(line)) return;
 
-    const cleaned = line.replace(/[:：|•\-–—_]+\s*$/g, "").trim();
+    // Case-fold rather than toLowerCase: "İş Deneyimi" must reach the
+    // pattern as "iş deneyimi", which a plain lowercase splits in two.
+    const cleaned = caseFold(line.replace(/[:：|•\-–—_]+\s*$/g, "").trim());
 
     for (const definition of SECTION_DEFINITIONS) {
       if (seen.has(definition.id)) continue;

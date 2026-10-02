@@ -40,6 +40,15 @@ export function normalizeDocument(raw: string): string {
   return text.trim();
 }
 
+/**
+ * Locale-neutral case fold. A plain toLowerCase() turns "İ" into "i" plus a
+ * combining dot, which splits the word in two for the tokenizer below; the
+ * dot is mapped first and any stray combining mark is dropped.
+ */
+export function caseFold(text: string): string {
+  return text.replace(/\u0130/g, "i").replace(/\u0307/g, "").toLowerCase();
+}
+
 export function toLines(text: string): string[] {
   return text
     .split("\n")
@@ -53,9 +62,7 @@ export function countWords(text: string): number {
 }
 
 export function tokenize(text: string): string[] {
-  const matches = text
-    .toLowerCase()
-    .match(/[\p{L}\p{N}][\p{L}\p{N}+#.]*(?:\+\+)?/gu);
+  const matches = caseFold(text).match(/[\p{L}\p{N}][\p{L}\p{N}+#.]*(?:\+\+)?/gu);
   if (!matches) return [];
   return matches.map((token) => token.replace(/[.]+$/g, "")).filter(Boolean);
 }

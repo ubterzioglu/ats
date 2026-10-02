@@ -1,6 +1,7 @@
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { countWords, ratio } from "./text";
+import { hasTurkishVerbEnding } from "./turkish";
 
 export const IMPACT_MAX = 20;
 
@@ -78,7 +79,12 @@ export function scoreImpact(context: ScoreContext): DimensionOutcome {
       });
     }
 
-    const withVerb = bullets.filter((bullet) => ACTION_VERB_RX.test(bullet));
+    // Turkish is verb-final: the ownership verb closes the bullet, so the
+    // English-anchored check would score every Turkish bullet as verbless.
+    const turkish = context.language === "tr";
+    const withVerb = bullets.filter(
+      (bullet) => ACTION_VERB_RX.test(bullet) || (turkish && hasTurkishVerbEnding(bullet))
+    );
     const verbRatio = ratio(withVerb.length, bullets.length);
     if (verbRatio < 0.35) {
       drafts.push({

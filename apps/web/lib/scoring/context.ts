@@ -3,7 +3,8 @@ import type { DetectedSection, DocumentLanguage, DocumentStats } from "@/types/a
 import { buildExperience, type ExperienceReport } from "./experience";
 import { detectLanguage } from "./language";
 import { detectSections } from "./sections";
-import { countWords, isBulletLine, normalizeDocument, round, stripBulletMarker, toLines, tokenize } from "./text";
+import { caseFold, countWords, isBulletLine, normalizeDocument, round, stripBulletMarker, toLines, tokenize } from "./text";
+import { trLowercase } from "./turkish";
 
 export interface ScoreContext {
   readonly raw: string;
@@ -32,6 +33,7 @@ export function buildContext(cvText: string): ScoreContext {
 
   const years = (raw.match(/\b(19|20)\d{2}\b/g) ?? []).map(Number);
   const experience = buildExperience(lines);
+  const language = detectLanguage(raw);
 
   const stats: DocumentStats = {
     characters: raw.length,
@@ -46,13 +48,14 @@ export function buildContext(cvText: string): ScoreContext {
 
   return {
     raw,
-    lower: raw.toLowerCase(),
+    // Turkish lowercases by its own rules: "I" is the uppercase of "ı", not "i".
+    lower: language === "tr" ? trLowercase(raw) : caseFold(raw),
     lines,
     tokens,
     tokenSet: new Set(tokens),
     bullets,
     sections: detectSections(lines),
-    language: detectLanguage(raw),
+    language,
     stats,
     experience
   };
