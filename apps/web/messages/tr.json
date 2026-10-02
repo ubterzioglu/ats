@@ -3,267 +3,267 @@
     "name": "ats readability"
   },
   "languageSwitcher": {
-    "label": "Language"
+    "label": "Dil"
   },
   "metadata": {
-    "defaultTitle": "ATS readability — see your CV the way the parser does",
+    "defaultTitle": "ATS readability — CV'nizi ayrıştırıcının gördüğü gibi görün",
     "titleTemplate": "%s · ATS readability",
-    "description": "Read a CV the way an applicant tracking system reads it: what parses, what is missing, and which terms from the job ad never appear. Runs entirely in the browser.",
+    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tamamen tarayıcıda çalışır.",
     "openGraphTitle": "ATS readability",
-    "openGraphDescription": "See your CV the way the parser does. Nothing is uploaded.",
-    "sharedReportTitle": "Shared report"
+    "openGraphDescription": "CV'nizi ayrıştırıcının gördüğü gibi görün. Hiçbir şey yüklenmez.",
+    "sharedReportTitle": "Paylaşılan rapor"
   },
   "common": {
-    "signIn": "Sign in",
-    "signOut": "Sign out",
-    "signInToSave": "Sign in to save reports",
-    "disclaimer": "The checks are heuristics built from how mainstream parsers behave, not a reproduction of any named vendor. A good score means nothing is standing between your CV and a human reader; it is not a prediction that you will be invited."
+    "signIn": "Giriş yap",
+    "signOut": "Çıkış yap",
+    "signInToSave": "Raporları kaydetmek için giriş yapın",
+    "disclaimer": "Kontroller, yaygın ayrıştırıcıların davranışından türetilmiş sezgisel kurallardır; adı geçen hiçbir ürünün kopyası değildir. İyi bir puan, CV'niz ile insan okuyucu arasında hiçbir engel kalmadığı anlamına gelir; davet alacağınızın öngörüsü değildir."
   },
   "home": {
-    "headline": "Your CV is read as text, not as a design.",
-    "lede": "An applicant tracking system throws away your layout and keeps whatever text it can pull out. This shows you that text, scores what survived out of 100, and lists what to change — ordered by how many points each fix is worth.",
-    "analyzeCta": "Analyze a CV",
-    "privacyNote": "The file is read in your browser and scored there. It is never uploaded.",
-    "methodHeading": "How the 100 points are split",
-    "methodIntro": "Each dimension starts at its full weight and loses points only to a named finding, so the report can always tell you where a missing point went.",
-    "methodNoBlackBox": "Nothing here is a black box: every deduction names the line it came from and what to write instead.",
+    "headline": "CV'niz tasarım olarak değil, metin olarak okunur.",
+    "lede": "Aday takip sistemi düzeninizi atar ve çekebildiği metni tutar. Burada o metni görür, hayatta kalanın 100 üzerinden puanını alır ve neyi değiştirmeniz gerektiğini görürsünüz — her düzeltmenin kaç puan ettiğine göre sıralanmış olarak.",
+    "analyzeCta": "Bir CV analiz et",
+    "privacyNote": "Dosya tarayıcınızda okunur ve orada puanlanır. Hiçbir zaman yüklenmez.",
+    "methodHeading": "100 puan nasıl bölünüyor",
+    "methodIntro": "Her boyut tam ağırlığıyla başlar ve yalnızca adı konmuş bir bulguya puan kaybeder; böylece rapor, eksilen puanın nereye gittiğini her zaman söyleyebilir.",
+    "methodNoBlackBox": "Burada kara kutu yok: her kesinti hangi satırdan geldiğini ve onun yerine ne yazılacağını söyler.",
     "dimensions": {
       "parseability": {
-        "name": "Parseability",
-        "what": "Whether the text layer survives extraction at all: columns, tables, icon fonts, broken encodings."
+        "name": "Ayrıştırılabilirlik",
+        "what": "Metin katmanının çıkarımdan sağ çıkıp çıkmadığı: sütunlar, tablolar, ikon yazı tipleri, bozuk kodlamalar."
       },
       "keywords": {
-        "name": "Keyword match",
-        "what": "Coverage of the terms mined from the job ad, weighted by how central each one is to the posting."
+        "name": "Anahtar kelime eşleşmesi",
+        "what": "İlandan çıkarılan terimlerin kapsanması; her terim ilan için ne kadar merkezi olduğuna göre ağırlıklandırılır."
       },
       "impact": {
-        "name": "Impact",
-        "what": "Quantified results and ownership verbs, measured against responsibility filler."
+        "name": "Etki",
+        "what": "Sayısallaştırılmış sonuçlar ve sahiplenme fiilleri; sorumluluk doldurusuna karşı ölçülür."
       },
       "structure": {
-        "name": "Structure",
-        "what": "Headings a parser can map to fields, dated entries in reverse order, bullets instead of paragraphs."
+        "name": "Yapı",
+        "what": "Ayrıştırıcının alanlara eşleyebileceği başlıklar, tersten sıralı tarihli kayıtlar, paragraf yerine madde imleri."
       },
       "contact": {
-        "name": "Contact",
-        "what": "The identity fields every system stores: name, email, phone, location, profile link."
+        "name": "İletişim",
+        "what": "Her sistemin sakladığı kimlik alanları: ad, e-posta, telefon, konum, profil bağlantısı."
       }
     }
   },
   "analyze": {
-    "heading": "See what the parser gets",
-    "lede": "Upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad."
+    "heading": "Ayrıştırıcı ne alıyor görün",
+    "lede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıdaki metin, bir aday takip sisteminin çıkaracağı metindir — çıkarım yanlış gittiyse düzeltin, sonra ilana karşı puanlayın."
   },
   "login": {
-    "heading": "Sign in",
-    "lede": "Your CV is read and scored in your browser. The account only keeps your share links.",
-    "emailLabel": "Email",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
+    "heading": "Giriş yap",
+    "lede": "CV'niz tarayıcınızda okunur ve puanlanır. Hesap yalnızca paylaşım bağlantılarınızı tutar.",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "siz@ornek.com",
+    "passwordLabel": "Parola",
     "passwordPlaceholder": "••••••••",
-    "submit": "Sign in",
-    "createAccount": "Create an account",
-    "whatThisChecks": "What this checks",
+    "submit": "Giriş yap",
+    "createAccount": "Hesap oluştur",
+    "whatThisChecks": "Bu neyi kontrol ediyor",
     "messages": {
-      "invalidCredentials": "That email and password do not match an account.",
-      "signupFailed": "The account could not be created. Check the address and try again.",
-      "checkYourEmail": "Account created. Confirm your email address to sign in.",
-      "linkExpired": "That confirmation link is no longer valid. Sign in to have a new one sent."
+      "invalidCredentials": "Bu e-posta ve parola bir hesapla eşleşmiyor.",
+      "signupFailed": "Hesap oluşturulamadı. Adresi kontrol edip yeniden deneyin.",
+      "checkYourEmail": "Hesap oluşturuldu. Giriş yapmak için e-posta adresinizi doğrulayın.",
+      "linkExpired": "Bu doğrulama bağlantısı artık geçerli değil. Yenisinin gönderilmesi için giriş yapın."
     }
   },
   "notFound": {
     "code": "404",
-    "heading": "Nothing here",
-    "body": "A shared report lives for 30 days and then deletes itself. This one has either expired or never existed.",
-    "cta": "Analyze a CV"
+    "heading": "Burada bir şey yok",
+    "body": "Paylaşılan bir rapor 30 gün yaşar, sonra kendini siler. Bu ya süresi dolmuş ya da hiç var olmamış.",
+    "cta": "Bir CV analiz et"
   },
   "analyzer": {
-    "sections": "Sections",
-    "tabInput": "Document and job ad",
-    "tabReport": "Report",
-    "startOver": "Start over",
-    "scoreAnyway": "Score anyway",
-    "backToText": "Back to the text",
-    "cvHeading": "The CV",
-    "cvLede": "Upload the exact file you send to employers. Whatever comes out below is what a parser gets.",
-    "extractedLabel": "Extracted text — edit it if something is off",
-    "extractedPlaceholder": "Paste the CV text here if you would rather not upload a file.",
-    "adHeading": "The job ad",
-    "adLede": "Optional, and the single biggest change to the result. With an ad the keyword score is measured against that vacancy instead of a generic skill list.",
-    "adPlaceholder": "Paste the full posting, including the requirements list.",
-    "readingFile": "Reading the file…",
-    "analyze": "Analyze",
-    "previewLabel": "preview",
+    "sections": "Bölümler",
+    "tabInput": "Belge ve iş ilanı",
+    "tabReport": "Rapor",
+    "startOver": "Baştan başla",
+    "scoreAnyway": "Yine de puanla",
+    "backToText": "Metne dön",
+    "cvHeading": "CV",
+    "cvLede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıda ne çıkıyorsa ayrıştırıcının aldığı odur.",
+    "extractedLabel": "Çıkarılan metin — bir şey yanlışsa düzeltin",
+    "extractedPlaceholder": "Dosya yüklemek istemiyorsanız CV metnini buraya yapıştırın.",
+    "adHeading": "İş ilanı",
+    "adLede": "İsteğe bağlı ve sonucu en çok değiştiren şey. İlan verildiğinde anahtar kelime puanı genel bir beceri listesine değil, o ilana karşı ölçülür.",
+    "adPlaceholder": "İlanın tamamını, gereksinimler listesi dahil, yapıştırın.",
+    "readingFile": "Dosya okunuyor…",
+    "analyze": "Analiz et",
+    "previewLabel": "önizleme",
     "previewOutOf": "/100",
-    "clear": "Clear",
-    "downloadReport": "Download report",
-    "copied": "Copied",
-    "copyAsText": "Copy as text",
-    "creatingLink": "Creating link…",
-    "createShareLink": "Create share link",
-    "editAndRerun": "Edit and re-run",
-    "shareNote": "Shareable for 30 days, scores only — no CV text is stored:",
-    "parserCaption": "{words} words · {lines} lines · {language}",
+    "clear": "Temizle",
+    "downloadReport": "Raporu indir",
+    "copied": "Kopyalandı",
+    "copyAsText": "Metin olarak kopyala",
+    "creatingLink": "Bağlantı oluşturuluyor…",
+    "createShareLink": "Paylaşım bağlantısı oluştur",
+    "editAndRerun": "Düzenle ve yeniden çalıştır",
+    "shareNote": "30 gün paylaşılabilir, yalnızca puanlar — hiçbir CV metni saklanmaz:",
+    "parserCaption": "{words} kelime · {lines} satır · {language}",
     "errors": {
-      "fileUnreadable": "That file could not be read.",
-      "tooShort": "Add the CV text first — at least a few lines are needed to judge anything.",
-      "analysisFailed": "The analysis could not be completed.",
-      "clipboard": "The clipboard is not available here. Download the report instead.",
-      "shareAuthRequired": "Sign in to create a share link. The analysis itself needs no account.",
-      "shareEnvMissing": "Sharing needs Supabase credentials. Everything else works without them.",
-      "shareFailed": "The link could not be created. The report is still yours to download."
+      "fileUnreadable": "Bu dosya okunamadı.",
+      "tooShort": "Önce CV metnini ekleyin — bir şey değerlendirmek için en az birkaç satır gerekir.",
+      "analysisFailed": "Analiz tamamlanamadı.",
+      "clipboard": "Pano burada kullanılamıyor. Onun yerine raporu indirin.",
+      "shareAuthRequired": "Paylaşım bağlantısı oluşturmak için giriş yapın. Analizin kendisi hesap gerektirmez.",
+      "shareEnvMissing": "Paylaşım için Supabase kimlik bilgileri gerekir. Geri kalan her şey onlarsız çalışır.",
+      "shareFailed": "Bağlantı oluşturulamadı. Rapor yine de sizin, indirebilirsiniz."
     }
   },
   "dataControls": {
-    "heading": "Stored on this device",
-    "counting": "Counting what is stored here…",
-    "holds": "This browser holds {what}. Your CV is not among it: nothing here keeps the document or any line from it.",
-    "nothing": "nothing",
-    "history": "saved scores",
-    "meta": "settings",
-    "delete": "Delete local data",
-    "confirm": "Deleting removes {what}. It cannot be undone.",
-    "confirmDelete": "Delete {count} records",
-    "keep": "Keep them",
-    "deleting": "Deleting…",
-    "deleted": "Deleted {count} records. This browser now holds nothing from this site.",
-    "countAgain": "Count again"
+    "heading": "Bu cihazda saklananlar",
+    "counting": "Burada ne saklandığı sayılıyor…",
+    "holds": "Bu tarayıcı {what} tutuyor. CV'niz bunların arasında değil: burada ne belge ne de ondan bir satır saklanır.",
+    "nothing": "hiçbir şey",
+    "history": "kayıtlı puan",
+    "meta": "ayar",
+    "delete": "Yerel veriyi sil",
+    "confirm": "Silmek {what} kaldırır. Geri alınamaz.",
+    "confirmDelete": "{count} kaydı sil",
+    "keep": "Kalsın",
+    "deleting": "Siliniyor…",
+    "deleted": "{count} kayıt silindi. Bu tarayıcı artık bu siteden hiçbir şey tutmuyor.",
+    "countAgain": "Yeniden say"
   },
   "rewriteDiff": {
-    "heading": "Rewrite weak bullets",
-    "lede": "The local model restates {count, plural, one {# responsibility bullet} other {# responsibility bullets}} as claims. Invented facts are filtered out before you see them; everything unknown stays a visible [quantify: …].",
-    "cancel": "Cancel",
-    "propose": "Propose rewrites",
-    "warmingUp": "Warming up the model…",
-    "progress": "{percent}% {text}",
-    "nothingUsable": "The model returned nothing usable. The deterministic drafts below still work.",
-    "rewriteFailed": "Rewriting failed.",
-    "stale": "The text changed since this proposal was made; regenerate the proposals.",
-    "apply": "Apply and re-score",
-    "discard": "Discard"
+    "heading": "Zayıf maddeleri yeniden yaz",
+    "lede": "Yerel model {count, plural, one {# sorumluluk maddesini} other {# sorumluluk maddesini}} iddia haline getirir. Uydurulmuş bilgiler siz görmeden elenir; bilinmeyen her şey görünür bir [quantify: …] olarak kalır.",
+    "cancel": "İptal",
+    "propose": "Yeniden yazım öner",
+    "warmingUp": "Model ısınıyor…",
+    "progress": "%{percent} {text}",
+    "nothingUsable": "Model kullanılabilir bir şey döndürmedi. Aşağıdaki deterministik taslaklar yine de çalışıyor.",
+    "rewriteFailed": "Yeniden yazma başarısız oldu.",
+    "stale": "Bu öneri yapıldıktan sonra metin değişti; önerileri yeniden oluşturun.",
+    "apply": "Uygula ve yeniden puanla",
+    "discard": "Vazgeç"
   },
   "keywordPanel": {
-    "headingFromAd": "Terms from the job ad",
-    "headingBaseline": "Skill terms found in the CV",
-    "covered": " % covered",
-    "tierRequired": "The ad requires these",
-    "tierOther": "Also indexed from the ad",
-    "tierPreferred": "Nice to have according to the ad",
-    "recognised": "Recognised in the CV",
-    "noTerms": "No recognisable skill terms. Name the tools and methods you work with.",
-    "pasteAd": "Paste a job ad to replace this inventory with a real match score against one vacancy.",
-    "statusFound": "FOUND",
-    "statusAlias": "ALIAS",
-    "statusMissing": "MISSING",
-    "statusPartial": "PARTIAL",
-    "titlePartial": "PARTIAL: the CV says something close - \"{passage}\" ({percent}% similar)",
-    "titleAlias": "matched in the CV as \"{alias}\"",
-    "titleMissing": "never appears in the CV"
+    "headingFromAd": "İlandaki terimler",
+    "headingBaseline": "CV'de bulunan beceri terimleri",
+    "covered": " % kapsandı",
+    "tierRequired": "İlan bunları şart koşuyor",
+    "tierOther": "İlandan ayrıca çıkarılanlar",
+    "tierPreferred": "İlana göre tercih sebebi",
+    "recognised": "CV'de tanınanlar",
+    "noTerms": "Tanınabilir beceri terimi yok. Çalıştığınız araçları ve yöntemleri adlarıyla yazın.",
+    "pasteAd": "Bu envanteri tek bir ilana karşı gerçek bir eşleşme puanıyla değiştirmek için bir iş ilanı yapıştırın.",
+    "statusFound": "VAR",
+    "statusAlias": "EŞANLAM",
+    "statusMissing": "YOK",
+    "statusPartial": "KISMİ",
+    "titlePartial": "KISMİ: CV'de buna yakın bir ifade var - \"{passage}\" (%{percent} benzer)",
+    "titleAlias": "CV'de \"{alias}\" olarak eşleşti",
+    "titleMissing": "CV'de hiç geçmiyor"
   },
   "reportChat": {
-    "heading": "Ask about this report",
-    "lede": "The local model answers from the report below your score - not from the CV, and not from anything beyond what the checks found.",
-    "noAnswer": "No answer - see the error below.",
-    "roleUser": "You",
+    "heading": "Bu rapor hakkında sorun",
+    "lede": "Yerel model, puanınızın altındaki rapordan yanıt verir - CV'den değil, kontrollerin bulduğunun ötesinden hiç değil.",
+    "noAnswer": "Yanıt yok - aşağıdaki hataya bakın.",
+    "roleUser": "Siz",
     "roleModel": "Model",
-    "waiting": "Waiting for the model…",
-    "placeholder": "Why did keywords cost so much?",
-    "inputLabel": "Question about the report",
-    "cancel": "Cancel",
-    "ask": "Ask",
-    "failed": "The model could not answer."
+    "waiting": "Model bekleniyor…",
+    "placeholder": "Anahtar kelimeler neden bu kadar puana mal oldu?",
+    "inputLabel": "Rapor hakkında soru",
+    "cancel": "İptal",
+    "ask": "Sor",
+    "failed": "Model yanıt veremedi."
   },
   "severity": {
-    "critical": "Blocks parsing",
-    "high": "Costly",
-    "medium": "Worth fixing",
-    "low": "Polish"
+    "critical": "Ayrıştırmayı engelliyor",
+    "high": "Pahalı",
+    "medium": "Düzeltmeye değer",
+    "low": "Rötuş"
   },
   "scoreRail": {
     "outOf": "/100",
-    "previousRun": "the previous run",
-    "lastVisit": "your last visit",
-    "gainedSince": "gained since {label}",
-    "lostSince": "lost since {label}",
-    "meterLabel": "{dimension}: {score} of {max}"
+    "previousRun": "önceki çalıştırma",
+    "lastVisit": "son ziyaretiniz",
+    "gainedSince": "{label} sonrasında kazanıldı",
+    "lostSince": "{label} sonrasında kaybedildi",
+    "meterLabel": "{dimension}: {max} üzerinden {score}"
   },
   "fixList": {
-    "emptyHeading": "Nothing to fix",
-    "emptyBody": "Every check passed. Run the CV against the next job ad to see how the keyword match holds up.",
-    "heading": "What to fix, most expensive first",
-    "summary": "{count, plural, one {# finding} other {# findings}} · {points} pts",
-    "cost": "−{cost} pts",
-    "showLine": "Show this line in the parsed text",
-    "showEvidence": "Show what was found",
-    "hideEvidence": "Hide what was found"
+    "emptyHeading": "Düzeltilecek bir şey yok",
+    "emptyBody": "Her kontrol geçti. Anahtar kelime eşleşmesinin nasıl durduğunu görmek için CV'yi bir sonraki ilana karşı çalıştırın.",
+    "heading": "Neyi düzeltmeli, en pahalısından başlayarak",
+    "summary": "{count, plural, one {# bulgu} other {# bulgu}} · {points} puan",
+    "cost": "−{cost} puan",
+    "showLine": "Bu satırı ayrıştırılmış metinde göster",
+    "showEvidence": "Ne bulunduğunu göster",
+    "hideEvidence": "Ne bulunduğunu gizle"
   },
   "aiStatus": {
-    "detecting": "Checking what this machine can run locally…",
-    "heading": "Text model",
-    "lede": "Rewriting and explanations need a text model. Every option runs on your machine; none of them sees your CV until you ask for one of them.",
+    "detecting": "Bu makinenin yerelde ne çalıştırabileceği kontrol ediliyor…",
+    "heading": "Metin modeli",
+    "lede": "Yeniden yazma ve açıklamalar bir metin modeli gerektirir. Her seçenek sizin makinenizde çalışır; siz istemeden hiçbiri CV'nizi görmez.",
     "size": "~{sizeMb} MB",
-    "active": "active",
-    "probing": "Probing localhost:11434…",
-    "ollamaUnreachable": "Ollama did not answer on localhost:11434. Start it, and set OLLAMA_ORIGINS to include this site."
+    "active": "etkin",
+    "probing": "localhost:11434 yoklanıyor…",
+    "ollamaUnreachable": "Ollama localhost:11434 üzerinde yanıt vermedi. Başlatın ve OLLAMA_ORIGINS değerine bu siteyi ekleyin."
   },
   "aiConsent": {
-    "ready": "Semantic model ready.",
-    "readyDetail": "Hints below run locally against the parsed text; scores are unaffected.",
-    "heading": "Semantic hints (optional)",
-    "lede": "A small language model can point out near-misses the literal matcher cannot see - like a CV saying “Postgres” where the ad says “PostgreSQL”. It runs entirely in your browser ({model}, about {sizeMb} MB, downloaded once and cached). Your CV text is never sent anywhere, and scores never change - hints are advice, not measurement.",
-    "progressLabel": "Model download progress",
-    "cancel": "Cancel",
-    "tryAgain": "Try again",
-    "download": "Download model",
-    "downloadFailed": "The model could not be downloaded."
+    "ready": "Anlamsal model hazır.",
+    "readyDetail": "Aşağıdaki ipuçları ayrıştırılmış metne karşı yerelde çalışır; puanlar etkilenmez.",
+    "heading": "Anlamsal ipuçları (isteğe bağlı)",
+    "lede": "Küçük bir dil modeli, birebir eşleştiricinin göremediği yakın kaçırmaları gösterebilir - ilan “PostgreSQL” derken CV'nin “Postgres” demesi gibi. Tamamen tarayıcınızda çalışır ({model}, yaklaşık {sizeMb} MB, bir kez indirilir ve önbelleğe alınır). CV metniniz hiçbir yere gönderilmez ve puanlar hiç değişmez - ipuçları tavsiyedir, ölçüm değil.",
+    "progressLabel": "Model indirme ilerlemesi",
+    "cancel": "İptal",
+    "tryAgain": "Yeniden dene",
+    "download": "Modeli indir",
+    "downloadFailed": "Model indirilemedi."
   },
   "parserView": {
-    "heading": "What the parser read",
-    "truncated": "[…truncated for display]"
+    "heading": "Ayrıştırıcının okuduğu",
+    "truncated": "[…görüntü için kısaltıldı]"
   },
   "parseSweep": {
-    "caption": "Two columns and a sidebar, read top to bottom",
-    "fileReadout": "pdf · 1 page",
+    "caption": "İki sütun ve bir kenar çubuğu, yukarıdan aşağıya okunuyor",
+    "fileReadout": "pdf · 1 sayfa",
     "sample": {
-      "name": "John Doe",
-      "role": "QA Engineer · SDET",
-      "experience": "Experience",
-      "skills": "Skills",
-      "education": "Education",
-      "extracted": "JOHN DOE QA Engineer | SDET\nSpringfield  john@example.com  +1 555 ...\n\nEXPERIENCE   Senior QA Engineer\nBuilt an API regression suite in Java and\nREST Assured; cut release testing from\nthree days to four hours.\nLed the migration of 240 manual cases to\nautomated coverage.\n\nSKILLS  Selenium, Java, REST Assured, CI/CD\n\nEDUCATION  BSc Computer Engineering, 2019"
+      "name": "Ayşe Yılmaz",
+      "role": "Test Mühendisi · SDET",
+      "experience": "Deneyim",
+      "skills": "Beceriler",
+      "education": "Eğitim",
+      "extracted": "AYŞE YILMAZ Test Mühendisi | SDET\nİstanbul  ayse@ornek.com  +90 555 ...\n\nDENEYİM   Kıdemli Test Mühendisi\nJava ve REST Assured ile bir API regresyon\npaketi kurdu; sürüm testini üç günden\ndört saate indirdi.\n240 manuel senaryonun otomasyona\ngeçişini yönetti.\n\nBECERİLER  Selenium, Java, REST Assured, CI/CD\n\nEĞİTİM  Bilgisayar Mühendisliği Lisans, 2019"
     }
   },
   "coverageMap": {
-    "heading": "What the CV never addresses",
-    "lede": "The ad in {chunks, plural, one {# chunk} other {# chunks}}, each compared against the whole CV by the local model. These stay below {threshold}% similarity to anything you wrote. Advice, not measurement - the score is unchanged.",
-    "allCovered": "Every part of the ad has a close counterpart in the CV.",
-    "bestMatch": "best match {percent}%",
-    "more": "{count} more weakly covered chunks."
+    "heading": "CV'nin hiç değinmediği yerler",
+    "lede": "İlan {chunks, plural, one {# parçaya} other {# parçaya}} bölündü ve her biri yerel model tarafından CV'nin tamamıyla karşılaştırıldı. Bunlar yazdığınız hiçbir şeye %{threshold} benzerliğin altında kalıyor. Tavsiye, ölçüm değil - puan değişmedi.",
+    "allCovered": "İlanın her parçasının CV'de yakın bir karşılığı var.",
+    "bestMatch": "en iyi eşleşme %{percent}",
+    "more": "{count} zayıf kapsanan parça daha."
   },
   "findingExplain": {
-    "explain": "Explain with the local model",
-    "loading": "Asking the local model…",
-    "error": "The model could not answer - try again"
+    "explain": "Yerel modelle açıkla",
+    "loading": "Yerel modele soruluyor…",
+    "error": "Model yanıt veremedi - yeniden deneyin"
   },
   "fixDrafts": {
-    "heading": "Rewrite drafts",
-    "ledeBefore": "Responsibility phrasing rewritten as a claim.",
+    "heading": "Yeniden yazım taslakları",
+    "ledeBefore": "Sorumluluk ifadeleri iddia olarak yeniden yazıldı.",
     "quantifyToken": "[quantify: …]",
-    "ledeAfter": "marks the part only you can fill in. Applying a draft re-runs the analysis so the score rail shows the difference.",
-    "apply": "Apply and re-score",
-    "more": "{count} more drafts appear as you resolve these."
+    "ledeAfter": "yalnızca sizin doldurabileceğiniz yeri işaretler. Bir taslağı uygulamak analizi yeniden çalıştırır, böylece puan rayı farkı gösterir.",
+    "apply": "Uygula ve yeniden puanla",
+    "more": "Bunları çözdükçe {count} taslak daha görünecek."
   },
   "documentIntake": {
-    "pagesRead": "{source} · {pages, plural, one {# page} other {# pages}} read",
-    "drop": "Drop a CV here",
-    "formats": "PDF, DOCX or plain text, up to 10 MB. It is read in this browser and never sent anywhere.",
-    "reading": "Reading…",
-    "chooseAnother": "Choose another file",
-    "choose": "Choose a file"
+    "pagesRead": "{source} · {pages, plural, one {# sayfa} other {# sayfa}} okundu",
+    "drop": "Bir CV'yi buraya bırakın",
+    "formats": "PDF, DOCX veya düz metin, en fazla 10 MB. Bu tarayıcıda okunur ve hiçbir yere gönderilmez.",
+    "reading": "Okunuyor…",
+    "chooseAnother": "Başka bir dosya seç",
+    "choose": "Dosya seç"
   },
   "sharedReport": {
-    "eyebrow": "shared report · {date}",
-    "lede": "Scores and advice only. The CV itself was never stored.",
-    "cta": "Run your own CV through it"
+    "eyebrow": "paylaşılan rapor · {date}",
+    "lede": "Yalnızca puanlar ve tavsiyeler. CV'nin kendisi hiçbir zaman saklanmadı.",
+    "cta": "Kendi CV'nizi de geçirin"
   }
 }
