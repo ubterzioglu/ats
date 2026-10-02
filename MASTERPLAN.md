@@ -474,6 +474,13 @@ Opens the funnel and lays the ground the rest needs. No new product surface. Not
 | ~~**P0.6**~~ ✅ | **Turkish translation.** | M | P0.5 | Full UI in Turkish; no untranslated keys |
 | ~~**P0.7**~~ ✅ | **German translation.** | M | P0.5 | Full UI in German; no untranslated keys |
 
+> **Phase 1 note.** `V.1`-`V.10` and `J.1`-`J.7` are done. `V.1` and `V.2` landed
+> as one commit: `V.1` removes the classes `V.2` deletes, so splitting them meant one
+> commit where every surface referenced a class that no longer existed. `C.2`, `C.3`
+> and `A.1`-`A.4` remain.
+
+<!-- -->
+
 > **P0.5 must land before the `V` batches.** The redesign writes a large amount of new UI copy;
 > writing it outside the catalog means extracting it all a second time.
 
@@ -502,16 +509,16 @@ Part of Phase 0. Built once; modules C, D, E, F and G all depend on it, and so d
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **V.1** | **Tokens, fonts, themes.** CSS variables for both themes, `tailwind.config.ts`, Instrument Sans + DM Mono via `next/font/google` with `axes: ["wdth"]`, the `data-theme` mechanism, the pre-paint theme script, theme-aware `viewport.themeColor`, and `components/theme-toggle.tsx`. | M | P0.5 | Both themes render; no flash on load; the `wdth` axis is demonstrably applied |
-| **V.2** | **Surface primitives.** `.bench` and `.live`; remove `.sheet`, `.ruler` and `.scan-*`. Update `barTone` in `lib/ui.ts`. | S | V.1 | No component references a removed class |
-| **V.3** | **Landing reset.** Delete `parse-sweep.tsx`; new `bench-preview.tsx` hero showing real ordered findings with point values. Weights section reset. | M | V.2 | The hero communicates the product without animation; reduced-motion clean |
-| **V.4** | **Analyze input view reset.** The CV and job-ad surfaces in the new system. | S | V.2 | Function unchanged, new system |
-| **V.5** | **`bench/measure-rail.tsx`.** `score-rail.tsx` becomes the sticky instrument, in condensed width. Meters animate once on first render only. | M | V.2 | Deltas still shown; no motion on re-render |
-| **V.6** | **`bench/work-list.tsx` + `bench/work-item.tsx`.** The spine: numbered, value-ordered findings with evidence and point value, **and** in-place editing with instant re-scoring. Module C's core is built here rather than bolted on later. Owns review focus 3. | L | V.2, V.5 | Eight panels reduced to spine + rail; every finding reachable and editable; re-score under 300 ms on a mid-range laptop for a realistic CV |
-| **V.7** | **`bench/ask-dock.tsx`.** `report-chat.tsx` becomes a persistent strip. | M | V.6 | Reachable from anywhere in the report |
-| **V.8** | **Keyword panel and coverage fold-in.** `coverage-map.tsx` absorbed into `keyword-panel.tsx`. | M | V.2 | One panel, both reports |
-| **V.9** | **Remaining surfaces.** `/r/[token]` (read-only spine, no AI, no dock), `/login`, `not-found`, `coming-soon`. Owns review focus 2. | M | V.6 | A report saved by the old UI renders |
-| **V.10** | **Quality pass.** Contrast verified at 4.5:1 in both themes, keyboard focus visible, touch targets ≥44px, `prefers-reduced-motion`, mobile single-column collapse, no horizontal scroll. Confirms `live` cyan appears nowhere outside AI surfaces. | M | V.3–V.9 | Every item verified with evidence |
+| ~~**V.1**~~ ✅ | **Tokens, fonts, themes.** CSS variables for both themes, `tailwind.config.ts`, Instrument Sans + DM Mono via `next/font/google` with `axes: ["wdth"]`, the `data-theme` mechanism, the pre-paint theme script, theme-aware `viewport.themeColor`, and `components/theme-toggle.tsx`. | M | P0.5 | Both themes render; no flash on load; the `wdth` axis is demonstrably applied |
+| ~~**V.2**~~ ✅ | **Surface primitives.** `.bench` and `.live`; remove `.sheet`, `.ruler` and `.scan-*`. Update `barTone` in `lib/ui.ts`. | S | V.1 | No component references a removed class |
+| ~~**V.3**~~ ✅ | **Landing reset.** Delete `parse-sweep.tsx`; new `bench-preview.tsx` hero showing real ordered findings with point values. Weights section reset. | M | V.2 | The hero communicates the product without animation; reduced-motion clean |
+| ~~**V.4**~~ ✅ | **Analyze input view reset.** The CV and job-ad surfaces in the new system. | S | V.2 | Function unchanged, new system |
+| ~~**V.5**~~ ✅ | **`bench/measure-rail.tsx`.** `score-rail.tsx` becomes the sticky instrument, in condensed width. Meters animate once on first render only. | M | V.2 | Deltas still shown; no motion on re-render |
+| ~~**V.6**~~ ✅ | **`bench/work-list.tsx` + `bench/work-item.tsx`.** The spine: numbered, value-ordered findings with evidence and point value, **and** in-place editing with instant re-scoring. Module C's core is built here rather than bolted on later. Owns review focus 3. | L | V.2, V.5 | Eight panels reduced to spine + rail; every finding reachable and editable; re-score under 300 ms on a mid-range laptop for a realistic CV |
+| ~~**V.7**~~ ✅ | **`bench/ask-dock.tsx`.** `report-chat.tsx` becomes a persistent strip. | M | V.6 | Reachable from anywhere in the report |
+| ~~**V.8**~~ ✅ | **Keyword panel and coverage fold-in.** `coverage-map.tsx` absorbed into `keyword-panel.tsx`. | M | V.2 | One panel, both reports |
+| ~~**V.9**~~ ✅ | **Remaining surfaces.** `/r/[token]` (read-only spine, no AI, no dock), `/login`, `not-found`, `coming-soon`. Owns review focus 2. | M | V.6 | A report saved by the old UI renders |
+| ~~**V.10**~~ ✅ | **Quality pass.** Contrast verified at 4.5:1 in both themes, keyboard focus visible, touch targets ≥44px, `prefers-reduced-motion`, mobile single-column collapse, no horizontal scroll. Confirms `live` cyan appears nowhere outside AI surfaces. | M | V.3–V.9 | Every item verified with evidence |
 
 ### Module C — Fix mode
 
@@ -539,13 +546,13 @@ this extends rather than introduces.
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **J.1** | **Turkish stemming.** Snowball Turkish stemmer in keyword matching, plus locale-correct `ı/i` and `İ/I` casing, with domain rules on top. | M | — | Turkish keyword match rate comparable to English on the test set |
-| **J.2** | **German compound splitting.** Dictionary-based splitter: "Softwareentwicklung" → "Software" + "Entwicklung". | M | — | German keyword match rate comparable to English |
-| **J.3** | **Per-language stopwords.** Extends `lib/scoring/stopwords.ts`. | S | J.1, J.2 | Stopwords no longer inflate coverage in TR/DE |
-| **J.4** | **Encoding corruption check.** Garbled `ı İ ş ğ ç ö ü ä ß` reported as a Parseability finding. Owns review focus 1 for input. | M | — | Corrupted test PDFs detected; clean ones not flagged |
-| **J.5** | **Date formats.** "Oca 2022", "Ocak 2022", "01.2022", "Jan. 2022", "März 2022", "heute", "halen", "devam ediyor". | M | — | The Structure dimension reads TR/DE dates |
-| **J.6** | **Market-based advice.** Photo, date of birth, marital status, military service, by target market. | S | J.5 | Advice differs by selected market |
-| **J.7** | **Europass detection.** | S | J.5 | Europass layouts recognised and warned about |
+| ~~**J.1**~~ ✅ | **Turkish stemming.** Snowball Turkish stemmer in keyword matching, plus locale-correct `ı/i` and `İ/I` casing, with domain rules on top. | M | — | Turkish keyword match rate comparable to English on the test set |
+| ~~**J.2**~~ ✅ | **German compound splitting.** Dictionary-based splitter: "Softwareentwicklung" → "Software" + "Entwicklung". | M | — | German keyword match rate comparable to English |
+| ~~**J.3**~~ ✅ | **Per-language stopwords.** Extends `lib/scoring/stopwords.ts`. | S | J.1, J.2 | Stopwords no longer inflate coverage in TR/DE |
+| ~~**J.4**~~ ✅ | **Encoding corruption check.** Garbled `ı İ ş ğ ç ö ü ä ß` reported as a Parseability finding. Owns review focus 1 for input. | M | — | Corrupted test PDFs detected; clean ones not flagged |
+| ~~**J.5**~~ ✅ | **Date formats.** "Oca 2022", "Ocak 2022", "01.2022", "Jan. 2022", "März 2022", "heute", "halen", "devam ediyor". | M | — | The Structure dimension reads TR/DE dates |
+| ~~**J.6**~~ ✅ | **Market-based advice.** Photo, date of birth, marital status, military service, by target market. | S | J.5 | Advice differs by selected market |
+| ~~**J.7**~~ ✅ | **Europass detection.** | S | J.5 | Europass layouts recognised and warned about |
 
 ### Module B — ATS profiles (matching modes)
 
