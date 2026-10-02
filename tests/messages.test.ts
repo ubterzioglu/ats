@@ -42,6 +42,7 @@ const SHARED_VERBATIM: ReadonlySet<string> = new Set([
   "measureRail.outOf",
   "benchPreview.outOf",
   "benchPreview.worth",
+  "workItem.worth",
   "aiStatus.size",
   "fixDrafts.quantifyToken",
   // Turkish for "Model" is "Model", and German for "System" is "System".

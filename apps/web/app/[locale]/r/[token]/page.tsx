@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { FixList } from "@/components/fix-list";
+import { WorkList } from "@/components/bench/work-list";
 import { KeywordPanel } from "@/components/keyword-panel";
 import { MeasureRail } from "@/components/bench/measure-rail";
 import { Link } from "@/i18n/navigation";
@@ -44,7 +44,7 @@ export default async function SharedReportPage({ params }: SharedReportPageProps
 
       <div className="space-y-5">
         <MeasureRail result={report} />
-        <FixList findings={report.findings} />
+        <WorkList findings={report.findings} />
         <KeywordPanel report={report.keywords} />
       </div>
 

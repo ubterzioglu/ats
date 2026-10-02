@@ -193,15 +193,23 @@
     "lostSince": "{label} sonrasında kaybedildi",
     "meterLabel": "{dimension}: {max} üzerinden {score}"
   },
-  "fixList": {
-    "emptyHeading": "Düzeltilecek bir şey yok",
-    "emptyBody": "Her kontrol geçti. Anahtar kelime eşleşmesinin nasıl durduğunu görmek için CV'yi bir sonraki ilana karşı çalıştırın.",
-    "heading": "Neyi düzeltmeli, en pahalısından başlayarak",
+  "workList": {
+    "heading": "Neyi düzeltmeli, en değerlisinden başlayarak",
     "summary": "{count, plural, one {# bulgu} other {# bulgu}} · {points} puan",
-    "cost": "−{cost} puan",
+    "emptyHeading": "Düzeltilecek bir şey yok",
+    "emptyBody": "Her kontrol geçti. Anahtar kelime eşleşmesinin nasıl durduğunu görmek için CV'yi bir sonraki ilana karşı çalıştırın."
+  },
+  "workItem": {
+    "worth": "+{points}",
     "showLine": "Bu satırı ayrıştırılmış metinde göster",
-    "showEvidence": "Ne bulunduğunu göster",
-    "hideEvidence": "Ne bulunduğunu gizle"
+    "editLine": "Bu satırı düzenle",
+    "editLabel": "Ayrıştırıcının okuduğu hâliyle satır",
+    "draftAFix": "Bir düzeltme yaz",
+    "drafting": "Taslak yazılıyor…",
+    "nothingToDraft": "Bu satır için taslak yok. Kendiniz düzenleyin ya da yukarıdaki talimatı izleyin.",
+    "applyAndRescore": "Uygula ve yeniden puanla",
+    "cancel": "İptal",
+    "discard": "Vazgeç"
   },
   "aiStatus": {
     "detecting": "Bu makinenin yerelde ne çalıştırabileceği kontrol ediliyor…",

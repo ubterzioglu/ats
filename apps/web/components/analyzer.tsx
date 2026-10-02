@@ -10,9 +10,12 @@ import { acquireModel } from "@/lib/ai/model";
 import type { ModelTier } from "@/lib/ai/providers/types";
 import { findPartialMatches, toPassages, type PartialMatchHint } from "@/lib/ai/semantic-match";
 import { explainFinding } from "@/lib/ai/tasks/explain";
+import { rewriteBullets } from "@/lib/ai/tasks/rewrite";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
 import { buildMarkdownReport } from "@/lib/report/markdown";
+import { draftForLine } from "@/lib/bench/evidence";
 import { analyzeCv } from "@/lib/scoring";
+import { draftFixes } from "@/lib/scoring/drafts";
 import { assessDocumentKind, type DocumentKindAssessment } from "@/lib/scoring/gate";
 import { readPreviousRecord, recordAnalysis } from "@/lib/store/history";
 import type { HistoryRecord } from "@/lib/store/schema";
@@ -21,15 +24,13 @@ import type { AnalysisResult, Finding } from "@/types/analysis";
 
 import { AiConsent } from "./ai-consent";
 import { AiStatus } from "./ai-status";
+import { MeasureRail } from "./bench/measure-rail";
+import { WorkList } from "./bench/work-list";
 import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
-import { FixDrafts } from "./fix-drafts";
-import { FixList } from "./fix-list";
 import { KeywordPanel } from "./keyword-panel";
 import { ParserView } from "./parser-view";
 import { ReportChat } from "./report-chat";
-import { RewriteDiff } from "./rewrite-diff";
-import { MeasureRail } from "./bench/measure-rail";
 
 type View = "input" | "report";
 
@@ -170,6 +171,40 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       cancelled = true;
     };
   }, [embedder, result, cvText, jobAd]);
+
+  /**
+   * A rule first, a model only when no rule matches. The deterministic drafts
+   * are instant, need no download and cannot invent, so reaching for the model
+   * when one applies would be slower and weaker at once.
+   */
+  const draftFix = useCallback(
+    async (lineIndex: number, line: string): Promise<string | null> => {
+      const rule = draftForLine(draftFixes(cvText), lineIndex);
+      if (rule) return rule.replacement;
+      if (modelTier === "none") return null;
+
+      const prefix = line.match(/^\s*(?:[-*•▪●■▶‣⁃∙·➤➜✔✓★◦○]|\d+[.)])?\s*/)?.[0] ?? "";
+      const content = line.slice(prefix.length).trim();
+      if (content.length === 0) return null;
+
+      try {
+        const session = await acquireModel(modelTier);
+        const knownSkills = result
+          ? [...result.keywords.matched, ...result.keywords.missing].map((term) => term.term)
+          : [];
+        const pairs = await rewriteBullets(
+          session.model,
+          [{ lineIndex, prefix, content }],
+          knownSkills
+        );
+        const rewritten = pairs[0]?.rewritten;
+        return rewritten ? `${prefix}${rewritten}` : null;
+      } catch {
+        return null;
+      }
+    },
+    [cvText, modelTier, result]
+  );
 
   const explainLocally = useCallback(
     async (finding: Finding) => {
@@ -432,22 +467,20 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             </p>
           ) : null}
 
-          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+          {/* Spine and rail. The work list is the dominant column because it
+              is what the user came to do; everything that measures or explains
+              sits beside it, narrower, and stays out of the way. */}
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
             <div className="space-y-5">
-              <FixList
+              <WorkList
                 findings={result.findings}
+                cvText={cvText}
+                onApply={applyAndRescore}
                 onSelectEvidence={setMarkedLine}
                 explain={modelTier === "none" ? undefined : explainLocally}
+                draftFix={draftFix}
+                draftIsLive={modelTier !== "none"}
               />
-              <RewriteDiff
-                tier={modelTier}
-                cvText={cvText}
-                knownSkills={[...result.keywords.matched, ...result.keywords.missing].map(
-                  (term) => term.term
-                )}
-                onApply={applyAndRescore}
-              />
-              <FixDrafts text={cvText} onApply={applyAndRescore} />
               <ReportChat tier={modelTier} result={result} />
             </div>
 

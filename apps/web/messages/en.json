@@ -193,15 +193,23 @@
     "lostSince": "lost since {label}",
     "meterLabel": "{dimension}: {score} of {max}"
   },
-  "fixList": {
-    "emptyHeading": "Nothing to fix",
-    "emptyBody": "Every check passed. Run the CV against the next job ad to see how the keyword match holds up.",
-    "heading": "What to fix, most expensive first",
+  "workList": {
+    "heading": "What to fix, most valuable first",
     "summary": "{count, plural, one {# finding} other {# findings}} · {points} pts",
-    "cost": "−{cost} pts",
+    "emptyHeading": "Nothing to fix",
+    "emptyBody": "Every check passed. Run the CV against the next job ad to see how the keyword match holds up."
+  },
+  "workItem": {
+    "worth": "+{points}",
     "showLine": "Show this line in the parsed text",
-    "showEvidence": "Show what was found",
-    "hideEvidence": "Hide what was found"
+    "editLine": "Edit this line",
+    "editLabel": "The line as the parser read it",
+    "draftAFix": "Draft a fix",
+    "drafting": "Writing a draft…",
+    "nothingToDraft": "No draft for this line. Edit it yourself, or follow the instruction above.",
+    "applyAndRescore": "Apply and re-score",
+    "cancel": "Cancel",
+    "discard": "Discard"
   },
   "aiStatus": {
     "detecting": "Checking what this machine can run locally…",

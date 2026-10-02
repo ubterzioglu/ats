@@ -193,15 +193,23 @@
     "lostSince": "verloren seit {label}",
     "meterLabel": "{dimension}: {score} von {max}"
   },
-  "fixList": {
-    "emptyHeading": "Nichts zu korrigieren",
-    "emptyBody": "Alle Prüfungen bestanden. Lassen Sie den Lebenslauf gegen die nächste Stellenanzeige laufen, um zu sehen, wie die Begriffsabdeckung sich hält.",
-    "heading": "Was zu korrigieren ist, das Teuerste zuerst",
+  "workList": {
+    "heading": "Was zu korrigieren ist, das Wertvollste zuerst",
     "summary": "{count, plural, one {# Befund} other {# Befunde}} · {points} Punkte",
-    "cost": "−{cost} Punkte",
+    "emptyHeading": "Nichts zu korrigieren",
+    "emptyBody": "Alle Prüfungen bestanden. Lassen Sie den Lebenslauf gegen die nächste Stellenanzeige laufen, um zu sehen, wie die Begriffsabdeckung sich hält."
+  },
+  "workItem": {
+    "worth": "+{points}",
     "showLine": "Diese Zeile im ausgelesenen Text zeigen",
-    "showEvidence": "Zeigen, was gefunden wurde",
-    "hideEvidence": "Verbergen, was gefunden wurde"
+    "editLine": "Diese Zeile bearbeiten",
+    "editLabel": "Die Zeile, wie der Parser sie gelesen hat",
+    "draftAFix": "Korrektur entwerfen",
+    "drafting": "Entwurf wird geschrieben…",
+    "nothingToDraft": "Für diese Zeile gibt es keinen Entwurf. Bearbeiten Sie sie selbst oder folgen Sie der Anweisung oben.",
+    "applyAndRescore": "Übernehmen und neu bewerten",
+    "cancel": "Abbrechen",
+    "discard": "Verwerfen"
   },
   "aiStatus": {
     "detecting": "Es wird geprüft, was dieser Rechner lokal ausführen kann…",
