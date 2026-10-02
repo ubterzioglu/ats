@@ -466,16 +466,27 @@ Opens the funnel and lays the ground the rest needs. No new product surface. Not
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **P0.1** | **Remove the login gate.** Drop the `/analyze` protection block in [`middleware.ts`](apps/web/middleware.ts), keeping `updateSession`. Sign-in becomes required only for saving and sharing. Align the landing copy. | S | — | `/analyze` reachable signed out and a full analysis runs; sharing still asks for sign-in |
-| **P0.2** | **Delete the dead analyze proxy.** Remove `app/api/analyze/route.ts`. Nothing references it, but it is a live endpoint that forwards a request body to a server backend, contradicting principle 2. | S | — | Route gone; no reference to `API_URL` remains in `apps/web` |
-| **P0.3** | **Retire the rejected server tree.** Delete `apps/api/`, `services/`, `packages/`, and the empty `infra/` and `data/`. Reduce `docker-compose.yml` to the `web` service, dropping `api`, `db`, `redis`, their volumes, and the `depends_on`/`API_URL` wiring on `web`. The deployment does currently build `api`, but the site has no users yet, so no staged rollout is needed. | M | P0.2 | `docker compose up` builds and serves the web app alone; the repository holds one architecture |
-| **P0.4** | **Before/after score across visits.** Complete the partly-built comparison: `score-rail.tsx` already renders a `previous` result; wire it to stored history. | S | ST.2 | A second visit shows the previous score |
-| **P0.5** | **i18n infrastructure.** Add `next-intl`. English as default locale, locale routing, a language switcher. No translation in this batch — it only moves existing strings into message catalogs. | M | — | Every user-facing string in `app/` and `components/` resolves through the catalog; English output byte-identical to today |
-| **P0.6** | **Turkish translation.** | M | P0.5 | Full UI in Turkish; no untranslated keys |
-| **P0.7** | **German translation.** | M | P0.5 | Full UI in German; no untranslated keys |
+| ~~**P0.1**~~ ✅ | **Remove the login gate.** Drop the `/analyze` protection block in [`middleware.ts`](apps/web/middleware.ts), keeping `updateSession`. Sign-in becomes required only for saving and sharing. Align the landing copy. | S | — | `/analyze` reachable signed out and a full analysis runs; sharing still asks for sign-in |
+| ~~**P0.2**~~ ✅ | **Delete the dead analyze proxy.** Remove `app/api/analyze/route.ts`. Nothing references it, but it is a live endpoint that forwards a request body to a server backend, contradicting principle 2. | S | — | Route gone; no reference to `API_URL` remains in `apps/web` |
+| **P0.3** ◐ | **Retire the rejected server tree.** *(compose reduced; the tree deletion is still outstanding)*  Delete `apps/api/`, `services/`, `packages/`, and the empty `infra/` and `data/`. Reduce `docker-compose.yml` to the `web` service, dropping `api`, `db`, `redis`, their volumes, and the `depends_on`/`API_URL` wiring on `web`. The deployment does currently build `api`, but the site has no users yet, so no staged rollout is needed. | M | P0.2 | `docker compose up` builds and serves the web app alone; the repository holds one architecture |
+| ~~**P0.4**~~ ✅ | **Before/after score across visits.** Complete the partly-built comparison: `score-rail.tsx` already renders a `previous` result; wire it to stored history. | S | ST.2 | A second visit shows the previous score |
+| ~~**P0.5**~~ ✅ | **i18n infrastructure.** Add `next-intl`. English as default locale, locale routing, a language switcher. No translation in this batch — it only moves existing strings into message catalogs. | M | — | Every user-facing string in `app/` and `components/` resolves through the catalog; English output byte-identical to today |
+| ~~**P0.6**~~ ✅ | **Turkish translation.** | M | P0.5 | Full UI in Turkish; no untranslated keys |
+| ~~**P0.7**~~ ✅ | **German translation.** | M | P0.5 | Full UI in German; no untranslated keys |
 
 > **P0.5 must land before the `V` batches.** The redesign writes a large amount of new UI copy;
 > writing it outside the catalog means extracting it all a second time.
+
+<!-- -->
+
+> **Decision taken during P0.5 — the engine's own wording stays English.** Findings, dimension
+> labels and band names are composed in `lib/scoring/`. Translating them means giving that layer a
+> locale, which it is forbidden to have, or moving every sentence out of it and leaving the
+> dimension files as bare costs. Neither belongs inside an interface-translation batch. The
+> interface is translated; the engine's wording is a separate batch, and `J.1`–`J.7` are the right
+> place to decide it, since they already change how the engine reads other languages.
+> `tests/messages.test.ts` enforces catalog parity: every locale carries the English key set, no
+> value still equals the English, and ICU placeholders survive translation.
 
 ### Store — `lib/store/`
 
@@ -483,9 +494,9 @@ Part of Phase 0. Built once; modules C, D, E, F and G all depend on it, and so d
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **ST.1** | **IndexedDB wrapper.** Versioned schema, migration scaffold, typed records. Handles refusal and quota exhaustion by surfacing the failure, never by silently dropping data. Owns review focus 5. | M | — | Works in private browsing or reports clearly that it cannot; the quota-exceeded path is tested |
-| **ST.2** | **Analysis history.** The last N analyses per browser: total, dimension scores, timestamp. No CV text. | S | ST.1 | History survives reload |
-| **ST.3** | **Data controls.** One-click wipe of everything stored locally, with a count of what will go. | S | ST.1 | Wipe clears all stores; the UI confirms what went |
+| ~~**ST.1**~~ ✅ | **IndexedDB wrapper.** Versioned schema, migration scaffold, typed records. Handles refusal and quota exhaustion by surfacing the failure, never by silently dropping data. Owns review focus 5. | M | — | Works in private browsing or reports clearly that it cannot; the quota-exceeded path is tested |
+| ~~**ST.2**~~ ✅ | **Analysis history.** The last N analyses per browser: total, dimension scores, timestamp. No CV text. | S | ST.1 | History survives reload |
+| ~~**ST.3**~~ ✅ | **Data controls.** One-click wipe of everything stored locally, with a count of what will go. | S | ST.1 | Wipe clears all stores; the UI confirms what went |
 
 ### Visual language — the workbench
 
