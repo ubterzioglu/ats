@@ -14,7 +14,7 @@ import { rewriteBullets } from "@/lib/ai/tasks/rewrite";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
 import { buildMarkdownReport } from "@/lib/report/markdown";
 import { describeChange, type ScoreChange } from "@/lib/bench/change";
-import { draftForLine } from "@/lib/bench/evidence";
+import { draftForLine, findEvidenceLine } from "@/lib/bench/evidence";
 import { analyzeCv } from "@/lib/scoring";
 import { draftFixes } from "@/lib/scoring/drafts";
 import { assessDocumentKind, type DocumentKindAssessment } from "@/lib/scoring/gate";
@@ -61,7 +61,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [reading, setReading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [gate, setGate] = useState<DocumentKindAssessment | null>(null);
-  const [markedLine, setMarkedLine] = useState<string | null>(null);
+  const [markedIndex, setMarkedIndex] = useState<number | null>(null);
   const [embedder, setEmbedder] = useState<Embedder | null>(null);
   const [modelTier, setModelTier] = useState<ModelTier>("none");
   const [hints, setHints] = useState<readonly PartialMatchHint[]>([]);
@@ -124,7 +124,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       setGate(null);
       setError(null);
       setShareUrl(null);
-      setMarkedLine(null);
+      setMarkedIndex(null);
 
       try {
         const next = analyzeCv({ cvText, jobDescription: jobAd });
@@ -237,7 +237,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const applyAndRescore = useCallback(
     (newText: string) => {
       setCvText(newText);
-      setMarkedLine(null);
+      setMarkedIndex(null);
       try {
         const next = analyzeCv({ cvText: newText, jobDescription: jobAd });
         setPrevious(result);
@@ -323,7 +323,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setShareUrl(null);
     setNotice(null);
     setGate(null);
-    setMarkedLine(null);
+    setMarkedIndex(null);
     setHints([]);
     setCoverage(null);
     setError(null);
@@ -506,7 +506,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 findings={result.findings}
                 cvText={cvText}
                 onApply={applyAndRescore}
-                onSelectEvidence={setMarkedLine}
+                onSelectEvidence={(line) => setMarkedIndex(findEvidenceLine(cvText, line))}
                 explain={modelTier === "none" ? undefined : explainLocally}
                 draftFix={draftFix}
                 draftIsLive={modelTier !== "none"}
@@ -524,12 +524,12 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               <IdentityTable
                 cvText={cvText}
                 findings={result.findings}
-                onSelectLine={setMarkedLine}
+                onSelectLine={setMarkedIndex}
               />
               <EntriesTable
                 cvText={cvText}
                 sections={result.sections}
-                onSelectLine={setMarkedLine}
+                onSelectLine={setMarkedIndex}
               />
               <KeywordPanel report={result.keywords} hints={hints} coverage={coverage} />
               <AiConsent onReady={setEmbedder} />
@@ -537,7 +537,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               <ParserView
                 text={cvText}
                 highlights={highlights}
-                markedLine={markedLine}
+                markedIndex={markedIndex}
                 caption={t("parserCaption", {
                   words: result.stats.words,
                   lines: result.stats.lines,

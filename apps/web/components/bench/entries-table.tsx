@@ -9,7 +9,8 @@ import type { DetectedSection } from "@/types/analysis";
 interface EntriesTableProps {
   readonly cvText: string;
   readonly sections: readonly DetectedSection[];
-  readonly onSelectLine?: (line: string) => void;
+  /** Receives the line index the entry was read from, not its text. */
+  readonly onSelectLine?: (lineIndex: number) => void;
 }
 
 /** The sections a CV is expected to carry, in the order a reader looks for them. */
@@ -72,7 +73,7 @@ export function EntriesTable({ cvText, sections, onSelectLine }: EntriesTablePro
                 <button
                   type="button"
                   className="mt-1 inline-flex min-h-11 items-center text-micro text-muted transition-colors hover:text-action"
-                  onClick={() => onSelectLine(entry.source)}
+                  onClick={() => onSelectLine(entry.line)}
                 >
                   {t("showLine")}
                 </button>

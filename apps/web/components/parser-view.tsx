@@ -7,8 +7,12 @@ interface ParserViewProps {
   readonly text: string;
   readonly highlights: readonly string[];
   readonly caption: string;
-  /** Evidence line from a selected finding; the view scrolls to it and marks it. */
-  readonly markedLine?: string | null;
+  /**
+   * Index of the line to mark, resolved by the caller. An index rather than the
+   * line's text: two identical lines in a document are two different places,
+   * and matching by text would always send the reader to the first.
+   */
+  readonly markedIndex?: number | null;
 }
 
 const MAX_RENDERED = 24000;
@@ -39,52 +43,58 @@ function renderLine(line: string, pattern: RegExp | null, key: number) {
   );
 }
 
-/** Trailing ellipses are display truncation in evidence, not document text. */
-function evidenceNeedle(markedLine: string): string {
-  return markedLine.replace(/(\.\.\.|…)\s*$/u, "").trim();
-}
-
 /**
  * The extracted text exactly as the scorer saw it, with the terms that matched
  * the job ad marked. Seeing the raw parse is what turns a score into something
  * a person can act on.
  */
-export function ParserView({ text, highlights, caption, markedLine }: ParserViewProps) {
+export function ParserView({ text, highlights, caption, markedIndex }: ParserViewProps) {
   const t = useTranslations("parserView");
   const markedRef = useRef<HTMLSpanElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
   const clipped = text.length > MAX_RENDERED;
   const body = clipped ? text.slice(0, MAX_RENDERED) : text;
   const pattern = buildPattern(highlights);
   const lines = body.split("\n");
 
-  const needle = markedLine ? evidenceNeedle(markedLine) : "";
-  const markedIndex =
-    needle.length > 0 ? lines.findIndex((line) => line.includes(needle)) : -1;
+  const marked = markedIndex ?? -1;
 
   useEffect(() => {
-    if (markedIndex >= 0) {
-      markedRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
-    }
-  }, [markedIndex, needle]);
+    if (marked < 0) return;
+
+    // Two moves, and both are needed. Scrolling the line inside the pre is
+    // useless if the pre itself is off-screen, which it is on mobile and
+    // usually is on desktop: the tables sit above it in the same column.
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const behavior: ScrollBehavior = smooth ? "smooth" : "auto";
+
+    sectionRef.current?.scrollIntoView({ block: "nearest", behavior });
+    markedRef.current?.scrollIntoView({ block: "center", behavior });
+  }, [marked]);
 
   return (
-    <section className="bench flex min-h-0 flex-col overflow-hidden" aria-labelledby="parser-heading">
+    <section
+      ref={sectionRef}
+      className="bench flex min-h-0 flex-col overflow-hidden"
+      aria-labelledby="parser-heading"
+    >
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
-        <h2 id="parser-heading" className="text-base font-semibold">
+        <h2 id="parser-heading" className="text-h3 font-semibold">
           {t("heading")}
         </h2>
         <span className="readout">{caption}</span>
       </div>
 
-      <pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words bg-bench-sunk px-5 py-4 font-mono text-xs leading-relaxed text-muted sm:px-6">
+      <pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words bg-bench-sunk px-5 py-4 font-mono text-micro leading-relaxed text-muted sm:px-6">
         {lines.map((line, index) => (
           <span
             key={`line-${index}`}
-            ref={index === markedIndex ? markedRef : undefined}
-            id={index === markedIndex ? "marked-line" : undefined}
+            ref={index === marked ? markedRef : undefined}
+            id={index === marked ? "marked-line" : undefined}
+            aria-current={index === marked ? "true" : undefined}
             className={cx(
-              "block",
-              index === markedIndex && "-mx-1.5 rounded-chip bg-action/20 px-1.5 text-ink"
+              "block scroll-my-8",
+              index === marked && "-mx-1.5 rounded-chip bg-action/20 px-1.5 text-ink"
             )}
           >
             {renderLine(line, pattern, index)}

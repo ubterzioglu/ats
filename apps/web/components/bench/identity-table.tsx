@@ -9,7 +9,8 @@ import type { Finding } from "@/types/analysis";
 interface IdentityTableProps {
   readonly cvText: string;
   readonly findings: readonly Finding[];
-  readonly onSelectLine?: (line: string) => void;
+  /** Receives the line index the field was read from, not its text. */
+  readonly onSelectLine?: (lineIndex: number) => void;
 }
 
 const DOT: Readonly<Record<FieldStatus, string>> = {
@@ -31,7 +32,7 @@ export function IdentityTable({ cvText, findings, onSelectLine }: IdentityTableP
   const fields = readIdentity(cvText, findings);
 
   function row(field: IdentityField) {
-    const line = field.line !== undefined ? cvText.split("\n")[field.line] : undefined;
+    const at = field.line;
 
     return (
       <div key={field.id} className="flex items-baseline gap-3 px-5 py-3 sm:px-6">
@@ -43,11 +44,11 @@ export function IdentityTable({ cvText, findings, onSelectLine }: IdentityTableP
 
         <dd className="min-w-0 flex-1">
           {field.value !== undefined ? (
-            onSelectLine && line !== undefined ? (
+            onSelectLine && at !== undefined ? (
               <button
                 type="button"
                 title={t("showLine")}
-                onClick={() => onSelectLine(line)}
+                onClick={() => onSelectLine(at)}
                 className="block w-full truncate text-left font-mono text-micro text-ink transition-colors hover:text-action"
               >
                 {field.value}
