@@ -149,6 +149,28 @@
     "apply": "Uygula ve yeniden puanla",
     "discard": "Vazgeç"
   },
+  "identityTable": {
+    "heading": "Ayrıştırıcının bilgileriniz olarak okuduğu",
+    "lede": "Her aday takip sisteminin sakladığı kimlik alanları. Her biri ayrıştırıcının çıkardığı hâliyle gösteriliyor.",
+    "showLine": "Bu satırı ayrıştırılmış metinde göster",
+    "fields": {
+      "name": "Ad",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "location": "Konum",
+      "profile": "Profil"
+    },
+    "status": {
+      "found": "bulundu",
+      "suspect": "şüpheli",
+      "missing": "eksik"
+    },
+    "reason": {
+      "not-located": "Kontroller bunu mevcut sayıyor ama metinden temiz bir değer çıkarılamadı.",
+      "split-across-lines": "Değer iki satıra bölünmüş, ayrıştırıcı yalnızca bir kısmını okuyabilir.",
+      "buried-in-a-run": "Değer uzun ve bölünmemiş bir satırın içinde; ayrıştırıcı onu komşularıyla birleştirebilir."
+    }
+  },
   "keywordPanel": {
     "headingFromAd": "İlandaki terimler",
     "headingBaseline": "CV'de bulunan beceri terimleri",

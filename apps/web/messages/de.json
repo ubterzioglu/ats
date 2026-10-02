@@ -149,6 +149,28 @@
     "apply": "Übernehmen und neu bewerten",
     "discard": "Verwerfen"
   },
+  "identityTable": {
+    "heading": "Was der Parser als Ihre Daten gelesen hat",
+    "lede": "Die Identitätsfelder, die jedes Bewerbermanagementsystem speichert. Jedes wird so gezeigt, wie der Parser es ausgelesen hat.",
+    "showLine": "Diese Zeile im ausgelesenen Text zeigen",
+    "fields": {
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "location": "Ort",
+      "profile": "Profil"
+    },
+    "status": {
+      "found": "gefunden",
+      "suspect": "unsicher",
+      "missing": "fehlt"
+    },
+    "reason": {
+      "not-located": "Die Prüfungen zählen das Feld als vorhanden, aber aus dem Text ließ sich kein sauberer Wert herausholen.",
+      "split-across-lines": "Der Wert ist auf zwei Zeilen verteilt, ein Parser liest möglicherweise nur einen Teil.",
+      "buried-in-a-run": "Der Wert steht in einer langen, ungebrochenen Zeile, in der ein Parser ihn mit den Nachbarn zusammenziehen kann."
+    }
+  },
   "keywordPanel": {
     "headingFromAd": "Begriffe aus der Stellenanzeige",
     "headingBaseline": "Im Lebenslauf gefundene Fachbegriffe",

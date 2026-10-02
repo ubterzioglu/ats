@@ -29,6 +29,7 @@ import { AiStatus } from "./ai-status";
 import { MeasureRail } from "./bench/measure-rail";
 import { AskDock } from "./bench/ask-dock";
 import { ChangeNote } from "./bench/change-note";
+import { IdentityTable } from "./bench/identity-table";
 import { ScoreTrail } from "./bench/score-trail";
 import { WorkList } from "./bench/work-list";
 import { DataControls } from "./data-controls";
@@ -519,6 +520,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 sticky
               />
               <ScoreTrail points={trail} />
+              <IdentityTable
+                cvText={cvText}
+                findings={result.findings}
+                onSelectLine={setMarkedLine}
+              />
               <KeywordPanel report={result.keywords} hints={hints} coverage={coverage} />
               <AiConsent onReady={setEmbedder} />
               <AiStatus onTierChange={setModelTier} />

@@ -48,7 +48,10 @@ const SHARED_VERBATIM: ReadonlySet<string> = new Set([
   // Turkish for "Model" is "Model", and German for "System" is "System".
   // Real collisions, not missed strings.
   "askDock.roleModel",
-  "theme.system"
+  "theme.system",
+  // German for "Name" is "Name", and "Profil" differs from "Profile" only in
+  // English. Real collisions, not missed strings.
+  "identityTable.fields.name"
 ]);
 
 const english = flatten(en as Catalog);

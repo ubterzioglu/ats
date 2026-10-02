@@ -149,6 +149,28 @@
     "apply": "Apply and re-score",
     "discard": "Discard"
   },
+  "identityTable": {
+    "heading": "What the parser read as your details",
+    "lede": "The identity fields every applicant tracking system stores. Each one is shown as the parser extracted it.",
+    "showLine": "Show this line in the parsed text",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location",
+      "profile": "Profile"
+    },
+    "status": {
+      "found": "found",
+      "suspect": "suspect",
+      "missing": "missing"
+    },
+    "reason": {
+      "not-located": "The checks count this as present, but no clean value could be lifted out of the text.",
+      "split-across-lines": "The value is broken across two lines, so a parser may read only part of it.",
+      "buried-in-a-run": "The value sits inside a long unbroken line, where a parser can run it together with its neighbours."
+    }
+  },
   "keywordPanel": {
     "headingFromAd": "Terms from the job ad",
     "headingBaseline": "Skill terms found in the CV",
