@@ -25,16 +25,25 @@ function termPattern(term: string): RegExp {
   return new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(term)}(?![\\p{L}\\p{N}])`, "giu");
 }
 
-export function countOccurrences(haystack: string, term: string): number {
-  let total = 0;
+export interface VariantCount {
+  readonly variant: string;
+  readonly hits: number;
+}
+
+export function countOccurrencesByVariant(haystack: string, term: string): VariantCount[] {
+  const totals = new Map<string, number>();
   for (const line of haystack.split("\n")) {
     for (const variant of variantsOf(term)) {
       if (isAmbiguousTerm(variant) && !hasTechContext(line)) continue;
       const matches = line.match(termPattern(variant));
-      if (matches) total += matches.length;
+      if (matches) totals.set(variant, (totals.get(variant) ?? 0) + matches.length);
     }
   }
-  return total;
+  return variantsOf(term).map((variant) => ({ variant, hits: totals.get(variant) ?? 0 }));
+}
+
+export function countOccurrences(haystack: string, term: string): number {
+  return countOccurrencesByVariant(haystack, term).reduce((sum, entry) => sum + entry.hits, 0);
 }
 
 interface Candidate {
@@ -287,6 +296,29 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
       fix: "Work the missing terms into real sentences about what you actually did. Never paste a keyword list.",
       cost: KEYWORDS_MAX - rawScore,
       evidence: headline
+    });
+  }
+
+  const aliasOnly: string[] = [];
+  for (const term of matched) {
+    const counts = countOccurrencesByVariant(context.lower, term.term);
+    const canonical = counts.find((entry) => entry.variant === term.term);
+    const viaAlias = counts.find((entry) => entry.variant !== term.term && entry.hits > 0);
+    if ((canonical?.hits ?? 0) === 0 && viaAlias) {
+      aliasOnly.push(`${term.term} (found as "${viaAlias.variant}")`);
+    }
+  }
+  if (aliasOnly.length > 0) {
+    drafts.push({
+      id: "keywords.acronym-pair",
+      severity: "low",
+      title: "Some terms match only through a variant spelling",
+      detail: `${aliasOnly.length} vacancy term(s) match your CV only via an alias: ${aliasOnly
+        .slice(0, 5)
+        .join("; ")}. A filter without a synonym table matches literally and misses these.`,
+      fix: 'Write both forms once where they appear naturally, e.g. "Kubernetes (k8s)".',
+      cost: 1,
+      evidence: aliasOnly.slice(0, 5)
     });
   }
 
