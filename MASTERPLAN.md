@@ -525,8 +525,8 @@ Part of Phase 0. Built once; modules C, D, E, F and G all depend on it, and so d
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
 | ~~C.1~~ | **Merged into `V.6`.** Inline editing and instant re-scoring are built with the work item, not added to it. | — | — | See `V.6` |
-| **C.2** | **Per-change delta.** "+4 · Keyword match", naming which finding closed. | S | V.6, ST.2 | Every score change attributable to a finding |
-| **C.3** | **Session score history.** A plot of the score across the session. | M | C.2, ST.2 | Survives reload |
+| ~~**C.2**~~ OK | **Per-change delta.** "+4 · Keyword match", naming which finding closed. | S | V.6, ST.2 | Every score change attributable to a finding |
+| ~~**C.3**~~ OK | **Session score history.** A plot of the score across the session. | M | C.2, ST.2 | Survives reload |
 
 ### Module A — Parse view 2.0
 
@@ -534,10 +534,10 @@ Answers the question candidates ask most: did the parser read my title and dates
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **A.1** | **Identity field table.** Name, email, phone, location, links, from the existing `lib/scoring/contact.ts` context. | M | V.8 | Each field shows found / suspect / missing |
-| **A.2** | **Experience entries table.** Title, company and date range per entry; education, skills, languages. | M | A.1 | Entries listed as the parser sees them |
-| **A.3** | **Reasons for suspect and missing.** A readable cause, e.g. "the date range looks split across two columns". | M | A.2 | Every non-found field carries a reason |
-| **A.4** | **Field to source-line highlighting.** Clicking a field marks its line in the raw text. | M | A.3 | Works on desktop and mobile |
+| ~~**A.1**~~ OK | **Identity field table.** Name, email, phone, location, links, from the existing `lib/scoring/contact.ts` context. | M | V.8 | Each field shows found / suspect / missing |
+| ~~**A.2**~~ OK | **Experience entries table.** Title, company and date range per entry; education, skills, languages. | M | A.1 | Entries listed as the parser sees them |
+| ~~**A.3**~~ OK | **Reasons for suspect and missing.** A readable cause, e.g. "the date range looks split across two columns". | M | A.2 | Every non-found field carries a reason |
+| ~~**A.4**~~ OK | **Field to source-line highlighting.** Clicking a field marks its line in the raw text. | M | A.3 | Works on desktop and mobile |
 
 ### Module J — Localization engine
 
@@ -584,26 +584,26 @@ produces can be read by a parser.
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **E.1** | **PDF infrastructure.** `@react-pdf/renderer` with embedded fonts covering Turkish and German glyphs. Chosen because it gives a controlled text layer — the closed-loop guarantee depends on us, not the browser, deciding how text is written. | L | — | A probe document round-trips through `lib/extract/` with glyphs intact |
-| **E.1a** | **Analysis report as PDF.** Client-side, on top of E.1. | S | E.1 | The report downloads as a PDF |
-| **E.2** | **Canonical resume model.** JSON Resume schema, zod-validated. Chosen for its import/export ecosystem. | M | — | The schema validates the fixture set |
-| **E.3** | **Editor form.** | L | E.2 | Every schema field editable |
+| ~~**E.1**~~ OK | **PDF infrastructure.** `@react-pdf/renderer` with embedded fonts covering Turkish and German glyphs. Chosen because it gives a controlled text layer — the closed-loop guarantee depends on us, not the browser, deciding how text is written. | L | — | A probe document round-trips through `lib/extract/` with glyphs intact |
+| ~~**E.1a**~~ OK | **Analysis report as PDF.** Client-side, on top of E.1. | S | E.1 | The report downloads as a PDF |
+| ~~**E.2**~~ OK | **Canonical resume model.** JSON Resume schema, zod-validated. Chosen for its import/export ecosystem. | M | — | The schema validates the fixture set |
+| ~~**E.3**~~ OK | **Editor form.** | L | E.2 | Every schema field editable |
 | **E.4** | **Template: dense.** Single column, standard headings. | M | E.1, E.3 | Renders the fixture resume |
 | **E.5** | **Template: plain.** | M | E.4 | Renders the fixture resume |
 | **E.6** | **Template: modern.** | M | E.4 | Renders the fixture resume |
 | **E.7** | **Closed-loop validation.** Every export runs through our own parser and the result is shown to the user. A CI regression test asserts all templates score Parseability 25/25, including Turkish and German fixtures. Owns review focus 1 for export. | L | E.4–E.6 | CI fails if any template drops below full marks |
-| **E.8** | **DOCX export.** | L | E.2 | Opens correctly in Word and LibreOffice |
+| ~~**E.8**~~ OK | **DOCX export.** | L | E.2 | Opens correctly in Word and LibreOffice |
 | **E.9** | **Import an existing CV.** Parse PDF/DOCX into the editor; mark fields that could not be extracted for manual completion. | L | E.3, A.2 | Unextractable fields are flagged, never invented |
-| **E.10** | **JSON Resume import and export.** | S | E.2 | Round-trips without loss |
+| ~~**E.10**~~ OK | **JSON Resume import and export.** | S | E.2 | Round-trips without loss |
 
 ### AI layers
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **L.1** | **`LLMProvider` in TypeScript.** `id`, `health()`, `chat()`, `structured<T>()`. Partly exists under `lib/ai/providers/`. | M | — | Swapping provider changes no scoring behaviour |
+| ~~**L.1**~~ OK | **`LLMProvider` in TypeScript.** `id`, `health()`, `chat()`, `structured<T>()`. Partly exists under `lib/ai/providers/`. | M | — | Swapping provider changes no scoring behaviour |
 | **L.2** | **Layer 2 — the user's own Ollama.** An `OLLAMA_ORIGINS` setup guide, a "test connection" button, clear failure messages. Owns review focus 4. | M | L.1 | Every failure mode produces a usable message, never a blocked UI |
 | **L.3** | **Layer 3 — BYOK.** The key is held in the browser only and never sent to our server. A visible "your CV will be sent to: …" notice on every request. | M | L.1 | The key never leaves the browser; the notice appears on every call |
-| **L.4** | **Schema validation of all LLM output.** Output failing its schema is never shown. Owns the rest of review focus 4. | M | L.1 | Malformed output is rejected and the user told plainly |
+| ~~**L.4**~~ OK | **Schema validation of all LLM output.** Output failing its schema is never shown. Owns the rest of review focus 4. | M | L.1 | Malformed output is rejected and the user told plainly |
 
 ### Module D — Tailoring workshop
 
