@@ -1,3 +1,5 @@
+import type { Band, DimensionId, DocumentLanguage } from "@/types/analysis";
+
 export const DB_NAME = "ats-local";
 
 /**
@@ -7,6 +9,7 @@ export const DB_NAME = "ats-local";
  */
 export interface StoreSchema {
   readonly meta: MetaRecord;
+  readonly history: HistoryRecord;
 }
 
 export type StoreName = keyof StoreSchema;
@@ -16,6 +19,26 @@ export interface MetaRecord {
   readonly key: string;
   readonly value: string | number | boolean;
   readonly updatedAt: number;
+}
+
+/**
+ * One past analysis. Scores and the time only: the CV text, the findings and
+ * their evidence lines all stay out, because history outlives the session that
+ * produced it and the document is not ours to keep.
+ */
+export interface HistoryRecord {
+  readonly id: string;
+  readonly recordedAt: number;
+  readonly total: number;
+  readonly band: Band;
+  readonly language: DocumentLanguage;
+  readonly dimensions: readonly HistoryDimension[];
+}
+
+export interface HistoryDimension {
+  readonly id: DimensionId;
+  readonly score: number;
+  readonly max: number;
 }
 
 export interface Migration {
@@ -29,6 +52,13 @@ export const MIGRATIONS: readonly Migration[] = [
     apply(db) {
       db.createObjectStore("meta", { keyPath: "key" });
     }
+  },
+  {
+    version: 2,
+    apply(db) {
+      const history = db.createObjectStore("history", { keyPath: "id" });
+      history.createIndex("recordedAt", "recordedAt");
+    }
   }
 ];
 
@@ -37,4 +67,4 @@ export const DB_VERSION = MIGRATIONS.reduce(
   1
 );
 
-export const STORE_NAMES: readonly StoreName[] = ["meta"];
+export const STORE_NAMES: readonly StoreName[] = ["meta", "history"];
