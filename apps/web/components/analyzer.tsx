@@ -24,6 +24,7 @@ import { FixDrafts } from "./fix-drafts";
 import { FixList } from "./fix-list";
 import { KeywordPanel } from "./keyword-panel";
 import { ParserView } from "./parser-view";
+import { ReportChat } from "./report-chat";
 import { RewriteDiff } from "./rewrite-diff";
 import { ScoreRail } from "./score-rail";
 
@@ -421,6 +422,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 onApply={applyAndRescore}
               />
               <FixDrafts text={cvText} onApply={applyAndRescore} />
+              <ReportChat tier={modelTier} result={result} />
             </div>
 
             <div className="space-y-5">
