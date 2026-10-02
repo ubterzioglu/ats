@@ -1,0 +1,82 @@
+{
+  "brand": {
+    "name": "ats readability"
+  },
+  "metadata": {
+    "defaultTitle": "ATS readability — see your CV the way the parser does",
+    "titleTemplate": "%s · ATS readability",
+    "description": "Read a CV the way an applicant tracking system reads it: what parses, what is missing, and which terms from the job ad never appear. Runs entirely in the browser.",
+    "openGraphTitle": "ATS readability",
+    "openGraphDescription": "See your CV the way the parser does. Nothing is uploaded.",
+    "sharedReportTitle": "Shared report"
+  },
+  "common": {
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "signInToSave": "Sign in to save reports",
+    "disclaimer": "The checks are heuristics built from how mainstream parsers behave, not a reproduction of any named vendor. A good score means nothing is standing between your CV and a human reader; it is not a prediction that you will be invited."
+  },
+  "home": {
+    "headline": "Your CV is read as text, not as a design.",
+    "lede": "An applicant tracking system throws away your layout and keeps whatever text it can pull out. This shows you that text, scores what survived out of 100, and lists what to change — ordered by how many points each fix is worth.",
+    "analyzeCta": "Analyze a CV",
+    "privacyNote": "The file is read in your browser and scored there. It is never uploaded.",
+    "methodHeading": "How the 100 points are split",
+    "methodIntro": "Each dimension starts at its full weight and loses points only to a named finding, so the report can always tell you where a missing point went.",
+    "methodNoBlackBox": "Nothing here is a black box: every deduction names the line it came from and what to write instead.",
+    "dimensions": {
+      "parseability": {
+        "name": "Parseability",
+        "what": "Whether the text layer survives extraction at all: columns, tables, icon fonts, broken encodings."
+      },
+      "keywords": {
+        "name": "Keyword match",
+        "what": "Coverage of the terms mined from the job ad, weighted by how central each one is to the posting."
+      },
+      "impact": {
+        "name": "Impact",
+        "what": "Quantified results and ownership verbs, measured against responsibility filler."
+      },
+      "structure": {
+        "name": "Structure",
+        "what": "Headings a parser can map to fields, dated entries in reverse order, bullets instead of paragraphs."
+      },
+      "contact": {
+        "name": "Contact",
+        "what": "The identity fields every system stores: name, email, phone, location, profile link."
+      }
+    }
+  },
+  "analyze": {
+    "heading": "See what the parser gets",
+    "lede": "Upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad."
+  },
+  "login": {
+    "heading": "Sign in",
+    "lede": "Your CV is read and scored in your browser. The account only keeps your share links.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "submit": "Sign in",
+    "createAccount": "Create an account",
+    "whatThisChecks": "What this checks",
+    "messages": {
+      "invalidCredentials": "That email and password do not match an account.",
+      "signupFailed": "The account could not be created. Check the address and try again.",
+      "checkYourEmail": "Account created. Confirm your email address to sign in.",
+      "linkExpired": "That confirmation link is no longer valid. Sign in to have a new one sent."
+    }
+  },
+  "notFound": {
+    "code": "404",
+    "heading": "Nothing here",
+    "body": "A shared report lives for 30 days and then deletes itself. This one has either expired or never existed.",
+    "cta": "Analyze a CV"
+  },
+  "sharedReport": {
+    "eyebrow": "shared report · {date}",
+    "lede": "Scores and advice only. The CV itself was never stored.",
+    "cta": "Run your own CV through it"
+  }
+}

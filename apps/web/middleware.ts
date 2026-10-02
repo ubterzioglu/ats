@@ -1,22 +1,24 @@
+import createMiddleware from "next-intl/middleware";
 import type { NextRequest } from "next/server";
 
+import { routing } from "@/i18n/routing";
 import { updateSession } from "@/lib/supabase/middleware";
+
+const handleLocale = createMiddleware(routing);
 
 // No route is gated here. Analysis runs for anyone; sign-in is required only
 // where a report is written to the server, which `createShareLink` enforces.
 export async function middleware(request: NextRequest) {
-  return updateSession(request);
+  return updateSession(request, handleLocale(request));
 }
 
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
+     * Every path except static assets and `/auth`, which holds the email
+     * confirmation handler. It has no page and no locale, and rewriting it to
+     * a locale segment would route it to nothing.
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|auth/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
