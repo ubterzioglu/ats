@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 
 import { createShareLink } from "@/app/actions";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
@@ -91,6 +91,25 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     () => (result ? result.keywords.matched.map((term) => term.term) : []),
     [result]
   );
+
+  // The engine is synchronous and cheap, so the score can follow the text
+  // while it is being edited - debounced so a fast typist does not watch it
+  // flicker on every keystroke.
+  const [previewTotal, setPreviewTotal] = useState<number | null>(null);
+  useEffect(() => {
+    if (cvText.trim().length < MIN_CV_CHARS) {
+      setPreviewTotal(null);
+      return;
+    }
+    const handle = window.setTimeout(() => {
+      try {
+        setPreviewTotal(analyzeCv({ cvText, jobDescription: jobAd }).total);
+      } catch {
+        setPreviewTotal(null);
+      }
+    }, 300);
+    return () => window.clearTimeout(handle);
+  }, [cvText, jobAd]);
 
   function downloadReport() {
     if (!result) return;
@@ -258,6 +277,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               <button type="button" className="btn" onClick={() => runAnalysis()} disabled={reading}>
                 {reading ? "Reading the file…" : "Analyze"}
               </button>
+              {previewTotal !== null ? (
+                <span className="readout" aria-live="polite">
+                  preview <span className="text-ink tabular-nums">{previewTotal}</span>/100
+                </span>
+              ) : null}
               <button type="button" className="btn-quiet" onClick={clearAll}>
                 Clear
               </button>
