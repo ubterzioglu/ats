@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 
 import type { KeywordReport, KeywordTerm, KeywordTier } from "@/types/analysis";
 
+import type { CoverageMapReport } from "@/lib/ai/coverage-map";
 import type { PartialMatchHint } from "@/lib/ai/semantic-match";
 import { cx } from "@/lib/ui";
 
@@ -9,6 +10,8 @@ interface KeywordPanelProps {
   readonly report: KeywordReport;
   /** Advisory near-misses from the local model; never affects scores. */
   readonly hints?: readonly PartialMatchHint[];
+  /** Advisory coverage in embedding space; never affects scores. */
+  readonly coverage?: CoverageMapReport | null;
 }
 
 type Status = "found" | "alias" | "missing";
@@ -24,13 +27,20 @@ const CHIP_STYLE: Readonly<Record<Status, string>> = {
   missing: "border-mark/35 bg-mark/[0.06] text-mark"
 };
 
+const COVERAGE_SHOWN = 6;
+const SNIPPET_CHARS = 220;
+
+function snippet(chunk: string): string {
+  return chunk.length > SNIPPET_CHARS ? `${chunk.slice(0, SNIPPET_CHARS)}…` : chunk;
+}
+
 function TermChip({ term, hint }: { readonly term: KeywordTerm; readonly hint?: PartialMatchHint }) {
   const t = useTranslations("keywordPanel");
   const status = statusOf(term);
   return (
     <li
       className={cx(
-        "rounded-chip border px-2 py-1 font-mono text-xs",
+        "rounded-chip border px-2 py-1 font-mono text-micro",
         hint ? "border-caution/40 bg-caution/[0.08] text-ink" : CHIP_STYLE[status]
       )}
       title={
@@ -47,8 +57,10 @@ function TermChip({ term, hint }: { readonly term: KeywordTerm; readonly hint?: 
       }
     >
       {term.term}
-      {status === "found" && term.hits > 1 ? <span className="ml-1 text-muted">×{term.hits}</span> : null}
-      <span className="ml-1.5 text-[10px] tracking-wide text-muted">
+      {status === "found" && term.hits > 1 ? (
+        <span className="ml-1 text-muted">×{term.hits}</span>
+      ) : null}
+      <span className="condensed ml-2 text-micro text-muted">
         {hint
           ? t("statusPartial")
           : status === "found"
@@ -70,30 +82,41 @@ const TIER_GROUPS: ReadonlyArray<{
   { tier: "preferred", labelKey: "tierPreferred" }
 ];
 
-export function KeywordPanel({ report, hints }: KeywordPanelProps) {
+/**
+ * One panel, both reports. Literal term matching is measurement and comes from
+ * the deterministic engine; the coverage section below it is the local model's
+ * reading of the same ad, and is marked as such in `live-ink` - the only thing
+ * in this product that colour is allowed to mean.
+ *
+ * The coverage section is absent until a model has produced one, so the panel
+ * is complete without AI.
+ */
+export function KeywordPanel({ report, hints, coverage }: KeywordPanelProps) {
   const t = useTranslations("keywordPanel");
+  const c = useTranslations("coverageMap");
   const matchedFromAd = report.source === "job-description";
-  const coverage = Math.round(report.coverage * 100);
+  const percentage = Math.round(report.coverage * 100);
   const all = matchedFromAd ? [...report.matched, ...report.missing] : [];
   const hintByTerm = new Map((hints ?? []).map((hint) => [hint.term, hint]));
+  const showCoverage = matchedFromAd && coverage !== null && coverage !== undefined && coverage.adChunks > 0;
 
   return (
     <section className="bench overflow-hidden" aria-labelledby="keywords-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
-        <h2 id="keywords-heading" className="text-base font-semibold">
+        <h2 id="keywords-heading" className="text-h3 font-semibold">
           {t(matchedFromAd ? "headingFromAd" : "headingBaseline")}
         </h2>
         {matchedFromAd ? (
           <span className="font-mono text-sm tabular-nums">
-            {coverage}
+            {percentage}
             <span className="text-muted">{t("covered")}</span>
           </span>
         ) : null}
       </div>
 
       {matchedFromAd ? (
-        <div className="h-1.5 border-b border-line bg-bench-sunk">
-          <div className="h-full bg-action" style={{ width: `${coverage}%` }} />
+        <div className="h-1 border-b border-line bg-bench-sunk">
+          <div className="h-full bg-action" style={{ width: `${percentage}%` }} />
         </div>
       ) : null}
 
@@ -106,8 +129,8 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
               if (terms.length === 0) return null;
               return (
                 <div key={labelKey}>
-                  <h3 className="text-xs font-medium text-muted">{t(labelKey)}</h3>
-                  <ul className="mt-2.5 flex flex-wrap gap-1.5">
+                  <h3 className="condensed text-micro font-medium text-muted">{t(labelKey)}</h3>
+                  <ul className="mt-3 flex flex-wrap gap-2">
                     {terms.map((term) => (
                       <TermChip key={term.term} term={term} hint={hintByTerm.get(term.term)} />
                     ))}
@@ -119,17 +142,15 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
 
         {!matchedFromAd ? (
           <div>
-            <h3 className="text-xs font-medium text-muted">{t("recognised")}</h3>
+            <h3 className="condensed text-micro font-medium text-muted">{t("recognised")}</h3>
             {report.matched.length === 0 ? (
-              <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
-                {t("noTerms")}
-              </p>
+              <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("noTerms")}</p>
             ) : (
-              <ul className="mt-2.5 flex flex-wrap gap-1.5">
+              <ul className="mt-3 flex flex-wrap gap-2">
                 {report.matched.map((term) => (
                   <li
                     key={term.term}
-                    className="rounded-chip border border-line bg-action/[0.10] px-2 py-1 font-mono text-xs"
+                    className="rounded-chip border border-line bg-action/[0.10] px-2 py-1 font-mono text-micro"
                   >
                     {term.term}
                     {term.hits > 1 ? <span className="ml-1 text-muted">×{term.hits}</span> : null}
@@ -137,12 +158,51 @@ export function KeywordPanel({ report, hints }: KeywordPanelProps) {
                 ))}
               </ul>
             )}
-            <p className="mt-6 max-w-measure text-sm leading-relaxed text-muted">
-              {t("pasteAd")}
-            </p>
+            <p className="mt-6 max-w-measure text-sm leading-relaxed text-muted">{t("pasteAd")}</p>
           </div>
         ) : null}
       </div>
+
+      {showCoverage ? (
+        <div className="border-t border-line bg-bench-sunk px-5 py-5 sm:px-6">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h3 className="text-sm font-semibold">{c("heading")}</h3>
+            <span className="condensed text-micro text-live-ink">{c("fromModel")}</span>
+          </div>
+          <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
+            {c("lede", {
+              chunks: coverage.adChunks,
+              threshold: Math.round(coverage.threshold * 100)
+            })}
+          </p>
+
+          {coverage.weak.length === 0 ? (
+            <p className="mt-4 text-sm leading-relaxed text-muted">{c("allCovered")}</p>
+          ) : (
+            <ul className="mt-4 space-y-3">
+              {coverage.weak.slice(0, COVERAGE_SHOWN).map((entry) => (
+                <li
+                  key={entry.chunk.slice(0, 60)}
+                  className="rounded-control border border-line bg-bench px-3 py-3"
+                >
+                  <p className="font-mono text-micro leading-relaxed text-muted">
+                    {snippet(entry.chunk)}
+                  </p>
+                  <p className="mt-2 font-mono text-micro tabular-nums text-caution">
+                    {c("bestMatch", { percent: Math.round(entry.best * 100) })}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {coverage.weak.length > COVERAGE_SHOWN ? (
+            <p className="mt-3 text-micro text-muted">
+              {c("more", { count: coverage.weak.length - COVERAGE_SHOWN })}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
     </section>
   );
 }

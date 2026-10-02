@@ -248,6 +248,7 @@
     }
   },
   "coverageMap": {
+    "fromModel": "from the local model",
     "heading": "What the CV never addresses",
     "lede": "The ad in {chunks, plural, one {# chunk} other {# chunks}}, each compared against the whole CV by the local model. These stay below {threshold}% similarity to anything you wrote. Advice, not measurement - the score is unchanged.",
     "allCovered": "Every part of the ad has a close counterpart in the CV.",

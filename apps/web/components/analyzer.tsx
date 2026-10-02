@@ -21,7 +21,6 @@ import type { AnalysisResult, Finding } from "@/types/analysis";
 
 import { AiConsent } from "./ai-consent";
 import { AiStatus } from "./ai-status";
-import { CoverageMap } from "./coverage-map";
 import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
 import { FixDrafts } from "./fix-drafts";
@@ -459,10 +458,9 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             </div>
 
             <div className="space-y-5">
-              <KeywordPanel report={result.keywords} hints={hints} />
+              <KeywordPanel report={result.keywords} hints={hints} coverage={coverage} />
               <AiConsent onReady={setEmbedder} />
               <AiStatus onTierChange={setModelTier} />
-              {coverage && coverage.adChunks > 0 ? <CoverageMap report={coverage} /> : null}
               <ParserView
                 text={cvText}
                 highlights={highlights}

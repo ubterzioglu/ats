@@ -248,6 +248,7 @@
     }
   },
   "coverageMap": {
+    "fromModel": "yerel modelden",
     "heading": "CV'nin hiç değinmediği yerler",
     "lede": "İlan {chunks, plural, one {# parçaya} other {# parçaya}} bölündü ve her biri yerel model tarafından CV'nin tamamıyla karşılaştırıldı. Bunlar yazdığınız hiçbir şeye %{threshold} benzerliğin altında kalıyor. Tavsiye, ölçüm değil - puan değişmedi.",
     "allCovered": "İlanın her parçasının CV'de yakın bir karşılığı var.",

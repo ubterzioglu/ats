@@ -248,6 +248,7 @@
     }
   },
   "coverageMap": {
+    "fromModel": "vom lokalen Modell",
     "heading": "Worauf der Lebenslauf nie eingeht",
     "lede": "Die Anzeige in {chunks, plural, one {# Abschnitt} other {# Abschnitten}}, jeder vom lokalen Modell mit dem gesamten Lebenslauf verglichen. Diese bleiben unter {threshold} % Ähnlichkeit zu allem, was Sie geschrieben haben. Rat, keine Messung - die Punktzahl bleibt unverändert.",
     "allCovered": "Zu jedem Teil der Anzeige gibt es im Lebenslauf eine nahe Entsprechung.",
