@@ -194,6 +194,14 @@
     "lostSince": "{label} sonrasında kaybedildi",
     "meterLabel": "{dimension}: {max} üzerinden {score}"
   },
+  "changeNote": {
+    "label": "Son değişiklik ne kazandırdı",
+    "noDimensionMoved": "hiçbir boyut kıpırdamadı",
+    "closed": "Kapandı: {title} ({points} puan geri geldi)",
+    "opened": "Açıldı: {title} (−{points} puan)",
+    "partlyAttributed": "Bir boyut tabanına ya da tavanına ulaştı, bu yüzden bu değişimin bir kısmı tek bir bulguya izlenemiyor.",
+    "dismiss": "Kapat"
+  },
   "workList": {
     "heading": "Neyi düzeltmeli, en değerlisinden başlayarak",
     "summary": "{count, plural, one {# bulgu} other {# bulgu}} · {points} puan",

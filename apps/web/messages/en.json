@@ -194,6 +194,14 @@
     "lostSince": "lost since {label}",
     "meterLabel": "{dimension}: {score} of {max}"
   },
+  "changeNote": {
+    "label": "What the last change was worth",
+    "noDimensionMoved": "no dimension moved",
+    "closed": "Closed: {title} ({points} pts back)",
+    "opened": "Opened: {title} (−{points} pts)",
+    "partlyAttributed": "A dimension reached its floor or ceiling, so part of this change cannot be traced to a single finding.",
+    "dismiss": "Dismiss"
+  },
   "workList": {
     "heading": "What to fix, most valuable first",
     "summary": "{count, plural, one {# finding} other {# findings}} · {points} pts",

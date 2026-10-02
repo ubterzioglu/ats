@@ -194,6 +194,14 @@
     "lostSince": "verloren seit {label}",
     "meterLabel": "{dimension}: {score} von {max}"
   },
+  "changeNote": {
+    "label": "Was die letzte Änderung gebracht hat",
+    "noDimensionMoved": "keine Dimension hat sich bewegt",
+    "closed": "Behoben: {title} ({points} Punkte zurück)",
+    "opened": "Neu: {title} (−{points} Punkte)",
+    "partlyAttributed": "Eine Dimension hat ihren Boden oder ihre Decke erreicht, daher lässt sich ein Teil dieser Änderung keinem einzelnen Befund zuordnen.",
+    "dismiss": "Schließen"
+  },
   "workList": {
     "heading": "Was zu korrigieren ist, das Wertvollste zuerst",
     "summary": "{count, plural, one {# Befund} other {# Befunde}} · {points} Punkte",

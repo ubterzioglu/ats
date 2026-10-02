@@ -13,6 +13,7 @@ import { explainFinding } from "@/lib/ai/tasks/explain";
 import { rewriteBullets } from "@/lib/ai/tasks/rewrite";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
 import { buildMarkdownReport } from "@/lib/report/markdown";
+import { describeChange, type ScoreChange } from "@/lib/bench/change";
 import { draftForLine } from "@/lib/bench/evidence";
 import { analyzeCv } from "@/lib/scoring";
 import { draftFixes } from "@/lib/scoring/drafts";
@@ -26,6 +27,7 @@ import { AiConsent } from "./ai-consent";
 import { AiStatus } from "./ai-status";
 import { MeasureRail } from "./bench/measure-rail";
 import { AskDock } from "./bench/ask-dock";
+import { ChangeNote } from "./bench/change-note";
 import { WorkList } from "./bench/work-list";
 import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
@@ -49,6 +51,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [previous, setPrevious] = useState<AnalysisResult | null>(null);
   const [lastVisit, setLastVisit] = useState<HistoryRecord | null>(null);
+  const [change, setChange] = useState<ScoreChange | null>(null);
   const [view, setView] = useState<View>("input");
   const [reading, setReading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
@@ -119,6 +122,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         setResult(next);
         setHints([]);
         setCoverage(null);
+        setChange(null);
         setView("report");
         // History is a convenience the report does not depend on, so a browser
         // that refuses local storage simply gets no comparison. DataControls is
@@ -225,6 +229,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         const next = analyzeCv({ cvText: newText, jobDescription: jobAd });
         setPrevious(result);
         setResult(next);
+        setChange(result ? describeChange(result, next) : null);
       } catch {
         // The previous result stays on screen; the text edit is still applied.
       }
@@ -296,6 +301,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setExtraction(null);
     setResult(null);
     setPrevious(null);
+    setChange(null);
     setShareUrl(null);
     setNotice(null);
     setGate(null);
@@ -477,6 +483,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               sits beside it, narrower, and stays out of the way. */}
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
             <div className="space-y-5">
+              {change ? <ChangeNote change={change} onDismiss={() => setChange(null)} /> : null}
               <WorkList
                 findings={result.findings}
                 cvText={cvText}
