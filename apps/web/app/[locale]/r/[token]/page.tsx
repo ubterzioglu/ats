@@ -35,17 +35,26 @@ export default async function SharedReportPage({ params }: SharedReportPageProps
   const brand = await getTranslations("brand");
 
   return (
-    <main className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
+    <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
       <header className="mb-8 border-b border-line pb-6">
-        <p className="readout">{t("eyebrow", { date: report.generatedAt.slice(0, 10) })}</p>
-        <h1 className="mt-2 font-mono text-lg font-medium tracking-tight">{brand("name")}</h1>
+        <p className="condensed text-micro text-muted">
+          {t("eyebrow", { date: report.generatedAt.slice(0, 10) })}
+        </p>
+        <h1 className="mt-2 font-mono text-h3 font-medium tracking-tight">{brand("name")}</h1>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("lede")}</p>
       </header>
 
-      <div className="space-y-5">
-        <MeasureRail result={report} />
-        <WorkList findings={report.findings} />
-        <KeywordPanel report={report.keywords} />
+      {/* The same spine and rail as the live report, read-only: no CV text to
+          edit against, no model, no dock. A work item with nothing to act on
+          renders as the finding alone, which is all a shared link can offer. */}
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+        <div className="space-y-5">
+          <WorkList findings={report.findings} />
+        </div>
+        <div className="space-y-5">
+          <MeasureRail result={report} />
+          <KeywordPanel report={report.keywords} />
+        </div>
       </div>
 
       <p className="mt-10 border-t border-line pt-6 text-sm text-muted">

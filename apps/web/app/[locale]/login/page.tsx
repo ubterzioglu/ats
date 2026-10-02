@@ -28,12 +28,12 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       </Link>
 
       <div className="bench mt-6 p-7">
-        <h1 className="text-xl font-semibold">{t("heading")}</h1>
-        <p className="mt-1.5 text-sm leading-relaxed text-muted">{t("lede")}</p>
+        <h1 className="text-h2 font-semibold">{t("heading")}</h1>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{t("lede")}</p>
 
         <form className="mt-7 flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="rail-label" htmlFor="email">
+          <div className="flex flex-col gap-2">
+            <label className="condensed text-micro font-medium text-muted" htmlFor="email">
               {t("emailLabel")}
             </label>
             <input
@@ -47,8 +47,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             />
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <label className="rail-label" htmlFor="password">
+          <div className="flex flex-col gap-2">
+            <label className="condensed text-micro font-medium text-muted" htmlFor="password">
               {t("passwordLabel")}
             </label>
             <input
@@ -65,7 +65,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           {message ? (
             <p
               role="alert"
-              className="rounded-control border border-caution/35 bg-caution/[0.07] px-3.5 py-3 text-sm text-caution"
+              className="rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm text-caution"
             >
               {message}
             </p>

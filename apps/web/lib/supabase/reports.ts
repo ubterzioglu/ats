@@ -1,5 +1,6 @@
 import "server-only";
 
+import { restoreSharedReport } from "@/lib/report/restore";
 import type { AnalysisResult } from "@/types/analysis";
 
 import { createServiceClient } from "./client";
@@ -83,7 +84,12 @@ export async function loadReport(token: string): Promise<LoadReportOutcome> {
     if (!data) return { state: "not-found" };
     if (new Date(String(data.expires_at)).getTime() < Date.now()) return { state: "not-found" };
 
-    return { state: "found", report: data.payload as AnalysisResult };
+    // The row was written by whatever version was running that day, so it is
+    // rebuilt rather than cast. A row too damaged to rebuild reads as gone.
+    const report = restoreSharedReport(data.payload);
+    if (!report) return { state: "not-found" };
+
+    return { state: "found", report };
   } catch (cause) {
     console.error("[reports] select threw", cause);
     return { state: "error" };
