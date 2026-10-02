@@ -7,7 +7,7 @@ import { germanVariants } from "./german";
 import { extractExperienceRequirement } from "./job-ad";
 import { detectLanguage } from "./language";
 import { lineSection, sectionRanges } from "./sections";
-import { isJobNoise, isStopword } from "./stopwords";
+import { isJobNoise, isStopword, JOB_POSTING_NOISE } from "./stopwords";
 import { MULTI_WORD_SKILLS, SYNONYMS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill, variantsOf } from "./taxonomy";
 import { caseFold, clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
 import { hasTurkishCharacters, matchKeyTurkish } from "./turkish";
@@ -213,9 +213,19 @@ interface Discovery {
   readonly minFrequency: number;
 }
 
-function isProseWord(word: string): boolean {
-  return PROSE_WORDS.has(word) || isStopword(word) || isJobNoise(word);
+function isProseWord(word: string, language: DocumentLanguage): boolean {
+  return PROSE_WORDS.has(word) || isStopword(word, language) || isJobNoise(word);
 }
+
+/**
+ * The noise list is flat, but Turkish noise words arrive inflected:
+ * "deneyimi" is "deneyim" wearing a suffix. The stems of every noise entry
+ * are precomputed so the stem key of a Turkish token can be checked against
+ * them.
+ */
+const TURKISH_NOISE_KEYS: ReadonlySet<string> = new Set(
+  [...JOB_POSTING_NOISE].map((word) => matchKeyTurkish(word))
+);
 
 const BULLET_PREFIX_RX = /^([-*•▪●■▶‣⁃∙·➤➜✔✓★◦○]|\d+[.)])\s+/;
 
@@ -257,7 +267,8 @@ function discoverTerms(
   lowerLines: readonly string[],
   tiers: readonly (KeywordTier | undefined)[],
   candidates: ReadonlyMap<string, Candidate>,
-  lowercaseVocab: ReadonlySet<string>
+  lowercaseVocab: ReadonlySet<string>,
+  language: DocumentLanguage
 ): Map<string, Discovery> {
   const lower = lowerLines.join("\n");
   const titleIndex = lines.findIndex((line) => line.length > 0);
@@ -288,8 +299,8 @@ function discoverTerms(
       claimed.push(span);
       const words = match[0].split(/\s+/);
       const firstWord = (words[0] ?? "").toLowerCase();
-      if (isProseWord(firstWord) || lowercaseVocab.has(firstWord)) continue;
-      if (words.some((word) => isProseWord(word.toLowerCase()))) continue;
+      if (isProseWord(firstWord, language) || lowercaseVocab.has(firstWord)) continue;
+      if (words.some((word) => isProseWord(word.toLowerCase(), language))) continue;
       offer(match[0], 2, tier);
     }
 
@@ -301,7 +312,7 @@ function discoverTerms(
     ACRONYM_RX.lastIndex = 0;
     while ((match = ACRONYM_RX.exec(line)) !== null) {
       const term = match[0].toLowerCase();
-      if (isProseWord(term)) continue;
+      if (isProseWord(term, language)) continue;
       offer(term, 2, tier);
     }
 
@@ -312,7 +323,7 @@ function discoverTerms(
       const width = match[0].length;
       if (claimed.some(([start, end]) => at < end && at + width > start)) continue;
       const term = match[0].toLowerCase();
-      if (isProseWord(term)) continue;
+      if (isProseWord(term, language)) continue;
       const sentenceStart =
         at === 0 || at === bulletEnd || /[.!?]\s+$/.test(line.slice(0, at));
       if (sentenceStart && lowercaseVocab.has(term)) continue;
@@ -322,7 +333,7 @@ function discoverTerms(
     HYPHEN_RX.lastIndex = 0;
     while ((match = HYPHEN_RX.exec(lowerLines[index] ?? "")) !== null) {
       const parts = match[0].split("-");
-      if (parts.some((part) => isProseWord(part) || isAmbiguousTerm(part))) continue;
+      if (parts.some((part) => isProseWord(part, language) || isAmbiguousTerm(part))) continue;
       offer(match[0], 2, tier);
     }
   });
@@ -372,9 +383,16 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
     const contextual = hasTechContext(line);
     for (const token of tokenize(line)) {
       const term = canonicalize(token);
-      if (isStopword(term) || isJobNoise(term)) continue;
+      if (isStopword(term, language) || isJobNoise(term)) continue;
       if (/^\d+$/.test(term)) continue;
       const key = language === "tr" ? matchKeyTurkish(term) : term;
+      if (
+        language === "tr" &&
+        key !== term &&
+        (isStopword(key, language) || TURKISH_NOISE_KEYS.has(key))
+      ) {
+        continue;
+      }
       if (key.length < 3 && !isKnownSkill(key)) continue;
       if (isAmbiguousTerm(token) && !contextual) continue;
       frequencies.set(key, (frequencies.get(key) ?? 0) + 1);
@@ -403,7 +421,7 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
     candidates.set(surface, { term: surface, frequency, tier: tokenTiers.get(key) });
   }
 
-  const discovered = discoverTerms(lines, lowerLines, tiers, candidates, lowercaseVocab);
+  const discovered = discoverTerms(lines, lowerLines, tiers, candidates, lowercaseVocab, language);
   const lower = lowerLines.join("\n");
   for (const [term, discovery] of discovered) {
     candidates.set(term, {

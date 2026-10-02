@@ -93,7 +93,7 @@ describe("Turkish keyword matching", () => {
   const terms = extractJobKeywords(TR_JOB_AD).map((term) => term.term);
 
   it("mines the Turkish ad for inflected domain words", () => {
-    expect(terms.some((term) => matchKeyTurkish(term) === matchKeyTurkish("deneyim"))).toBe(true);
+    expect(terms.some((term) => matchKeyTurkish(term) === matchKeyTurkish("mühendis"))).toBe(true);
     expect(terms.some((term) => matchKeyTurkish(term) === matchKeyTurkish("otomasyon"))).toBe(true);
     expect(terms.some((term) => matchKeyTurkish(term) === matchKeyTurkish("regresyon"))).toBe(true);
   });
