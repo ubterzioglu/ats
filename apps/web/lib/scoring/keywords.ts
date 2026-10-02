@@ -3,7 +3,7 @@ import type { KeywordReport, KeywordTerm } from "@/types/analysis";
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { isJobNoise, isStopword } from "./stopwords";
-import { MULTI_WORD_SKILLS, canonicalize, isKnownSkill, variantsOf } from "./taxonomy";
+import { MULTI_WORD_SKILLS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill, variantsOf } from "./taxonomy";
 import { clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
 
 export const KEYWORDS_MAX = 25;
@@ -25,9 +25,12 @@ function termPattern(term: string): RegExp {
 
 export function countOccurrences(haystack: string, term: string): number {
   let total = 0;
-  for (const variant of variantsOf(term)) {
-    const matches = haystack.match(termPattern(variant));
-    if (matches) total += matches.length;
+  for (const line of haystack.split("\n")) {
+    for (const variant of variantsOf(term)) {
+      if (isAmbiguousTerm(variant) && !hasTechContext(line)) continue;
+      const matches = line.match(termPattern(variant));
+      if (matches) total += matches.length;
+    }
   }
   return total;
 }
@@ -73,15 +76,18 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
     });
   }
 
-  const tokens = tokenize(lower);
   const frequencies = new Map<string, number>();
 
-  for (const token of tokens) {
-    const term = canonicalize(token);
-    if (isStopword(term) || isJobNoise(term)) continue;
-    if (/^\d+$/.test(term)) continue;
-    if (term.length < 3 && !isKnownSkill(term)) continue;
-    frequencies.set(term, (frequencies.get(term) ?? 0) + 1);
+  for (const line of lines) {
+    const contextual = hasTechContext(line);
+    for (const token of tokenize(line.toLowerCase())) {
+      const term = canonicalize(token);
+      if (isStopword(term) || isJobNoise(term)) continue;
+      if (/^\d+$/.test(term)) continue;
+      if (term.length < 3 && !isKnownSkill(term)) continue;
+      if (isAmbiguousTerm(token) && !contextual) continue;
+      frequencies.set(term, (frequencies.get(term) ?? 0) + 1);
+    }
   }
 
   for (const [term, frequency] of frequencies) {
@@ -112,11 +118,15 @@ function baselineTerms(context: ScoreContext): KeywordTerm[] {
     if (hits > 0) found.push({ term: skill, weight: 1, hits });
   }
 
-  for (const token of context.tokenSet) {
-    const term = canonicalize(token);
-    if (!isKnownSkill(term) || term.includes(" ")) continue;
-    if (found.some((entry) => entry.term === term)) continue;
-    found.push({ term, weight: 1, hits: countOccurrences(context.lower, term) });
+  for (const line of context.lines) {
+    const contextual = hasTechContext(line);
+    for (const token of tokenize(line.toLowerCase())) {
+      const term = canonicalize(token);
+      if (!isKnownSkill(term) || term.includes(" ")) continue;
+      if (isAmbiguousTerm(token) && !contextual) continue;
+      if (found.some((entry) => entry.term === term)) continue;
+      found.push({ term, weight: 1, hits: countOccurrences(context.lower, term) });
+    }
   }
 
   return found.sort((a, b) => b.hits - a.hits);

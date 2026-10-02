@@ -19,6 +19,7 @@ interface Measurement {
   readonly recall: number;
   readonly missed: readonly string[];
   readonly spurious: readonly string[];
+  readonly forbiddenHits: readonly string[];
 }
 
 export function measure(ad: GoldenJobAd): Measurement {
@@ -28,12 +29,14 @@ export function measure(ad: GoldenJobAd): Measurement {
 
   const hits = extracted.filter((term) => expected.has(term));
   const precise = extracted.filter((term) => tolerated.has(term));
+  const forbidden = new Set(ad.forbidden);
 
   return {
     precision: extracted.length > 0 ? precise.length / extracted.length : 0,
     recall: expected.size > 0 ? hits.length / expected.size : 1,
     missed: [...expected].filter((term) => !extracted.includes(term)),
-    spurious: extracted.filter((term) => !tolerated.has(term))
+    spurious: extracted.filter((term) => !tolerated.has(term)),
+    forbiddenHits: extracted.filter((term) => forbidden.has(term))
   };
 }
 
@@ -53,6 +56,10 @@ describe("extractJobKeywords against the golden set", () => {
       it(`finds enough of the terms the ad is indexed by (recall >= ${RECALL_FLOOR})`, () => {
         expect(result.missed.join(", ")).toBeTypeOf("string");
         expect(result.recall).toBeGreaterThanOrEqual(RECALL_FLOOR);
+      });
+
+      it("never extracts a forbidden term", () => {
+        expect(result.forbiddenHits).toEqual([]);
       });
     });
   }

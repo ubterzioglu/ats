@@ -61,28 +61,48 @@ export function isKnownSkill(term: string): boolean {
 
 /** Terms that ATS keyword matching treats as equivalent. */
 export const SYNONYMS: Readonly<Record<string, readonly string[]>> = {
-  "golang": ["go"],
-  "node.js": ["nodejs", "node"],
-  "next.js": ["nextjs"],
-  "ci/cd": ["cicd", "ci", "cd"],
-  "quality assurance": ["qa"],
-  "test automation": ["automated testing", "testautomatisierung", "test otomasyonu"],
-  "google cloud": ["gcp"],
-  "postgresql": ["postgres"],
-  "kubernetes": ["k8s"],
-  "javascript": ["js"],
-  "typescript": ["ts"],
-  "machine learning": ["ml"],
-  "continuous integration": ["ci"],
-  "user experience": ["ux"],
-  "spring boot": ["springboot"]
+   "golang": ["go"],
+   "node.js": ["nodejs", "node"],
+   "next.js": ["nextjs"],
+   "ci/cd": ["cicd", "ci"],
+   "quality assurance": ["qa"],
+   "test automation": ["automated testing", "testautomatisierung", "test otomasyonu"],
+   "google cloud": ["gcp"],
+   "postgresql": ["postgres"],
+   "kubernetes": ["k8s"],
+   "javascript": ["js"],
+   "typescript": ["ts"],
+   "machine learning": ["ml"],
+   "continuous integration": ["ci"],
+   "user experience": ["ux"],
+   "spring boot": ["springboot"]
 };
+
+/**
+ * Aliases that are also ordinary words. "go" appears in "go-live", "r" in
+ * "R&D"; counting them unconditionally turns prose into skills. They only
+ * count on a line that also carries technical context.
+ */
+export const AMBIGUOUS_TERMS: ReadonlySet<string> = new Set(["go", "r", "c"]);
+
+const TECH_CONTEXT_RX =
+  /\b(api|apis|backend|back-end|service|services|microservice|microservices|server|golang|cloud|docker|kubernetes|container|containers|deploy|deployment|pipeline|pipelines|programming|program|programmer|language|developer|development|software|engineer|engineering|script|scripting|scripts|compiler|build|builds|tool|tools|ggplot|ggplot2|cran|tidyverse|dplyr|shiny|statistic|statistics|statistical|data|model|models|modeling|modelling|etl|analytics|ci\/cd)\b|\bggplot/i;
+
+export function isAmbiguousTerm(term: string): boolean {
+  return AMBIGUOUS_TERMS.has(term);
+}
+
+export function hasTechContext(line: string): boolean {
+  return TECH_CONTEXT_RX.test(line);
+}
 
 const REVERSE_SYNONYMS: ReadonlyMap<string, string> = (() => {
   const map = new Map<string, string>();
   for (const [canonical, aliases] of Object.entries(SYNONYMS)) {
     for (const alias of aliases) {
-      map.set(alias, canonical);
+      // First registration wins, so an alias shared by two entries resolves
+      // deterministically to whichever canonical term is listed first.
+      if (!map.has(alias)) map.set(alias, canonical);
     }
   }
   return map;
