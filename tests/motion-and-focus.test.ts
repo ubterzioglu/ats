@@ -1,0 +1,65 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+import { describe, expect, it } from "vitest";
+
+/**
+ * V.10's motion and focus items. Both are rules that live in one stylesheet and
+ * are easy to lose to an unrelated edit, so they are asserted rather than
+ * remembered.
+ */
+
+const CSS = readFileSync(resolve(__dirname, "../apps/web/app/globals.css"), "utf8");
+
+function block(selector: string): string {
+  const start = CSS.indexOf(selector);
+  expect(start, `globals.css has no ${selector}`).toBeGreaterThanOrEqual(0);
+  return CSS.slice(start, CSS.indexOf("\n}", start) + 2);
+}
+
+describe("reduced motion", () => {
+  const rule = block("@media (prefers-reduced-motion: reduce)");
+
+  it("is declared at all", () => {
+    expect(rule.length).toBeGreaterThan(0);
+  });
+
+  it("stops every animation and transition, so a new one is covered by default", () => {
+    expect(rule).toMatch(/\*,/);
+    expect(rule).toMatch(/animation-duration:\s*0\.01ms\s*!important/);
+    expect(rule).toMatch(/animation-iteration-count:\s*1\s*!important/);
+    expect(rule).toMatch(/transition-duration:\s*0\.01ms\s*!important/);
+  });
+
+  it("keeps the live edge visible while stopping it moving", () => {
+    // The edge says which part of the screen a model wrote. That is meaning,
+    // not decoration, so reduced motion removes the sweep and keeps the edge.
+    expect(rule).toMatch(/\.live-edge::after/);
+    expect(rule).toMatch(/animation:\s*none/);
+    expect(rule).toMatch(/linear-gradient/);
+  });
+});
+
+describe("the animations that exist", () => {
+  it("are the two the system allows, and no more", () => {
+    const names = [...CSS.matchAll(/@keyframes\s+([a-z-]+)/g)].map((match) => match[1]).sort();
+    expect(names).toEqual(["live-sweep", "meter-fill"]);
+  });
+
+  it("fills a meter exactly once", () => {
+    expect(block(".meter-fill {")).toMatch(/animation:\s*meter-fill[^;]*\s1;/);
+  });
+});
+
+describe("keyboard focus", () => {
+  const rule = block(":focus-visible {");
+
+  it("draws a visible ring rather than removing the outline", () => {
+    expect(rule).toMatch(/outline:\s*2px solid/);
+    expect(rule).toMatch(/outline-offset/);
+  });
+
+  it("is never suppressed anywhere in the stylesheet", () => {
+    expect(CSS).not.toMatch(/outline:\s*(none|0)/);
+  });
+});

@@ -14,6 +14,9 @@ const config: Config = {
         ink: "rgb(var(--ink) / <alpha-value>)",
         muted: "rgb(var(--muted) / <alpha-value>)",
         line: "rgb(var(--line) / <alpha-value>)",
+        // The visible boundary of a control, which owes 3:1. `line` is a
+        // divider and does not.
+        edge: "rgb(var(--edge) / <alpha-value>)",
         action: "rgb(var(--action) / <alpha-value>)",
         // Edges, flow and glow only. Never text on light - that is `live-ink`.
         live: {

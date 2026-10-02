@@ -15,6 +15,10 @@
   --ink: 15 20 30;
   --muted: 92 102 120;
   --line: 221 226 234;
+  /* The visible boundary of a control. `line` is a divider and may stay quiet;
+     an input or button edge is a UI component boundary and owes 3:1, or a
+     reader with low vision cannot see where the field is. */
+  --edge: 126 136 154;
   --action: 26 88 224;
   --live: 0 190 214;
   --live-ink: 0 110 128;
@@ -35,6 +39,7 @@
     --ink: 232 236 243;
     --muted: 150 160 176;
     --line: 48 56 69;
+    --edge: 118 128 146;
     --action: 110 160 255;
     --live: 34 211 238;
     --live-ink: 103 224 243;
@@ -52,6 +57,7 @@
   --ink: 232 236 243;
   --muted: 150 160 176;
   --line: 48 56 69;
+  --edge: 118 128 146;
   --action: 110 160 255;
   --live: 34 211 238;
   --live-ink: 103 224 243;
@@ -165,20 +171,20 @@
   }
 
   .field {
-    @apply w-full resize-y rounded-control border border-line bg-bench-sunk px-3.5 py-2.5 text-sm
+    @apply w-full resize-y rounded-control border border-edge bg-bench-sunk px-4 py-3 text-sm
       leading-relaxed transition-colors placeholder:text-muted/70 focus:border-action focus:bg-bench
       focus:outline-none;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-control bg-action px-4 py-2.5 text-sm
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-control bg-action px-4 py-3 text-sm
       font-medium text-bench transition-colors hover:bg-ink hover:text-bench
       disabled:cursor-not-allowed disabled:bg-muted/50;
   }
 
   .btn-quiet {
-    @apply inline-flex items-center justify-center gap-2 rounded-control border border-line bg-bench px-3.5
-      py-2.5 text-sm text-ink transition-colors hover:border-ink/35 hover:bg-bench-sunk
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-control border border-edge bg-bench
+      px-4 py-3 text-sm text-ink transition-colors hover:border-ink hover:bg-bench-sunk
       disabled:cursor-not-allowed disabled:opacity-40;
   }
 

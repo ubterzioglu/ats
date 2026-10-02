@@ -46,7 +46,9 @@ export function ThemeToggle() {
   }, []);
 
   if (choice === null) {
-    return <div className="h-8 w-[6.5rem]" aria-hidden />;
+    // Matches the mounted control's box, so choosing a theme does not shift the
+    // header under the reader's cursor.
+    return <div className="h-11 w-[11rem]" aria-hidden />;
   }
 
   return (
@@ -66,7 +68,7 @@ export function ThemeToggle() {
             apply(option);
           }}
           className={cx(
-            "rounded-chip px-2 py-1 text-micro transition-colors",
+            "inline-flex min-h-11 items-center rounded-chip px-3 text-micro transition-colors",
             choice === option ? "bg-ink text-bench" : "text-muted hover:text-ink"
           )}
         >

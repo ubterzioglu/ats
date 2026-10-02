@@ -321,7 +321,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               onClick={() => setView(tab)}
               aria-current={view === tab ? "page" : undefined}
               className={cx(
-                "rounded-chip px-4 py-2 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40",
+                "inline-flex min-h-11 items-center rounded-chip px-4 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40",
                 view === tab ? "bg-ink text-bench" : "text-muted hover:text-ink"
               )}
             >
@@ -341,7 +341,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         </nav>
 
         {result ? (
-          <button type="button" className="text-sm text-muted transition-colors hover:text-ink" onClick={clearAll}>
+          <button
+            type="button"
+            className="inline-flex min-h-11 items-center text-sm text-muted transition-colors hover:text-ink"
+            onClick={clearAll}
+          >
             {t("startOver")}
           </button>
         ) : null}

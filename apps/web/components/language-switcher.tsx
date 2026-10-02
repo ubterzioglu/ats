@@ -38,7 +38,7 @@ export function LanguageSwitcher() {
           aria-current={locale === active ? "true" : undefined}
           onClick={() => switchTo(locale)}
           className={cx(
-            "rounded-control px-2 py-1 text-sm transition-colors disabled:opacity-50",
+            "inline-flex min-h-11 items-center rounded-control px-3 text-sm transition-colors disabled:opacity-50",
             locale === active ? "text-ink" : "text-muted hover:text-ink"
           )}
         >

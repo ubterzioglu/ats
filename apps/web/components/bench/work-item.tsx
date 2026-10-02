@@ -117,7 +117,7 @@ export function WorkItem({
                       type="button"
                       title={t("showLine")}
                       onClick={() => onSelectEvidence(line)}
-                      className="block w-full overflow-x-auto whitespace-pre rounded-chip bg-bench-sunk px-3 py-2 text-left font-mono text-micro text-muted transition-colors hover:bg-action/[0.10] hover:text-ink"
+                      className="block min-h-11 w-full overflow-x-auto whitespace-pre rounded-chip bg-bench-sunk px-3 py-3 text-left font-mono text-micro text-muted transition-colors hover:bg-action/[0.10] hover:text-ink"
                     >
                       {line}
                     </button>

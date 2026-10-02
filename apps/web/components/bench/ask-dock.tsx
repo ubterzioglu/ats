@@ -124,7 +124,7 @@ export function AskDock({ tier, result }: AskDockProps) {
             {hasConversation ? (
               <button
                 type="button"
-                className="shrink-0 text-micro text-muted transition-colors hover:text-ink"
+                className="inline-flex min-h-11 shrink-0 items-center text-micro text-muted transition-colors hover:text-ink"
                 aria-expanded={open}
                 onClick={() => setOpen((current) => !current)}
               >
