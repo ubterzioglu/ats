@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 
 import { createShareLink } from "@/app/actions";
+import type { Embedder } from "@/lib/ai/embeddings";
+import { findPartialMatches, toPassages, type PartialMatchHint } from "@/lib/ai/semantic-match";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
 import { buildMarkdownReport } from "@/lib/report/markdown";
 import { analyzeCv } from "@/lib/scoring";
@@ -10,6 +12,7 @@ import { assessDocumentKind, type DocumentKindAssessment } from "@/lib/scoring/g
 import { cx } from "@/lib/ui";
 import type { AnalysisResult } from "@/types/analysis";
 
+import { AiConsent } from "./ai-consent";
 import { DocumentIntake } from "./document-intake";
 import { FixDrafts } from "./fix-drafts";
 import { FixList } from "./fix-list";
@@ -36,6 +39,8 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [notice, setNotice] = useState<string | null>(null);
   const [gate, setGate] = useState<DocumentKindAssessment | null>(null);
   const [markedLine, setMarkedLine] = useState<string | null>(null);
+  const [embedder, setEmbedder] = useState<Embedder | null>(null);
+  const [hints, setHints] = useState<readonly PartialMatchHint[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -83,6 +88,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         const next = analyzeCv({ cvText, jobDescription: jobAd });
         setPrevious(result);
         setResult(next);
+        setHints([]);
         setView("report");
       } catch (cause) {
         setError(cause instanceof Error ? cause.message : "The analysis could not be completed.");
@@ -95,6 +101,29 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     () => (result ? result.keywords.matched.map((term) => term.term) : []),
     [result]
   );
+
+  // Semantic hints are advisory and asynchronous; the deterministic report is
+  // already on screen when they arrive. A cancel flag keeps a stale run from
+  // overwriting fresher hints.
+  useEffect(() => {
+    if (!embedder || !result || result.keywords.source !== "job-description") return;
+    const missing = result.keywords.missing.map((term) => term.term);
+    if (missing.length === 0) {
+      setHints([]);
+      return;
+    }
+    let cancelled = false;
+    findPartialMatches(embedder, missing, toPassages(cvText))
+      .then((found) => {
+        if (!cancelled) setHints(found);
+      })
+      .catch(() => {
+        if (!cancelled) setHints([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [embedder, result, cvText]);
 
   // Applying a rewrite draft edits the text and immediately re-measures it,
   // so the score rail can show what that one sentence was worth.
@@ -349,7 +378,8 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             </div>
 
             <div className="space-y-5">
-              <KeywordPanel report={result.keywords} />
+              <KeywordPanel report={result.keywords} hints={hints} />
+              <AiConsent onReady={setEmbedder} />
               <ParserView
                 text={cvText}
                 highlights={highlights}

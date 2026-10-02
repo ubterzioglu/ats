@@ -1,9 +1,12 @@
 import type { KeywordReport, KeywordTerm, KeywordTier } from "@/types/analysis";
 
+import type { PartialMatchHint } from "@/lib/ai/semantic-match";
 import { cx } from "@/lib/ui";
 
 interface KeywordPanelProps {
   readonly report: KeywordReport;
+  /** Advisory near-misses from the local model; never affects scores. */
+  readonly hints?: readonly PartialMatchHint[];
 }
 
 type Status = "found" | "alias" | "missing";
@@ -25,22 +28,31 @@ const STATUS_LABEL: Readonly<Record<Status, string>> = {
   missing: "MISSING"
 };
 
-function TermChip({ term }: { readonly term: KeywordTerm }) {
+function TermChip({ term, hint }: { readonly term: KeywordTerm; readonly hint?: PartialMatchHint }) {
   const status = statusOf(term);
   return (
     <li
-      className={cx("rounded-chip border px-2 py-1 font-mono text-xs", CHIP_STYLE[status])}
+      className={cx(
+        "rounded-chip border px-2 py-1 font-mono text-xs",
+        hint ? "border-caution/40 bg-caution/[0.08] text-ink" : CHIP_STYLE[status]
+      )}
       title={
-        status === "alias"
-          ? `matched in the CV as "${term.alias}"`
-          : status === "missing"
-            ? "never appears in the CV"
-            : undefined
+        hint
+          ? `PARTIAL: the CV says something close - "${hint.passage}" (${Math.round(
+              hint.similarity * 100
+            )}% similar)`
+          : status === "alias"
+            ? `matched in the CV as "${term.alias}"`
+            : status === "missing"
+              ? "never appears in the CV"
+              : undefined
       }
     >
       {term.term}
       {status === "found" && term.hits > 1 ? <span className="ml-1 text-muted">×{term.hits}</span> : null}
-      <span className="ml-1.5 text-[10px] tracking-wide text-muted">{STATUS_LABEL[status]}</span>
+      <span className="ml-1.5 text-[10px] tracking-wide text-muted">
+        {hint ? "PARTIAL" : STATUS_LABEL[status]}
+      </span>
     </li>
   );
 }
@@ -51,10 +63,11 @@ const TIER_GROUPS: ReadonlyArray<{ readonly tier: KeywordTier | undefined; reado
   { tier: "preferred", label: "Nice to have according to the ad" }
 ];
 
-export function KeywordPanel({ report }: KeywordPanelProps) {
+export function KeywordPanel({ report, hints }: KeywordPanelProps) {
   const matchedFromAd = report.source === "job-description";
   const coverage = Math.round(report.coverage * 100);
   const all = matchedFromAd ? [...report.matched, ...report.missing] : [];
+  const hintByTerm = new Map((hints ?? []).map((hint) => [hint.term, hint]));
 
   return (
     <section className="sheet overflow-hidden" aria-labelledby="keywords-heading">
@@ -88,7 +101,7 @@ export function KeywordPanel({ report }: KeywordPanelProps) {
                   <h3 className="text-xs font-medium text-muted">{label}</h3>
                   <ul className="mt-2.5 flex flex-wrap gap-1.5">
                     {terms.map((term) => (
-                      <TermChip key={term.term} term={term} />
+                      <TermChip key={term.term} term={term} hint={hintByTerm.get(term.term)} />
                     ))}
                   </ul>
                 </div>
