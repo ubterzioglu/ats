@@ -51,6 +51,24 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ## 1. Current state
 
+### Status — 2 October 2026
+
+**40 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
+
+| Phase | Batches | State |
+|---|---|---|
+| 0 — Groundwork | P0.1-P0.7, ST.1-ST.3 | Done, except the `P0.3` tree deletion |
+| 1 — Deepen the engine | V.1-V.10, C.2-C.3, A.1-A.4, J.1-J.7 | Done |
+| 2 — Semantic layer | B.1-B.3, F.1-F.5 | Not started. On the critical path: `B.1` gates `F.1`, which gates most of module D |
+| 3 — Builder | E.1-E.10 | `E.1`, `E.1a`, `E.2`, `E.3`, `E.8`, `E.10` done; `E.4`-`E.7` and `E.9` open |
+| 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1` and `L.4` done; `L.2`, `L.3` and all of D open |
+| 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Not started |
+
+The gate is clean: lint, typecheck, 516 tests across 53 files, and a production build.
+
+See `apps/web/docs/handover-2026-10-02.md` for what is open, what is blocked on what, and the
+decisions already taken that constrain the batches still to come.
+
 ### What the product does today
 
 The CV is read and scored in the browser; the file is never uploaded. The text an applicant tracking
@@ -87,10 +105,10 @@ Verified in the repository, so no batch re-does it:
 
 | # | Problem | Impact | Owned by |
 |---|---|---|---|
-| S1 | `/analyze` sits behind a login gate ([`middleware.ts`](apps/web/middleware.ts)) | A product called "free for all" demands an account to run an analysis. Loss at the very top of the funnel. | **P0.1** |
-| S2 | A partially-built server architecture (FastAPI, Postgres, Redis, Ollama) contradicts the live browser-based product | Direction confusion; server-side CV processing breaks the privacy promise | **P0.2**, **P0.3** |
-| S3 | The interface is English-only | A barrier for the Turkish and German-speaking target audience | **P0.5**–**P0.7**, **J.1**–**J.7** |
-| S4 | The report view stacks eight equal-weight panels | The user has one question and the interface answers in ten equal voices | **V.5**–**V.8** |
+| ~~S1~~ fixed | `/analyze` sat behind a login gate ([`middleware.ts`](apps/web/middleware.ts)) | A product called "free for all" demands an account to run an analysis. Loss at the very top of the funnel. | **P0.1** |
+| S2 partly fixed | A partially-built server architecture (FastAPI, Postgres, Redis, Ollama) contradicts the live browser-based product | Direction confusion; server-side CV processing breaks the privacy promise | **P0.2**, **P0.3** |
+| ~~S3~~ fixed | The interface was English-only | A barrier for the Turkish and German-speaking target audience | **P0.5**–**P0.7**, **J.1**–**J.7** |
+| ~~S4~~ fixed | The report view stacked eight equal-weight panels | The user has one question and the interface answers in ten equal voices | **V.5**–**V.8** |
 
 ---
 
