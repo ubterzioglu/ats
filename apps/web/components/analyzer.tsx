@@ -33,6 +33,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [reading, setReading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [gate, setGate] = useState<DocumentKindAssessment | null>(null);
+  const [markedLine, setMarkedLine] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -74,6 +75,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       setGate(null);
       setError(null);
       setShareUrl(null);
+      setMarkedLine(null);
 
       try {
         setResult(analyzeCv({ cvText, jobDescription: jobAd }));
@@ -137,6 +139,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setShareUrl(null);
     setNotice(null);
     setGate(null);
+    setMarkedLine(null);
     setError(null);
     setView("input");
   }
@@ -294,13 +297,14 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           ) : null}
 
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-            <FixList findings={result.findings} />
+            <FixList findings={result.findings} onSelectEvidence={setMarkedLine} />
 
             <div className="space-y-5">
               <KeywordPanel report={result.keywords} />
               <ParserView
                 text={cvText}
                 highlights={highlights}
+                markedLine={markedLine}
                 caption={`${result.stats.words} words · ${result.stats.lines} lines · ${result.language.toUpperCase()}`}
               />
             </div>

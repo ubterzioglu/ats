@@ -3,9 +3,10 @@ import { SEVERITY_EDGE, SEVERITY_LABEL, SEVERITY_TEXT } from "@/lib/ui";
 
 interface FixListProps {
   readonly findings: readonly Finding[];
+  readonly onSelectEvidence?: (line: string) => void;
 }
 
-export function FixList({ findings }: FixListProps) {
+export function FixList({ findings, onSelectEvidence }: FixListProps) {
   if (findings.length === 0) {
     return (
       <section className="sheet p-5 sm:p-6">
@@ -40,7 +41,18 @@ export function FixList({ findings }: FixListProps) {
 
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 className="font-sans text-sm font-semibold">{finding.title}</h3>
+                {onSelectEvidence && finding.evidence && finding.evidence.length > 0 ? (
+                  <button
+                    type="button"
+                    className="text-left font-sans text-sm font-semibold underline decoration-line underline-offset-4 transition-colors hover:decoration-accent"
+                    title="Show this line in the parsed text"
+                    onClick={() => onSelectEvidence(finding.evidence?.[0] ?? "")}
+                  >
+                    {finding.title}
+                  </button>
+                ) : (
+                  <h3 className="font-sans text-sm font-semibold">{finding.title}</h3>
+                )}
                 <span className={`font-mono text-xs tabular-nums ${SEVERITY_TEXT[finding.severity]}`}>
                   −{finding.cost} pts
                 </span>
@@ -61,11 +73,21 @@ export function FixList({ findings }: FixListProps) {
                   </summary>
                   <ul className="mt-2 space-y-1">
                     {finding.evidence.map((line) => (
-                      <li
-                        key={line}
-                        className="overflow-x-auto whitespace-pre rounded-chip bg-bed px-3 py-2 font-mono text-xs text-muted"
-                      >
-                        {line}
+                      <li key={line}>
+                        {onSelectEvidence ? (
+                          <button
+                            type="button"
+                            title="Show this line in the parsed text"
+                            onClick={() => onSelectEvidence(line)}
+                            className="block w-full overflow-x-auto whitespace-pre rounded-chip bg-bed px-3 py-2 text-left font-mono text-xs text-muted transition-colors hover:bg-accent/15 hover:text-ink"
+                          >
+                            {line}
+                          </button>
+                        ) : (
+                          <span className="block overflow-x-auto whitespace-pre rounded-chip bg-bed px-3 py-2 font-mono text-xs text-muted">
+                            {line}
+                          </span>
+                        )}
                       </li>
                     ))}
                   </ul>
