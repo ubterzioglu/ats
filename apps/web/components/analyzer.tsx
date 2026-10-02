@@ -19,6 +19,7 @@ import type { AnalysisResult, Finding } from "@/types/analysis";
 import { AiConsent } from "./ai-consent";
 import { AiStatus } from "./ai-status";
 import { CoverageMap } from "./coverage-map";
+import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
 import { FixDrafts } from "./fix-drafts";
 import { FixList } from "./fix-list";
@@ -440,6 +441,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 markedLine={markedLine}
                 caption={`${result.stats.words} words · ${result.stats.lines} lines · ${result.language.toUpperCase()}`}
               />
+              <DataControls />
             </div>
           </div>
         </div>
