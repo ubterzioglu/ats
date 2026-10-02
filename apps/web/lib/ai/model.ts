@@ -1,16 +1,16 @@
-import { createBuiltinModel } from "./providers/builtin";
-import { createOllamaModel } from "./providers/ollama";
+import { createBuiltinProvider } from "./providers/builtin";
+import { createOllamaProvider } from "./providers/ollama";
 import { startWebLlm, type WebLlmModel, type WebLlmProgress } from "./providers/webllm";
-import type { ModelTier, TextModel } from "./providers/types";
+import type { LLMProvider, ModelTier } from "./providers/types";
 
 /**
- * One place that turns a tier choice into a TextModel. The WebLLM session is
- * a module-level singleton: weights load once per page, and every task after
- * the first reuses the engine.
+ * One place that turns a tier choice into an LLMProvider. The WebLLM session
+ * is a module-level singleton: weights load once per page, and every task
+ * after the first reuses the engine.
  */
 
 export interface ModelSession {
-  readonly model: TextModel;
+  readonly model: LLMProvider;
   dispose(): void;
 }
 
@@ -23,9 +23,9 @@ export async function acquireModel(
 ): Promise<ModelSession> {
   switch (tier) {
     case "builtin":
-      return { model: createBuiltinModel(), dispose: () => {} };
+      return { model: createBuiltinProvider(), dispose: () => {} };
     case "ollama":
-      return { model: createOllamaModel(), dispose: () => {} };
+      return { model: createOllamaProvider(), dispose: () => {} };
     case "webllm": {
       if (!webllmSession) {
         webllmLoading ??= startWebLlm(onProgress ?? (() => {})).then(

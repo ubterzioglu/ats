@@ -1,6 +1,6 @@
 import { isGrounded } from "@/lib/ai/grounding";
 
-import type { ChatMessage, JsonSchema, TextModel } from "../providers/types";
+import type { ChatMessage, JsonSchema, LLMProvider } from "../providers/types";
 
 /**
  * Tailoring suggestions for one vacancy. The hard rule is the product's
@@ -70,7 +70,7 @@ export function validateTailorPayload(payload: unknown): TailorSuggestion[] | nu
 }
 
 export async function suggestTailoring(
-  model: TextModel,
+  model: LLMProvider,
   cvText: string,
   matchedTerms: readonly string[],
   missingTerms: readonly string[],
@@ -106,7 +106,7 @@ export async function suggestTailoring(
   let payload: TailorSuggestion[] | null = null;
   for (let attempt = 0; attempt < 2 && payload === null; attempt += 1) {
     payload = validateTailorPayload(
-      await model.generateJson<unknown>(TAILOR_SCHEMA, messages, signal)
+      await model.structured<unknown>(TAILOR_SCHEMA, messages, signal ? { signal } : {})
     );
   }
   if (payload === null) throw new Error("The model did not return the requested shape.");

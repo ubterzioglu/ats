@@ -1,6 +1,6 @@
 import type { Finding } from "@/types/analysis";
 
-import type { ChatMessage, JsonSchema, TextModel } from "../providers/types";
+import type { ChatMessage, JsonSchema, LLMProvider } from "../providers/types";
 
 /**
  * Explaining a finding gets the smallest context that can do the job: the
@@ -40,7 +40,7 @@ export function validateExplanation(payload: unknown): FindingExplanation | null
 }
 
 export async function explainFinding(
-  model: TextModel,
+  model: LLMProvider,
   finding: Finding,
   signal?: AbortSignal
 ): Promise<FindingExplanation> {
@@ -64,7 +64,11 @@ export async function explainFinding(
   ];
 
   for (let attempt = 0; attempt < 2; attempt += 1) {
-    const payload = await model.generateJson<unknown>(EXPLAIN_SCHEMA, messages, signal);
+    const payload = await model.structured<unknown>(
+      EXPLAIN_SCHEMA,
+      messages,
+      signal ? { signal } : {}
+    );
     const explanation = validateExplanation(payload);
     if (explanation) return explanation;
   }

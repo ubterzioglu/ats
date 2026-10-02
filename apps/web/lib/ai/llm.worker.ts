@@ -22,7 +22,8 @@ type Inbound =
       type: "generate";
       id: number;
       messages: readonly ChatMessage[];
-      schema: unknown;
+      /** Present for structured(), absent for plain chat(). */
+      schema?: unknown;
     };
 
 const ctx = self as unknown as WorkerScope;
@@ -84,10 +85,15 @@ ctx.onmessage = (event: MessageEvent<Inbound>) => {
           temperature: 0,
           // web-llm constrains decoding from a stringified schema carried
           // alongside json_object; there is no json_schema response type here.
-          response_format: {
-            type: "json_object",
-            schema: JSON.stringify(message.schema)
-          }
+          // Plain chat() sends no schema and gets unconstrained text back.
+          ...(message.schema !== undefined
+            ? {
+                response_format: {
+                  type: "json_object" as const,
+                  schema: JSON.stringify(message.schema)
+                }
+              }
+            : {})
         });
         post({
           type: "generated",

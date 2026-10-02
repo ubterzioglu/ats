@@ -1,6 +1,6 @@
 import type { AnalysisResult } from "@/types/analysis";
 
-import type { ChatMessage, JsonSchema, TextModel } from "../providers/types";
+import type { ChatMessage, JsonSchema, LLMProvider } from "../providers/types";
 
 /**
  * Question answering over the report. The model receives the serialized
@@ -58,7 +58,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 export async function askAboutReport(
-  model: TextModel,
+  model: LLMProvider,
   result: AnalysisResult,
   question: string,
   history: readonly AskTurn[] = [],
@@ -80,7 +80,11 @@ export async function askAboutReport(
   ];
 
   for (let attempt = 0; attempt < 2; attempt += 1) {
-    const payload = await model.generateJson<unknown>(ANSWER_SCHEMA, messages, signal);
+    const payload = await model.structured<unknown>(
+      ANSWER_SCHEMA,
+      messages,
+      signal ? { signal } : {}
+    );
     if (isRecord(payload) && typeof payload.answer === "string" && payload.answer.trim().length > 0) {
       return payload.answer.trim();
     }

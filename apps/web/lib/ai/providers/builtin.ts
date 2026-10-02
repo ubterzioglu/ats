@@ -1,4 +1,4 @@
-import type { ChatMessage, JsonSchema, TextModel } from "./types";
+import type { ChatMessage, ChatOptions, JsonSchema, LLMProvider, ProviderHealth } from "./types";
 
 /**
  * Chrome/Edge built-in provider (Gemini Nano, Prompt API). Runs on the
@@ -41,18 +41,59 @@ export async function builtinAvailability(): Promise<string> {
   return model.availability();
 }
 
-class BuiltinModel implements TextModel {
+class BuiltinProvider implements LLMProvider {
   readonly id = "builtin";
   readonly label = "Browser built-in (Gemini Nano)";
 
   private session: BuiltinSession | null = null;
   private sessionKey: string | null = null;
 
-  async generateJson<T>(
+  async health(): Promise<ProviderHealth> {
+    const model = languageModel();
+    if (!model) {
+      return { ok: false, detail: "This browser has no built-in model." };
+    }
+    const availability = await model.availability();
+    if (availability === "available") {
+      return { ok: true, detail: "The built-in model is ready." };
+    }
+    if (availability.startsWith("downloading")) {
+      return { ok: false, detail: "The built-in model is still downloading." };
+    }
+    if (availability === "downloadable") {
+      return { ok: false, detail: "The built-in model has to be downloaded first." };
+    }
+    return { ok: false, detail: `The built-in model is not ready (status: ${availability}).` };
+  }
+
+  async chat(messages: readonly ChatMessage[], options?: ChatOptions): Promise<string> {
+    const session = await this.ensureSession(messages, options);
+    return session.prompt(toPrompt(messages), promptOptions(options));
+  }
+
+  async structured<T>(
     schema: JsonSchema,
     messages: readonly ChatMessage[],
-    signal?: AbortSignal
+    options?: ChatOptions
   ): Promise<T> {
+    const session = await this.ensureSession(messages, options);
+    const raw = await session.prompt(toPrompt(messages), {
+      responseConstraint: schema,
+      ...promptOptions(options)
+    });
+    try {
+      return JSON.parse(raw) as T;
+    } catch {
+      throw new Error("The built-in model returned something that is not JSON.");
+    }
+  }
+
+  // The system prompt is baked into the session; recreating only when it
+  // changes keeps repeated calls cheap.
+  private async ensureSession(
+    messages: readonly ChatMessage[],
+    options?: ChatOptions
+  ): Promise<BuiltinSession> {
     const model = languageModel();
     if (!model) throw new Error("This browser has no built-in model.");
 
@@ -61,36 +102,32 @@ class BuiltinModel implements TextModel {
       throw new Error(`The built-in model is not ready (status: ${availability}).`);
     }
 
-    // The system prompt is baked into the session; recreating only when it
-    // changes keeps repeated calls cheap.
     const system = messages.filter((message) => message.role === "system");
     const key = system.map((message) => message.content).join("\n");
     if (!this.session || this.sessionKey !== key) {
       this.session?.destroy();
       this.session = await model.create({
         ...(system.length > 0 ? { initialPrompts: system } : {}),
-        ...(signal ? { signal } : {})
+        ...(options?.signal ? { signal: options.signal } : {})
       });
       this.sessionKey = key;
     }
-
-    const rest = messages
-      .filter((message) => message.role !== "system")
-      .map((message) => ({ role: message.role, content: message.content }));
-
-    const raw = await this.session.prompt(rest, {
-      responseConstraint: schema,
-      ...(signal ? { signal } : {})
-    });
-
-    try {
-      return JSON.parse(raw) as T;
-    } catch {
-      throw new Error("The built-in model returned something that is not JSON.");
-    }
+    return this.session;
   }
 }
 
-export function createBuiltinModel(): TextModel {
-  return new BuiltinModel();
+function toPrompt(
+  messages: readonly ChatMessage[]
+): readonly { role: string; content: string }[] {
+  return messages
+    .filter((message) => message.role !== "system")
+    .map((message) => ({ role: message.role, content: message.content }));
+}
+
+function promptOptions(options?: ChatOptions): { signal?: AbortSignal } {
+  return options?.signal ? { signal: options.signal } : {};
+}
+
+export function createBuiltinProvider(): LLMProvider {
+  return new BuiltinProvider();
 }

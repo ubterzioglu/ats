@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 
-import type { TextModel } from "@/lib/ai/providers/types";
 import {
   applyRewrite,
   rewriteBullets,
@@ -8,27 +7,13 @@ import {
   validateRewritePayload
 } from "@/lib/ai/tasks/rewrite";
 
+import { fakeProvider } from "./helpers/fake-provider";
+
 /**
  * The model is a black box, so the task wraps it in hard edges: shape
  * validation with one retry, grounding against the source bullet, and a line
  * swap that refuses when the document moved.
  */
-
-function stubModel(responses: readonly unknown[]): { model: TextModel; calls: () => number } {
-  let calls = 0;
-  return {
-    model: {
-      id: "stub",
-      label: "stub",
-      async generateJson<T>(): Promise<T> {
-        const response = responses[Math.min(calls, responses.length - 1)];
-        calls += 1;
-        return response as T;
-      }
-    },
-    calls: () => calls
-  };
-}
 
 const CV = `Jane Doe
 
@@ -75,7 +60,7 @@ describe("rewriteBullets", () => {
   const source = weak[0]!.content;
 
   it("keeps a grounded rewrite", async () => {
-    const stub = stubModel([
+    const stub = fakeProvider([
       {
         rewrites: [
           {
@@ -85,42 +70,42 @@ describe("rewriteBullets", () => {
         ]
       }
     ]);
-    const pairs = await rewriteBullets(stub.model, weak, ["playwright"]);
+    const pairs = await rewriteBullets(stub.provider, weak, ["playwright"]);
     expect(pairs).toHaveLength(1);
     expect(pairs[0]?.original).toBe(source);
   });
 
   it("drops a rewrite that invents a number or a technology", async () => {
-    const stub = stubModel([
+    const stub = fakeProvider([
       {
         rewrites: [
           { original: source, rewritten: "Led testing with Selenium, reducing escapes by 40%." }
         ]
       }
     ]);
-    const pairs = await rewriteBullets(stub.model, weak, ["playwright", "selenium"]);
+    const pairs = await rewriteBullets(stub.provider, weak, ["playwright", "selenium"]);
     expect(pairs).toEqual([]);
   });
 
   it("retries once when the shape is wrong, then gives up loudly", async () => {
-    const recovering = stubModel([
+    const recovering = fakeProvider([
       { nonsense: true },
       { rewrites: [{ original: source, rewritten: "Led software testing before each release." }] }
     ]);
-    const pairs = await rewriteBullets(recovering.model, weak, ["playwright"]);
+    const pairs = await rewriteBullets(recovering.provider, weak, ["playwright"]);
     expect(pairs).toHaveLength(1);
     expect(recovering.calls()).toBe(2);
 
-    const hopeless = stubModel([{ nonsense: true }]);
-    await expect(rewriteBullets(hopeless.model, weak, ["playwright"])).rejects.toThrow();
+    const hopeless = fakeProvider([{ nonsense: true }]);
+    await expect(rewriteBullets(hopeless.provider, weak, ["playwright"])).rejects.toThrow();
     expect(hopeless.calls()).toBe(2);
   });
 
   it("ignores proposals for bullets it was never given", async () => {
-    const stub = stubModel([
+    const stub = fakeProvider([
       { rewrites: [{ original: "Some other sentence entirely.", rewritten: "Led things." }] }
     ]);
-    expect(await rewriteBullets(stub.model, weak, ["playwright"])).toEqual([]);
+    expect(await rewriteBullets(stub.provider, weak, ["playwright"])).toEqual([]);
   });
 });
 

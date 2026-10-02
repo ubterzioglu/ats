@@ -1,6 +1,6 @@
 import { isGrounded } from "@/lib/ai/grounding";
 
-import type { ChatMessage, JsonSchema, TextModel } from "../providers/types";
+import type { ChatMessage, JsonSchema, LLMProvider } from "../providers/types";
 
 /**
  * Bullet rewriting. The model restates weak bullets as claims; the grounding
@@ -94,7 +94,7 @@ export function validateRewritePayload(payload: unknown): RewritePair[] | null {
 }
 
 export async function rewriteBullets(
-  model: TextModel,
+  model: LLMProvider,
   bullets: readonly WeakBullet[],
   knownSkills: readonly string[],
   signal?: AbortSignal
@@ -114,7 +114,11 @@ export async function rewriteBullets(
   // One retry at temperature 0: if the shape is wrong twice, the tier cannot
   // do this job and the caller should say so.
   for (let attempt = 0; attempt < 2 && pairs === null; attempt += 1) {
-    const payload = await model.generateJson<unknown>(REWRITE_SCHEMA, messages, signal);
+    const payload = await model.structured<unknown>(
+      REWRITE_SCHEMA,
+      messages,
+      signal ? { signal } : {}
+    );
     pairs = validateRewritePayload(payload);
   }
   if (pairs === null) throw new Error("The model did not return the requested shape.");

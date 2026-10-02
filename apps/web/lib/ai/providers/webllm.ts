@@ -1,4 +1,4 @@
-import type { ChatMessage, JsonSchema, TextModel } from "./types";
+import type { ChatMessage, ChatOptions, JsonSchema, LLMProvider, ProviderHealth } from "./types";
 
 /**
  * WebLLM provider manager. Picks a Qwen instruct model by device memory,
@@ -46,7 +46,7 @@ export interface WebLlmProgress {
   readonly text: string;
 }
 
-export interface WebLlmModel extends TextModel {
+export interface WebLlmModel extends LLMProvider {
   terminate(): void;
 }
 
@@ -84,6 +84,30 @@ export function startWebLlm(
       pending.clear();
     };
 
+    const generate = (
+      messages: readonly ChatMessage[],
+      schema: JsonSchema | undefined,
+      options?: ChatOptions
+    ): Promise<string> => {
+      if (terminated) return Promise.reject(new Error("The local model was stopped."));
+      const id = nextId;
+      nextId += 1;
+      return new Promise<string>((resolveText, rejectText) => {
+        const onAbort = (): void => {
+          pending.delete(id);
+          rejectText(new Error("Generation was cancelled."));
+        };
+        pending.set(id, { resolve: resolveText, reject: rejectText });
+        options?.signal?.addEventListener("abort", onAbort, { once: true });
+        worker.postMessage({
+          type: "generate",
+          id,
+          messages,
+          ...(schema ? { schema } : {})
+        });
+      });
+    };
+
     worker.onmessage = (event: MessageEvent) => {
       const message = event.data as
         | { type: "progress"; progress: number; text: string }
@@ -101,6 +125,26 @@ export function startWebLlm(
         resolve({
           id: "webllm",
           label: `${choice.label} (local, WebGPU)`,
+          async health(): Promise<ProviderHealth> {
+            return terminated
+              ? { ok: false, detail: "The local model was stopped." }
+              : { ok: true, detail: `${choice.label} is running on this device.` };
+          },
+          async chat(messages, options) {
+            return generate(messages, undefined, options);
+          },
+          async structured<T>(
+            schema: JsonSchema,
+            messages: readonly ChatMessage[],
+            options?: ChatOptions
+          ): Promise<T> {
+            const text = await generate(messages, schema, options);
+            try {
+              return JSON.parse(text) as T;
+            } catch {
+              throw new Error("The local model returned something that is not JSON.");
+            }
+          },
           terminate(): void {
             terminated = true;
             worker.terminate();
@@ -108,32 +152,6 @@ export function startWebLlm(
               request.reject(new Error("The local model was stopped."));
             }
             pending.clear();
-          },
-          async generateJson<T>(
-            schema: JsonSchema,
-            messages: readonly ChatMessage[],
-            signal?: AbortSignal
-          ): Promise<T> {
-            if (terminated) throw new Error("The local model was stopped.");
-            const id = nextId;
-            nextId += 1;
-            const text = await new Promise<string>((resolveText, rejectText) => {
-              const onAbort = (): void => {
-                pending.delete(id);
-                rejectText(new Error("Generation was cancelled."));
-              };
-              pending.set(id, {
-                resolve: resolveText,
-                reject: rejectText
-              });
-              signal?.addEventListener("abort", onAbort, { once: true });
-              worker.postMessage({ type: "generate", id, messages, schema });
-            });
-            try {
-              return JSON.parse(text) as T;
-            } catch {
-              throw new Error("The local model returned something that is not JSON.");
-            }
           }
         });
         return;

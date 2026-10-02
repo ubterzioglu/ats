@@ -1,33 +1,17 @@
 import { describe, expect, it } from "vitest";
 
-import type { TextModel } from "@/lib/ai/providers/types";
 import { askAboutReport, serializeReport } from "@/lib/ai/tasks/ask";
 import { suggestTailoring, validateTailorPayload } from "@/lib/ai/tasks/tailor";
 import { analyzeCv } from "@/lib/scoring";
 
 import { JOB_AD, STRONG_CV, WEAK_CV } from "./fixtures";
+import { fakeProvider } from "./helpers/fake-provider";
 
 /**
- * Both tasks run against stub models here: the report chat must answer from
- * the serialized report alone, and the tailoring task must never let a
+ * Both tasks run against stub providers here: the report chat must answer
+ * from the serialized report alone, and the tailoring task must never let a
  * suggestion carry a fact the CV does not contain.
  */
-
-function stubModel(responses: readonly unknown[]): { model: TextModel; calls: () => number } {
-  let calls = 0;
-  return {
-    model: {
-      id: "stub",
-      label: "stub",
-      async generateJson<T>(): Promise<T> {
-        const response = responses[Math.min(calls, responses.length - 1)];
-        calls += 1;
-        return response as T;
-      }
-    },
-    calls: () => calls
-  };
-}
 
 describe("serializeReport", () => {
   it("carries scores, findings and term lists", () => {
@@ -42,13 +26,13 @@ describe("serializeReport", () => {
 describe("askAboutReport", () => {
   it("returns the answer and retries once on a malformed one", async () => {
     const result = analyzeCv({ cvText: STRONG_CV, jobDescription: JOB_AD });
-    const recovering = stubModel([{}, { answer: "Keywords cost points because coverage is partial." }]);
-    const answer = await askAboutReport(recovering.model, result, "Why did I lose points?");
+    const recovering = fakeProvider([{}, { answer: "Keywords cost points because coverage is partial." }]);
+    const answer = await askAboutReport(recovering.provider, result, "Why did I lose points?");
     expect(answer).toContain("coverage");
     expect(recovering.calls()).toBe(2);
 
-    const hopeless = stubModel([{ nope: true }]);
-    await expect(askAboutReport(hopeless.model, result, "Why?")).rejects.toThrow();
+    const hopeless = fakeProvider([{ nope: true }]);
+    await expect(askAboutReport(hopeless.provider, result, "Why?")).rejects.toThrow();
   });
 });
 
@@ -70,7 +54,7 @@ QA Engineer, Beispiel GmbH
   });
 
   it("keeps a suggestion grounded in the CV", async () => {
-    const stub = stubModel([
+    const stub = fakeProvider([
       {
         suggestions: [
           {
@@ -81,12 +65,12 @@ QA Engineer, Beispiel GmbH
         ]
       }
     ]);
-    const suggestions = await suggestTailoring(stub.model, cv, ["playwright", "jira"], ["kubernetes"]);
+    const suggestions = await suggestTailoring(stub.provider, cv, ["playwright", "jira"], ["kubernetes"]);
     expect(suggestions).toHaveLength(1);
   });
 
   it("drops a suggestion that smuggles in a missing skill", async () => {
-    const stub = stubModel([
+    const stub = fakeProvider([
       {
         suggestions: [
           {
@@ -97,13 +81,13 @@ QA Engineer, Beispiel GmbH
         ]
       }
     ]);
-    const suggestions = await suggestTailoring(stub.model, cv, ["playwright"], ["kubernetes"]);
+    const suggestions = await suggestTailoring(stub.provider, cv, ["playwright"], ["kubernetes"]);
     expect(suggestions).toEqual([]);
   });
 
   it("returns nothing when the CV has no matched terms", async () => {
-    const stub = stubModel([{ suggestions: [] }]);
-    expect(await suggestTailoring(stub.model, cv, [], ["kubernetes"])).toEqual([]);
+    const stub = fakeProvider([{ suggestions: [] }]);
+    expect(await suggestTailoring(stub.provider, cv, [], ["kubernetes"])).toEqual([]);
     expect(stub.calls()).toBe(0);
   });
 });
