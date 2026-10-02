@@ -166,9 +166,10 @@
     "titleAlias": "matched in the CV as \"{alias}\"",
     "titleMissing": "never appears in the CV"
   },
-  "reportChat": {
+  "askDock": {
     "heading": "Ask about this report",
-    "lede": "The local model answers from the report below your score - not from the CV, and not from anything beyond what the checks found.",
+    "show": "Show {count, plural, one {# message} other {# messages}}",
+    "hide": "Hide the conversation",
     "noAnswer": "No answer - see the error below.",
     "roleUser": "You",
     "roleModel": "Model",

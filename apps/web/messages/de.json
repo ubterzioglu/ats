@@ -166,9 +166,10 @@
     "titleAlias": "im Lebenslauf als \"{alias}\" gefunden",
     "titleMissing": "kommt im Lebenslauf nicht vor"
   },
-  "reportChat": {
+  "askDock": {
     "heading": "Zu diesem Bericht nachfragen",
-    "lede": "Das lokale Modell antwortet aus dem Bericht unter Ihrer Punktzahl - nicht aus dem Lebenslauf und nicht über das hinaus, was die Prüfungen gefunden haben.",
+    "show": "{count, plural, one {# Nachricht} other {# Nachrichten}} zeigen",
+    "hide": "Verlauf ausblenden",
     "noAnswer": "Keine Antwort - siehe den Fehler unten.",
     "roleUser": "Sie",
     "roleModel": "Modell",

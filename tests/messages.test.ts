@@ -47,7 +47,7 @@ const SHARED_VERBATIM: ReadonlySet<string> = new Set([
   "fixDrafts.quantifyToken",
   // Turkish for "Model" is "Model", and German for "System" is "System".
   // Real collisions, not missed strings.
-  "reportChat.roleModel",
+  "askDock.roleModel",
   "theme.system"
 ]);
 

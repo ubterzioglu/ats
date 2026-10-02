@@ -25,12 +25,13 @@ import type { AnalysisResult, Finding } from "@/types/analysis";
 import { AiConsent } from "./ai-consent";
 import { AiStatus } from "./ai-status";
 import { MeasureRail } from "./bench/measure-rail";
+import { AskDock } from "./bench/ask-dock";
 import { WorkList } from "./bench/work-list";
 import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
 import { KeywordPanel } from "./keyword-panel";
 import { ParserView } from "./parser-view";
-import { ReportChat } from "./report-chat";
+
 
 type View = "input" | "report";
 
@@ -481,7 +482,6 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 draftFix={draftFix}
                 draftIsLive={modelTier !== "none"}
               />
-              <ReportChat tier={modelTier} result={result} />
             </div>
 
             <div className="space-y-5">
@@ -507,6 +507,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               <DataControls />
             </div>
           </div>
+
+          {/* The dock is fixed to the viewport, so the report reserves room
+              for it rather than letting it cover the last work item. */}
+          <div aria-hidden className="h-20" />
+          <AskDock tier={modelTier} result={result} />
         </div>
       ) : null}
     </div>

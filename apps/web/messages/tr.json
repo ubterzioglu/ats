@@ -166,9 +166,10 @@
     "titleAlias": "CV'de \"{alias}\" olarak eşleşti",
     "titleMissing": "CV'de hiç geçmiyor"
   },
-  "reportChat": {
+  "askDock": {
     "heading": "Bu rapor hakkında sorun",
-    "lede": "Yerel model, puanınızın altındaki rapordan yanıt verir - CV'den değil, kontrollerin bulduğunun ötesinden hiç değil.",
+    "show": "{count, plural, one {# mesajı} other {# mesajı}} göster",
+    "hide": "Konuşmayı gizle",
     "noAnswer": "Yanıt yok - aşağıdaki hataya bakın.",
     "roleUser": "Siz",
     "roleModel": "Model",
