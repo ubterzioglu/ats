@@ -3,13 +3,30 @@ import { barTone } from "@/lib/ui";
 
 interface ScoreRailProps {
   readonly result: AnalysisResult;
+  readonly previous?: AnalysisResult | null;
+}
+
+function Delta({ value }: { readonly value: number }) {
+  if (value === 0) return null;
+  const positive = value > 0;
+  return (
+    <span
+      className={`ml-2 font-mono text-sm tabular-nums ${positive ? "text-good" : "text-mark"}`}
+      title={positive ? "gained since the previous run" : "lost since the previous run"}
+    >
+      {positive ? `+${value}` : `−${Math.abs(value)}`}
+    </span>
+  );
 }
 
 /**
  * The hero. A score is a measurement, so it is drawn against a ruler rather
  * than as a dial, and every dimension carries the sentence that explains it.
+ * On a re-run the rail also shows what each measurement moved by.
  */
-export function ScoreRail({ result }: ScoreRailProps) {
+export function ScoreRail({ result, previous }: ScoreRailProps) {
+  const totalDelta = previous ? result.total - previous.total : 0;
+
   return (
     <section className="sheet overflow-hidden" aria-labelledby="score-heading">
       <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b border-line px-5 py-6 sm:px-7 sm:py-7">
@@ -18,6 +35,7 @@ export function ScoreRail({ result }: ScoreRailProps) {
             {result.total}
           </span>
           <span className="font-mono text-base text-muted">/100</span>
+          {previous ? <Delta value={totalDelta} /> : null}
         </h2>
         <p className="max-w-measure text-sm leading-relaxed text-muted sm:text-right">{result.bandLabel}</p>
       </div>
@@ -29,6 +47,8 @@ export function ScoreRail({ result }: ScoreRailProps) {
       <dl className="divide-y divide-line/70">
         {result.dimensions.map((dimension) => {
           const percentage = Math.round((dimension.score / dimension.max) * 100);
+          const previousDimension = previous?.dimensions.find((entry) => entry.id === dimension.id);
+          const delta = previousDimension ? dimension.score - previousDimension.score : 0;
           return (
             <div
               key={dimension.id}
@@ -55,6 +75,7 @@ export function ScoreRail({ result }: ScoreRailProps) {
 
               <dd className="readout sm:pt-0.5 sm:text-right">
                 <span className="text-ink">{dimension.score}</span>/{dimension.max}
+                {previousDimension ? <Delta value={delta} /> : null}
               </dd>
             </div>
           );

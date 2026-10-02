@@ -29,6 +29,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [jobAd, setJobAd] = useState("");
   const [extraction, setExtraction] = useState<ExtractionResult | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [previous, setPrevious] = useState<AnalysisResult | null>(null);
   const [view, setView] = useState<View>("input");
   const [reading, setReading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
@@ -78,13 +79,15 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       setMarkedLine(null);
 
       try {
-        setResult(analyzeCv({ cvText, jobDescription: jobAd }));
+        const next = analyzeCv({ cvText, jobDescription: jobAd });
+        setPrevious(result);
+        setResult(next);
         setView("report");
       } catch (cause) {
         setError(cause instanceof Error ? cause.message : "The analysis could not be completed.");
       }
     },
-    [cvText, jobAd]
+    [cvText, jobAd, result]
   );
 
   const highlights = useMemo(
@@ -155,6 +158,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setJobAd("");
     setExtraction(null);
     setResult(null);
+    setPrevious(null);
     setShareUrl(null);
     setNotice(null);
     setGate(null);
@@ -292,7 +296,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
       {view === "report" && result ? (
         <div className="space-y-5">
-          <ScoreRail result={result} />
+          <ScoreRail result={result} previous={previous} />
 
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" className="btn-quiet" onClick={downloadReport}>
