@@ -30,6 +30,9 @@ const GENERIC_RX =
 const BUZZWORD_RX =
   /(team player|hard.?working|detail.?oriented|results.?driven|self.?starter|go.?getter|think outside the box|dynamic personality|motivated individual|teamfahig|teamfähig|belastbar|engagiert|zuverlassig|zuverlässig|dinamik|ozverili|özverili|takim oyuncusu|takım oyuncusu|calis?kan|çalışkan)/gi;
 
+const HEDGING_RX =
+  /(familiar with|exposed to|exposure to|some experience with|basic understanding of|working knowledge of|have used|have worked with|helped to|tried to|participated in|took part in|played a role in|had a hand in|got introduced to|contributed somewhat|grundkenntnisse|basiskenntnisse|erste erfahrungen|erste erfahrung|einblicke in|mitgewirkt|unterstutzung bei|unterstützung bei|temel duzeyde|temel düzeyde|temel seviye|asinalik|aşinalık|bilgi sahibi)/i;
+
 const FIRST_PERSON_RX = /\b(i|my|me|ich|mein|meine|meinen|ben|benim)\b/gi;
 
 const QUANTIFIED_RX =
@@ -82,6 +85,19 @@ export function scoreImpact(context: ScoreContext): DimensionOutcome {
         detail: `${Math.round(verbRatio * 100)}% of bullets start with an ownership verb. The rest open with nouns or filler.`,
         fix: "Start each bullet with what you did: built, migrated, automated, reduced.",
         cost: 4
+      });
+    }
+
+    const hedged = bullets.filter((bullet) => HEDGING_RX.test(bullet));
+    if (ratio(hedged.length, bullets.length) >= 0.15) {
+      drafts.push({
+        id: "impact.hedging",
+        severity: "low",
+        title: "Bullets hedge instead of claiming the work",
+        detail: `${hedged.length} of ${bullets.length} bullets qualify your contribution with phrases like "familiar with" or "Grundkenntnisse". A hedged claim reads as no claim at all.`,
+        fix: "Rewrite each one as something you did: the action, the tool and the part you owned.",
+        cost: 2,
+        evidence: hedged.slice(0, 3).map((bullet) => bullet.slice(0, 120))
       });
     }
 
