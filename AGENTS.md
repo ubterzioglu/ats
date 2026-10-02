@@ -23,6 +23,10 @@ npm test            # vitest run
 - **`lib/scoring/` is pure.** No DOM, no network, no React, no I/O. One file per dimension. Everything there is
   unit-testable and must stay that way.
 - **`lib/extract/` is browser-only.** Reads files in the client; the server never receives a CV.
+- **`lib/ai/` is browser-only and advisory.** Models run locally (Web Worker, WebGPU/WASM); nothing in this
+  directory may feed inputs into `lib/scoring/` — scores stay deterministic. Model weights download only after
+  explicit user consent, with size, progress and cancel shown. CV text never leaves the browser; downloading
+  weights is allowed because no CV text is sent.
 - **`lib/supabase/` is server-only.** Every file starts with `import "server-only"`. Service-role client
   bypasses RLS, so validate before writing — see `app/actions.ts` for the boundary check.
 - Persistence is optional everywhere. If `getSupabaseEnv()` returns `null`, callers degrade quietly and never
