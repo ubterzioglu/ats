@@ -13,6 +13,8 @@ import { extractDocument, type ExtractionResult } from "@/lib/extract";
 import { buildMarkdownReport } from "@/lib/report/markdown";
 import { analyzeCv } from "@/lib/scoring";
 import { assessDocumentKind, type DocumentKindAssessment } from "@/lib/scoring/gate";
+import { readPreviousRecord, recordAnalysis } from "@/lib/store/history";
+import type { HistoryRecord } from "@/lib/store/schema";
 import { cx } from "@/lib/ui";
 import type { AnalysisResult, Finding } from "@/types/analysis";
 
@@ -43,6 +45,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [extraction, setExtraction] = useState<ExtractionResult | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [previous, setPrevious] = useState<AnalysisResult | null>(null);
+  const [lastVisit, setLastVisit] = useState<HistoryRecord | null>(null);
   const [view, setView] = useState<View>("input");
   const [reading, setReading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
@@ -56,6 +59,18 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [sharing, startSharing] = useTransition();
+
+  // Read once, before this visit writes anything, so the comparison is against
+  // the last visit rather than against the analysis just run.
+  useEffect(() => {
+    let cancelled = false;
+    void readPreviousRecord().then((outcome) => {
+      if (!cancelled && outcome.ok) setLastVisit(outcome.value);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleFile = useCallback(async (file: File) => {
     setReading(true);
@@ -102,6 +117,10 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         setHints([]);
         setCoverage(null);
         setView("report");
+        // History is a convenience the report does not depend on, so a browser
+        // that refuses local storage simply gets no comparison. DataControls is
+        // where that refusal is stated.
+        void recordAnalysis(next);
       } catch (cause) {
         setError(cause instanceof Error ? cause.message : "The analysis could not be completed.");
       }
@@ -383,7 +402,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
       {view === "report" && result ? (
         <div className="space-y-5">
-          <ScoreRail result={result} previous={previous} />
+          <ScoreRail
+            result={result}
+            previous={previous ?? lastVisit}
+            comparisonLabel={previous ? "the previous run" : "your last visit"}
+          />
 
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" className="btn-quiet" onClick={downloadReport}>

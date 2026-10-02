@@ -1,18 +1,30 @@
-import type { AnalysisResult } from "@/types/analysis";
+import type { AnalysisResult, DimensionId } from "@/types/analysis";
 import { barTone } from "@/lib/ui";
+
+/**
+ * The least a past score has to carry to be compared against. A full
+ * `AnalysisResult` from earlier in the session satisfies it, and so does a
+ * stored history record, which holds the scores and nothing else.
+ */
+export interface ScoreComparison {
+  readonly total: number;
+  readonly dimensions: readonly { readonly id: DimensionId; readonly score: number }[];
+}
 
 interface ScoreRailProps {
   readonly result: AnalysisResult;
-  readonly previous?: AnalysisResult | null;
+  readonly previous?: ScoreComparison | null;
+  /** Says what the delta is measured against. Defaults to the previous run. */
+  readonly comparisonLabel?: string;
 }
 
-function Delta({ value }: { readonly value: number }) {
+function Delta({ value, label }: { readonly value: number; readonly label: string }) {
   if (value === 0) return null;
   const positive = value > 0;
   return (
     <span
       className={`ml-2 font-mono text-sm tabular-nums ${positive ? "text-good" : "text-mark"}`}
-      title={positive ? "gained since the previous run" : "lost since the previous run"}
+      title={`${positive ? "gained" : "lost"} since ${label}`}
     >
       {positive ? `+${value}` : `−${Math.abs(value)}`}
     </span>
@@ -24,7 +36,11 @@ function Delta({ value }: { readonly value: number }) {
  * than as a dial, and every dimension carries the sentence that explains it.
  * On a re-run the rail also shows what each measurement moved by.
  */
-export function ScoreRail({ result, previous }: ScoreRailProps) {
+export function ScoreRail({
+  result,
+  previous,
+  comparisonLabel = "the previous run"
+}: ScoreRailProps) {
   const totalDelta = previous ? result.total - previous.total : 0;
 
   return (
@@ -35,7 +51,7 @@ export function ScoreRail({ result, previous }: ScoreRailProps) {
             {result.total}
           </span>
           <span className="font-mono text-base text-muted">/100</span>
-          {previous ? <Delta value={totalDelta} /> : null}
+          {previous ? <Delta value={totalDelta} label={comparisonLabel} /> : null}
         </h2>
         <p className="max-w-measure text-sm leading-relaxed text-muted sm:text-right">{result.bandLabel}</p>
       </div>
@@ -75,7 +91,7 @@ export function ScoreRail({ result, previous }: ScoreRailProps) {
 
               <dd className="readout sm:pt-0.5 sm:text-right">
                 <span className="text-ink">{dimension.score}</span>/{dimension.max}
-                {previousDimension ? <Delta value={delta} /> : null}
+                {previousDimension ? <Delta value={delta} label={comparisonLabel} /> : null}
               </dd>
             </div>
           );
