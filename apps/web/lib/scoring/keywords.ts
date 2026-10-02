@@ -481,16 +481,17 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
     });
   }
 
-  const aliasOnly: string[] = [];
+  const aliasFor = new Map<string, string>();
   for (const term of matched) {
     const counts = countOccurrencesByVariant(context.lower, term.term);
     const canonical = counts.find((entry) => entry.variant === term.term);
     const viaAlias = counts.find((entry) => entry.variant !== term.term && entry.hits > 0);
     if ((canonical?.hits ?? 0) === 0 && viaAlias) {
-      aliasOnly.push(`${term.term} (found as "${viaAlias.variant}")`);
+      aliasFor.set(term.term, viaAlias.variant);
     }
   }
-  if (aliasOnly.length > 0) {
+  if (aliasFor.size > 0) {
+    const aliasOnly = [...aliasFor.entries()].map(([term, alias]) => `${term} (found as "${alias}")`);
     drafts.push({
       id: "keywords.acronym-pair",
       severity: "low",
@@ -503,6 +504,10 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
       evidence: aliasOnly.slice(0, 5)
     });
   }
+  const matchedWithAlias = matched.map((term) => {
+    const alias = aliasFor.get(term.term);
+    return alias ? { ...term, alias } : term;
+  });
 
   const ranges = sectionRanges(context.sections, context.lines.length);
   const hasSkillsSection = ranges.some((range) => range.id === "skills");
@@ -580,7 +585,7 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
     report: {
       source: "job-description",
       coverage: round(coverage, 3),
-      matched: [...matched].sort((a, b) => b.weight - a.weight),
+      matched: [...matchedWithAlias].sort((a, b) => b.weight - a.weight),
       missing: [...missing].sort((a, b) => b.weight - a.weight),
       overused
     }

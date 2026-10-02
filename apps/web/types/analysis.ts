@@ -37,6 +37,8 @@ export interface KeywordTerm {
   readonly weight: number;
   readonly hits: number;
   readonly tier?: KeywordTier;
+  /** The variant that matched when the canonical spelling itself never appears. */
+  readonly alias?: string;
 }
 
 export interface KeywordReport {
