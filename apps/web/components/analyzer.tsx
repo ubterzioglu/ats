@@ -11,6 +11,7 @@ import { cx } from "@/lib/ui";
 import type { AnalysisResult } from "@/types/analysis";
 
 import { DocumentIntake } from "./document-intake";
+import { FixDrafts } from "./fix-drafts";
 import { FixList } from "./fix-list";
 import { KeywordPanel } from "./keyword-panel";
 import { ParserView } from "./parser-view";
@@ -93,6 +94,23 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const highlights = useMemo(
     () => (result ? result.keywords.matched.map((term) => term.term) : []),
     [result]
+  );
+
+  // Applying a rewrite draft edits the text and immediately re-measures it,
+  // so the score rail can show what that one sentence was worth.
+  const applyAndRescore = useCallback(
+    (newText: string) => {
+      setCvText(newText);
+      setMarkedLine(null);
+      try {
+        const next = analyzeCv({ cvText: newText, jobDescription: jobAd });
+        setPrevious(result);
+        setResult(next);
+      } catch {
+        // The previous result stays on screen; the text edit is still applied.
+      }
+    },
+    [jobAd, result]
   );
 
   // The engine is synchronous and cheap, so the score can follow the text
@@ -325,7 +343,10 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           ) : null}
 
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-            <FixList findings={result.findings} onSelectEvidence={setMarkedLine} />
+            <div className="space-y-5">
+              <FixList findings={result.findings} onSelectEvidence={setMarkedLine} />
+              <FixDrafts text={cvText} onApply={applyAndRescore} />
+            </div>
 
             <div className="space-y-5">
               <KeywordPanel report={result.keywords} />
