@@ -1,9 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Source_Serif_4 } from "next/font/google";
 import type { ReactNode } from "react";
 
 import "./globals.css";
+
+// Headings and running prose. A CV is a document, and the serif says so before
+// any copy does.
+const serif = Source_Serif_4({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "600"],
+  variable: "--font-serif",
+  display: "swap"
+});
 
 const sans = IBM_Plex_Sans({
   subsets: ["latin", "latin-ext"],
@@ -12,6 +21,7 @@ const sans = IBM_Plex_Sans({
   display: "swap"
 });
 
+// Reserved for what the parser produced: extracted text, counts, matched terms.
 const mono = IBM_Plex_Mono({
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500"],
@@ -36,19 +46,16 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#DDE3E8" },
-    { media: "(prefers-color-scheme: dark)", color: "#10161D" }
-  ]
+  themeColor: "#F6F7FA"
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
       <body>
         {children}
-        <Script 
-          id="clarity-script" 
+        <Script
+          id="clarity-script"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
@@ -58,7 +65,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
                   y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
               })(window, document, "clarity", "script", "yr25yt3zqx");
             `
-          }} 
+          }}
         />
       </body>
     </html>

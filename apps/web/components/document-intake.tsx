@@ -33,8 +33,8 @@ export function DocumentIntake({ extraction, busy, onFile }: DocumentIntakeProps
       onDragLeave={() => setDragging(false)}
       onDrop={handleDrop}
       className={cx(
-        "flex flex-col items-center justify-center gap-3 rounded-sheet border border-dashed px-6 py-10 text-center transition-colors",
-        dragging ? "border-ink bg-signal/15" : "border-line bg-bed/30"
+        "flex flex-col items-center justify-center gap-3 rounded-control border border-dashed px-6 py-10 text-center transition-colors",
+        dragging ? "border-accent bg-accent/[0.06]" : "border-line bg-bed/50"
       )}
     >
       <input
@@ -51,8 +51,8 @@ export function DocumentIntake({ extraction, busy, onFile }: DocumentIntakeProps
 
       {extraction ? (
         <>
-          <p className="font-mono text-sm">{extraction.fileName}</p>
-          <p className="text-xs text-muted">
+          <p className="font-mono text-sm text-ink">{extraction.fileName}</p>
+          <p className="readout">
             {extraction.source.toUpperCase()} · {extraction.pages} page
             {extraction.pages === 1 ? "" : "s"} read
           </p>

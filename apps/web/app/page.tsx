@@ -1,87 +1,125 @@
 import Link from "next/link";
-import { ArrowRight, BarChart3, Bot, FileSearch } from "lucide-react";
+
+import { ParseSweep } from "@/components/parse-sweep";
+
+const DIMENSIONS: ReadonlyArray<{
+  readonly name: string;
+  readonly weight: number;
+  readonly what: string;
+}> = [
+  {
+    name: "Parseability",
+    weight: 25,
+    what: "Whether the text layer survives extraction at all: columns, tables, icon fonts, broken encodings."
+  },
+  {
+    name: "Keyword match",
+    weight: 25,
+    what: "Coverage of the terms mined from the job ad, weighted by how central each one is to the posting."
+  },
+  {
+    name: "Impact",
+    weight: 20,
+    what: "Quantified results and ownership verbs, measured against responsibility filler."
+  },
+  {
+    name: "Structure",
+    weight: 20,
+    what: "Headings a parser can map to fields, dated entries in reverse order, bullets instead of paragraphs."
+  },
+  {
+    name: "Contact",
+    weight: 10,
+    what: "The identity fields every system stores: name, email, phone, location, profile link."
+  }
+];
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6 overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] rounded-full bg-blue-500/10 blur-[100px] pointer-events-none -z-10" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40rem] h-[40rem] rounded-full bg-emerald-500/10 blur-[100px] pointer-events-none -z-10" />
+    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <header className="flex items-center justify-between gap-4 py-5">
+        <span className="font-mono text-sm font-medium tracking-tight">ats readability</span>
+        <Link href="/login" className="text-sm text-muted transition-colors hover:text-ink">
+          Sign in
+        </Link>
+      </header>
 
-      <section className="text-center space-y-8 max-w-4xl animate-fade-in-up">
-        {/* Hero Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 text-sm font-medium rounded-full bg-bed border border-line text-muted mb-4">
-          <span className="w-2 h-2 rounded-full bg-signal animate-pulse" />
-          ATS Engine v2.0 is live
-        </div>
+      <main>
+        <section className="grid items-center gap-10 py-10 lg:grid-cols-[1fr_minmax(0,27rem)] lg:gap-14 lg:py-16">
+          <div>
+            <h1 className="max-w-[14ch] text-4xl font-semibold leading-[1.08] sm:text-5xl lg:text-6xl">
+              Your CV is read as text, not as a design.
+            </h1>
 
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-ink leading-[1.1]">
-          Read your CV the way an <br className="hidden md:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">
-            ATS parser does.
-          </span>
-        </h1>
-        
-        <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed">
-          Upload your resume and a target job description. We’ll show you exactly how automated systems extract your skills, where you lose points, and what to fix. No buzzwords, just deterministic data.
-        </p>
+            <p className="mt-6 max-w-measure text-base leading-relaxed text-muted sm:text-lg">
+              An applicant tracking system throws away your layout and keeps whatever text it can pull
+              out. This shows you that text, scores what survived out of 100, and lists what to change —
+              ordered by how many points each fix is worth.
+            </p>
 
-        <div className="flex items-center justify-center gap-4 pt-4">
-          <Link
-            href={"/analyze" as any}
-            className="inline-flex items-center gap-2 bg-ink text-sheet px-6 py-3 rounded-sheet font-medium transition-transform hover:scale-105 active:scale-95 shadow-sheet"
-          >
-            Start free analysis
-            <ArrowRight size={18} />
-          </Link>
-          <Link
-            href={"/login" as any}
-            className="inline-flex items-center gap-2 bg-transparent text-ink border border-line px-6 py-3 rounded-sheet font-medium transition-colors hover:border-ink"
-          >
-            Sign in to save
-          </Link>
-        </div>
-      </section>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link href="/analyze" className="btn">
+                Analyze a CV
+              </Link>
+              <Link href="/login" className="btn-quiet">
+                Sign in to save reports
+              </Link>
+            </div>
 
-      {/* Feature Cards */}
-      <section className="grid md:grid-cols-3 gap-6 max-w-5xl mt-24">
-        <div className="sheet p-8 space-y-4 hover:border-ink/50 transition-colors">
-          <div className="w-12 h-12 rounded-full bg-bed flex items-center justify-center text-ink border border-line">
-            <FileSearch size={24} />
+            <p className="mt-6 max-w-measure text-sm leading-relaxed text-muted">
+              The file is read in your browser and scored there. It is never uploaded.
+            </p>
           </div>
-          <h3 className="text-xl font-semibold text-ink">Deterministic Parsing</h3>
-          <p className="text-muted text-sm leading-relaxed">
-            We don&apos;t use LLMs to guess your score. Our parser extracts text and matches skills against a strict taxonomy, just like legacy enterprise systems.
-          </p>
-        </div>
 
-        <div className="sheet p-8 space-y-4 hover:border-ink/50 transition-colors">
-          <div className="w-12 h-12 rounded-full bg-bed flex items-center justify-center text-ink border border-line">
-            <BarChart3 size={24} />
-          </div>
-          <h3 className="text-xl font-semibold text-ink">Actionable Scoring</h3>
-          <p className="text-muted text-sm leading-relaxed">
-            Every point lost is explained. See exactly which required skills were missed and where your document formatting broke the parser.
-          </p>
-        </div>
+          <ParseSweep />
+        </section>
 
-        <div className="sheet p-8 space-y-4 hover:border-ink/50 transition-colors">
-          <div className="w-12 h-12 rounded-full bg-bed flex items-center justify-center text-ink border border-line">
-            <Bot size={24} />
+        <section className="border-t border-line py-12 lg:py-16" aria-labelledby="method-heading">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-16">
+            <div className="lg:sticky lg:top-10 lg:self-start">
+              <h2 id="method-heading" className="text-2xl font-semibold">
+                How the 100 points are split
+              </h2>
+              <p className="mt-4 max-w-measure text-sm leading-relaxed text-muted">
+                Each dimension starts at its full weight and loses points only to a named finding, so the
+                report can always tell you where a missing point went.
+              </p>
+              <p className="mt-4 max-w-measure text-sm leading-relaxed text-muted">
+                Nothing here is a black box: every deduction names the line it came from and what to write
+                instead.
+              </p>
+            </div>
+
+            <dl className="space-y-7">
+              {DIMENSIONS.map((dimension) => (
+                <div key={dimension.name}>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <dt className="text-sm font-medium">{dimension.name}</dt>
+                    <span className="readout text-ink">{dimension.weight}</span>
+                  </div>
+                  <div
+                    aria-hidden
+                    className="ruler mt-2 h-1.5 overflow-hidden rounded-full border border-line bg-sheet"
+                  >
+                    <div className="h-full bg-accent/70" style={{ width: `${dimension.weight}%` }} />
+                  </div>
+                  <dd className="mt-2.5 max-w-measure text-sm leading-relaxed text-muted">
+                    {dimension.what}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
-          <h3 className="text-xl font-semibold text-ink">Local AI Agent</h3>
-          <p className="text-muted text-sm leading-relaxed">
-            While the score is strict, our embedded AI agent explains the results in plain language and suggests specific ways to rewrite weak bullet points.
-          </p>
-        </div>
-      </section>
-      
-      {/* Footer / Privacy note */}
-      <footer className="mt-24 text-center pb-8">
-        <p className="text-xs text-muted max-w-lg mx-auto">
-          Files are processed temporarily on our secure servers and deleted immediately after analysis. We do not use your CV to train AI models.
+        </section>
+      </main>
+
+      <footer className="border-t border-line py-8">
+        <p className="max-w-measure text-sm leading-relaxed text-muted">
+          The checks are heuristics built from how mainstream parsers behave, not a reproduction of any
+          named vendor. A good score means nothing is standing between your CV and a human reader; it is
+          not a prediction that you will be invited.
         </p>
       </footer>
-    </main>
+    </div>
   );
 }

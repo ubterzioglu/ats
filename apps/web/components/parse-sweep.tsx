@@ -1,0 +1,96 @@
+const DESIGNED_SKILLS: readonly string[] = ["Selenium", "Java", "REST Assured", "CI/CD"];
+
+const EXTRACTED: readonly string[] = [
+  "OZAN SARIBALIOGLU QA Engineer | SDET",
+  "Istanbul  ozan@example.com  +90 545 ...",
+  "",
+  "EXPERIENCE   Senior QA Engineer",
+  "Built an API regression suite in Java and",
+  "REST Assured; cut release testing from",
+  "three days to four hours.",
+  "Led the migration of 240 manual cases to",
+  "automated coverage.",
+  "",
+  "SKILLS  Selenium, Java, REST Assured, CI/CD",
+  "",
+  "EDUCATION  BSc Computer Engineering, 2019"
+];
+
+/**
+ * The product's whole argument in one image: a designed CV is swept by the
+ * parser and replaced, in place, by the flat text it actually yields. The
+ * designed layer is clipped away behind the beam, so the two states are never
+ * side by side — you watch one become the other.
+ */
+export function ParseSweep() {
+  return (
+    <figure className="sheet relative overflow-hidden" aria-labelledby="sweep-caption">
+      <div className="relative h-[18rem] sm:h-[19rem]">
+        {/* What the parser yields. Sits underneath, revealed as the beam passes. */}
+        <div className="absolute inset-0 overflow-hidden bg-bed/60 px-5 py-5 sm:px-6">
+          <pre className="whitespace-pre-wrap font-mono text-[11px] leading-[1.75] text-muted sm:text-xs">
+            {EXTRACTED.join("\n")}
+          </pre>
+        </div>
+
+        {/* The document as its author designed it. */}
+        <div className="scan-intact absolute inset-0 bg-sheet px-5 py-5 sm:px-6">
+          <div className="flex gap-4">
+            <div className="h-11 w-11 shrink-0 rounded-full bg-bed" />
+            <div className="min-w-0 flex-1">
+              <p className="font-serif text-base font-semibold leading-tight">Ozan Sarıbalıoğlu</p>
+              <p className="text-[11px] text-muted">QA Engineer · SDET</p>
+            </div>
+          </div>
+
+          <div className="mt-5 grid grid-cols-[1fr_5.5rem] gap-5">
+            <div className="space-y-3">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">Experience</p>
+              <div className="space-y-1.5">
+                <div className="h-1.5 w-full rounded-full bg-line" />
+                <div className="h-1.5 w-[92%] rounded-full bg-line" />
+                <div className="h-1.5 w-[74%] rounded-full bg-line" />
+              </div>
+              <div className="space-y-1.5 pt-1">
+                <div className="h-1.5 w-[88%] rounded-full bg-line" />
+                <div className="h-1.5 w-full rounded-full bg-line" />
+                <div className="h-1.5 w-[60%] rounded-full bg-line" />
+              </div>
+            </div>
+
+            <div className="space-y-2 border-l border-line pl-4">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">Skills</p>
+              {DESIGNED_SKILLS.map((skill) => (
+                <p key={skill} className="truncate text-[10px] text-muted">
+                  {skill}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-accent">Education</p>
+            <div className="mt-2.5 space-y-1.5">
+              <div className="h-1.5 w-full rounded-full bg-line" />
+              <div className="h-1.5 w-[80%] rounded-full bg-line" />
+              <div className="h-1.5 w-[64%] rounded-full bg-line" />
+            </div>
+          </div>
+        </div>
+
+        {/* The read head. */}
+        <div aria-hidden className="scan-beam absolute inset-x-0 h-px bg-accent">
+          <div className="absolute inset-x-0 -top-10 h-10 bg-gradient-to-b from-transparent to-accent/12" />
+        </div>
+      </div>
+
+      <figcaption
+        id="sweep-caption"
+        className="flex items-center justify-between gap-4 border-t border-line px-5 py-3 text-xs text-muted sm:px-6"
+      >
+        <span>Two columns and a sidebar, read top to bottom</span>
+        <span className="readout">pdf · 1 page</span>
+      </figcaption>
+    </figure>
+  );
+}

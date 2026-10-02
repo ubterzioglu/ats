@@ -2,54 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+/* The product is a machine reading a page. Light only: a dark canvas would undo
+   the one metaphor everything here rests on. */
 :root {
-  --bed: 221 227 232;
+  --bed: 246 247 250;
   --sheet: 255 255 255;
-  --ink: 27 36 48;
-  --muted: 90 102 117;
-  --line: 195 204 212;
-  --mark: 200 30 75;
-  --signal: 242 194 48;
-  --caution: 168 106 16;
-  --good: 46 125 91;
-  --shadow: 27 36 48;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bed: 16 22 29;
-    --sheet: 25 33 43;
-    --ink: 231 237 242;
-    --muted: 147 161 176;
-    --line: 44 55 67;
-    --mark: 255 107 142;
-    --signal: 242 194 48;
-    --caution: 226 170 78;
-    --good: 79 185 138;
-    --shadow: 0 0 0;
-  }
+  --ink: 24 30 42;
+  --muted: 102 112 130;
+  --line: 226 230 237;
+  --accent: 42 74 196;
+  --mark: 198 40 56;
+  --signal: 250 214 80;
+  --caution: 170 100 14;
+  --good: 20 125 95;
+  --shadow: 24 30 42;
 }
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    color-scheme: light;
   }
 
   body {
     background-color: rgb(var(--bed));
     color: rgb(var(--ink));
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-feature-settings: "cv05" 1;
     min-height: 100dvh;
   }
 
+  /* Running prose is set in the serif; the interface chrome stays in the sans.
+     Mono is reserved for what the parser produced. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif), Georgia, serif;
+    letter-spacing: -0.012em;
+  }
+
   ::selection {
-    background-color: rgb(var(--signal) / 0.5);
+    background-color: rgb(var(--signal) / 0.55);
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--ink));
+    outline: 2px solid rgb(var(--accent));
     outline-offset: 2px;
+    border-radius: 2px;
   }
 
   textarea,
@@ -61,25 +59,26 @@
 }
 
 @layer components {
-  /* The document surface everything in the app sits on. */
+  /* The document surface everything in the app sits on. The only shadow in the
+     system: nothing nested inside a sheet casts one. */
   .sheet {
     @apply rounded-sheet border border-line bg-sheet shadow-sheet;
   }
 
   .field {
-    @apply w-full resize-y rounded-sheet border border-line bg-bed/40 px-3 py-2.5 text-sm leading-relaxed
-      placeholder:text-muted/70 focus:border-ink focus:outline-none;
+    @apply w-full resize-y rounded-control border border-line bg-bed/50 px-3.5 py-2.5 text-sm leading-relaxed
+      transition-colors placeholder:text-muted/70 focus:border-accent focus:bg-sheet focus:outline-none;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-sheet border border-ink bg-ink px-4 py-2
-      text-sm font-medium text-sheet transition-opacity hover:opacity-85 disabled:cursor-not-allowed
-      disabled:opacity-40;
+    @apply inline-flex items-center justify-center gap-2 rounded-control bg-accent px-4 py-2.5 text-sm
+      font-medium text-sheet transition-colors hover:bg-ink disabled:cursor-not-allowed
+      disabled:bg-muted/50;
   }
 
   .btn-quiet {
-    @apply inline-flex items-center justify-center gap-2 rounded-sheet border border-line bg-transparent px-3 py-2
-      text-sm text-muted transition-colors hover:border-ink hover:text-ink disabled:cursor-not-allowed
+    @apply inline-flex items-center justify-center gap-2 rounded-control border border-line bg-sheet px-3.5 py-2.5
+      text-sm text-ink transition-colors hover:border-ink/35 hover:bg-bed disabled:cursor-not-allowed
       disabled:opacity-40;
   }
 
@@ -87,13 +86,19 @@
     @apply text-sm font-medium text-ink;
   }
 
-  /* Ruler ticks behind every measured bar, so a score reads as a measurement. */
+  /* A score is a measurement, so every bar is drawn against tick marks. */
   .ruler {
     background-image: repeating-linear-gradient(
       to right,
       rgb(var(--line)) 0 1px,
       transparent 1px 10%
     );
+  }
+
+  /* Small type that belongs to the machine rather than the interface: counts,
+     file names, extracted terms. */
+  .readout {
+    @apply font-mono text-xs tabular-nums text-muted;
   }
 
   /* The parser sweep. One orchestrated moment: the beam travels down the page,
@@ -105,10 +110,6 @@
 
   .scan-intact {
     animation: scan-intact 7s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .scan-status {
-    animation: scan-status 2.6s ease-in-out infinite;
   }
 }
 
@@ -140,16 +141,6 @@
   }
 }
 
-@keyframes scan-status {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.25;
-  }
-}
-
 /* Without motion the sweep would land on its last frame and the designed layout
    would never be visible, losing the comparison the image exists to make. Hold
    it mid-pass instead: half read, half intact. */
@@ -162,9 +153,7 @@
   .scan-intact {
     clip-path: inset(52% 0 0 0);
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {

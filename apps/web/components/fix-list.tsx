@@ -9,7 +9,7 @@ export function FixList({ findings }: FixListProps) {
   if (findings.length === 0) {
     return (
       <section className="sheet p-5 sm:p-6">
-        <h2 className="text-sm font-semibold">Nothing to fix</h2>
+        <h2 className="text-base font-semibold">Nothing to fix</h2>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
           Every check passed. Run the CV against the next job ad to see how the keyword match holds up.
         </p>
@@ -17,23 +17,30 @@ export function FixList({ findings }: FixListProps) {
     );
   }
 
+  const recoverable = findings.reduce((sum, finding) => sum + finding.cost, 0);
+
   return (
     <section className="sheet overflow-hidden" aria-labelledby="fixes-heading">
-      <div className="flex items-baseline justify-between gap-4 border-b border-line px-5 py-4 sm:px-6">
-        <h2 id="fixes-heading" className="text-sm font-semibold">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
+        <h2 id="fixes-heading" className="text-base font-semibold">
           What to fix, most expensive first
         </h2>
-        <span className="font-mono text-xs text-muted">{findings.length}</span>
+        <span className="readout">
+          {findings.length} {findings.length === 1 ? "finding" : "findings"} · {recoverable} pts
+        </span>
       </div>
 
-      <ol>
+      <ol className="divide-y divide-line/70">
         {findings.map((finding) => (
-          <li key={finding.id} className="flex gap-4 border-b border-line/60 px-5 py-5 last:border-b-0 sm:px-6">
-            <span aria-hidden className={`mt-1 w-1 shrink-0 rounded-full ${SEVERITY_EDGE[finding.severity]}`} />
+          <li key={finding.id} className="flex gap-4 px-5 py-5 sm:px-6">
+            <span
+              aria-hidden
+              className={`my-1 w-[3px] shrink-0 self-stretch rounded-full ${SEVERITY_EDGE[finding.severity]}`}
+            />
 
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 className="text-sm font-medium">{finding.title}</h3>
+                <h3 className="font-sans text-sm font-semibold">{finding.title}</h3>
                 <span className={`font-mono text-xs tabular-nums ${SEVERITY_TEXT[finding.severity]}`}>
                   −{finding.cost} pts
                 </span>
@@ -41,21 +48,22 @@ export function FixList({ findings }: FixListProps) {
               </div>
 
               <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{finding.detail}</p>
-              <p className="mt-2 max-w-measure text-sm leading-relaxed">
-                <span className="font-medium">Fix: </span>
+
+              <p className="mt-3 max-w-measure border-l-2 border-accent/30 pl-3 text-sm leading-relaxed">
                 {finding.fix}
               </p>
 
               {finding.evidence && finding.evidence.length > 0 ? (
-                <details className="mt-3">
-                  <summary className="cursor-pointer text-xs text-muted hover:text-ink">
-                    Show what was found
+                <details className="group mt-3">
+                  <summary className="cursor-pointer list-none text-xs text-muted transition-colors hover:text-ink">
+                    <span className="group-open:hidden">Show what was found</span>
+                    <span className="hidden group-open:inline">Hide what was found</span>
                   </summary>
                   <ul className="mt-2 space-y-1">
                     {finding.evidence.map((line) => (
                       <li
                         key={line}
-                        className="overflow-x-auto whitespace-pre rounded-sheet bg-bed/60 px-3 py-2 font-mono text-xs text-muted"
+                        className="overflow-x-auto whitespace-pre rounded-chip bg-bed px-3 py-2 font-mono text-xs text-muted"
                       >
                         {line}
                       </li>
