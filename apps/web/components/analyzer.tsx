@@ -14,6 +14,7 @@ import { cx } from "@/lib/ui";
 import type { AnalysisResult } from "@/types/analysis";
 
 import { AiConsent } from "./ai-consent";
+import { AiStatus } from "./ai-status";
 import { CoverageMap } from "./coverage-map";
 import { DocumentIntake } from "./document-intake";
 import { FixDrafts } from "./fix-drafts";
@@ -400,6 +401,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             <div className="space-y-5">
               <KeywordPanel report={result.keywords} hints={hints} />
               <AiConsent onReady={setEmbedder} />
+              <AiStatus />
               {coverage && coverage.adChunks > 0 ? <CoverageMap report={coverage} /> : null}
               <ParserView
                 text={cvText}
