@@ -1,5 +1,6 @@
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
+import { STANDARD_PRESENT, collectDateFormats } from "./experience";
 import { SECTION_DEFINITIONS, sectionLabel } from "./sections";
 
 export const STRUCTURE_MAX = 20;
@@ -83,6 +84,34 @@ export function scoreStructure(context: ScoreContext): DimensionOutcome {
       detail: "Years appear in the text but not as start-to-end ranges a parser can pair up.",
       fix: "Write both ends of every period, using \"present\" for the current role.",
       cost: 3
+    });
+  }
+
+  const dateFormats = collectDateFormats(context.lines);
+
+  if (dateFormats.formats.size > 1) {
+    drafts.push({
+      id: "structure.mixed-date-formats",
+      severity: "medium",
+      title: "Dates are written in more than one format",
+      detail: `The document mixes these endpoint shapes: ${[...dateFormats.formats].join(", ")}. A parser tuned to one format reads the others as noise or drops them.`,
+      fix: "Pick one format, MM/YYYY - MM/YYYY, and use it on every entry.",
+      cost: 2
+    });
+  }
+
+  const nonstandardPresent = dateFormats.presentForms.filter(
+    (form) => !STANDARD_PRESENT.has(form.toLowerCase())
+  );
+  if (nonstandardPresent.length > 0) {
+    drafts.push({
+      id: "structure.nonstandard-present",
+      severity: "low",
+      title: "The current role does not end in a word parsers know",
+      detail: `Open-ended roles are marked with ${nonstandardPresent.join(", ")}. Stricter parsers only expect "present" (or its language equivalent) and may drop the endpoint.`,
+      fix: 'Write "present", "heute" or "halen" for the current role.',
+      cost: 1,
+      evidence: [...new Set(nonstandardPresent)].slice(0, 3)
     });
   }
 

@@ -44,6 +44,55 @@ const MONTH_NAMES: Readonly<Record<string, number>> = {
 const SEPARATOR = /\s*(?:-|–|—|to|bis|until|als|ile)\s*/i;
 const YEAR = /^(19|20)\d{2}$/;
 
+const RANGE_RX =
+  /((?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|[\p{L}]+\.?\s+(?:19|20)\d{2}|(?:19|20)\d{2})\s*(?:-|–|—|to|bis|until|als|ile)\s*([\p{L}]+\.?\s+(?:19|20)\d{2}|(?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|(?:19|20)\d{2}|[\p{L}]+)/iu;
+
+/**
+ * The "present" spellings a parser is built to expect. Others parse here but
+ * are unusual enough that stricter systems drop the endpoint.
+ */
+export const STANDARD_PRESENT: ReadonlySet<string> = new Set(["present", "heute", "halen"]);
+
+export type DateFormatKind = "iso-year-month" | "month-year-word" | "year-only" | "present" | "unknown";
+
+/** Classifies one date endpoint by the shape it is written in. */
+export function classifyDateShape(raw: string): DateFormatKind {
+  const token = raw.trim().replace(/[.,;)]+$/, "");
+  if (token.length === 0) return "unknown";
+  if (PRESENT.test(token)) return "present";
+  if (/^(?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}$/.test(token)) return "iso-year-month";
+  if (/^(?:19|20)\d{2}\s*[-./]\s*(?:0?[1-9]|1[0-2])$/.test(token)) return "iso-year-month";
+  const named = token.match(/^([\p{L}]+)\.?\s+((?:19|20)\d{2})$/u);
+  if (named && MONTH_NAMES[(named[1] ?? "").toLowerCase()] !== undefined) return "month-year-word";
+  if (YEAR.test(token)) return "year-only";
+  return "unknown";
+}
+
+export interface DateFormatReport {
+  /** Shapes found across every endpoint, without "present" and "unknown". */
+  readonly formats: ReadonlySet<DateFormatKind>;
+  /** Raw spellings used for an open-ended role, e.g. "Current". */
+  readonly presentForms: readonly string[];
+}
+
+/** Reads every date range in the document and groups the endpoint shapes. */
+export function collectDateFormats(lines: readonly string[]): DateFormatReport {
+  const formats = new Set<DateFormatKind>();
+  const presentForms: string[] = [];
+
+  for (const line of lines) {
+    const match = line.match(RANGE_RX);
+    if (!match) continue;
+    for (const endpoint of [match[1] ?? "", match[2] ?? ""]) {
+      const shape = classifyDateShape(endpoint);
+      if (shape === "present") presentForms.push(endpoint.trim());
+      else if (shape !== "unknown") formats.add(shape);
+    }
+  }
+
+  return { formats, presentForms };
+}
+
 function monthsSinceZero(year: number, month: number): number {
   return year * 12 + (month - 1);
 }
@@ -92,9 +141,7 @@ export function extractPeriods(lines: readonly string[], now = new Date()): {
   const reversed: string[] = [];
 
   for (const line of lines) {
-    const match = line.match(
-      /((?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|[\p{L}]+\.?\s+(?:19|20)\d{2}|(?:19|20)\d{2})\s*(?:-|–|—|to|bis|until|als|ile)\s*([\p{L}]+\.?\s+(?:19|20)\d{2}|(?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|(?:19|20)\d{2}|[\p{L}]+)/iu
-    );
+    const match = line.match(RANGE_RX);
     if (!match) continue;
 
     const left = parseEndpoint(match[1] ?? "", now);
