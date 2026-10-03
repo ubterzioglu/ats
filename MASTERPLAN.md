@@ -53,7 +53,7 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 2 October 2026
 
-**49 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
+**50 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
 
 | Phase | Batches | State |
 |---|---|---|
@@ -62,9 +62,9 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 | 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1` landed, which unblocks `B.2` and `F.1`; `F.1` still gates most of module D |
 | 3 — Builder | E.1-E.10 | Done in full (`E.1a` alongside `E.1`) |
 | 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1` and `L.4` done; `L.2`, `L.3` and all of D open |
-| 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Started: `H.1`, `H.2` and `I.1` done; G, `H.3`-`H.4`, `I.2` and `F.6` open |
+| 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Started: `H.1`, `H.2`, `I.1` and `I.2` done; G, `H.3`-`H.4` and `F.6` open |
 
-The gate is clean: lint, typecheck, 516 tests across 53 files, and a production build.
+The gate is clean: lint, typecheck, 674 tests across 64 files, and a production build.
 
 See `apps/web/docs/handover-2026-10-02.md` for what is open, what is blocked on what, and the
 decisions already taken that constrain the batches still to come.
@@ -665,7 +665,7 @@ The reason candidates come back; the module that closes the loop. Local-only in 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
 | ~~**I.1**~~ ✅ | **Parse the LinkedIn "Save as PDF" export.** No scraping, so no terms-of-service risk. | M | A.2 | The export is parsed correctly |
-| **I.2** | **Inconsistency report.** Date mismatches, differing titles, skills in the CV but not the profile, headline against target role. | M | I.1 | Each inconsistency cites both sources |
+| ~~**I.2**~~ ✅ | **Inconsistency report.** Date mismatches, differing titles, skills in the CV but not the profile, headline against target role. | M | I.1 | Each inconsistency cites both sources |
 
 ---
 
