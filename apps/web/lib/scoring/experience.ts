@@ -61,6 +61,9 @@ const YEAR = /^(19|20)\d{2}$/;
 const RANGE_RX =
   /((?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|[\p{L}]+\.?\s+(?:19|20)\d{2}|(?:19|20)\d{2})\s*(?:-|–|—|to|bis|until|als|ile)\s*([\p{L}]+\.?\s+(?:19|20)\d{2}|(?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|(?:19|20)\d{2}|[\p{L}]+(?:\s+[\p{L}]+){0,2})/iu;
 
+/** The same pattern, scannable from an offset. See `findRange`. */
+const RANGE_RX_SCAN = new RegExp(RANGE_RX.source, "giu");
+
 /**
  * The "present" spellings a parser is built to expect. Others parse here but
  * are unusual enough that stricter systems drop the endpoint.
@@ -103,9 +106,18 @@ export function collectDateFormats(lines: readonly string[]): DateFormatReport {
   const presentForms: string[] = [];
 
   for (const line of lines) {
-    const match = line.match(RANGE_RX);
-    if (!match) continue;
-    for (const endpoint of [match[1] ?? "", match[2] ?? ""]) {
+    // The readable range where there is one, so a column-aligned entry reports
+    // its year-only shape rather than an unreadable word. Where no range reads
+    // at all, the raw first match still holds shapes worth naming.
+    const found = findRange(line, new Date());
+    const raw = found ? null : line.match(RANGE_RX);
+    if (!found && !raw) continue;
+
+    const endpoints = found
+      ? [found.leftRaw, found.rightRaw]
+      : [raw?.[1] ?? "", raw?.[2] ?? ""];
+
+    for (const endpoint of endpoints) {
       const shape = classifyDateShape(endpoint);
       if (shape === "present") presentForms.push(endpoint.trim());
       else if (shape !== "unknown") formats.add(shape);
@@ -154,6 +166,48 @@ function parseEndpoint(raw: string, now: Date): { readonly value: number; readon
   return null;
 }
 
+interface Endpoint {
+  readonly value: number;
+  readonly open: boolean;
+}
+
+interface RangeMatch {
+  readonly leftRaw: string;
+  readonly rightRaw: string;
+  readonly left: Endpoint;
+  readonly right: Endpoint;
+}
+
+/**
+ * Finds the first range on the line whose *both* endpoints actually read.
+ *
+ * The left alternative `[\p{L}]+\.?\s+(19|20)\d{2}` exists for "Jan 2021", but
+ * in a column-aligned entry ("Engineer    Acme    2021 - 2023") it swallows the
+ * employer and the year together, `parseEndpoint` then rejects "Acme" as a
+ * month, and the bare-year alternative never gets a turn. So a failed endpoint
+ * does not end the line: the scan restarts one character further along, which
+ * walks the start position past the word and onto the year itself.
+ */
+function findRange(line: string, now: Date): RangeMatch | null {
+  let from = 0;
+
+  while (from <= line.length) {
+    RANGE_RX_SCAN.lastIndex = from;
+    const match = RANGE_RX_SCAN.exec(line);
+    if (!match) return null;
+
+    const leftRaw = match[1] ?? "";
+    const rightRaw = match[2] ?? "";
+    const left = parseEndpoint(leftRaw, now);
+    const right = parseEndpoint(rightRaw, now);
+    if (left && right) return { leftRaw, rightRaw, left, right };
+
+    from = match.index + 1;
+  }
+
+  return null;
+}
+
 /** Pulls every date range out of the document, one line at a time. */
 export function extractPeriods(lines: readonly string[], now = new Date()): {
   readonly periods: readonly Period[];
@@ -163,12 +217,10 @@ export function extractPeriods(lines: readonly string[], now = new Date()): {
   const reversed: string[] = [];
 
   for (const line of lines) {
-    const match = line.match(RANGE_RX);
-    if (!match) continue;
+    const found = findRange(line, now);
+    if (!found) continue;
 
-    const left = parseEndpoint(match[1] ?? "", now);
-    const right = parseEndpoint(match[2] ?? "", now);
-    if (!left || !right) continue;
+    const { left, right } = found;
 
     if (right.value < left.value) {
       reversed.push(line.trim());

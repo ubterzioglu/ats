@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { buildExperience, extractPeriods, formatDuration, mergePeriods } from "@/lib/scoring/experience";
+import {
+  buildExperience,
+  collectDateFormats,
+  extractPeriods,
+  formatDuration,
+  mergePeriods
+} from "@/lib/scoring/experience";
 
 /** Fixed so "present" does not drift with the wall clock. */
 const NOW = new Date(2026, 8, 28);
@@ -39,6 +45,51 @@ describe("extractPeriods", () => {
     const { periods, reversed } = extractPeriods(["Built the deployment pipeline", "Berlin, Germany"], NOW);
     expect(periods).toHaveLength(0);
     expect(reversed).toHaveLength(0);
+  });
+
+  // Column-aligned entries are one of the commonest CV layouts: the role, the
+  // employer and the dates sit in three columns that extract to one line
+  // separated by runs of spaces. A word ending immediately before the year used
+  // to swallow it as a month name and the whole line was then skipped.
+  describe("column-aligned entries", () => {
+    it("reads a bare-year range preceded by the employer", () => {
+      const { periods } = extractPeriods(["Senior QA Engineer    Acme    2021 - 2023"], NOW);
+      expect(periods).toHaveLength(1);
+      expect(periods[0]?.start).toBe(2021 * 12);
+      expect(periods[0]?.end).toBe(2023 * 12);
+    });
+
+    it("reads a bare-year range preceded by the role alone", () => {
+      const { periods } = extractPeriods(["Senior QA Engineer 2021 - 2023"], NOW);
+      expect(periods).toHaveLength(1);
+      expect(periods[0]?.start).toBe(2021 * 12);
+    });
+
+    it("reads an open range preceded by the employer", () => {
+      const { periods } = extractPeriods(["Senior QA Engineer    Acme GmbH    2021 - present"], NOW);
+      expect(periods).toHaveLength(1);
+      expect(periods[0]?.open).toBe(true);
+    });
+
+    it("still reads a real month name that follows a word", () => {
+      const { periods } = extractPeriods(["Engineer    Acme    March 2018 - June 2019"], NOW);
+      expect(periods).toHaveLength(1);
+      expect(periods[0]?.start).toBe(2018 * 12 + 2);
+      expect(periods[0]?.end).toBe(2019 * 12 + 5);
+    });
+
+    it("still reports a reversed column-aligned range as reversed", () => {
+      const { periods, reversed } = extractPeriods(["Engineer    Acme    2023 - 2021"], NOW);
+      expect(periods).toHaveLength(0);
+      expect(reversed).toHaveLength(1);
+    });
+  });
+});
+
+describe("collectDateFormats", () => {
+  it("sees the year-only shape in a column-aligned entry", () => {
+    const { formats } = collectDateFormats(["Senior QA Engineer    Acme    2021 - 2023"]);
+    expect(formats.has("year-only")).toBe(true);
   });
 });
 
