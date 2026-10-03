@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { RESUME_SPEC } from "@/lib/editor/spec";
 import { readDraft, writeDraft } from "@/lib/editor/storage";
+import { importResumeFromDocument } from "@/lib/resume/import-document";
 import { exportJsonResumeText, importJsonResumeText } from "@/lib/resume/json-resume";
 import type { Resume } from "@/types/resume";
 
@@ -12,6 +13,12 @@ import { ExportPanel } from "./export-panel";
 import { SpecNodes } from "./spec-nodes";
 
 type SaveState = "idle" | "saving" | "saved" | "refused";
+
+interface ImportReport {
+  readonly name: string;
+  readonly review: number;
+  readonly missing: number;
+}
 
 const SAVE_DEBOUNCE_MS = 600;
 
@@ -21,7 +28,8 @@ const SAVE_DEBOUNCE_MS = 600;
  * to the spec fails the coverage test rather than quietly having no input.
  *
  * The draft is kept on this device and nowhere else. It is the candidate's CV,
- * which is the one thing this product never sends anywhere.
+ * which is the one thing this product never sends anywhere - the document
+ * import parses PDFs and DOCX in the browser for the same reason.
  */
 export function ResumeEditor() {
   const t = useTranslations("editor");
@@ -29,7 +37,11 @@ export function ResumeEditor() {
   const [save, setSave] = useState<SaveState>("idle");
   const [error, setError] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
+  const [reviewPaths, setReviewPaths] = useState<ReadonlySet<string>>(new Set());
+  const [importReport, setImportReport] = useState<ImportReport | null>(null);
+  const [importing, setImporting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const documentRef = useRef<HTMLInputElement>(null);
   const timer = useRef<number | null>(null);
 
   useEffect(() => {
@@ -65,6 +77,25 @@ export function ResumeEditor() {
     change(outcome.resume);
   }
 
+  async function openDocument(file: File) {
+    setError(null);
+    setImporting(true);
+    try {
+      const outcome = await importResumeFromDocument(file);
+      change(outcome.resume);
+      setReviewPaths(new Set(outcome.reviewPaths));
+      setImportReport({
+        name: outcome.sourceName === "" ? file.name : outcome.sourceName,
+        review: outcome.reviewPaths.length,
+        missing: outcome.issues.filter((issue) => issue.status === "missing").length
+      });
+    } catch {
+      setError(t("importFailedDocument"));
+    } finally {
+      setImporting(false);
+    }
+  }
+
   function download() {
     if (!resume) return;
     const blob = new Blob([exportJsonResumeText(resume)], { type: "application/json" });
@@ -98,6 +129,26 @@ export function ResumeEditor() {
           }}
         />
 
+        <button
+          type="button"
+          className="btn-quiet"
+          disabled={importing}
+          onClick={() => documentRef.current?.click()}
+        >
+          {importing ? t("importing") : t("importDocument")}
+        </button>
+        <input
+          ref={documentRef}
+          type="file"
+          accept="application/pdf,.pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.docx"
+          className="sr-only"
+          onChange={(event) => {
+            const file = event.target.files?.item(0);
+            if (file) void openDocument(file);
+            event.target.value = "";
+          }}
+        />
+
         <button type="button" className="btn-quiet" onClick={download}>
           {t("exportJson")}
         </button>
@@ -124,6 +175,29 @@ export function ResumeEditor() {
         >
           {error}
         </p>
+      ) : null}
+
+      {importReport !== null ? (
+        <div className="rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm">
+          <p className="text-caution">{t("reviewTitle")}</p>
+          <p className="mt-1">
+            {t("importSummary", {
+              name: importReport.name,
+              review: importReport.review,
+              missing: importReport.missing
+            })}
+          </p>
+          <button
+            type="button"
+            className="btn-quiet mt-3"
+            onClick={() => {
+              setReviewPaths(new Set());
+              setImportReport(null);
+            }}
+          >
+            {t("dismissMarkers")}
+          </button>
+        </div>
       ) : null}
 
       {confirming ? (
@@ -156,6 +230,7 @@ export function ResumeEditor() {
               path={[]}
               labelScope="fields"
               onChange={change}
+              reviewPaths={reviewPaths}
             />
           </section>
         ))}

@@ -21,6 +21,7 @@ interface NodesProps {
   /** Catalog prefix for labels, e.g. "fields.work". */
   readonly labelScope: string;
   readonly onChange: (next: Resume) => void;
+  readonly reviewPaths?: ReadonlySet<string>;
 }
 
 /**
@@ -28,7 +29,7 @@ interface NodesProps {
  * a `location` object and a `profiles` list, and a section is an array of items
  * that are themselves lists of nodes.
  */
-export function SpecNodes({ resume, nodes, path, labelScope, onChange }: NodesProps) {
+export function SpecNodes({ resume, nodes, path, labelScope, onChange, reviewPaths }: NodesProps) {
   const t = useTranslations("editor");
 
   return (
@@ -49,6 +50,7 @@ export function SpecNodes({ resume, nodes, path, labelScope, onChange }: NodesPr
               input={node.input}
               label={label}
               onChange={onChange}
+              reviewPaths={reviewPaths}
             />
           );
         }
@@ -61,6 +63,7 @@ export function SpecNodes({ resume, nodes, path, labelScope, onChange }: NodesPr
               path={childPath}
               label={label}
               onChange={onChange}
+              reviewPaths={reviewPaths}
             />
           );
         }
@@ -75,6 +78,7 @@ export function SpecNodes({ resume, nodes, path, labelScope, onChange }: NodesPr
                 path={childPath}
                 labelScope={`${labelScope}.${node.key}`}
                 onChange={onChange}
+                reviewPaths={reviewPaths}
               />
             </fieldset>
           );
@@ -124,6 +128,7 @@ export function SpecNodes({ resume, nodes, path, labelScope, onChange }: NodesPr
                     path={[...childPath, index]}
                     labelScope={`${labelScope}.${node.key}`}
                     onChange={onChange}
+                    reviewPaths={reviewPaths}
                   />
                 </li>
               ))}

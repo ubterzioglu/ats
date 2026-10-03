@@ -53,14 +53,14 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 2 October 2026
 
-**47 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
+**48 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
 
 | Phase | Batches | State |
 |---|---|---|
 | 0 — Groundwork | P0.1-P0.7, ST.1-ST.3 | Done, except the `P0.3` tree deletion |
 | 1 — Deepen the engine | V.1-V.10, C.2-C.3, A.1-A.4, J.1-J.7 | Done |
 | 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1` landed, which unblocks `B.2` and `F.1`; `F.1` still gates most of module D |
-| 3 — Builder | E.1-E.10 | `E.1`-`E.8` and `E.10` done (`E.1a` alongside `E.1`); `E.9` open |
+| 3 — Builder | E.1-E.10 | Done in full (`E.1a` alongside `E.1`) |
 | 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1` and `L.4` done; `L.2`, `L.3` and all of D open |
 | 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Started: `H.1` and `H.2` done; G, I, `H.3`-`H.4` and `F.6` open |
 
@@ -486,7 +486,7 @@ Opens the funnel and lays the ground the rest needs. No new product surface. Not
 |---|---|---|---|---|
 | ~~**P0.1**~~ ✅ | **Remove the login gate.** Drop the `/analyze` protection block in [`middleware.ts`](apps/web/middleware.ts), keeping `updateSession`. Sign-in becomes required only for saving and sharing. Align the landing copy. | S | — | `/analyze` reachable signed out and a full analysis runs; sharing still asks for sign-in |
 | ~~**P0.2**~~ ✅ | **Delete the dead analyze proxy.** Remove `app/api/analyze/route.ts`. Nothing references it, but it is a live endpoint that forwards a request body to a server backend, contradicting principle 2. | S | — | Route gone; no reference to `API_URL` remains in `apps/web` |
-| **P0.3** ◐ | **Retire the rejected server tree.** *(compose reduced; the tree deletion is still outstanding)*  Delete `apps/api/`, `services/`, `packages/`, and the empty `infra/` and `data/`. Reduce `docker-compose.yml` to the `web` service, dropping `api`, `db`, `redis`, their volumes, and the `depends_on`/`API_URL` wiring on `web`. The deployment does currently build `api`, but the site has no users yet, so no staged rollout is needed. | M | P0.2 | `docker compose up` builds and serves the web app alone; the repository holds one architecture |
+| ~~**P0.3**~~ ✅ | **Retire the rejected server tree.** Delete `apps/api/`, `services/`, `packages/`, and the empty `infra/` and `data/`. Reduce `docker-compose.yml` to the `web` service, dropping `api`, `db`, `redis`, their volumes, and the `depends_on`/`API_URL` wiring on `web`. The deployment does currently build `api`, but the site has no users yet, so no staged rollout is needed. | M | P0.2 | `docker compose up` builds and serves the web app alone; the repository holds one architecture |
 | ~~**P0.4**~~ ✅ | **Before/after score across visits.** Complete the partly-built comparison: `score-rail.tsx` already renders a `previous` result; wire it to stored history. | S | ST.2 | A second visit shows the previous score |
 | ~~**P0.5**~~ ✅ | **i18n infrastructure.** Add `next-intl`. English as default locale, locale routing, a language switcher. No translation in this batch — it only moves existing strings into message catalogs. | M | — | Every user-facing string in `app/` and `components/` resolves through the catalog; English output byte-identical to today |
 | ~~**P0.6**~~ ✅ | **Turkish translation.** | M | P0.5 | Full UI in Turkish; no untranslated keys |
@@ -611,7 +611,7 @@ produces can be read by a parser.
 | ~~**E.6**~~ ✅ | **Template: modern.** | M | E.4 | Renders the fixture resume |
 | ~~**E.7**~~ ✅ | **Closed-loop validation.** Every export runs through our own parser and the result is shown to the user. A CI regression test asserts all templates score Parseability 25/25, including Turkish and German fixtures. Owns review focus 1 for export. | L | E.4–E.6 | CI fails if any template drops below full marks |
 | ~~**E.8**~~ OK | **DOCX export.** | L | E.2 | Opens correctly in Word and LibreOffice |
-| **E.9** | **Import an existing CV.** Parse PDF/DOCX into the editor; mark fields that could not be extracted for manual completion. | L | E.3, A.2 | Unextractable fields are flagged, never invented |
+| ~~**E.9**~~ ✅ | **Import an existing CV.** Parse PDF/DOCX into the editor; mark fields that could not be extracted for manual completion. | L | E.3, A.2 | Unextractable fields are flagged, never invented |
 | ~~**E.10**~~ OK | **JSON Resume import and export.** | S | E.2 | Round-trips without loss |
 
 ### AI layers
