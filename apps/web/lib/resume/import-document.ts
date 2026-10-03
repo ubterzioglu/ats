@@ -9,6 +9,8 @@ import type {
   ResumeWorkItem
 } from "@/types/resume";
 
+import { formatEngineMonth } from "./presentation";
+
 /**
  * Importing an existing CV: text in, canonical model out, and an honest list
  * of what the rules could not carry over.
@@ -142,11 +144,7 @@ function sectionRanges(lines: readonly string[]): Map<string, readonly string[]>
 }
 
 /** Engine months since year zero back into JSON Resume's YYYY-MM. */
-function formatMonth(months: number): string {
-  const year = Math.floor(months / 12);
-  const month = (months % 12) + 1;
-  return `${year}-${String(month).padStart(2, "0")}`;
-}
+const formatMonth = formatEngineMonth;
 
 function looksLikePersonName(line: string): boolean {
   const words = line.trim().split(/\s+/);

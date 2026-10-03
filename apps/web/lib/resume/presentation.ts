@@ -8,6 +8,18 @@ import type { Resume } from "@/types/resume";
  */
 
 /**
+ * The engine reads periods as months since year zero; JSON Resume writes
+ * YYYY-MM. This is the one formatter for that conversion, shared by every
+ * importer, so two modules can never disagree about what a month number
+ * means.
+ */
+export function formatEngineMonth(months: number): string {
+  const year = Math.floor(months / 12);
+  const month = (months % 12) + 1;
+  return `${year}-${String(month).padStart(2, "0")}`;
+}
+
+/**
  * JSON Resume writes "" for a role that is still open, so "" reads as
  * "present"; a missing end date is unknown and renders as the start alone.
  */
