@@ -3,14 +3,18 @@ import type { DocumentLanguage, KeywordReport, KeywordTerm, KeywordTier } from "
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { formatDuration } from "./experience";
-import { germanVariants } from "./german";
 import { extractExperienceRequirement } from "./job-ad";
 import { detectLanguage } from "./language";
+import { countOccurrences, matchTerms } from "./match";
 import { lineSection, sectionRanges } from "./sections";
 import { isJobNoise, isStopword, JOB_POSTING_NOISE } from "./stopwords";
-import { MULTI_WORD_SKILLS, SYNONYMS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill, variantsOf } from "./taxonomy";
+import { MULTI_WORD_SKILLS, SYNONYMS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill } from "./taxonomy";
 import { caseFold, clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
-import { hasTurkishCharacters, matchKeyTurkish } from "./turkish";
+import { matchKeyTurkish } from "./turkish";
+
+// The counting primitives moved to `./match`, where the three modes share them.
+// Re-exported because they are this module's long-standing public surface.
+export { countOccurrences, countOccurrencesByVariant, type VariantCount } from "./match";
 
 export const KEYWORDS_MAX = 25;
 
@@ -20,81 +24,6 @@ const MAX_TERMS = 40;
 const BASELINE_MAX = 20;
 const BASELINE_TARGET_SKILLS = 16;
 const STUFFING_THRESHOLD = 12;
-
-function escapeRegex(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function termPattern(term: string): RegExp {
-  return new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(term)}(?![\\p{L}\\p{N}])`, "giu");
-}
-
-export interface VariantCount {
-  readonly variant: string;
-  readonly hits: number;
-}
-
-/** Counts tokens whose Turkish stem-and-fold key equals the term's. */
-function countByTurkishKey(haystack: string, term: string): number {
-  const key = matchKeyTurkish(term);
-  if (key.length === 0) return 0;
-  let hits = 0;
-  for (const token of tokenize(haystack)) {
-    if (matchKeyTurkish(token) === key) hits += 1;
-  }
-  return hits;
-}
-
-/**
- * Literal variant counting, extended for Turkish and German. Turkish is
- * agglutinative: the ad says "geliştirme", the CV says "geliştirdim", and no
- * literal pattern pairs them, so Turkish tokens are matched on their stem key
- * as well. German compounds: the ad says "Testautomatisierung", the CV says
- * "Test-Automatisierung", so each term also carries its split and joined
- * surface forms. Stem hits top up the canonical variant.
- */
-export function countOccurrencesByVariant(
-  haystack: string,
-  term: string,
-  language?: DocumentLanguage
-): VariantCount[] {
-  const variants = [...new Set([...variantsOf(term), ...germanVariants(term)])];
-  const totals = new Map<string, number>();
-  for (const line of haystack.split("\n")) {
-    for (const variant of variants) {
-      if (isAmbiguousTerm(variant) && !hasTechContext(line)) continue;
-      const matches = line.match(termPattern(variant));
-      if (matches) totals.set(variant, (totals.get(variant) ?? 0) + matches.length);
-    }
-  }
-  const counts = variants.map((variant) => ({
-    variant,
-    hits: totals.get(variant) ?? 0
-  }));
-
-  const turkish = language === "tr" || hasTurkishCharacters(term);
-  if (turkish && !term.includes(" ")) {
-    const stemHits = countByTurkishKey(haystack, term);
-    const literalHits = counts.reduce((sum, entry) => sum + entry.hits, 0);
-    const canonical = counts[0];
-    if (canonical !== undefined && stemHits > literalHits) {
-      counts[0] = { variant: canonical.variant, hits: canonical.hits + stemHits - literalHits };
-    }
-  }
-
-  return counts;
-}
-
-export function countOccurrences(
-  haystack: string,
-  term: string,
-  language?: DocumentLanguage
-): number {
-  return countOccurrencesByVariant(haystack, term, language).reduce(
-    (sum, entry) => sum + entry.hits,
-    0
-  );
-}
 
 interface Candidate {
   readonly term: string;
@@ -525,16 +454,16 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
 
   const drafts: FindingDraft[] = [];
   const terms = extractJobKeywords(jd);
-  const scored = terms.map((term) => ({
-    ...term,
-    hits: countOccurrences(context.lower, term.term, context.language)
-  }));
 
-  const matched = scored.filter((term) => term.hits > 0);
-  const missing = scored.filter((term) => term.hits === 0);
-  const totalWeight = scored.reduce((sum, term) => sum + term.weight, 0);
-  const matchedWeight = matched.reduce((sum, term) => sum + term.weight, 0);
-  const coverage = totalWeight > 0 ? matchedWeight / totalWeight : 0;
+  // The score runs in normalized mode and only ever in normalized mode. Strict
+  // and semantic are offered as a comparison beside it; a score that moved with
+  // the mode would not be a score.
+  const { coverage, matched, missing } = matchTerms(
+    terms,
+    context.lower,
+    context.language,
+    "normalized"
+  );
 
   const rawScore = clamp(
     Math.round(KEYWORDS_MAX * Math.min(1, coverage / COVERAGE_TARGET)),
@@ -558,17 +487,10 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
     });
   }
 
-  const aliasFor = new Map<string, string>();
-  for (const term of matched) {
-    const counts = countOccurrencesByVariant(context.lower, term.term, context.language);
-    const canonical = counts.find((entry) => entry.variant === term.term);
-    const viaAlias = counts.find((entry) => entry.variant !== term.term && entry.hits > 0);
-    if ((canonical?.hits ?? 0) === 0 && viaAlias) {
-      aliasFor.set(term.term, viaAlias.variant);
-    }
-  }
-  if (aliasFor.size > 0) {
-    const aliasOnly = [...aliasFor.entries()].map(([term, alias]) => `${term} (found as "${alias}")`);
+  const aliasOnly = matched
+    .filter((term) => term.alias !== undefined)
+    .map((term) => `${term.term} (found as "${term.alias}")`);
+  if (aliasOnly.length > 0) {
     drafts.push({
       id: "keywords.acronym-pair",
       severity: "low",
@@ -581,10 +503,6 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
       evidence: aliasOnly.slice(0, 5)
     });
   }
-  const matchedWithAlias = matched.map((term) => {
-    const alias = aliasFor.get(term.term);
-    return alias ? { ...term, alias } : term;
-  });
 
   const ranges = sectionRanges(context.sections, context.lines.length);
   const hasSkillsSection = ranges.some((range) => range.id === "skills");
@@ -662,7 +580,7 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
     report: {
       source: "job-description",
       coverage: round(coverage, 3),
-      matched: [...matchedWithAlias].sort((a, b) => b.weight - a.weight),
+      matched: [...matched].sort((a, b) => b.weight - a.weight),
       missing: [...missing].sort((a, b) => b.weight - a.weight),
       overused
     }

@@ -53,13 +53,13 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 2 October 2026
 
-**40 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
+**41 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
 
 | Phase | Batches | State |
 |---|---|---|
 | 0 — Groundwork | P0.1-P0.7, ST.1-ST.3 | Done, except the `P0.3` tree deletion |
 | 1 — Deepen the engine | V.1-V.10, C.2-C.3, A.1-A.4, J.1-J.7 | Done |
-| 2 — Semantic layer | B.1-B.3, F.1-F.5 | Not started. On the critical path: `B.1` gates `F.1`, which gates most of module D |
+| 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1` landed, which unblocks `B.2` and `F.1`; `F.1` still gates most of module D |
 | 3 — Builder | E.1-E.10 | `E.1`, `E.1a`, `E.2`, `E.3`, `E.8`, `E.10` done; `E.4`-`E.7` and `E.9` open |
 | 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1` and `L.4` done; `L.2`, `L.3` and all of D open |
 | 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Not started |
@@ -580,7 +580,7 @@ in place.
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **B.1** | **Three matching modes.** Strict (literal), normalized (synonyms, abbreviations, taxonomy), semantic (Layer 1 embeddings). One engine, three modes. | L | J.3 | The same CV and ad produce consistently different, explainable results; semantic runs entirely in the browser |
+| ~~**B.1**~~ ✅ | **Three matching modes.** Strict (literal), normalized (synonyms, abbreviations, taxonomy), semantic (Layer 1 embeddings). One engine, three modes. | L | J.3 | The same CV and ad produce consistently different, explainable results; semantic runs entirely in the browser |
 | **B.2** | **Mode comparison summary.** "61 strict, 78 semantic. The difference comes from these 4 terms." | M | B.1 | The difference is attributable to named terms |
 | **B.3** | **Semantic labelling.** Semantic hits presented as "possible match", never as a confirmed skill. No vendor names on profile cards. | S | B.2 | No semantic hit is presented as certain |
 

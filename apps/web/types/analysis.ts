@@ -40,6 +40,19 @@ export interface DimensionScore {
 
 export type KeywordTier = "required" | "preferred";
 
+/**
+ * How literally a filter compares. Strict compares strings, normalized carries
+ * a synonym table and a stemmer, semantic compares meaning. The same CV scores
+ * differently against each.
+ */
+export type MatchMode = "strict" | "normalized" | "semantic";
+
+/** Why a semantic match was accepted. Always a possibility, never a fact. */
+export interface SemanticEvidence {
+  readonly passage: string;
+  readonly similarity: number;
+}
+
 export interface KeywordTerm {
   readonly term: string;
   readonly weight: number;
@@ -47,6 +60,19 @@ export interface KeywordTerm {
   readonly tier?: KeywordTier;
   /** The variant that matched when the canonical spelling itself never appears. */
   readonly alias?: string;
+  /**
+   * Set only in semantic mode, and only where `hits` is zero: the term is not
+   * written in the CV, something close to it is. Present it as a possible
+   * match, never as a confirmed skill.
+   */
+  readonly semantic?: SemanticEvidence;
+}
+
+export interface MatchOutcome {
+  readonly mode: MatchMode;
+  readonly coverage: number;
+  readonly matched: readonly KeywordTerm[];
+  readonly missing: readonly KeywordTerm[];
 }
 
 export interface KeywordReport {
