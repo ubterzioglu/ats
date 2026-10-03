@@ -53,16 +53,16 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 2 October 2026
 
-**41 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
+**47 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
 
 | Phase | Batches | State |
 |---|---|---|
 | 0 — Groundwork | P0.1-P0.7, ST.1-ST.3 | Done, except the `P0.3` tree deletion |
 | 1 — Deepen the engine | V.1-V.10, C.2-C.3, A.1-A.4, J.1-J.7 | Done |
 | 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1` landed, which unblocks `B.2` and `F.1`; `F.1` still gates most of module D |
-| 3 — Builder | E.1-E.10 | `E.1`, `E.1a`, `E.2`, `E.3`, `E.8`, `E.10` done; `E.4`-`E.7` and `E.9` open |
+| 3 — Builder | E.1-E.10 | `E.1`-`E.8` and `E.10` done (`E.1a` alongside `E.1`); `E.9` open |
 | 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1` and `L.4` done; `L.2`, `L.3` and all of D open |
-| 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Not started |
+| 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Started: `H.1` and `H.2` done; G, I, `H.3`-`H.4` and `F.6` open |
 
 The gate is clean: lint, typecheck, 516 tests across 53 files, and a production build.
 
@@ -606,10 +606,10 @@ produces can be read by a parser.
 | ~~**E.1a**~~ OK | **Analysis report as PDF.** Client-side, on top of E.1. | S | E.1 | The report downloads as a PDF |
 | ~~**E.2**~~ OK | **Canonical resume model.** JSON Resume schema, zod-validated. Chosen for its import/export ecosystem. | M | — | The schema validates the fixture set |
 | ~~**E.3**~~ OK | **Editor form.** | L | E.2 | Every schema field editable |
-| **E.4** | **Template: dense.** Single column, standard headings. | M | E.1, E.3 | Renders the fixture resume |
-| **E.5** | **Template: plain.** | M | E.4 | Renders the fixture resume |
-| **E.6** | **Template: modern.** | M | E.4 | Renders the fixture resume |
-| **E.7** | **Closed-loop validation.** Every export runs through our own parser and the result is shown to the user. A CI regression test asserts all templates score Parseability 25/25, including Turkish and German fixtures. Owns review focus 1 for export. | L | E.4–E.6 | CI fails if any template drops below full marks |
+| ~~**E.4**~~ ✅ | **Template: dense.** Single column, standard headings. | M | E.1, E.3 | Renders the fixture resume |
+| ~~**E.5**~~ ✅ | **Template: plain.** | M | E.4 | Renders the fixture resume |
+| ~~**E.6**~~ ✅ | **Template: modern.** | M | E.4 | Renders the fixture resume |
+| ~~**E.7**~~ ✅ | **Closed-loop validation.** Every export runs through our own parser and the result is shown to the user. A CI regression test asserts all templates score Parseability 25/25, including Turkish and German fixtures. Owns review focus 1 for export. | L | E.4–E.6 | CI fails if any template drops below full marks |
 | ~~**E.8**~~ OK | **DOCX export.** | L | E.2 | Opens correctly in Word and LibreOffice |
 | **E.9** | **Import an existing CV.** Parse PDF/DOCX into the editor; mark fields that could not be extracted for manual completion. | L | E.3, A.2 | Unextractable fields are flagged, never invented |
 | ~~**E.10**~~ OK | **JSON Resume import and export.** | S | E.2 | Round-trips without loss |
@@ -655,8 +655,8 @@ The reason candidates come back; the module that closes the loop. Local-only in 
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| **H.1** | **STAR story bank.** Situation / Task / Action / Result cards built from CV achievement bullets. | L | ST.1 | Usable with every AI layer off |
-| **H.2** | **Template questions.** Common questions mapped to story cards. | M | H.1 | No AI required |
+| ~~**H.1**~~ ✅ | **STAR story bank.** Situation / Task / Action / Result cards built from CV achievement bullets. | L | ST.1 | Usable with every AI layer off |
+| ~~**H.2**~~ ✅ | **Template questions.** Common questions mapped to story cards. | M | H.1 | No AI required |
 | **H.3** | **Ad-specific questions.** Layer 2/3. | M | H.2, L.4 | Generated questions cite terms from the ad |
 | **H.4** | **Practice mode.** The question is shown, the candidate writes an answer, a relevant story card is suggested. | M | H.3 | The suggestion is traceable to a card |
 

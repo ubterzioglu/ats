@@ -79,6 +79,23 @@
     "confirmClear": "Her alan temizlensin mi? Geri alınamaz.",
     "keep": "Düzenlemeye devam et",
     "analyze": "Bu CV'yi puanla",
+    "export": {
+      "title": "CV'nizi indirin",
+      "formatLabel": "Biçim",
+      "template": {
+        "dense": "Yoğun PDF",
+        "plain": "Sade PDF",
+        "modern": "Modern PDF"
+      },
+      "formatDocx": "Word belgesi (DOCX)",
+      "verify": "Denetle ve indir",
+      "working": "Dosya üretiliyor ve geri okunuyor…",
+      "passed": "Okunabilirlik {score}/{max} — ayrıştırıcımız bu dosyayı temiz okuyor. İndirme başladı.",
+      "degradedTitle": "Bir ayrıştırıcı bu dosyada puan kaybederdi",
+      "degradedDetail": "Okunabilirlik {score}/{max}. Henüz bir şey indirilmedi; motorun buldukları:",
+      "downloadAnyway": "Yine de indir",
+      "failed": "Dosya üretilemedi veya geri okunamadı."
+    },
     "fields": {
       "basics": {
         "_label": "Temel bilgiler",

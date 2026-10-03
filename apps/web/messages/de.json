@@ -79,6 +79,23 @@
     "confirmClear": "Alle Felder leeren? Das lässt sich nicht rückgängig machen.",
     "keep": "Weiter bearbeiten",
     "analyze": "Diesen Lebenslauf bewerten",
+    "export": {
+      "title": "Lebenslauf herunterladen",
+      "formatLabel": "Dateiformat",
+      "template": {
+        "dense": "Kompaktes PDF",
+        "plain": "Schlichtes PDF",
+        "modern": "Modernes PDF"
+      },
+      "formatDocx": "Word-Dokument (DOCX)",
+      "verify": "Prüfen und herunterladen",
+      "working": "Die Datei wird erzeugt und zurückgelesen…",
+      "passed": "Lesbarkeit {score}/{max} — unser Parser liest diese Datei sauber. Der Download wurde gestartet.",
+      "degradedTitle": "Ein Parser würde bei dieser Datei Punkte verlieren",
+      "degradedDetail": "Lesbarkeit {score}/{max}. Es wurde noch nichts heruntergeladen; der Parser hat Folgendes gefunden:",
+      "downloadAnyway": "Trotzdem herunterladen",
+      "failed": "Die Datei konnte nicht erzeugt oder zurückgelesen werden."
+    },
     "fields": {
       "basics": {
         "_label": "Grunddaten",

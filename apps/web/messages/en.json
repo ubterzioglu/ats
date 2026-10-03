@@ -79,6 +79,23 @@
     "confirmClear": "Clear every field? This cannot be undone.",
     "keep": "Keep editing",
     "analyze": "Score this CV",
+    "export": {
+      "title": "Download your CV",
+      "formatLabel": "Format",
+      "template": {
+        "dense": "Dense PDF",
+        "plain": "Plain PDF",
+        "modern": "Modern PDF"
+      },
+      "formatDocx": "Word document (DOCX)",
+      "verify": "Check and download",
+      "working": "Rendering the file and reading it back…",
+      "passed": "Parseability {score}/{max} — our parser reads this file cleanly. The download has started.",
+      "degradedTitle": "A parser would lose points on this file",
+      "degradedDetail": "Parseability {score}/{max}. Nothing has been downloaded yet; here is what the engine found:",
+      "downloadAnyway": "Download anyway",
+      "failed": "The file could not be produced or read back."
+    },
     "fields": {
       "basics": {
         "_label": "Basics",

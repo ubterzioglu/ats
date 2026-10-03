@@ -8,6 +8,7 @@ import { readDraft, writeDraft } from "@/lib/editor/storage";
 import { exportJsonResumeText, importJsonResumeText } from "@/lib/resume/json-resume";
 import type { Resume } from "@/types/resume";
 
+import { ExportPanel } from "./export-panel";
 import { SpecNodes } from "./spec-nodes";
 
 type SaveState = "idle" | "saving" | "saved" | "refused";
@@ -159,6 +160,8 @@ export function ResumeEditor() {
           </section>
         ))}
       </form>
+
+      <ExportPanel resume={resume} />
     </div>
   );
 }
