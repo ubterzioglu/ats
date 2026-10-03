@@ -15,6 +15,7 @@ export const PDF_MONO = "Ats Mono";
 export interface PdfFontFace {
   readonly src: string;
   readonly fontWeight: 400 | 700;
+  readonly fontStyle?: "normal" | "italic";
 }
 
 export interface PdfFontSources {
@@ -26,6 +27,7 @@ export interface PdfFontSources {
 export const WEB_FONT_SOURCES: PdfFontSources = {
   sans: [
     { src: "/fonts/dejavu-sans.ttf", fontWeight: 400 },
+    { src: "/fonts/dejavu-sans-oblique.ttf", fontWeight: 400, fontStyle: "italic" },
     { src: "/fonts/dejavu-sans-bold.ttf", fontWeight: 700 }
   ],
   mono: [{ src: "/fonts/dejavu-sans-mono.ttf", fontWeight: 400 }]
@@ -41,10 +43,20 @@ let registeredFor: PdfFontSources | null = null;
 export function registerPdfFonts(sources: PdfFontSources = WEB_FONT_SOURCES): void {
   if (registeredFor === sources) return;
   for (const face of sources.sans) {
-    Font.register({ family: PDF_SANS, src: face.src, fontWeight: face.fontWeight });
+    Font.register({
+      family: PDF_SANS,
+      src: face.src,
+      fontWeight: face.fontWeight,
+      ...(face.fontStyle ? { fontStyle: face.fontStyle } : {})
+    });
   }
   for (const face of sources.mono) {
-    Font.register({ family: PDF_MONO, src: face.src, fontWeight: face.fontWeight });
+    Font.register({
+      family: PDF_MONO,
+      src: face.src,
+      fontWeight: face.fontWeight,
+      ...(face.fontStyle ? { fontStyle: face.fontStyle } : {})
+    });
   }
   registeredFor = sources;
 }

@@ -4,6 +4,7 @@ import type { PdfFontSources } from "../fonts";
 import { registerPdfFonts } from "../fonts";
 import { renderPdfBlob, renderPdfBytes } from "../render";
 import { denseTemplate } from "./dense";
+import { modernTemplate } from "./modern";
 import { plainTemplate } from "./plain";
 import type { ResumeTemplate, TemplateId } from "./types";
 
@@ -16,7 +17,11 @@ import type { ResumeTemplate, TemplateId } from "./types";
 
 export type { ResumeTemplate, TemplateId } from "./types";
 
-export const RESUME_TEMPLATES: readonly ResumeTemplate[] = [denseTemplate, plainTemplate];
+export const RESUME_TEMPLATES: readonly ResumeTemplate[] = [
+  denseTemplate,
+  plainTemplate,
+  modernTemplate
+];
 
 export function templateById(id: TemplateId): ResumeTemplate {
   const template = RESUME_TEMPLATES.find((entry) => entry.id === id);

@@ -12,6 +12,7 @@ export function nodeFontSources(): PdfFontSources {
   return {
     sans: [
       { src: join(dir, "dejavu-sans.ttf"), fontWeight: 400 },
+      { src: join(dir, "dejavu-sans-oblique.ttf"), fontWeight: 400, fontStyle: "italic" },
       { src: join(dir, "dejavu-sans-bold.ttf"), fontWeight: 700 }
     ],
     mono: [{ src: join(dir, "dejavu-sans-mono.ttf"), fontWeight: 400 }]
