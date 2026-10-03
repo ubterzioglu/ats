@@ -58,8 +58,20 @@ const MONTH_NAMES: Readonly<Record<string, number>> = {
 const SEPARATOR = /\s*(?:-|–|—|to|bis|until|als|ile)\s*/i;
 const YEAR = /^(19|20)\d{2}$/;
 
-const RANGE_RX =
-  /((?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|[\p{L}]+\.?\s+(?:19|20)\d{2}|(?:19|20)\d{2})\s*(?:-|–|—|to|bis|until|als|ile)\s*([\p{L}]+\.?\s+(?:19|20)\d{2}|(?:0?[1-9]|1[0-2])\s*[./-]\s*(?:19|20)\d{2}|(?:19|20)\d{2}|[\p{L}]+(?:\s+[\p{L}]+){0,2})/iu;
+/**
+ * Year first, as ISO writes it: `2021-03`. Deliberately allows no space around
+ * the separator, because `2021 - 03` is the range `2021` to something, not one
+ * date. Tried before the bare year on both sides, or `2021-03 - 2024-05` reads
+ * as the year 2021 up to the month 03 of 2024.
+ */
+const ISO_YEAR_MONTH = String.raw`(?:19|20)\d{2}[-./](?:0?[1-9]|1[0-2])(?![\d])`;
+
+const RANGE_RX = new RegExp(
+  `(${ISO_YEAR_MONTH}|(?:0?[1-9]|1[0-2])\\s*[./-]\\s*(?:19|20)\\d{2}|[\\p{L}]+\\.?\\s+(?:19|20)\\d{2}|(?:19|20)\\d{2})` +
+    `\\s*(?:-|–|—|to|bis|until|als|ile)\\s*` +
+    `(${ISO_YEAR_MONTH}|[\\p{L}]+\\.?\\s+(?:19|20)\\d{2}|(?:0?[1-9]|1[0-2])\\s*[./-]\\s*(?:19|20)\\d{2}|(?:19|20)\\d{2}|[\\p{L}]+(?:\\s+[\\p{L}]+){0,2})`,
+  "iu"
+);
 
 /** The same pattern, scannable from an offset. See `findRange`. */
 const RANGE_RX_SCAN = new RegExp(RANGE_RX.source, "giu");
@@ -147,6 +159,15 @@ function parseEndpoint(raw: string, now: Date): { readonly value: number; readon
   if (numeric) {
     const month = Number(numeric[1]);
     const year = Number(numeric[2]);
+    return { value: monthsSinceZero(year, month), open: false };
+  }
+
+  // Year first. classifyDateShape has always named this shape; until now
+  // nothing could read it, so every ISO-dated CV lost its dates.
+  const isoFirst = token.match(/^((?:19|20)\d{2})[-./](0?[1-9]|1[0-2])$/);
+  if (isoFirst) {
+    const year = Number(isoFirst[1]);
+    const month = Number(isoFirst[2]);
     return { value: monthsSinceZero(year, month), open: false };
   }
 

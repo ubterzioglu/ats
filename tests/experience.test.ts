@@ -78,6 +78,31 @@ describe("extractPeriods", () => {
       expect(periods[0]?.end).toBe(2019 * 12 + 5);
     });
 
+    it("reads a year-first ISO range", () => {
+      const { periods } = extractPeriods(["Engineer    Acme    2021-03 - 2024-05"], NOW);
+      expect(periods).toHaveLength(1);
+      expect(periods[0]?.start).toBe(2021 * 12 + 2);
+      expect(periods[0]?.end).toBe(2024 * 12 + 4);
+    });
+
+    it("reads a year-first ISO range that is still open", () => {
+      const { periods } = extractPeriods(["Engineer    Acme    2021-01 - present"], NOW);
+      expect(periods).toHaveLength(1);
+      expect(periods[0]?.start).toBe(2021 * 12);
+      expect(periods[0]?.open).toBe(true);
+    });
+
+    it("accepts the dot and slash spellings of a year-first date", () => {
+      const { periods } = extractPeriods(["2021.03 - 2024.05", "2021/03 - 2024/05"], NOW);
+      expect(periods).toHaveLength(2);
+      expect(periods.every((period) => period.start === 2021 * 12 + 2)).toBe(true);
+    });
+
+    it("does not read a bare-year range as a year and a month", () => {
+      const { periods } = extractPeriods(["Engineer    Acme    2021 - 12"], NOW);
+      expect(periods).toHaveLength(0);
+    });
+
     it("still reports a reversed column-aligned range as reversed", () => {
       const { periods, reversed } = extractPeriods(["Engineer    Acme    2023 - 2021"], NOW);
       expect(periods).toHaveLength(0);
