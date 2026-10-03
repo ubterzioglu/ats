@@ -40,5 +40,18 @@ Thumbs.db
 docker-data/
 *.log
 
+# Agent harness scratch. Session and machine scoped, so it says nothing about
+# the project and conflicts on every pull. `.omc/project-memory.json` and
+# `.omc/notepad.md` are deliberately NOT here: those are shared and tracked.
+**/.omc/sessions/
+**/.omc/state/
+**/.omc/logs/
+.agents/
+kilo.json
+skills-lock.json
+
+# Supabase CLI scratch
+**/supabase/.temp/
+
 # Temp
 /tmp/
