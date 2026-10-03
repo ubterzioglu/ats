@@ -66,7 +66,7 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 The gate is clean: lint, typecheck, 674 tests across 64 files, and a production build.
 
-See `apps/web/docs/handover-2026-10-02.md` for what is open, what is blocked on what, and the
+See `apps/web/docs/handover-2026-10-03.md` for what is open, what is blocked on what, and the
 decisions already taken that constrain the batches still to come.
 
 ### What the product does today

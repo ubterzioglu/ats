@@ -14,7 +14,7 @@ C:\temp_private\ats deposunda çalışıyorsun.
 
 ÖNCE OKU
   AGENTS.md — mimari kuralları, puanlama değişmezi, gizlilik sözleşmesi, kod stili.
-  apps/web/docs/handover-2026-10-02.md — alınmış kararlar ve dosya sahipliği.
+  apps/web/docs/handover-2026-10-03.md — alınmış kararlar ve dosya sahipliği.
   MASTERPLAN.md bölüm 8 — batch tanımları ve bağımlılıklar.
 
 DEĞİŞMEZLER — PAZARLIKSIZ
