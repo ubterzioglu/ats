@@ -2,6 +2,8 @@ import { Document, HeadingLevel, Packer, Paragraph, TextRun } from "docx";
 
 import type { Resume, ResumeProjectItem, ResumeWorkItem } from "@/types/resume";
 
+import { renderContactParts, renderDateRange, renderLocation } from "./presentation";
+
 /**
  * The canonical resume as a DOCX, written for the two readers that matter:
  * a recruiter's Word and a parsing engine. That means one column, no tables,
@@ -16,38 +18,8 @@ import type { Resume, ResumeProjectItem, ResumeWorkItem } from "@/types/resume";
 
 const DEFAULT_FONT = "Calibri";
 
-function renderRange(start?: string, end?: string): string | null {
-  // JSON Resume writes "" for a role that is still open, so "" reads as
-  // "present"; a missing end date is unknown and renders as the start alone.
-  const endText = end === "" ? "present" : end;
-  if (start !== undefined && start !== "" && endText !== undefined && endText !== "") {
-    return `${start} - ${endText}`;
-  }
-  if (start !== undefined && start !== "") return start;
-  if (endText !== undefined && endText !== "") return endText;
-  return null;
-}
-
-function locationLine(resume: Resume): string {
-  const location = resume.basics?.location;
-  if (location === undefined) return "";
-  const cityLine = [location.postalCode, location.city].filter(Boolean).join(" ").trim();
-  return [location.address, cityLine, location.region, location.countryCode]
-    .filter(Boolean)
-    .join(", ");
-}
-
 function contactLine(resume: Resume): string {
-  const basics = resume.basics;
-  if (basics === undefined) return "";
-  const parts = [basics.email, basics.phone, basics.url, locationLine(resume)].filter(Boolean);
-  for (const profile of basics.profiles ?? []) {
-    const rendered = [profile.network, profile.username ?? profile.url]
-      .filter(Boolean)
-      .join(": ");
-    if (rendered.length > 0) parts.push(rendered);
-  }
-  return parts.join(" | ");
+  return renderContactParts(resume).join(" | ");
 }
 
 function heading(text: string): Paragraph {
@@ -79,7 +51,7 @@ function workSection(items: readonly ResumeWorkItem[]): Paragraph[] {
     const primary = [item.position, item.name].filter(Boolean)[0] ?? "";
     const secondary = primary === item.position ? item.name : "";
     if (primary !== "") paragraphs.push(entryHeader(primary, secondary));
-    const range = renderRange(item.startDate, item.endDate);
+    const range = renderDateRange(item.startDate, item.endDate);
     if (range !== null) paragraphs.push(body(range, { italic: true }));
     if (item.summary !== undefined && item.summary !== "") paragraphs.push(body(item.summary));
     for (const highlight of item.highlights ?? []) paragraphs.push(bullet(highlight));
@@ -91,7 +63,7 @@ function projectSection(items: readonly ResumeProjectItem[]): Paragraph[] {
   const paragraphs: Paragraph[] = [];
   for (const item of items) {
     if (item.name !== undefined && item.name !== "") paragraphs.push(entryHeader(item.name));
-    const range = renderRange(item.startDate, item.endDate);
+    const range = renderDateRange(item.startDate, item.endDate);
     const meta = [range, item.entity, item.type].filter(Boolean).join(" - ");
     if (meta !== "") paragraphs.push(body(meta, { italic: true }));
     if (item.description !== undefined && item.description !== "") {
@@ -114,7 +86,7 @@ function educationSection(resume: Resume): Paragraph[] {
     else if (item.institution !== undefined && item.institution !== "") {
       paragraphs.push(entryHeader(item.institution));
     }
-    const range = renderRange(item.startDate, item.endDate);
+    const range = renderDateRange(item.startDate, item.endDate);
     if (range !== null) paragraphs.push(body(range, { italic: true }));
     if (item.score !== undefined && item.score !== "") paragraphs.push(body(`Score: ${item.score}`));
     for (const course of item.courses ?? []) paragraphs.push(bullet(course));
@@ -194,7 +166,7 @@ export function resumeParagraphs(resume: Resume): Paragraph[] {
       const primary = [item.position, item.organization].filter(Boolean)[0] ?? "";
       const secondary = primary === item.position ? item.organization : "";
       if (primary !== "") paragraphs.push(entryHeader(primary, secondary));
-      const range = renderRange(item.startDate, item.endDate);
+      const range = renderDateRange(item.startDate, item.endDate);
       if (range !== null) paragraphs.push(body(range, { italic: true }));
       if (item.summary !== undefined && item.summary !== "") paragraphs.push(body(item.summary));
       for (const highlight of item.highlights ?? []) paragraphs.push(bullet(highlight));

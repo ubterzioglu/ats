@@ -186,3 +186,365 @@ export const UNKNOWN_KEYS_RESUME = {
   social: [{ network: "Mastodon", url: "https://example.social/@ayse" }],
   meta: { canonical: "x", theme: "elegant" }
 } as const;
+
+/**
+ * The closed-loop fixtures: full-length resumes in three languages, sized so
+ * a rendered template clears every Parseability check on its own merits
+ * (including the 260-word floor) and carrying the promised glyphs - ş ğ ı İ
+ * ö ü ç in Turkish, ä ö ü ß in German. E.7's CI regression renders these
+ * through every template and demands full marks.
+ */
+
+export const LOOP_RESUME_EN = {
+  basics: {
+    name: "Umut Baris Terzioglu",
+    label: "Senior QA Automation Engineer",
+    email: "umut@example.com",
+    phone: "+49 151 2345678",
+    url: "https://example.com",
+    summary:
+      "Senior quality engineer with nine years of experience automating regression, API and release pipelines for insurance platforms. I build test infrastructure that teams trust, measure everything that matters, and mentor engineers into automation ownership across product tribes.",
+    location: {
+      address: "Musterstrasse 12",
+      postalCode: "10115",
+      city: "Berlin",
+      countryCode: "DE",
+      region: "Berlin"
+    },
+    profiles: [{ network: "LinkedIn", username: "example", url: "https://linkedin.com/in/example" }]
+  },
+  work: [
+    {
+      name: "Adesso SE",
+      position: "Senior QA Automation Engineer",
+      startDate: "2021-01",
+      endDate: "",
+      summary: "Owner of the regression automation for a claims platform used across four product tribes.",
+      highlights: [
+        "Built a Playwright and TypeScript regression suite covering 420 end to end cases, cutting a six hour manual cycle to 35 minutes.",
+        "Migrated 180 legacy Selenium tests to Playwright with zero loss of coverage and a shared page object library.",
+        "Automated release verification in GitLab CI and reduced failed releases by 40% over two quarters.",
+        "Mentored four junior testers through their ISTQB certification and into automation ownership."
+      ]
+    },
+    {
+      name: "Beispiel GmbH",
+      position: "QA Engineer",
+      startDate: "2017-03",
+      endDate: "2020-12",
+      summary: "API and integration testing for twelve services behind a policy administration system.",
+      highlights: [
+        "Designed the API test strategy with REST Assured and Postman across twelve backend services.",
+        "Introduced Xray reporting in Jira, giving release managers same day defect status.",
+        "Reduced the regression escape rate from 11% to 3% across four major releases."
+      ]
+    }
+  ],
+  projects: [
+    {
+      name: "ats readability",
+      description:
+        "An open CV analyzer that scores how well an applicant tracking system can read a document and lists the fixes in order of value.",
+      highlights: [
+        "Shipped a deterministic scoring engine covered by more than five hundred unit tests.",
+        "Built PDF and DOCX exporters that pass their own parser at full marks."
+      ],
+      keywords: ["TypeScript", "Next.js", "vitest"],
+      startDate: "2026-01",
+      endDate: "",
+      roles: ["Developer"],
+      entity: "Personal",
+      type: "application"
+    }
+  ],
+  education: [
+    {
+      institution: "Istanbul Technical University",
+      area: "Computer Engineering",
+      studyType: "BSc",
+      startDate: "2011-09",
+      endDate: "2015-06",
+      score: "3.2",
+      courses: ["Distributed systems", "Software testing", "Data structures"]
+    }
+  ],
+  skills: [
+    {
+      name: "Test automation",
+      level: "Senior",
+      keywords: ["Playwright", "Selenium", "TypeScript", "REST Assured", "Cypress"]
+    },
+    { name: "CI and infrastructure", keywords: ["GitLab CI", "Jenkins", "Docker", "Kubernetes", "SQL"] },
+    { name: "Process", keywords: ["Agile", "Scrum", "Xray", "Jira", "Test strategy"] }
+  ],
+  languages: [
+    { language: "Turkish", fluency: "Native" },
+    { language: "English", fluency: "C1" },
+    { language: "German", fluency: "B2" }
+  ],
+  awards: [
+    {
+      title: "Tester of the year",
+      date: "2019",
+      awarder: "Beispiel GmbH",
+      summary: "Awarded for the regression suite that halved release verification time."
+    }
+  ],
+  publications: [
+    {
+      name: "Flaky tests in continuous integration",
+      publisher: "Testing Magazine",
+      releaseDate: "2020-05",
+      url: "https://example.com/flaky",
+      summary: "A field guide to quarantining and repairing flaky tests in shared pipelines."
+    }
+  ],
+  volunteer: [
+    {
+      organization: "Kadin Yazilimci",
+      position: "Mentor",
+      startDate: "2019-01",
+      endDate: "2020-01",
+      summary: "Mentored twelve career changers through their first automation roles.",
+      highlights: ["Nine of the twelve mentees placed within a year."]
+    }
+  ],
+  interests: [{ name: "Cycling", keywords: ["Gravel", "Bikepacking"] }],
+  references: [{ name: "Jane Doe", reference: "Available on request." }]
+} as const;
+
+export const LOOP_RESUME_TR = {
+  basics: {
+    name: "Umut Barış Terzioğlu",
+    label: "Kıdemli Test Otomasyon Mühendisi",
+    email: "umut@example.com",
+    phone: "+90 532 123 45 67",
+    url: "https://example.com",
+    summary:
+      "Sigorta platformlarında dokuz yıllık regresyon ve API test otomasyonu deneyimine sahip kıdemli test mühendisi. Güvenilir test altyapıları kurar, ölçülebilir sonuçlar üretir ve ekip arkadaşlarını otomasyon sahipliği konusunda geliştirir.",
+    location: {
+      address: "İstiklal Caddesi 12",
+      postalCode: "34433",
+      city: "İstanbul",
+      countryCode: "TR",
+      region: "Beyoğlu"
+    },
+    profiles: [{ network: "LinkedIn", username: "example", url: "https://linkedin.com/in/example" }]
+  },
+  work: [
+    {
+      name: "Adesso",
+      position: "Kıdemli Test Otomasyon Mühendisi",
+      startDate: "2021-01",
+      endDate: "",
+      summary: "Dört ürün kabilesinde kullanılan hasar platformunun regresyon otomasyonu sorumlusu.",
+      highlights: [
+        "Playwright ve TypeScript ile 420 senaryoyu kapsayan regresyon test paketi geliştirdim, 6 saatlik manuel döngüyü 35 dakikaya indirdim.",
+        "180 eski Selenium testini ortak sayfa nesnesi kütüphanesiyle Playwright'a taşıdım, test kapsamından ödün vermeden.",
+        "GitLab CI üzerinde sürüm doğrulamalarını otomatikleştirdim, hatalı sürümleri iki çeyrekte %40 azalttım.",
+        "ISTQB sertifikası alan dört junior test uzmanına mentorluk yaptım ve otomasyon sahipliğini devrettim."
+      ]
+    },
+    {
+      name: "Örnek A.Ş.",
+      position: "Test Mühendisi",
+      startDate: "2017-03",
+      endDate: "2020-12",
+      summary: "Poliçe yönetim sisteminin arkasındaki on iki servis için API ve entegrasyon testleri.",
+      highlights: [
+        "REST Assured ve Postman ile on iki servis için API test stratejisini tasarladım.",
+        "Jira içinde Xray raporlamasını devreye aldım, sürüm yöneticilerine aynı gün hata durumu sundum.",
+        "Regresyon kaçış oranını dört büyük sürümde %11'den %3'e düşürdüm."
+      ]
+    }
+  ],
+  projects: [
+    {
+      name: "ats okunabilirlik",
+      description:
+        "Bir aday takip sisteminin özgeçmişi ne kadar iyi okuyabildiğini puanlayan ve düzeltmeleri değer sırasına göre listeleyen açık kaynaklı analiz aracı.",
+      highlights: [
+        "Beş yüzden fazla birim testiyle korunan deterministik bir puanlama motoru teslim ettim.",
+        "Kendi ayrıştırıcısından tam puanla geçen PDF ve DOCX dışa aktarımları geliştirdim."
+      ],
+      keywords: ["TypeScript", "Next.js", "vitest"],
+      startDate: "2026-01",
+      endDate: "",
+      roles: ["Geliştirici"],
+      entity: "Kişisel",
+      type: "uygulama"
+    }
+  ],
+  education: [
+    {
+      institution: "İstanbul Teknik Üniversitesi",
+      area: "Bilgisayar Mühendisliği",
+      studyType: "Lisans",
+      startDate: "2011-09",
+      endDate: "2015-06",
+      score: "3.2",
+      courses: ["Dağıtık sistemler", "Yazılım testi", "Veri yapıları"]
+    }
+  ],
+  skills: [
+    {
+      name: "Test otomasyonu",
+      level: "Kıdemli",
+      keywords: ["Playwright", "Selenium", "TypeScript", "REST Assured", "Cypress"]
+    },
+    { name: "CI ve altyapı", keywords: ["GitLab CI", "Jenkins", "Docker", "Kubernetes", "SQL"] },
+    { name: "Süreç", keywords: ["Agile", "Scrum", "Xray", "Jira", "Test stratejisi"] }
+  ],
+  languages: [
+    { language: "Türkçe", fluency: "Ana dil" },
+    { language: "İngilizce", fluency: "C1" },
+    { language: "Almanca", fluency: "B2" }
+  ],
+  awards: [
+    {
+      title: "Yılın test uzmanı",
+      date: "2019",
+      awarder: "Örnek A.Ş.",
+      summary: "Sürüm doğrulama süresini yarıya indiren regresyon paketi için verildi."
+    }
+  ],
+  publications: [
+    {
+      name: "Sürekli entegrasyonda kararsız testler",
+      publisher: "Testing Magazine",
+      releaseDate: "2020-05",
+      url: "https://example.com/flaky",
+      summary: "Ortak işlem hatlarında kararsız testleri karantinaya alma ve onarma rehberi."
+    }
+  ],
+  volunteer: [
+    {
+      organization: "Kadın Yazılımcı",
+      position: "Mentor",
+      startDate: "2019-01",
+      endDate: "2020-01",
+      summary: "Kariyer değiştiren on iki kişiye ilk otomasyon rollerinde mentorluk yaptım.",
+      highlights: ["On iki kişiden dokuzu bir yıl içinde işe yerleşti."]
+    }
+  ],
+  interests: [{ name: "Bisiklet", keywords: ["Gravel", "Bikepacking"] }],
+  references: [{ name: "Ayşe Yılmaz", reference: "Talep üzerine paylaşılır." }]
+} as const;
+
+export const LOOP_RESUME_DE = {
+  basics: {
+    name: "Umut Baris Terzioglu",
+    label: "Senior QA Automatisierungsingenieur",
+    email: "umut@example.com",
+    phone: "+49 151 2345678",
+    url: "https://example.com",
+    summary:
+      "Erfahrener QA-Ingenieur mit neun Jahren in der Testautomatisierung von Regressions-, API- und Release-Pipelines für Versicherungsplattformen. Ich baue Testinfrastruktur, der Teams vertrauen, messe alles Wichtige und begleite Ingenieure in die Automatisierungs-Verantwortung.",
+    location: {
+      address: "Musterstraße 12",
+      postalCode: "10115",
+      city: "Berlin",
+      countryCode: "DE",
+      region: "Berlin"
+    },
+    profiles: [{ network: "LinkedIn", username: "example", url: "https://linkedin.com/in/example" }]
+  },
+  work: [
+    {
+      name: "Adesso SE",
+      position: "Senior QA Automatisierungsingenieur",
+      startDate: "2021-01",
+      endDate: "",
+      summary: "Verantwortlich für die Regressionsautomatisierung einer Schadensplattform über vier Produktstämme.",
+      highlights: [
+        "Entwickelte eine Playwright- und TypeScript-Regressionssuite mit 420 Fällen und reduzierte einen 6-stündigen manuellen Zyklus auf 35 Minuten.",
+        "Migrierte 180 alte Selenium-Tests zu Playwright, ohne Verlust der Testabdeckung und mit gemeinsamer Page-Object-Bibliothek.",
+        "Automatisierte die Release-Verifizierung in GitLab CI und reduzierte fehlgeschlagene Releases um 40% in zwei Quartalen.",
+        "Betreute vier Junior-Tester bis zur ISTQB-Zertifizierung und übergab ihnen die Automatisierung."
+      ]
+    },
+    {
+      name: "Beispiel GmbH",
+      position: "QA Ingenieur",
+      startDate: "2017-03",
+      endDate: "2020-12",
+      summary: "API- und Integrationstests für zwölf Dienste hinter einem Vertragsverwaltungssystem.",
+      highlights: [
+        "Entwarf die API-Teststrategie mit REST Assured und Postman über zwölf Backend-Dienste.",
+        "Führte Xray-Reporting in Jira ein und gab Release-Managern den Fehlerstatus am selben Tag.",
+        "Senkte die Regressions-Fluchtrate über vier große Releases von 11% auf 3%."
+      ]
+    }
+  ],
+  projects: [
+    {
+      name: "ats Lesbarkeit",
+      description:
+        "Ein offener CV-Analysator, der bewertet, wie gut ein Bewerbermanagementsystem ein Dokument lesen kann, und die Korrekturen nach Wert sortiert auflistet.",
+      highlights: [
+        "Lieferte eine deterministische Bewertungsmaschine mit mehr als fünfhundert Unit-Tests.",
+        "Baute PDF- und DOCX-Exporte, die den eigenen Parser mit voller Punktzahl bestehen."
+      ],
+      keywords: ["TypeScript", "Next.js", "vitest"],
+      startDate: "2026-01",
+      endDate: "",
+      roles: ["Entwickler"],
+      entity: "Persönlich",
+      type: "Anwendung"
+    }
+  ],
+  education: [
+    {
+      institution: "Technische Universität Istanbul",
+      area: "Computertechnik",
+      studyType: "BSc",
+      startDate: "2011-09",
+      endDate: "2015-06",
+      score: "3.2",
+      courses: ["Verteilte Systeme", "Softwaretest", "Datenstrukturen"]
+    }
+  ],
+  skills: [
+    {
+      name: "Testautomatisierung",
+      level: "Senior",
+      keywords: ["Playwright", "Selenium", "TypeScript", "REST Assured", "Cypress"]
+    },
+    { name: "CI und Infrastruktur", keywords: ["GitLab CI", "Jenkins", "Docker", "Kubernetes", "SQL"] },
+    { name: "Prozess", keywords: ["Agile", "Scrum", "Xray", "Jira", "Teststrategie"] }
+  ],
+  languages: [
+    { language: "Türkisch", fluency: "Muttersprache" },
+    { language: "Englisch", fluency: "C1" },
+    { language: "Deutsch", fluency: "C1" }
+  ],
+  awards: [
+    {
+      title: "Tester des Jahres",
+      date: "2019",
+      awarder: "Beispiel GmbH",
+      summary: "Ausgezeichnet für die Regressionssuite, die die Release-Verifizierung halbierte."
+    }
+  ],
+  publications: [
+    {
+      name: "Flaky Tests in der kontinuierlichen Integration",
+      publisher: "Testing Magazine",
+      releaseDate: "2020-05",
+      url: "https://example.com/flaky",
+      summary: "Ein Leitfaden zum Isolieren und Reparieren flaky Tests in gemeinsamen Pipelines."
+    }
+  ],
+  volunteer: [
+    {
+      organization: "Kadin Yazilimci",
+      position: "Mentor",
+      startDate: "2019-01",
+      endDate: "2020-01",
+      summary: "Begleitete zwölf Quereinsteiger durch ihre ersten Automatisierungsrollen.",
+      highlights: ["Neun von zwölf fanden innerhalb eines Jahres eine Stelle."]
+    }
+  ],
+  interests: [{ name: "Radfahren", keywords: ["Gravel", "Bikepacking"] }],
+  references: [{ name: "Jane Doe", reference: "Auf Anfrage verfügbar." }]
+} as const;
