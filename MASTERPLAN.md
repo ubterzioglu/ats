@@ -53,11 +53,11 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 2 October 2026
 
-**50 of 75 batches done.** Phase 0 is complete bar one deletion, and Phase 1 is complete in full.
+**51 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
 
 | Phase | Batches | State |
 |---|---|---|
-| 0 — Groundwork | P0.1-P0.7, ST.1-ST.3 | Done, except the `P0.3` tree deletion |
+| 0 — Groundwork | P0.1-P0.7, ST.1-ST.3 | Done in full. The repository holds one architecture |
 | 1 — Deepen the engine | V.1-V.10, C.2-C.3, A.1-A.4, J.1-J.7 | Done |
 | 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1` landed, which unblocks `B.2` and `F.1`; `F.1` still gates most of module D |
 | 3 — Builder | E.1-E.10 | Done in full (`E.1a` alongside `E.1`) |
@@ -106,7 +106,7 @@ Verified in the repository, so no batch re-does it:
 | # | Problem | Impact | Owned by |
 |---|---|---|---|
 | ~~S1~~ fixed | `/analyze` sat behind a login gate ([`middleware.ts`](apps/web/middleware.ts)) | A product called "free for all" demands an account to run an analysis. Loss at the very top of the funnel. | **P0.1** |
-| S2 partly fixed | A partially-built server architecture (FastAPI, Postgres, Redis, Ollama) contradicts the live browser-based product | Direction confusion; server-side CV processing breaks the privacy promise | **P0.2**, **P0.3** |
+| ~~S2~~ fixed | A partially-built server architecture (FastAPI, Postgres, Redis, Ollama) contradicts the live browser-based product | Direction confusion; server-side CV processing breaks the privacy promise | **P0.2**, **P0.3** |
 | ~~S3~~ fixed | The interface was English-only | A barrier for the Turkish and German-speaking target audience | **P0.5**–**P0.7**, **J.1**–**J.7** |
 | ~~S4~~ fixed | The report view stacked eight equal-weight panels | The user has one question and the interface answers in ten equal voices | **V.5**–**V.8** |
 
