@@ -18,9 +18,9 @@ describe("F.4 Multi-ad comparison", () => {
   const context = buildContext(cvText);
 
   it("ranks the best fitting ad first", () => {
-    const perfectAd = "Backend engineer in New York. Needs Node.js and TypeScript. 3 years experience required.";
-    const partialAd = "Backend dev. Needs Node.js, TypeScript, and Kubernetes. 2 years experience.";
-    const poorAd = "Senior Python engineer. 8 years experience required. Django, PostgreSQL.";
+    const perfectAd = "We are seeking a highly motivated Backend engineer in New York to join our fast-paced startup environment and build scalable microservices. You must have a strong work ethic.\n\nRequirements:\n- Node.js\n- TypeScript\n- 3 years experience";
+    const partialAd = "We are seeking a Backend dev for our enterprise infrastructure team. You will be responsible for maintaining our core systems and ensuring high availability across our cloud environments.\n\nRequirements:\n- Node.js\n- TypeScript\n- Kubernetes\n- 2 years experience";
+    const poorAd = "We are looking for a Senior Python engineer to lead our data engineering efforts. You will architect robust data pipelines and mentor junior developers in best practices.\n\nRequirements:\n- Django\n- PostgreSQL\n- Python\n- 8 years experience";
 
     const ads: string[] = [poorAd, perfectAd, partialAd];
     

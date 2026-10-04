@@ -53,15 +53,15 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 2 October 2026
 
-**63 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
+**64 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
 
 | Phase | Batches | State |
 |---|---|---|
 | 0 — Groundwork | P0.1-P0.7, ST.1-ST.3 | Done in full. The repository holds one architecture |
 | 1 — Deepen the engine | V.1-V.10, C.2-C.3, A.1-A.4, J.1-J.7 | Done |
-| 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1`, `B.3`, `F.1`, `F.2` and `F.3` landed; `F.1` unblocks most of module D |
+| 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1`, `B.3`, `F.1`, `F.2`, `F.3` and `F.4` landed; `F.1` unblocks most of module D |
 | 3 — Builder | E.1-E.10 | Done in full (`E.1a` alongside `E.1`) |
-| 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1`, `L.2`, `L.3`, `L.4`, `D.1`, `D.2` and `D.3` done; `D.4`-`D.7` open |
+| 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1`, `L.2`, `L.3`, `L.4`, `D.1`, `D.2`, `D.3` and `D.6` done; `D.4`, `D.5`, `D.7` open |
 | 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Started: `G.1`, `H.1`, `H.2`, `H.3`, `I.1` and `I.2` done; G.2-G.5, `H.4` and `F.6` open |
 
 The gate is clean: lint, typecheck, 674 tests across 64 files, and a production build.
@@ -591,7 +591,7 @@ in place.
 | ~~**F.1**~~ ✅ | **Ad parsing.** Required skills, preferred skills, seniority, language requirement, location/remote, salary if present. `KeywordTerm.tier` already carries required/preferred. | L | B.1 | The required/preferred split is reasonable on the test ad set |
 | **F.2** | **Red flags.** Over-long skill lists, a years requirement contradicting the seniority, vague role definition. | M | F.1 | Each flag names its evidence |
 | **F.3** | **Deterministic eligibility checklist.** | M | F.1 | No AI involved |
-| **F.4** | **Multi-ad comparison.** 5–10 ads, best fit. | L | F.3, ST.1 | Ten ads compared in-browser |
+| ~~**F.4**~~ ✅ | **Multi-ad comparison.** 5–10 ads, best fit. | L | F.3, ST.1 | Ten ads compared in-browser |
 | **F.5** | **Learning priority list.** The skills most often missing across the target role. | M | F.4 | Ordered by frequency across stored ads |
 | **F.6** | **Ghost posting check.** Greenhouse / Lever / Ashby public job-board APIs via a server proxy. Carries no CV data, so principle 2 holds. | L | F.1 | The proxy carries no candidate data |
 
