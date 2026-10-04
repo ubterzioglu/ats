@@ -53,28 +53,7 @@ YENİ MESAJ ANAHTARI
 
 # DALGA 1 — şimdi başlanabilir
 
-## F.1 — İlan ayrıştırma `L` · kritik yol
 
-```
-MASTERPLAN'den F.1'i uygula: ilanı gerçekten okuyan bir ayrıştırıcı.
-
-Bugün lib/scoring/job-ad.ts 37 satır ve tek şey okuyor: "en az kaç yıl deneyim".
-Şunları da okuyacak:
-  - zorunlu / tercihen beceri ayrımı (KeywordTerm.tier bunu zaten taşıyor,
-    lib/scoring/keywords.ts'teki başlık durum makinesi tier'ı satır satır biliyor —
-    onu kullan, ikinci bir başlık sözlüğü yazma)
-  - kıdem seviyesi (junior / mid / senior / lead / principal; EN+DE+TR)
-  - dil şartı (hangi dil, hangi seviye — "fließend Deutsch", "akıcı İngilizce")
-  - lokasyon ve uzaktan çalışma (ofis / hibrit / tam uzaktan, şehir)
-  - maaş, yazıyorsa (aralık, para birimi, periyot)
-
-Her alan okunamadığında null döner — tahmin yok. Her okunan alan, okunduğu satırı
-`source` olarak taşır; F.2 kırmızı bayrakları o alıntıya dayandıracak.
-
-Alan: lib/scoring/job-ad.ts, types/analysis.ts. Saf kalacak.
-Kabul: test ilan setinde zorunlu/tercihen ayrımı makul.
-Bu batch 4 batch'i birden açıyor (F.2, F.3, F.6, D.2) — en kritik iş bu.
-```
 
 ## B.2 — Mod karşılaştırma özeti `M`
 
