@@ -71,17 +71,7 @@ YENİ MESAJ ANAHTARI
 
 # DALGA 2 — F.1 bitince
 
-## F.2 — Kırmızı bayraklar `M`
 
-```
-MASTERPLAN'den F.2'yi uygula. F.1'in çıkardığı alanların üstüne kurulur.
-
-İlandaki şüpheli şeyleri işaretle: aşırı uzun beceri listesi, kıdemle çelişen yıl
-şartı ("junior" diyor ama 8 yıl istiyor), muğlak rol tanımı.
-
-Kabul: her bayrak KANITINI adıyla söyler — ilanın hangi satırından çıktığını. F.1 her
-alanda `source` satırını taşıyor, onu kullan. Gerekçesiz bayrak gösterme.
-```
 
 ## F.3 — Deterministik uygunluk kontrol listesi `M`
 
