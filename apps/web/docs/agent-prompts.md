@@ -89,17 +89,7 @@ ilan kimliği gider. İlke 2 böyle korunur. Bunu bir testle kanıtla.
 Kabul: proxy aday verisi taşımıyor.
 ```
 
-## D.2 — Eksik terim kartları `M`
 
-```
-MASTERPLAN'den D.2'yi uygula.
-
-CV'de eksik olan her ilan terimi için bir kart: terim ilanda nerede geçiyor, ne kadar
-merkezi (F.1'in zorunlu/tercihen ayrımı + terimin ağırlığı), ve CV'de nereye girerdi.
-
-Kabul: her kart ilandan ALINTI yapar. Alıntısı olmayan kart gösterilmez.
-Eksik terimler matchTerms'ün `missing` listesinden gelir — kendi listeni çıkarma.
-```
 
 ---
 
