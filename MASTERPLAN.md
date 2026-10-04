@@ -53,7 +53,7 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 2 October 2026
 
-**64 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
+**65 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
 
 | Phase | Batches | State |
 |---|---|---|

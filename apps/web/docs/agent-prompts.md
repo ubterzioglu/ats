@@ -107,13 +107,7 @@ Kabul: on ilan tarayıcı içinde karşılaştırılıyor — sunucuya hiçbir �
 Karşılaştırma F.3'ün kontrol listesi ve matchTerms kapsaması üzerinden yürür.
 ```
 
-## D.6 — Varyant karşılaştırma `M` · D.1'den sonra
 
-```
-MASTERPLAN'den D.6'yı uygula.
-Ana CV'nin puanı ile uyarlanmış varyantın puanı yan yana. Kabul: iki puan birlikte
-gösteriliyor. Fark neyden geliyor, boyut boyut okunabilsin.
-```
 
 ## G.2 — Kart bağlantıları `M` · G.1 + D.1'den sonra
 
