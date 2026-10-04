@@ -13,6 +13,7 @@ export interface StoreSchema {
   readonly trail: TrailPoint;
   readonly drafts: DraftRecord;
   readonly variants: VariantRecord;
+  readonly applications: ApplicationRecord;
 }
 
 export type StoreName = keyof StoreSchema;
@@ -83,6 +84,23 @@ export interface VariantRecord {
   readonly overrides: unknown;
 }
 
+export type ApplicationStage = "saved" | "applied" | "interview" | "offer" | "rejected";
+
+export interface ApplicationRecord {
+  readonly id: string;
+  readonly companyName: string;
+  readonly roleTitle: string;
+  readonly stage: ApplicationStage;
+  readonly url?: string;
+  readonly jobId?: string;
+  readonly variantId?: string;
+  readonly scoreAtApplication?: number;
+  readonly notes?: string;
+  readonly contacts?: readonly string[];
+  readonly updatedAt: number;
+  readonly createdAt: number;
+}
+
 export interface Migration {
   readonly version: number;
   readonly apply: (db: IDBDatabase) => void;
@@ -121,6 +139,14 @@ export const MIGRATIONS: readonly Migration[] = [
       const variants = db.createObjectStore("variants", { keyPath: "id" });
       variants.createIndex("jobId", "jobId");
     }
+  },
+  {
+    version: 6,
+    apply(db) {
+      const applications = db.createObjectStore("applications", { keyPath: "id" });
+      applications.createIndex("stage", "stage");
+      applications.createIndex("updatedAt", "updatedAt");
+    }
   }
 ];
 
@@ -129,4 +155,4 @@ export const DB_VERSION = MIGRATIONS.reduce(
   1
 );
 
-export const STORE_NAMES: readonly StoreName[] = ["meta", "history", "trail", "drafts", "variants"];
+export const STORE_NAMES: readonly StoreName[] = ["meta", "history", "trail", "drafts", "variants", "applications"];

@@ -23,7 +23,8 @@
     "signIn": "Sign in",
     "signOut": "Sign out",
     "signInToSave": "Sign in to save reports",
-    "disclaimer": "The checks are heuristics built from how mainstream parsers behave, not a reproduction of any named vendor. A good score means nothing is standing between your CV and a human reader; it is not a prediction that you will be invited."
+    "disclaimer": "The checks are heuristics built from how mainstream parsers behave, not a reproduction of any named vendor. A good score means nothing is standing between your CV and a human reader; it is not a prediction that you will be invited.",
+    "applications": "Applications"
   },
   "home": {
     "headline": "Your CV is read as text, not as a design.",
@@ -529,5 +530,24 @@
     "eyebrow": "shared report · {date}",
     "lede": "Scores and advice only. The CV itself was never stored.",
     "cta": "Run your own CV through it"
+  },
+  "kanban": {
+    "heading": "Applications",
+    "lede": "Track your applications. Data stays on your device.",
+    "add": "Add Application",
+    "edit": "Edit",
+    "delete": "Delete",
+    "companyName": "Company",
+    "roleTitle": "Role",
+    "url": "Job ad URL (optional)",
+    "save": "Save",
+    "cancel": "Cancel",
+    "stages": {
+      "saved": "Saved",
+      "applied": "Applied",
+      "interview": "Interview",
+      "offer": "Offer",
+      "rejected": "Rejected"
+    }
   }
 }

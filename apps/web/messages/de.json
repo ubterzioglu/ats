@@ -23,7 +23,8 @@
     "signIn": "Anmelden",
     "signOut": "Abmelden",
     "signInToSave": "Anmelden, um Berichte zu speichern",
-    "disclaimer": "Die Prüfungen sind Heuristiken aus dem Verhalten gängiger Parser, nicht der Nachbau eines bestimmten Anbieters. Eine gute Punktzahl heißt, dass nichts mehr zwischen Ihrem Lebenslauf und einem menschlichen Leser steht; sie sagt nicht voraus, dass Sie eingeladen werden."
+    "disclaimer": "Die Prüfungen sind Heuristiken aus dem Verhalten gängiger Parser, nicht der Nachbau eines bestimmten Anbieters. Eine gute Punktzahl heißt, dass nichts mehr zwischen Ihrem Lebenslauf und einem menschlichen Leser steht; sie sagt nicht voraus, dass Sie eingeladen werden.",
+    "applications": "Bewerbungen"
   },
   "home": {
     "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Gestaltung.",
@@ -529,5 +530,24 @@
     "eyebrow": "geteilter Bericht · {date}",
     "lede": "Nur Punktzahlen und Hinweise. Der Lebenslauf selbst wurde nie gespeichert.",
     "cta": "Den eigenen Lebenslauf durchlaufen lassen"
+  },
+  "kanban": {
+    "heading": "Bewerbungen",
+    "lede": "Verfolgen Sie Ihre Bewerbungen. Daten bleiben auf Ihrem Gerät.",
+    "add": "Bewerbung hinzufügen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "companyName": "Unternehmen",
+    "roleTitle": "Position",
+    "url": "Stellenanzeige URL (optional)",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "stages": {
+      "saved": "Gespeichert",
+      "applied": "Beworben",
+      "interview": "Interview",
+      "offer": "Angebot",
+      "rejected": "Abgelehnt"
+    }
   }
 }

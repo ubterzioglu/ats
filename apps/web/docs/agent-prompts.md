@@ -63,17 +63,7 @@ YENİ MESAJ ANAHTARI
 
 
 
-## G.1 — Kanban `L`
 
-```
-MASTERPLAN'den G.1'i uygula.
-
-Başvuru takip panosu: Kaydedildi → Başvuruldu → Mülakat → Teklif/Ret.
-ST.1 üstüne kur. Hesapsız, tamamen yerel çalışacak — bu bir hesap açtırma kancası değil.
-
-Kabul: hesap olmadan tam kullanılabilir.
-G.2–G.5 bunun üstüne gelecek, o yüzden kart modelini genişletilebilir bırak.
-```
 
 ## H.3 — İlana özel mülakat soruları `M`
 

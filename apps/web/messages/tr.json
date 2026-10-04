@@ -23,7 +23,8 @@
     "signIn": "Giriş yap",
     "signOut": "Çıkış yap",
     "signInToSave": "Raporları kaydetmek için giriş yapın",
-    "disclaimer": "Kontroller, yaygın ayrıştırıcıların davranışından türetilmiş sezgisel kurallardır; adı geçen hiçbir ürünün kopyası değildir. İyi bir puan, CV'niz ile insan okuyucu arasında hiçbir engel kalmadığı anlamına gelir; davet alacağınızın öngörüsü değildir."
+    "disclaimer": "Kontroller, yaygın ayrıştırıcıların davranışından türetilmiş sezgisel kurallardır; adı geçen hiçbir ürünün kopyası değildir. İyi bir puan, CV'niz ile insan okuyucu arasında hiçbir engel kalmadığı anlamına gelir; davet alacağınızın öngörüsü değildir.",
+    "applications": "Başvurular"
   },
   "home": {
     "headline": "CV'niz tasarım olarak değil, metin olarak okunur.",
@@ -529,5 +530,24 @@
     "eyebrow": "paylaşılan rapor · {date}",
     "lede": "Yalnızca puanlar ve tavsiyeler. CV'nin kendisi hiçbir zaman saklanmadı.",
     "cta": "Kendi CV'nizi de geçirin"
+  },
+  "kanban": {
+    "heading": "Başvurular",
+    "lede": "Başvurularınızı takip edin. Verileriniz cihazınızda kalır.",
+    "add": "Başvuru Ekle",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "companyName": "Şirket",
+    "roleTitle": "Pozisyon",
+    "url": "İlan URL (isteğe bağlı)",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "stages": {
+      "saved": "Kaydedildi",
+      "applied": "Başvuruldu",
+      "interview": "Mülakat",
+      "offer": "Teklif",
+      "rejected": "Reddedildi"
+    }
   }
 }

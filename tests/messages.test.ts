@@ -76,7 +76,8 @@ const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
     "editor.fields.references.name",
     "editor.fields.projects.url",
     "editor.fields.projects.entity",
-    "editor.fields.meta.version"
+    "editor.fields.meta.version",
+    "kanban.stages.interview"
   ])
 };
 

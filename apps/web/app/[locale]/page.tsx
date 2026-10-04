@@ -30,6 +30,9 @@ export default async function HomePage({ params }: HomePageProps) {
       <header className="flex items-center justify-between gap-4 py-5">
         <span className="font-mono text-sm font-medium tracking-tight">{brand("name")}</span>
         <div className="flex items-center gap-4">
+          <Link href="/applications" className="text-sm font-medium text-muted transition-colors hover:text-ink">
+            {common("applications")}
+          </Link>
           <ThemeToggle />
           <LanguageSwitcher />
           <Link href="/login" className="text-sm text-muted transition-colors hover:text-ink">
