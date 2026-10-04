@@ -51,9 +51,9 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ## 1. Current state
 
-### Status — 2 October 2026
+### Status — 4 October 2026
 
-**70 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
+**72 of 76 batches done.** Phases 0, 1 and 3 are complete in full.
 
 | Phase | Batches | State |
 |---|---|---|
@@ -62,9 +62,9 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 | 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1`, `B.3`, `F.1`, `F.2`, `F.3` and `F.4` landed; `F.1` unblocks most of module D |
 | 3 — Builder | E.1-E.10 | Done in full (`E.1a` alongside `E.1`) |
 | 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1`, `L.2`, `L.3`, `L.4`, `D.1`, `D.2`, `D.3` and `D.6` done; `D.4`, `D.5`, `D.7` open |
-| 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Started: `G.1`, `G.2`, `G.3`, `G.4`, `G.5`, `H.1`, `H.2`, `H.3`, `H.4`, `I.1` and `I.2` done; `F.6` open |
+| 5 — Close the loop | G.1-G.5, H.0-H.4, I.1-I.2, F.6 | Started: `G.1`, `G.2`, `G.3`, `G.4`, `G.5`, `H.0`, `H.1`, `H.2`, `H.3`, `H.4`, `I.1` and `I.2` done; `F.6` open |
 
-The gate is clean: lint, typecheck, 674 tests across 64 files, and a production build.
+The gate is clean: lint, typecheck, 759 tests across 79 files, and a production build.
 
 See `apps/web/docs/handover-2026-10-03.md` for what is open, what is blocked on what, and the
 decisions already taken that constrain the batches still to come.
@@ -655,10 +655,11 @@ The reason candidates come back; the module that closes the loop. Local-only in 
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
+| ~~**H.0**~~ ✅ | **Interview mode in the workbench.** Fourth view in `/analyze`: STAR cards, template questions, ad-specific questions and practice mode. No new route — `buildStoryBank` needs the raw CV text, which the workbench already holds. | M | H.1, H.2, H.3, H.4 | All four sub-panels reachable from the report view; H.1/H.2/H.4 work with model off; H.4 suggestion traces to a named card with shared words |
 | ~~**H.1**~~ ✅ | **STAR story bank.** Situation / Task / Action / Result cards built from CV achievement bullets. | L | ST.1 | Usable with every AI layer off |
 | ~~**H.2**~~ ✅ | **Template questions.** Common questions mapped to story cards. | M | H.1 | No AI required |
 | ~~**H.3**~~ OK | **Ad-specific questions.** Layer 2/3. | M | H.2, L.4 | Generated questions cite terms from the ad |
-| **H.4** | **Practice mode.** The question is shown, the candidate writes an answer, a relevant story card is suggested. | M | H.3 | The suggestion is traceable to a card |
+| ~~**H.4**~~ ✅ | **Practice mode.** The question is shown, the candidate writes an answer, a relevant story card is suggested. | M | H.3 | The suggestion is traceable to a card |
 
 ### Module I — LinkedIn consistency check
 
@@ -715,7 +716,7 @@ E.2 ─► E.8, E.10;   E.3 + A.2 ─► E.9
 L.1 ─┬─► L.2, L.3
      └─► L.4 ─► D.4 ─► D.5, D.7
 D.1 ─► D.6;   D.2 ─► D.3 ─► D.4
-G.1 ─► G.2, G.3, G.4;   H.1 ─► H.2 ─► H.3 ─► H.4
+G.1 ─► G.2, G.3, G.4;   H.1 ─► H.2 ─► H.3 ─► H.4 ─► H.0
 A.2 ─► I.1 ─► I.2
 ```
 

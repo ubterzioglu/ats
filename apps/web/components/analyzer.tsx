@@ -38,10 +38,11 @@ import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
 import { KeywordPanel } from "./keyword-panel";
 import { ParserView } from "./parser-view";
+import { InterviewMode } from "./interview/interview-mode";
 import { TailorMode } from "./tailor/tailor-mode";
 
 
-type View = "input" | "report" | "tailor";
+type View = "input" | "report" | "tailor" | "interview";
 
 interface AnalyzerProps {
   readonly sharingEnabled: boolean;
@@ -504,6 +505,9 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 {t("tailorToAd")}
               </button>
             ) : null}
+            <button type="button" className="btn-quiet" onClick={() => setView("interview")}>
+              {t("prepareInterview")}
+            </button>
           </div>
 
           {shareUrl ? (
@@ -601,6 +605,45 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 cvText={cvText}
                 onApply={applyAndRescore}
                 draftLetter={modelTier === "none" ? undefined : draftLetter}
+              />
+            </div>
+
+            <div className="space-y-5">
+              <MeasureRail
+                result={result}
+                previous={previous ?? lastVisit}
+                comparedTo={previous ? "previousRun" : "lastVisit"}
+                sticky
+              />
+              <ParserView
+                text={cvText}
+                highlights={highlights}
+                markedIndex={markedIndex}
+                caption={t("parserCaption", {
+                  words: result.stats.words,
+                  lines: result.stats.lines,
+                  language: result.language.toUpperCase()
+                })}
+              />
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {view === "interview" && result ? (
+        <div className="space-y-5">
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" className="btn-quiet" onClick={() => setView("report")}>
+              {t("backToReport")}
+            </button>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+            <div className="space-y-5">
+              <InterviewMode
+                cvText={cvText}
+                terms={[...result.keywords.matched, ...result.keywords.missing]}
+                modelTier={modelTier}
               />
             </div>
 

@@ -25,7 +25,9 @@ const AI_SURFACES: ReadonlySet<string> = new Set([
   // The keyword panel's coverage section, which a model produces.
   "components/keyword-panel.tsx",
   // The cover letter: live edge while the model drafts, and around the draft.
-  "components/tailor/cover-letter-panel.tsx"
+  "components/tailor/cover-letter-panel.tsx",
+  // Ad-specific interview questions: live edge while the model generates.
+  "components/interview/ad-questions-panel.tsx"
 ]);
 
 function sourceFiles(dir: string): string[] {
