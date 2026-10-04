@@ -53,19 +53,37 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 4 October 2026
 
-**72 of 76 batches done.** Phases 0, 1 and 3 are complete in full.
+**72 of 76 batches landed; 66 of them are reachable from a screen.** Phases 0, 1 and 3 are complete in full. Six landed batches are engine only (`F.2`, `F.3`, `F.4`, `D.6`, `G.3`, `G.4`): their commits touched no file under `components/` or `app/`, so no user can reach them. A batch is done when a user can reach it, the gate is green and its acceptance is proven by a test. See "Surface debt" below.
 
 | Phase | Batches | State |
 |---|---|---|
 | 0 — Groundwork | P0.1-P0.7, ST.1-ST.3 | Done in full. The repository holds one architecture |
 | 1 — Deepen the engine | V.1-V.10, C.2-C.3, A.1-A.4, J.1-J.7 | Done |
-| 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1`, `B.3`, `F.1`, `F.2`, `F.3` and `F.4` landed; `F.1` unblocks most of module D |
+| 2 — Semantic layer | B.1-B.3, F.1-F.5 | `B.1`-`B.3` and `F.1`-`F.4` landed; `F.2`-`F.4` are engine only. `F.5` open |
 | 3 — Builder | E.1-E.10 | Done in full (`E.1a` alongside `E.1`) |
-| 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1`, `L.2`, `L.3`, `L.4`, `D.1`, `D.2`, `D.3` and `D.6` done; `D.4`, `D.5`, `D.7` open |
-| 5 — Close the loop | G.1-G.5, H.0-H.4, I.1-I.2, F.6 | Started: `G.1`, `G.2`, `G.3`, `G.4`, `G.5`, `H.0`, `H.1`, `H.2`, `H.3`, `H.4`, `I.1` and `I.2` done; `F.6` open |
+| 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1`-`L.4`, `D.1`-`D.3`, `D.6` and `D.7` landed (`D.6` engine only). `D.4` and `D.5` have a surface and need their acceptance verified |
+| 5 — Close the loop | G.1-G.5, H.0-H.4, I.1-I.2, F.6 | `G.1`-`G.5`, `H.0`-`H.4`, `I.1` and `I.2` landed (`G.3`, `G.4` engine only). `F.6` open |
 
 The gate is clean: lint, typecheck, 759 tests across 79 files, and a production build.
 
+### Surface debt
+
+Found on 4 October by checking every exported engine function against `components/` and `app/`
+(47 `.ts` and `.tsx` files). The function-name check is the reliable one; a keyword grep gave a false
+negative on `D.4` and was discarded. Each row below has working, tested logic and no screen.
+
+| Batch | Exported, unreached | Where it belongs |
+|---|---|---|
+| `F.2` red flags | `AnalysisResult.jobAd.redFlags` | The report, beside the job-ad section. Each flag must show its evidence line |
+| `F.3` suitability | `AnalysisResult.suitability` | The report, as a checklist: passed, failed, unknown. No AI involved |
+| `F.4` multi-ad comparison | `compareAds` (`lib/scoring/compare.ts`) | A compare view fed by `lib/store/jobs.ts`, 5-10 ads, in the browser |
+| `D.6` variant comparison | `diff`, `patch` (`lib/variants/diff.ts`) | Tailoring mode: master score and variant score shown together |
+| `G.3` follow-up reminders | `generateReminders` (`lib/store/reminders.ts`) | The kanban cards |
+| `G.4` CSV and JSON export | `exportApplicationsTo{JSON,CSV}`, `importApplicationsFrom{JSON,CSV}` | The kanban toolbar. The acceptance is a round trip |
+
+Reached, for contrast: `B.2` (`keyword-panel.tsx`), `B.3`, `L.2` (`ollama-setup.tsx`), `L.3`
+(`byok-consent-listener.tsx`), `D.7` (`cover-letter-panel.tsx`), and `D.4`'s rewrite path
+(`analyzer.tsx`).
 See `apps/web/docs/handover-2026-10-03.md` for what is open, what is blocked on what, and the
 decisions already taken that constrain the batches still to come.
 
@@ -581,17 +599,17 @@ in place.
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
 | ~~**B.1**~~ ✅ | **Three matching modes.** Strict (literal), normalized (synonyms, abbreviations, taxonomy), semantic (Layer 1 embeddings). One engine, three modes. | L | J.3 | The same CV and ad produce consistently different, explainable results; semantic runs entirely in the browser |
-| **B.2** | **Mode comparison summary.** "61 strict, 78 semantic. The difference comes from these 4 terms." | M | B.1 | The difference is attributable to named terms |
-| **B.3** | **Semantic labelling.** Semantic hits presented as "possible match", never as a confirmed skill. No vendor names on profile cards. | S | B.2 | No semantic hit is presented as certain |
+| ~~**B.2**~~ ✅ | **Mode comparison summary.** "61 strict, 78 semantic. The difference comes from these 4 terms." | M | B.1 | The difference is attributable to named terms |
+| ~~**B.3**~~ ✅ | **Semantic labelling.** Semantic hits presented as "possible match", never as a confirmed skill. No vendor names on profile cards. | S | B.2 | No semantic hit is presented as certain |
 
 ### Module F — Job ad analyser
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
 | ~~**F.1**~~ ✅ | **Ad parsing.** Required skills, preferred skills, seniority, language requirement, location/remote, salary if present. `KeywordTerm.tier` already carries required/preferred. | L | B.1 | The required/preferred split is reasonable on the test ad set |
-| **F.2** | **Red flags.** Over-long skill lists, a years requirement contradicting the seniority, vague role definition. | M | F.1 | Each flag names its evidence |
-| **F.3** | **Deterministic eligibility checklist.** | M | F.1 | No AI involved |
-| ~~**F.4**~~ ✅ | **Multi-ad comparison.** 5–10 ads, best fit. | L | F.3, ST.1 | Ten ads compared in-browser |
+| ~~**F.2**~~ ✅ | **Red flags.** Over-long skill lists, a years requirement contradicting the seniority, vague role definition. | M | F.1 | Each flag names its evidence *Engine only: no screen reaches it yet, see "Surface debt" in section 1.* |
+| ~~**F.3**~~ ✅ | **Deterministic eligibility checklist.** | M | F.1 | No AI involved *Engine only: no screen reaches it yet, see "Surface debt" in section 1.* |
+| ~~**F.4**~~ ✅ | **Multi-ad comparison.** 5–10 ads, best fit. | L | F.3, ST.1 | Ten ads compared in-browser *Engine only: no screen reaches it yet, see "Surface debt" in section 1.* |
 | **F.5** | **Learning priority list.** The skills most often missing across the target role. | M | F.4 | Ordered by frequency across stored ads |
 | **F.6** | **Ghost posting check.** Greenhouse / Lever / Ashby public job-board APIs via a server proxy. Carries no CV data, so principle 2 holds. | L | F.1 | The proxy carries no candidate data |
 
@@ -619,8 +637,8 @@ produces can be read by a parser.
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
 | ~~**L.1**~~ OK | **`LLMProvider` in TypeScript.** `id`, `health()`, `chat()`, `structured<T>()`. Partly exists under `lib/ai/providers/`. | M | — | Swapping provider changes no scoring behaviour |
-| **L.2** | **Layer 2 — the user's own Ollama.** An `OLLAMA_ORIGINS` setup guide, a "test connection" button, clear failure messages. Owns review focus 4. | M | L.1 | Every failure mode produces a usable message, never a blocked UI |
-| **L.3** | **Layer 3 — BYOK.** The key is held in the browser only and never sent to our server. A visible "your CV will be sent to: …" notice on every request. | M | L.1 | The key never leaves the browser; the notice appears on every call |
+| ~~**L.2**~~ ✅ | **Layer 2 — the user's own Ollama.** An `OLLAMA_ORIGINS` setup guide, a "test connection" button, clear failure messages. Owns review focus 4. | M | L.1 | Every failure mode produces a usable message, never a blocked UI |
+| ~~**L.3**~~ ✅ | **Layer 3 — BYOK.** The key is held in the browser only and never sent to our server. A visible "your CV will be sent to: …" notice on every request. | M | L.1 | The key never leaves the browser; the notice appears on every call |
 | ~~**L.4**~~ OK | **Schema validation of all LLM output.** Output failing its schema is never shown. Owns the rest of review focus 4. | M | L.1 | Malformed output is rejected and the user told plainly |
 
 ### Module D — Tailoring workshop
@@ -630,10 +648,10 @@ produces can be read by a parser.
 | ~~**D.1**~~ OK | **CV variants.** Each variant bound to one ad and derived from the master CV, stored in IndexedDB. | L | ST.1, E.2 | Variants persist across reloads |
 | ~~**D.2**~~ ✅ | **Missing-term cards.** Where the term appears in the ad, how central it is, and where it would go in the CV. | M | F.1 | Each card cites the ad |
 | ~~**D.3**~~ ✅ | **"I have this skill" gate.** No term enters a CV without confirmation, enforced by an automated test. | M | D.2 | A test proves an unconfirmed skill cannot be added |
-| **D.4** | **Bullet rewriting.** Rephrases existing bullets only. No invented numbers; placeholders (`[X%]`, `[N people]`) where a measurable result is missing. Builds on `lib/ai/tasks/rewrite.ts` and `grounding.ts`. | L | L.4, D.3 | Output containing a number or organisation absent from the input is rejected |
-| **D.5** | **Per-bullet diff accept/reject.** | M | D.4 | Each change independently acceptable |
-| **D.6** | **Variant comparison.** Master score against tailored variant score. | M | D.1 | Both scores shown together |
-| **D.7** | **Cover letter helper.** Same guardrails as D.4. | M | D.4 | No invented claims |
+| **D.4** | **Bullet rewriting.** Rephrases existing bullets only. No invented numbers; placeholders (`[X%]`, `[N people]`) where a measurable result is missing. Builds on `lib/ai/tasks/rewrite.ts` and `grounding.ts`. | L | L.4, D.3 | Output containing a number or organisation absent from the input is rejected *Status: a surface exists (`components/analyzer.tsx` `draftFix`: rule first, model second, one line at a time, re-measured on apply) and `grounding` rejects invented numbers, technologies and organisations (`19e67f9`). The acceptance looks met; verify it with a test through the surface, then tick.* |
+| **D.5** | **Per-bullet diff accept/reject.** | M | D.4 | Each change independently acceptable *Status: each draft applies to one line independently; there is no side-by-side accept/reject view. Verify against the acceptance wording before ticking.* |
+| ~~**D.6**~~ ✅ | **Variant comparison.** Master score against tailored variant score. | M | D.1 | Both scores shown together *Engine only: no screen reaches it yet, see "Surface debt" in section 1.* |
+| ~~**D.7**~~ ✅ | **Cover letter helper.** Same guardrails as D.4. | M | D.4 | No invented claims |
 
 ### Module G — Application tracker
 
@@ -643,8 +661,8 @@ The reason candidates come back; the module that closes the loop. Local-only in 
 |---|---|---|---|---|
 | ~~**G.1**~~ OK | **Kanban.** Saved → Applied → Interview → Offer/Rejected. | L | ST.1 | Fully usable without an account |
 | ~~**G.2**~~ ✅ | **Card links.** The ad, the CV variant used, the score at the time of applying, notes, contacts. | M | G.1, D.1 | Each card resolves its linked records |
-| **G.3** | **Follow-up reminders.** e.g. "no reply for 7 days". | M | G.1 | Reminders computed locally |
-| **G.4** | **CSV and JSON export.** | S | G.1 | Round-trips |
+| ~~**G.3**~~ ✅ | **Follow-up reminders.** e.g. "no reply for 7 days". | M | G.1 | Reminders computed locally *Engine only: no screen reaches it yet, see "Surface debt" in section 1.* |
+| ~~**G.4**~~ ✅ | **CSV and JSON export.** | S | G.1 | Round-trips *Engine only: no screen reaches it yet, see "Surface debt" in section 1.* |
 | ~~**G.5**~~ ✅ | **One-click deletion.** | S | G.1, ST.3 | Removes everything, locally |
 
 > Encrypted server sync is deliberately **not** in this pass: a large security surface, a key
