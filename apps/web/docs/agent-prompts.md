@@ -1,9 +1,6 @@
 # Kalan işler — batch batch agent prompt'ları
 
-29 batch kaldı. Her biri için aşağıda hazır bir prompt var. Kullanımı: **ortak başlığı** kopyala,
-altına ilgili batch bloğunu yapıştır, agent'a ver.
-
-Dalgalar bağımlılığa göre sıralı. Aynı dalgadaki işler birbirinden bağımsızdır — paralel verilebilir.
+Tüm batch'lerin kodu ve testleri tamamlandı. Kalan iş: tarayıcı doğrulaması ve deploy.
 
 ---
 
@@ -14,8 +11,8 @@ C:\temp_private\ats deposunda çalışıyorsun.
 
 ÖNCE OKU
   AGENTS.md — mimari kuralları, puanlama değişmezi, gizlilik sözleşmesi, kod stili.
-  apps/web/docs/handover-2026-10-03.md — alınmış kararlar ve dosya sahipliği.
-  MASTERPLAN.md bölüm 8 — batch tanımları ve bağımlılıklar.
+  apps/web/docs/handover-2026-10-04.md — bugün ne yapıldı, ne kaldı.
+  MASTERPLAN.md bölüm 1 — mevcut durum.
 
 DEĞİŞMEZLER — PAZARLIKSIZ
   1. lib/scoring/ saftır. DOM yok, ağ yok, React yok, I/O yok. lib/ai'den HİÇBİR ŞEY
@@ -51,136 +48,23 @@ YENİ MESAJ ANAHTARI
 
 ---
 
-# DALGA 1 — şimdi başlanabilir
+# KALAN İŞLER
 
+## D.4 ve D.5 — tarayıcı doğrulaması
 
+Kod ve testler tamamlandı. Grounding uydurma sayı, teknoloji ve kurum adını reddediyor.
+Her work item'ın kendi kabul/ret butonu var. Ama MASTERPLAN "ekran yolundan doğrulama
+bekliyor" diyor.
 
+Gerçek bir tarayıcıda:
+1. Bir CV ve ilan ile analiz çalıştır.
+2. Tailor görünümüne git.
+3. Bir taslağı kabul et, diğerini ret et.
+4. Metnin beklendiği gibi değiştiğini doğrula.
+5. Uydurma sayı içeren bir taslağın reddedildiğini ve kullanıcının nedenini gördüğünü
+   doğrula.
 
-
-
-
-
-
-
-
-
-
-
-
----
-
-# DALGA 2 — F.1 bitince
-
-
-
-
-
-## F.6 — Hayalet ilan kontrolü `L`
-
-```
-MASTERPLAN'den F.6'yı uygula.
-
-Greenhouse / Lever / Ashby'nin herkese açık iş panosu API'leri üzerinden ilanın hâlâ
-yayında olup olmadığını kontrol et. Sunucu tarafı proxy üzerinden (CORS).
-
-KRİTİK: proxy HİÇBİR aday verisi taşımaz — ne CV metni, ne isim, ne e-posta. Yalnızca
-ilan kimliği gider. İlke 2 böyle korunur. Bunu bir testle kanıtla.
-
-Kabul: proxy aday verisi taşımıyor.
-```
-
-
-
----
-
-# DALGA 3
-
-
-
-## F.4 — Çoklu ilan karşılaştırma `L` · F.3'ten sonra
-
-```
-MASTERPLAN'den F.4'ü uygula.
-
-5–10 ilanı yan yana koy, en iyi uyumu göster. ST.1 ile ilanlar yerelde saklanır.
-Kabul: on ilan tarayıcı içinde karşılaştırılıyor — sunucuya hiçbir şey gitmeden.
-Karşılaştırma F.3'ün kontrol listesi ve matchTerms kapsaması üzerinden yürür.
-```
-
-
-
-
-
-
-
-
-
----
-
-# DALGA 4
-
-## D.4 — Madde yeniden yazımı `L` · L.4 + D.3'ten sonra
-
-```
-MASTERPLAN'den D.4'ü uygula. Bu modülün en riskli batch'i.
-
-YALNIZCA var olan maddeleri yeniden ifade eder. Uydurulmuş sayı YOK. Ölçülebilir bir
-sonuç eksikse yer tutucu bırakılır: [X%], [N kişi].
-
-lib/ai/tasks/rewrite.ts ve lib/ai/grounding.ts üstüne kur — ikisi de hazır.
-Kabul: GİRDİDE OLMAYAN bir sayı ya da kurum adı içeren çıktı REDDEDİLİR. Bu bir
-tercih değil, kapı. Reddi testle kanıtla, hem sayı hem kurum adı için.
-
-Önce kural, sonra model (karar 6): deterministik bir yeniden yazım kuralı varsa onu
-kullan, modeli yalnızca kural yoksa çağır. Anında, indirme yok, uyduramaz.
-```
-
----
-
-# DALGA 5
-
-## D.5 — Madde madde kabul/ret `M` · D.4'ten sonra
-
-```
-MASTERPLAN'den D.5'i uygula.
-Her değişiklik ayrı ayrı kabul veya reddedilebilir. Toplu "hepsini uygula" tek yol
-olmasın — kullanıcı neyi kabul ettiğini görmeden kabul etmemeli.
-Kabul: her değişiklik bağımsız kabul edilebilir.
-```
-
-## D.7 — Ön yazı yardımcısı `M` · D.4'ten sonra
-
-```
-MASTERPLAN'den D.7'yi uygula.
-Ön yazı taslağı. D.4'ün AYNI korumaları geçerli: CV'de olmayan hiçbir iddia, hiçbir
-sayı, hiçbir kurum adı üretilmez. Uydurulmuş iddia reddedilir.
-Kabul: uydurulmuş iddia yok — testle kanıtlı.
-```
-
----
-
-# KOD DIŞI İŞLER
-
-## P0.3 — Reddedilen sunucu ağacını sil
-
-Agent'a verilmez, izin kilidine takılıyor. Elle:
-
-```
-cd C:\temp_private\ats
-git rm -r apps/api services packages docker-compose
-git commit -m "chore: delete the rejected server tree"
-```
-
-`infra/` ve `data/` boş, takipli değil. `apps/web`'den sıfır referans var — doğrulandı.
-Sonra MASTERPLAN'de P0.3'ü ◐ yerine ✅ yap.
-
-## Supabase migrasyonu
-
-Uygulanmadı (`PGRST205 — public.ats_reports bulunamadı`). En kolayı: Supabase panelinde
-SQL Editor'e `apps/web/supabase/migrations/0001_ats_reports.sql` içeriğini yapıştır, Run.
-Dosya `if not exists` kullanıyor, tekrar çalıştırmak zararsız.
-CLI yolu şu an kapalı: oturum başka bir hesapta (`plbssoycbtaalwwvhgbr` o hesapta görünmüyor)
-ve veritabanı parolası hiçbir yerde kayıtlı değil.
+Sonra MASTERPLAN'de D.4 ve D.5'i ✅ yap.
 
 ## V.10 ve A.4 — tarayıcı doğrulaması
 
@@ -191,7 +75,19 @@ Terminalden kapanamaz. Gerçek bir telefonda ya da cihaz emülasyonunda:
 Geri kalan V.10 maddeleri zaten testle korunuyor (kontrast, live rengi, azaltılmış
 hareket, odak).
 
+## Supabase migrasyonu
+
+Uygulanmadı (`PGRST205 — public.ats_reports bulunamadı`). En kolayı: Supabase panelinde
+SQL Editor'e `apps/web/supabase/migrations/0001_ats_reports.sql` içeriğini yapıştır, Run.
+Dosya `if not exists` kullanıyor, tekrar çalıştırmak zararsız.
+
+CLI yolu şu an kapalı: oturum başka bir hesapta (`plbssoycbtaalwwvhgbr` o hesapta görünmüyor)
+ve veritabanı parolası hiçbir yerde kayıtlı değil.
+
 ## Deploy
 
 Kod `origin/main`'de. Otomatik deploy çalışmıyor — Coolify'da **Redeploy**'a basılması
 gerekiyor. İlk basışta canlı site "çok yakında" sayfasından gerçek ürüne döner.
+
+Push'tan önce: `npx npm@10 ci --dry-run` (apps/web içinde) temiz çıksın. Yerel npm 11,
+Docker'ın npm 10'u; ayrışırsa deploy kırılır.
