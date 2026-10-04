@@ -47,19 +47,6 @@ const EMAIL_RX = /[^\s@,;:()]+@[^\s@,;:()]+\.[\p{L}]{2,}/u;
 const URL_RX = /https?:\/\/[^\s,;)]+/i;
 const LINKEDIN_RX = /(?<![\w./])linkedin\.com\/[^\s,;)]+/i;
 
-/**
- * The engine reads month-first ranges ("01/2021 - present"); the editor's
- * canonical form - and therefore every template export - is year-first
- * ("2021-01"). Flipping the token order is text normalisation, not date
- * parsing: extractPeriods stays the only parser, and full ISO dates
- * ("2020-05-14") are left alone by the lookahead.
- */
-const ISO_YEAR_MONTH_RX = /\b((?:19|20)\d{2})-(0[1-9]|1[0-2])(?!-?\d)/g;
-
-function normalizeIsoDates(text: string): string {
-  return text.replace(ISO_YEAR_MONTH_RX, "$2/$1");
-}
-
 const HEADING_PATTERNS: readonly (readonly [string, RegExp])[] = [
   ["summary", /^(summary|profile|about me|özet|profil|hakkımda|zusammenfassung)\b/iu],
   ["experience", /^(work\s+|professional\s+|relevant\s+|employment\s+)?(experience|history|deneyim|iş deneyimi|is deneyimi|mesleki deneyim|berufserfahrung|beruflicher werdegang|werdegang|çalışma geçmişi|calisma gecmisi)\b/iu],
@@ -505,8 +492,7 @@ function basicsFrom(lines: readonly string[], draft: Draft): Record<string, unkn
 }
 
 export function importResumeFromText(text: string, sourceName = ""): DocumentImport {
-  const normalized = normalizeIsoDates(normalizeDocument(text));
-  const lines = normalized.split("\n");
+  const lines = normalizeDocument(text).split("\n");
   const draft: Draft = { resume: {}, issues: [], review: new Set() };
   const sections = sectionRanges(lines);
 
@@ -554,7 +540,7 @@ export function importResumeFromText(text: string, sourceName = ""): DocumentImp
     resume: draft.resume as Resume,
     issues,
     reviewPaths: issues.filter((issue) => issue.status === "needs-review").map((issue) => issue.path),
-    sourceWords: countWords(normalized),
+    sourceWords: countWords(normalizeDocument(text)),
     sourceName
   };
 }
