@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { askAboutReport, serializeReport } from "@/lib/ai/tasks/ask";
+import { generateAdQuestions, validateAdQuestionsPayload } from "@/lib/ai/tasks/interview";
 import { suggestTailoring, validateTailorPayload } from "@/lib/ai/tasks/tailor";
 import { analyzeCv } from "@/lib/scoring";
 
@@ -89,5 +90,36 @@ QA Engineer, Beispiel GmbH
     const stub = fakeProvider([{ suggestions: [] }]);
     expect(await suggestTailoring(stub.provider, cv, [], ["kubernetes"])).toEqual([]);
     expect(stub.calls()).toBe(0);
+  });
+});
+
+describe("generateAdQuestions", () => {
+  it("validates the payload shape", () => {
+    expect(validateAdQuestionsPayload({ questions: "no" })).toBeNull();
+    expect(
+      validateAdQuestionsPayload({
+        questions: [{ text: "How?", citedTerm: "Kafka", category: "technical", topics: ["delivery"] }]
+      })
+    ).toEqual([{ text: "How?", citedTerm: "Kafka", category: "technical", topics: ["delivery"] }]);
+  });
+
+  it("filters out questions that cite unknown terms", async () => {
+    const stub = fakeProvider([
+      {
+        questions: [
+          { text: "Q1?", citedTerm: "Kafka", category: "technical", topics: [] },
+          { text: "Q2?", citedTerm: "MadeUp", category: "technical", topics: [] }
+        ]
+      }
+    ]);
+
+    const terms = [
+      { term: "Kafka", matched: true, count: 1, source: "ad", tier: "required" as const, hits: 1, weight: 1 },
+      { term: "Docker", matched: false, count: 0, source: "ad", tier: "preferred" as const, hits: 0, weight: 1 }
+    ];
+
+    const questions = await generateAdQuestions(stub.provider, terms);
+    expect(questions).toHaveLength(1);
+    expect(questions[0]?.citedTerm).toBe("Kafka");
   });
 });

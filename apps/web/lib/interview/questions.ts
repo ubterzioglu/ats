@@ -1,4 +1,4 @@
-import type { PreparedQuestion, StarCard, StoryBank, TemplateQuestion } from "@/types/interview";
+import type { AdQuestion, PreparedAdQuestion, PreparedQuestion, StarCard, StoryBank, TemplateQuestion } from "@/types/interview";
 
 /**
  * Common interview questions, mapped onto the story bank by rules only - no
@@ -145,6 +145,15 @@ function scoreCard(question: TemplateQuestion, card: StarCard): number {
   return overlap * 10 + completeness(card) + (card.result.present ? 2 : 0);
 }
 
+function scoreAdCard(question: AdQuestion, card: StarCard): number {
+  let overlap = 0;
+  for (const topic of question.topics) {
+    if (card.topics.includes(topic)) overlap += 1;
+  }
+  if (overlap === 0) return -1;
+  return overlap * 10 + completeness(card) + (card.result.present ? 2 : 0);
+}
+
 export function mapQuestionsToStories(bank: StoryBank): PreparedQuestion[] {
   const prepared = TEMPLATE_QUESTIONS.map((question, catalogIndex) => {
     const ranked = bank.cards
@@ -167,6 +176,32 @@ export function mapQuestionsToStories(bank: StoryBank): PreparedQuestion[] {
       if (aHas !== bHas) return bHas - aHas;
       if (aHas === 1 && a.best !== b.best) return b.best - a.best;
       return a.catalogIndex - b.catalogIndex;
+    })
+    .map((entry) => entry.prepared);
+}
+
+export function mapAdQuestionsToStories(bank: StoryBank, questions: readonly AdQuestion[]): PreparedAdQuestion[] {
+  const prepared = questions.map((question, index) => {
+    const ranked = bank.cards
+      .map((card, cardIndex) => ({ card, cardIndex, score: scoreAdCard(question, card) }))
+      .filter((entry) => entry.score >= 0)
+      .sort((a, b) => b.score - a.score || a.card.sourceLine - b.card.sourceLine || a.cardIndex - b.cardIndex)
+      .slice(0, MAX_CARDS_PER_QUESTION);
+
+    return {
+      index,
+      best: ranked[0]?.score ?? -1,
+      prepared: { question, cards: ranked.map((entry) => entry.card) }
+    };
+  });
+
+  return prepared
+    .sort((a, b) => {
+      const aHas = a.best >= 0 ? 1 : 0;
+      const bHas = b.best >= 0 ? 1 : 0;
+      if (aHas !== bHas) return bHas - aHas;
+      if (aHas === 1 && a.best !== b.best) return b.best - a.best;
+      return a.index - b.index;
     })
     .map((entry) => entry.prepared);
 }

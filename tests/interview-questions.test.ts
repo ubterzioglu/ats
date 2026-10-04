@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { TEMPLATE_QUESTIONS, mapQuestionsToStories } from "@/lib/interview/questions";
+import { TEMPLATE_QUESTIONS, mapAdQuestionsToStories, mapQuestionsToStories } from "@/lib/interview/questions";
 import { buildStoryBank } from "@/lib/interview/stories";
-import type { QuestionCategory, PreparedQuestion } from "@/types/interview";
+import type { AdQuestion, QuestionCategory, PreparedQuestion } from "@/types/interview";
 
 import { STRONG_CV, TR_CV } from "./fixtures";
 
@@ -109,5 +109,26 @@ QA Lead, Example Ltd
       TEMPLATE_QUESTIONS.map((question) => question.id)
     );
     expect(prepared.every((entry) => entry.cards.length === 0)).toBe(true);
+  });
+});
+
+describe("mapping ad-specific questions", () => {
+  const bank = buildStoryBank(STRONG_CV);
+
+  it("maps ad questions and filters cards by overlap", () => {
+    const custom: AdQuestion[] = [
+      {
+        id: "q1",
+        text: "How have you used Playwright?",
+        citedTerm: "Playwright",
+        category: "technical",
+        topics: ["automation", "testing"]
+      }
+    ];
+
+    const prepared = mapAdQuestionsToStories(bank, custom);
+    expect(prepared).toHaveLength(1);
+    expect(prepared[0]?.cards.length).toBeGreaterThan(0);
+    expect(prepared[0]?.cards[0]?.sourceText).toContain("Playwright");
   });
 });

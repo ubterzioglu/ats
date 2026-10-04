@@ -65,3 +65,16 @@ export interface PreparedQuestion {
   /** Ranked matches, best first. Empty is an honest answer, never padded. */
   readonly cards: readonly StarCard[];
 }
+
+export interface AdQuestion {
+  readonly id: string;
+  readonly text: string;
+  readonly citedTerm: string;
+  readonly category: QuestionCategory;
+  readonly topics: readonly StoryTopic[];
+}
+
+export interface PreparedAdQuestion {
+  readonly question: AdQuestion;
+  readonly cards: readonly StarCard[];
+}
