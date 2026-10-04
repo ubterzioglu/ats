@@ -12,6 +12,7 @@ export interface StoreSchema {
   readonly history: HistoryRecord;
   readonly trail: TrailPoint;
   readonly drafts: DraftRecord;
+  readonly variants: VariantRecord;
 }
 
 export type StoreName = keyof StoreSchema;
@@ -71,6 +72,17 @@ export interface DraftRecord {
   readonly resume: unknown;
 }
 
+/**
+ * A customized version of the resume tailored for a specific job application.
+ * Only stores the diff/overrides from the main draft to maintain inheritance.
+ */
+export interface VariantRecord {
+  readonly id: string;
+  readonly jobId: string;
+  readonly updatedAt: number;
+  readonly overrides: unknown;
+}
+
 export interface Migration {
   readonly version: number;
   readonly apply: (db: IDBDatabase) => void;
@@ -102,6 +114,13 @@ export const MIGRATIONS: readonly Migration[] = [
     apply(db) {
       db.createObjectStore("drafts", { keyPath: "id" });
     }
+  },
+  {
+    version: 5,
+    apply(db) {
+      const variants = db.createObjectStore("variants", { keyPath: "id" });
+      variants.createIndex("jobId", "jobId");
+    }
   }
 ];
 
@@ -110,4 +129,4 @@ export const DB_VERSION = MIGRATIONS.reduce(
   1
 );
 
-export const STORE_NAMES: readonly StoreName[] = ["meta", "history", "trail", "drafts"];
+export const STORE_NAMES: readonly StoreName[] = ["meta", "history", "trail", "drafts", "variants"];

@@ -61,20 +61,7 @@ YENİ MESAJ ANAHTARI
 
 
 
-## D.1 — CV varyantları `L`
 
-```
-MASTERPLAN'den D.1'i uygula.
-
-Her varyant bir ilana bağlı ve ana CV'den türetilmiş; IndexedDB'de saklanır.
-ST.1 (sürümlü IndexedDB sarmalayıcısı) ve E.2 (kanonik resume modeli) hazır — ikisinin
-üstüne kur, yeni bir depolama katmanı açma.
-
-Varyant ana CV'den TÜRETİLİR: ana CV değişince varyantın neyi miras aldığı belli olmalı,
-yoksa kullanıcı iki ayrı CV'yi elle senkronda tutmaya çalışır.
-
-Alan: yeni lib/variants/ + store. Kabul: varyantlar sayfa yenilemesinden sağ çıkıyor.
-```
 
 ## G.1 — Kanban `L`
 
