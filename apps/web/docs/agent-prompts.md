@@ -118,24 +118,7 @@ Her kanban kartı şunlara bağlanır: ilan, kullanılan CV varyantı, BAŞVURU 
 Kabul: her kart bağlı kayıtlarını çözebiliyor; kayıt silinmişse kart dürüstçe söylüyor.
 ```
 
-## G.3 — Takip hatırlatmaları `M` · G.1'den sonra
 
-```
-MASTERPLAN'den G.3'ü uygula.
-"7 gündür yanıt yok" türü hatırlatmalar. Tamamen YERELDE hesaplanır — sunucu yok,
-bildirim servisi yok, e-posta yok. Kabul: hatırlatmalar yerel hesaplanıyor.
-```
-
-
-
-## G.5 — Tek tıkla silme `S` · G.1 + ST.3'ten sonra
-
-```
-MASTERPLAN'den G.5'i uygula.
-Her şeyi tek tıkla sil, yerelden. ST.3 (veri kontrolleri, neyin gideceğini sayan onay)
-zaten var — onun üstüne kur, ikinci bir silme yolu açma.
-Kabul: her şeyi siliyor ve ne sildiğini söylüyor.
-```
 
 ## H.4 — Pratik modu `M` · H.3'ten sonra
 
