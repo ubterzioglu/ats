@@ -1,0 +1,7 @@
+# Local development only. `docker compose up` merges this file in automatically;
+# Coolify builds from docker-compose.yml alone, so the host port is never
+# published on the server, where a fixed port collides with other services.
+services:
+  web:
+    ports:
+      - "3000:3000"

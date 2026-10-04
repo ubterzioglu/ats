@@ -5,8 +5,12 @@ services:
       dockerfile: Dockerfile
     container_name: ats_web
     restart: unless-stopped
-    ports:
-      - "3000:3000"
+    # Not published to the host. A fixed host port collides with whatever already
+    # holds it on the deployment server, and Coolify's proxy reaches the container
+    # over the internal network anyway. For docker compose up on a laptop,
+    # docker-compose.override.yml publishes 3000 and is picked up automatically.
+    expose:
+      - "3000"
     # All optional. Without Supabase the app runs fully client-side and simply
     # does not persist or share reports.
     environment:
