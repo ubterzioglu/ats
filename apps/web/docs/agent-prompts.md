@@ -59,21 +59,7 @@ YENİ MESAJ ANAHTARI
 
 
 
-## L.3 — BYOK (kendi anahtarını getir) `M`
 
-```
-MASTERPLAN'den L.3'ü uygula.
-
-Kullanıcı kendi API anahtarını girer. Anahtar YALNIZCA tarayıcıda tutulur, bizim
-sunucumuza asla gitmez. Her istekte görünür bir uyarı: "CV'n şuraya gönderilecek: …"
-— sağlayıcının adı ve adresi açıkça yazsın.
-
-Bu, ön sayfadaki "CV tarayıcıdan çıkmaz" sözünün bilinçli istisnası. O yüzden sessiz
-olamaz: kullanıcı her seferinde ne olduğunu görmeli ve onaylamalı.
-
-Kabul: anahtar tarayıcıdan çıkmıyor; uyarı her çağrıda görünüyor.
-Bunu bir testle kanıtla — anahtarın herhangi bir sunucu isteğinin gövdesine girmediğini.
-```
 
 ## D.1 — CV varyantları `L`
 
