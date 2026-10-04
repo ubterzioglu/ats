@@ -1,4 +1,5 @@
 import { createBuiltinProvider } from "./providers/builtin";
+import { createByokProvider } from "./providers/byok";
 import { createOllamaProvider } from "./providers/ollama";
 import { startWebLlm, type WebLlmModel, type WebLlmProgress } from "./providers/webllm";
 import type { LLMProvider, ModelTier } from "./providers/types";
@@ -24,6 +25,8 @@ export async function acquireModel(
   switch (tier) {
     case "builtin":
       return { model: createBuiltinProvider(), dispose: () => {} };
+    case "byok":
+      return { model: createByokProvider(), dispose: () => {} };
     case "ollama":
       return { model: createOllamaProvider(), dispose: () => {} };
     case "webllm": {

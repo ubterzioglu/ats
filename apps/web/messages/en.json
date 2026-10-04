@@ -448,6 +448,19 @@
     "testConnection": "Test connection",
     "testing": "Testing…"
   },
+  "byokSetup": {
+    "heading": "Bring Your Own Key",
+    "intro": "Enter your API key and endpoint. Keys are stored locally in your browser and never sent to our servers. Every time a feature requests to send data, you will be prompted for consent.",
+    "endpointLabel": "Endpoint URL",
+    "modelLabel": "Model",
+    "keyLabel": "API Key",
+    "save": "Save Configuration",
+    "consentHeading": "Send CV data to external provider?",
+    "consentIntro": "This feature requires sending your CV data to an external provider to process it. Your text will be sent to:",
+    "consentWarning": "Review the provider's privacy policy before proceeding. Do not send sensitive data to providers you do not trust.",
+    "consentReject": "Cancel",
+    "consentApprove": "Send Data"
+  },
   "aiConsent": {
     "ready": "Semantic model ready.",
     "readyDetail": "Hints below run locally against the parsed text; scores are unaffected.",

@@ -448,6 +448,19 @@
     "testConnection": "Verbindung testen",
     "testing": "Wird getestet…"
   },
+  "byokSetup": {
+    "heading": "Eigener API-Schlüssel",
+    "intro": "Geben Sie Ihren API-Schlüssel und Endpunkt ein. Schlüssel werden lokal in Ihrem Browser gespeichert und nie an unsere Server gesendet. Sie werden bei jeder Anfrage um Zustimmung gebeten.",
+    "endpointLabel": "Endpunkt URL",
+    "modelLabel": "Modell",
+    "keyLabel": "API-Schlüssel",
+    "save": "Konfiguration speichern",
+    "consentHeading": "Lebenslauf-Daten an externen Anbieter senden?",
+    "consentIntro": "Diese Funktion erfordert das Senden Ihres Lebenslauftextes an eine externe API zur Verarbeitung. Ihr Text wird gesendet an:",
+    "consentWarning": "Überprüfen Sie die Datenschutzrichtlinie des Anbieters, bevor Sie fortfahren. Senden Sie keine sensiblen Daten an Anbieter, denen Sie nicht vertrauen.",
+    "consentReject": "Abbrechen",
+    "consentApprove": "Daten Senden"
+  },
   "aiConsent": {
     "ready": "Semantisches Modell bereit.",
     "readyDetail": "Die Hinweise unten laufen lokal gegen den ausgelesenen Text; die Punktzahlen bleiben unberührt.",

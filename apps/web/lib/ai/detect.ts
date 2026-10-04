@@ -8,7 +8,7 @@ import type { ModelTier, TierStatus } from "./providers/types";
  * user's own machine.
  */
 
-export const TIER_ORDER: readonly ModelTier[] = ["builtin", "webllm", "ollama", "none"];
+export const TIER_ORDER: readonly ModelTier[] = ["builtin", "webllm", "ollama", "byok", "none"];
 
 function hasBuiltinModel(): boolean {
   return typeof window !== "undefined" && "LanguageModel" in window;
@@ -46,6 +46,12 @@ export function detectTier(): TierStatus[] {
       label: "Ollama (localhost)",
       available: false,
       detail: "Opt-in: probed only when you select it. Needs Ollama running with OLLAMA_ORIGINS set for this site."
+    },
+    {
+      tier: "byok",
+      label: "Bring Your Own Key",
+      available: true,
+      detail: "Bring your own API key for an external LLM. Keys never leave the browser. Requires manual consent for every request."
     },
     {
       tier: "none",

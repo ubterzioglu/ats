@@ -448,6 +448,19 @@
     "testConnection": "Bağlantıyı test et",
     "testing": "Test ediliyor…"
   },
+  "byokSetup": {
+    "heading": "Kendi Anahtarını Getir",
+    "intro": "API anahtarınızı ve bitiş noktasını girin. Anahtarlar tarayıcınızda yerel olarak saklanır ve asla sunucularımıza gönderilmez. Özellikler veri göndermek istediğinde her seferinde onayınız istenir.",
+    "endpointLabel": "Bitiş Noktası (Endpoint)",
+    "modelLabel": "Model Adı",
+    "keyLabel": "API Anahtarı",
+    "save": "Yapılandırmayı Kaydet",
+    "consentHeading": "CV verisi dış sağlayıcıya gönderilsin mi?",
+    "consentIntro": "Bu işlem, CV metninizin işlenmesi için dış bir API'ye gönderilmesini gerektiriyor. Metniniz şuraya gönderilecek:",
+    "consentWarning": "Devam etmeden önce sağlayıcının gizlilik politikasını gözden geçirin. Güvenmediğiniz sağlayıcılara hassas verilerinizi göndermeyin.",
+    "consentReject": "İptal",
+    "consentApprove": "Veriyi Gönder"
+  },
   "aiConsent": {
     "ready": "Anlamsal model hazır.",
     "readyDetail": "Aşağıdaki ipuçları ayrıştırılmış metne karşı yerelde çalışır; puanlar etkilenmez.",

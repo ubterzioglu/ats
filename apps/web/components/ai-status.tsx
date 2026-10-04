@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { detectTier, probeOllama } from "@/lib/ai/detect";
 import { OllamaSetup } from "./ollama-setup";
+import { ByokSetup } from "./byok-setup";
 import type { ModelTier, TierStatus } from "@/lib/ai/providers/types";
 import { cx } from "@/lib/ui";
 
@@ -107,6 +108,12 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
       {active === "ollama" && (
         <div className="mt-6">
           <OllamaSetup onReady={() => setNote(null)} />
+        </div>
+      )}
+
+      {active === "byok" && (
+        <div className="mt-6">
+          <ByokSetup onReady={() => setNote(null)} />
         </div>
       )}
     </section>

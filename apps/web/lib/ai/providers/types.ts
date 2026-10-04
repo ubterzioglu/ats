@@ -57,7 +57,7 @@ export interface LLMProvider {
   ): Promise<T>;
 }
 
-export type ModelTier = "none" | "builtin" | "webllm" | "ollama";
+export type ModelTier = "none" | "builtin" | "webllm" | "ollama" | "byok";
 
 export interface TierStatus {
   readonly tier: ModelTier;
