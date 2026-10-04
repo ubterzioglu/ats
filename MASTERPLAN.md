@@ -53,13 +53,13 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 2 October 2026
 
-**60 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
+**61 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
 
 | Phase | Batches | State |
 |---|---|---|
 | 0 — Groundwork | P0.1-P0.7, ST.1-ST.3 | Done in full. The repository holds one architecture |
 | 1 — Deepen the engine | V.1-V.10, C.2-C.3, A.1-A.4, J.1-J.7 | Done |
-| 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1`, `B.3`, `F.1` and `F.2` landed; `F.1` unblocks most of module D |
+| 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1`, `B.3`, `F.1`, `F.2` and `F.3` landed; `F.1` unblocks most of module D |
 | 3 — Builder | E.1-E.10 | Done in full (`E.1a` alongside `E.1`) |
 | 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1`, `L.2`, `L.3`, `L.4` and `D.1` done; `D.2`-`D.7` open |
 | 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Started: `G.1`, `H.1`, `H.2`, `H.3`, `I.1` and `I.2` done; G.2-G.5, `H.4` and `F.6` open |

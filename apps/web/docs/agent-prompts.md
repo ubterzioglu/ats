@@ -73,17 +73,7 @@ YENİ MESAJ ANAHTARI
 
 
 
-## F.3 — Deterministik uygunluk kontrol listesi `M`
 
-```
-MASTERPLAN'den F.3'ü uygula.
-
-"Bu ilana başvurabilir misin" kontrol listesi: yıl şartı, dil şartı, lokasyon/çalışma
-izni, zorunlu beceriler. Her madde geçti/kaldı/belirsiz.
-
-Kabul: HİÇ AI yok. Tamamen deterministik, F.1'in okuduğu alanlar + CV'den okunan
-gerçeklerle. Tarihler extractPeriods'tan, terimler matchTerms'ten gelir.
-```
 
 ## F.6 — Hayalet ilan kontrolü `L`
 
