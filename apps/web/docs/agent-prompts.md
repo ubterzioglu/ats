@@ -109,14 +109,7 @@ Karşılaştırma F.3'ün kontrol listesi ve matchTerms kapsaması üzerinden y�
 
 
 
-## G.2 — Kart bağlantıları `M` · G.1 + D.1'den sonra
 
-```
-MASTERPLAN'den G.2'yi uygula.
-Her kanban kartı şunlara bağlanır: ilan, kullanılan CV varyantı, BAŞVURU ANINDAKİ puan
-(sonradan değişmez — o günün fotoğrafı), notlar, kişiler.
-Kabul: her kart bağlı kayıtlarını çözebiliyor; kayıt silinmişse kart dürüstçe söylüyor.
-```
 
 
 

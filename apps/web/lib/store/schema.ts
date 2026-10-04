@@ -14,6 +14,7 @@ export interface StoreSchema {
   readonly drafts: DraftRecord;
   readonly variants: VariantRecord;
   readonly applications: ApplicationRecord;
+  readonly jobs: JobRecord;
 }
 
 export type StoreName = keyof StoreSchema;
@@ -101,6 +102,16 @@ export interface ApplicationRecord {
   readonly createdAt: number;
 }
 
+export interface JobRecord {
+  readonly id: string;
+  readonly title: string;
+  readonly companyName: string;
+  readonly rawText: string;
+  readonly url?: string;
+  readonly updatedAt: number;
+  readonly createdAt: number;
+}
+
 export interface Migration {
   readonly version: number;
   readonly apply: (db: IDBDatabase) => void;
@@ -147,6 +158,12 @@ export const MIGRATIONS: readonly Migration[] = [
       applications.createIndex("stage", "stage");
       applications.createIndex("updatedAt", "updatedAt");
     }
+  },
+  {
+    version: 7,
+    apply(db) {
+      db.createObjectStore("jobs", { keyPath: "id" });
+    }
   }
 ];
 
@@ -155,4 +172,4 @@ export const DB_VERSION = MIGRATIONS.reduce(
   1
 );
 
-export const STORE_NAMES: readonly StoreName[] = ["meta", "history", "trail", "drafts", "variants", "applications"];
+export const STORE_NAMES: readonly StoreName[] = ["meta", "history", "trail", "drafts", "variants", "applications", "jobs"];
