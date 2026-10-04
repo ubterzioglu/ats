@@ -77,7 +77,7 @@ negative on `D.4` and was discarded. Each row below has working, tested logic an
 | `F.2` red flags | `AnalysisResult.jobAd.redFlags` | The report, beside the job-ad section. Each flag must show its evidence line |
 | `F.3` suitability | `AnalysisResult.suitability` | The report, as a checklist: passed, failed, unknown. No AI involved |
 | `F.4` multi-ad comparison | `compareAds` (`lib/scoring/compare.ts`) | A compare view fed by `lib/store/jobs.ts`, 5-10 ads, in the browser |
-| `D.6` variant comparison | `diff`, `patch` (`lib/variants/diff.ts`) | Tailoring mode: master score and variant score shown together |
+| `D.6` variant comparison | `compareVariants` (`lib/scoring/compare-variants.ts`) | Tailoring mode: master score and variant score shown together. (`diff` and `patch` in `lib/variants/diff.ts` belong to `D.5`, not here) |
 | `G.3` follow-up reminders | `generateReminders` (`lib/store/reminders.ts`) | The kanban cards |
 | `G.4` CSV and JSON export | `exportApplicationsTo{JSON,CSV}`, `importApplicationsFrom{JSON,CSV}` | The kanban toolbar. The acceptance is a round trip |
 
