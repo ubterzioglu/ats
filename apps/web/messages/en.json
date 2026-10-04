@@ -266,6 +266,8 @@
     "creatingLink": "Creating link…",
     "createShareLink": "Create share link",
     "editAndRerun": "Edit and re-run",
+    "tailorToAd": "Tailor to this ad",
+    "backToReport": "Back to the report",
     "shareNote": "Shareable for 30 days, scores only — no CV text is stored:",
     "parserCaption": "{words} words · {lines} lines · {language}",
     "errors": {
@@ -530,6 +532,22 @@
     "eyebrow": "shared report · {date}",
     "lede": "Scores and advice only. The CV itself was never stored.",
     "cta": "Run your own CV through it"
+  },
+  "tailor": {
+    "heading": "Terms this ad asks for",
+    "lede": "Each card quotes the line of the ad that asks for the term. Nothing enters your CV until you say you have the skill.",
+    "empty": "This ad names no term your CV is missing.",
+    "section": {
+      "skills": "Belongs in skills",
+      "experience": "Belongs in experience",
+      "summary": "Belongs in the summary"
+    },
+    "confirmLabel": "I have {term}",
+    "confirmHint": "Confirm first, then the term can be added.",
+    "addToSkills": "Add to skills",
+    "writeItYourself": "This one is a claim about work you did, so write it where you did it. The tool will not put words in your mouth.",
+    "alreadyThere": "Your CV already names this term.",
+    "noSkillsSection": "This CV has no skills section to add to. Add the heading first, or write the term where it belongs."
   },
   "kanban": {
     "heading": "Applications",

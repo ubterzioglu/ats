@@ -37,9 +37,10 @@ import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
 import { KeywordPanel } from "./keyword-panel";
 import { ParserView } from "./parser-view";
+import { TailorMode } from "./tailor/tailor-mode";
 
 
-type View = "input" | "report";
+type View = "input" | "report" | "tailor";
 
 interface AnalyzerProps {
   readonly sharingEnabled: boolean;
@@ -485,6 +486,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             <button type="button" className="btn-quiet" onClick={() => setView("input")}>
               {t("editAndRerun")}
             </button>
+            {jobAd.trim().length > 0 ? (
+              <button type="button" className="btn-quiet" onClick={() => setView("tailor")}>
+                {t("tailorToAd")}
+              </button>
+            ) : null}
           </div>
 
           {shareUrl ? (
@@ -559,6 +565,50 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               for it rather than letting it cover the last work item. */}
           <div aria-hidden className="h-20" />
           <AskDock tier={modelTier} result={result} />
+        </div>
+      ) : null}
+
+      {view === "tailor" && result ? (
+        <div className="space-y-5">
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" className="btn-quiet" onClick={() => setView("report")}>
+              {t("backToReport")}
+            </button>
+          </div>
+
+          {/* The rail travels with the mode: a term only earns its place if
+              the score moves, and the user should see that in the same glance
+              as the card they just accepted. */}
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+            <div className="space-y-5">
+              {change ? <ChangeNote change={change} onDismiss={() => setChange(null)} /> : null}
+              <TailorMode
+                result={result}
+                jobAd={jobAd}
+                cvText={cvText}
+                onApply={applyAndRescore}
+              />
+            </div>
+
+            <div className="space-y-5">
+              <MeasureRail
+                result={result}
+                previous={previous ?? lastVisit}
+                comparedTo={previous ? "previousRun" : "lastVisit"}
+                sticky
+              />
+              <ParserView
+                text={cvText}
+                highlights={highlights}
+                markedIndex={markedIndex}
+                caption={t("parserCaption", {
+                  words: result.stats.words,
+                  lines: result.stats.lines,
+                  language: result.language.toUpperCase()
+                })}
+              />
+            </div>
+          </div>
         </div>
       ) : null}
     </div>

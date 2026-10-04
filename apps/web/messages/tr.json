@@ -266,6 +266,8 @@
     "creatingLink": "Bağlantı oluşturuluyor…",
     "createShareLink": "Paylaşım bağlantısı oluştur",
     "editAndRerun": "Düzenle ve yeniden çalıştır",
+    "tailorToAd": "Bu ilana göre uyarla",
+    "backToReport": "Rapora dön",
     "shareNote": "30 gün paylaşılabilir, yalnızca puanlar — hiçbir CV metni saklanmaz:",
     "parserCaption": "{words} kelime · {lines} satır · {language}",
     "errors": {
@@ -530,6 +532,22 @@
     "eyebrow": "paylaşılan rapor · {date}",
     "lede": "Yalnızca puanlar ve tavsiyeler. CV'nin kendisi hiçbir zaman saklanmadı.",
     "cta": "Kendi CV'nizi de geçirin"
+  },
+  "tailor": {
+    "heading": "Bu ilanın istediği terimler",
+    "lede": "Her kart, terimi isteyen ilan satırını birebir aktarır. Beceriye sahip olduğunuzu söylemeden hiçbir şey CV'nize girmez.",
+    "empty": "Bu ilan, CV'nizde eksik olan hiçbir terim içermiyor.",
+    "section": {
+      "skills": "Beceriler bölümüne ait",
+      "experience": "Deneyim bölümüne ait",
+      "summary": "Özet bölümüne ait"
+    },
+    "confirmLabel": "{term} biliyorum",
+    "confirmHint": "Önce onaylayın, terim ancak o zaman eklenebilir.",
+    "addToSkills": "Becerilere ekle",
+    "writeItYourself": "Bu, yaptığınız işe dair bir iddia; o işi nerede yaptıysanız oraya kendiniz yazın. Araç sizin ağzınızdan konuşmaz.",
+    "alreadyThere": "CV'niz bu terimi zaten içeriyor.",
+    "noSkillsSection": "Bu CV'de beceriler bölümü yok. Önce başlığı ekleyin ya da terimi ait olduğu yere kendiniz yazın."
   },
   "kanban": {
     "heading": "Başvurular",

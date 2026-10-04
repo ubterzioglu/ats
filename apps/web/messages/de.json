@@ -266,6 +266,8 @@
     "creatingLink": "Link wird erstellt…",
     "createShareLink": "Freigabelink erstellen",
     "editAndRerun": "Bearbeiten und erneut ausführen",
+    "tailorToAd": "Auf diese Anzeige zuschneiden",
+    "backToReport": "Zurück zum Bericht",
     "shareNote": "30 Tage teilbar, nur Punktzahlen — es wird kein Text des Lebenslaufs gespeichert:",
     "parserCaption": "{words} Wörter · {lines} Zeilen · {language}",
     "errors": {
@@ -530,6 +532,22 @@
     "eyebrow": "geteilter Bericht · {date}",
     "lede": "Nur Punktzahlen und Hinweise. Der Lebenslauf selbst wurde nie gespeichert.",
     "cta": "Den eigenen Lebenslauf durchlaufen lassen"
+  },
+  "tailor": {
+    "heading": "Begriffe, nach denen diese Anzeige fragt",
+    "lede": "Jede Karte zitiert die Zeile der Anzeige, die den Begriff verlangt. Nichts gelangt in Ihren Lebenslauf, bevor Sie bestätigen, dass Sie die Fähigkeit haben.",
+    "empty": "Diese Anzeige nennt keinen Begriff, der Ihrem Lebenslauf fehlt.",
+    "section": {
+      "skills": "Gehört zu den Kenntnissen",
+      "experience": "Gehört zur Berufserfahrung",
+      "summary": "Gehört ins Profil"
+    },
+    "confirmLabel": "Ich kann {term}",
+    "confirmHint": "Erst bestätigen, dann lässt sich der Begriff hinzufügen.",
+    "addToSkills": "Zu den Kenntnissen hinzufügen",
+    "writeItYourself": "Das ist eine Aussage über Ihre Arbeit, also schreiben Sie sie dorthin, wo Sie diese Arbeit getan haben. Das Werkzeug legt Ihnen keine Worte in den Mund.",
+    "alreadyThere": "Ihr Lebenslauf nennt diesen Begriff bereits.",
+    "noSkillsSection": "Dieser Lebenslauf hat keinen Abschnitt für Kenntnisse. Legen Sie zuerst die Überschrift an, oder schreiben Sie den Begriff an die passende Stelle."
   },
   "kanban": {
     "heading": "Bewerbungen",
