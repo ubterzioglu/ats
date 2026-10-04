@@ -113,14 +113,7 @@ Karşılaştırma F.3'ün kontrol listesi ve matchTerms kapsaması üzerinden y�
 
 
 
-## H.4 — Pratik modu `M` · H.3'ten sonra
 
-```
-MASTERPLAN'den H.4'ü uygula.
-Soru gösterilir, aday cevabını yazar, ilgili STAR hikâye kartı önerilir.
-Kabul: öneri bir karta kadar İZLENEBİLİR — "bunu şu deneyiminden anlatabilirsin"
-derken hangi kart olduğu görünür. Sihirli öneri yok.
-```
 
 ---
 
