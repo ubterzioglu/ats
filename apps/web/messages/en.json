@@ -533,6 +533,20 @@
     "lede": "Scores and advice only. The CV itself was never stored.",
     "cta": "Run your own CV through it"
   },
+  "coverLetter": {
+    "heading": "Cover letter",
+    "lede": "A draft built from your CV and this ad. It may restate what your CV says and name the employer the ad names. Nothing else.",
+    "needsModel": "Turn on a model to draft a letter. Everything runs in your browser.",
+    "draftIt": "Draft a letter",
+    "drafting": "Drafting...",
+    "failed": "The model did not return a usable letter.",
+    "tryAgain": "Try again",
+    "draftAgain": "Draft again",
+    "copy": "Copy the letter",
+    "copied": "Copied",
+    "dropped": "{count, plural, one {# paragraph went beyond what your CV says and was dropped} other {# paragraphs went beyond what your CV says and were dropped}}.",
+    "nothingSurvived": "Every paragraph went beyond what your CV says, so none is shown. Add the evidence to your CV first, then draft again."
+  },
   "tailor": {
     "heading": "Terms this ad asks for",
     "lede": "Each card quotes the line of the ad that asks for the term. Nothing enters your CV until you say you have the skill.",

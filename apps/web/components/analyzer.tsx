@@ -9,6 +9,7 @@ import type { Embedder } from "@/lib/ai/embeddings";
 import { acquireModel } from "@/lib/ai/model";
 import type { ModelTier } from "@/lib/ai/providers/types";
 import { findPartialMatches, toPassages, type PartialMatchHint } from "@/lib/ai/semantic-match";
+import { draftCoverLetter, type CoverLetterDraft } from "@/lib/ai/tasks/cover-letter";
 import { explainFinding } from "@/lib/ai/tasks/explain";
 import { rewriteBullets } from "@/lib/ai/tasks/rewrite";
 import { extractDocument, type ExtractionResult } from "@/lib/extract";
@@ -224,6 +225,18 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     },
     [cvText, modelTier, result]
   );
+
+  // The letter's vocabulary is the report's own term lists, so what the model
+  // may say is bounded by what the engine already measured.
+  const draftLetter = useCallback(async (): Promise<CoverLetterDraft> => {
+    const session = await acquireModel(modelTier);
+    return draftCoverLetter(session.model, {
+      cvText,
+      jobAd,
+      matchedTerms: (result?.keywords.matched ?? []).map((term) => term.term),
+      missingTerms: (result?.keywords.missing ?? []).map((term) => term.term)
+    });
+  }, [cvText, jobAd, modelTier, result]);
 
   const explainLocally = useCallback(
     async (finding: Finding) => {
@@ -587,6 +600,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 jobAd={jobAd}
                 cvText={cvText}
                 onApply={applyAndRescore}
+                draftLetter={modelTier === "none" ? undefined : draftLetter}
               />
             </div>
 

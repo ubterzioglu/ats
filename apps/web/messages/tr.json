@@ -533,6 +533,20 @@
     "lede": "Yalnızca puanlar ve tavsiyeler. CV'nin kendisi hiçbir zaman saklanmadı.",
     "cta": "Kendi CV'nizi de geçirin"
   },
+  "coverLetter": {
+    "heading": "Ön yazı",
+    "lede": "CV'nizden ve bu ilandan çıkarılmış bir taslak. CV'nizin söylediğini yeniden ifade edebilir ve ilanın adını verdiği işvereni anabilir. Başka hiçbir şeyi değil.",
+    "needsModel": "Ön yazı taslağı için bir model açın. Her şey tarayıcınızda çalışır.",
+    "draftIt": "Ön yazı taslağı çıkar",
+    "drafting": "Taslak çıkarılıyor...",
+    "failed": "Model kullanılabilir bir ön yazı döndürmedi.",
+    "tryAgain": "Yeniden dene",
+    "draftAgain": "Yeniden taslak çıkar",
+    "copy": "Ön yazıyı kopyala",
+    "copied": "Kopyalandı",
+    "dropped": "{count, plural, other {# paragraf CV'nizin söylediğinin ötesine geçtiği için elendi}}.",
+    "nothingSurvived": "Her paragraf CV'nizin söylediğinin ötesine geçti, bu yüzden hiçbiri gösterilmiyor. Önce kanıtı CV'nize ekleyin, sonra yeniden taslak çıkarın."
+  },
   "tailor": {
     "heading": "Bu ilanın istediği terimler",
     "lede": "Her kart, terimi isteyen ilan satırını birebir aktarır. Beceriye sahip olduğunuzu söylemeden hiçbir şey CV'nize girmez.",

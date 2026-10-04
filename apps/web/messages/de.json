@@ -533,6 +533,20 @@
     "lede": "Nur Punktzahlen und Hinweise. Der Lebenslauf selbst wurde nie gespeichert.",
     "cta": "Den eigenen Lebenslauf durchlaufen lassen"
   },
+  "coverLetter": {
+    "heading": "Anschreiben",
+    "lede": "Ein Entwurf aus Ihrem Lebenslauf und dieser Anzeige. Er darf wiedergeben, was Ihr Lebenslauf sagt, und den Arbeitgeber nennen, den die Anzeige nennt. Mehr nicht.",
+    "needsModel": "Schalten Sie ein Modell ein, um ein Anschreiben zu entwerfen. Alles läuft in Ihrem Browser.",
+    "draftIt": "Anschreiben entwerfen",
+    "drafting": "Wird entworfen ...",
+    "failed": "Das Modell hat kein brauchbares Anschreiben geliefert.",
+    "tryAgain": "Erneut versuchen",
+    "draftAgain": "Neu entwerfen",
+    "copy": "Anschreiben kopieren",
+    "copied": "Kopiert",
+    "dropped": "{count, plural, one {# Absatz ging über das hinaus, was Ihr Lebenslauf belegt, und wurde verworfen} other {# Absätze gingen über das hinaus, was Ihr Lebenslauf belegt, und wurden verworfen}}.",
+    "nothingSurvived": "Jeder Absatz ging über das hinaus, was Ihr Lebenslauf belegt, deshalb wird keiner gezeigt. Ergänzen Sie die Belege zuerst im Lebenslauf und entwerfen Sie dann erneut."
+  },
   "tailor": {
     "heading": "Begriffe, nach denen diese Anzeige fragt",
     "lede": "Jede Karte zitiert die Zeile der Anzeige, die den Begriff verlangt. Nichts gelangt in Ihren Lebenslauf, bevor Sie bestätigen, dass Sie die Fähigkeit haben.",

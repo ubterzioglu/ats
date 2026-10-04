@@ -23,7 +23,9 @@ const AI_SURFACES: ReadonlySet<string> = new Set([
   // A work item: live edge around a draft a model wrote, never a rule draft.
   "components/bench/work-item.tsx",
   // The keyword panel's coverage section, which a model produces.
-  "components/keyword-panel.tsx"
+  "components/keyword-panel.tsx",
+  // The cover letter: live edge while the model drafts, and around the draft.
+  "components/tailor/cover-letter-panel.tsx"
 ]);
 
 function sourceFiles(dir: string): string[] {

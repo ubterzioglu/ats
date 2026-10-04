@@ -88,10 +88,21 @@ function detectableVariants(skill: string): string[] {
   );
 }
 
+export interface GroundingOptions {
+  /**
+   * Extra text organisation names may be drawn from, and only them. A cover
+   * letter has to name the employer, and that name lives in the vacancy, not
+   * in the CV - but the numbers and the technologies in the letter are claims
+   * about the candidate and must still come from the CV alone.
+   */
+  readonly namesAlsoFrom?: string;
+}
+
 export function isGrounded(
   source: string,
   output: string,
-  knownSkills: readonly string[] = SKILL_TAXONOMY
+  knownSkills: readonly string[] = SKILL_TAXONOMY,
+  options: GroundingOptions = {}
 ): GroundingResult {
   // Placeholders are promises to the user, not claims - exempt them wholesale.
   const claim = output.replace(PLACEHOLDER_RX, " ");
@@ -103,11 +114,12 @@ export function isGrounded(
     }
   }
 
+  const nameSource = options.namesAlsoFrom ? `${source}\n${options.namesAlsoFrom}` : source;
   for (const name of organisationNames(claim)) {
     // A name the taxonomy already knows is a tool, not an employer; the
     // technology pass below owns it and words it better.
     if (knownSkills.some((skill) => skill.toLowerCase() === name.toLowerCase())) continue;
-    if (!containsWord(source, name)) {
+    if (!containsWord(nameSource, name)) {
       issues.push({ kind: "institution", value: name });
     }
   }

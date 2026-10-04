@@ -3,9 +3,11 @@
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
+import type { CoverLetterDraft } from "@/lib/ai/tasks/cover-letter";
 import { buildMissingTermCards } from "@/lib/tailor/missing-terms";
 import type { AnalysisResult } from "@/types/analysis";
 
+import { CoverLetterPanel } from "./cover-letter-panel";
 import { TermCard } from "./term-card";
 
 export interface TailorModeProps {
@@ -13,6 +15,8 @@ export interface TailorModeProps {
   readonly jobAd: string;
   readonly cvText: string;
   readonly onApply: (newText: string) => void;
+  /** Absent when no model tier is available. */
+  readonly draftLetter?: () => Promise<CoverLetterDraft>;
 }
 
 /**
@@ -22,7 +26,7 @@ export interface TailorModeProps {
  * helped. A separate surface would have had to rebuild the score rail, the
  * editing mechanics and the apply path to say the same thing twice.
  */
-export function TailorMode({ result, jobAd, cvText, onApply }: TailorModeProps) {
+export function TailorMode({ result, jobAd, cvText, onApply, draftLetter }: TailorModeProps) {
   const t = useTranslations("tailor");
   const cards = useMemo(
     () => buildMissingTermCards(jobAd, result.keywords.missing),
@@ -30,27 +34,31 @@ export function TailorMode({ result, jobAd, cvText, onApply }: TailorModeProps) 
   );
 
   return (
-    <section className="bench">
-      <div className="border-b border-line px-5 py-5 sm:px-6">
-        <h2 className="text-h3 font-semibold">{t("heading")}</h2>
-        <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("lede")}</p>
-      </div>
+    <div className="space-y-5">
+      <section className="bench">
+        <div className="border-b border-line px-5 py-5 sm:px-6">
+          <h2 className="text-h3 font-semibold">{t("heading")}</h2>
+          <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("lede")}</p>
+        </div>
 
-      {cards.length === 0 ? (
-        <p className="px-5 py-5 text-sm text-muted sm:px-6">{t("empty")}</p>
-      ) : (
-        <ul className="divide-y divide-line">
-          {cards.map((card) => (
-            <TermCard
-              key={card.id}
-              card={card}
-              cvText={cvText}
-              sections={result.sections}
-              onApply={onApply}
-            />
-          ))}
-        </ul>
-      )}
-    </section>
+        {cards.length === 0 ? (
+          <p className="px-5 py-5 text-sm text-muted sm:px-6">{t("empty")}</p>
+        ) : (
+          <ul className="divide-y divide-line">
+            {cards.map((card) => (
+              <TermCard
+                key={card.id}
+                card={card}
+                cvText={cvText}
+                sections={result.sections}
+                onApply={onApply}
+              />
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <CoverLetterPanel draft={draftLetter} />
+    </div>
   );
 }
