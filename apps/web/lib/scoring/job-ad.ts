@@ -1,16 +1,15 @@
-import type { KeywordTerm } from "@/types/analysis";
-
-/**
- * Reads what a job ad demands in plain digits, starting with the one number
- * ads state outright: the minimum years of experience. A tenure filter checks
- * this before anything else, so the report has to check it too.
- */
-
-export interface ExperienceRequirement {
-  readonly years: number;
-  /** The ad line the number was read from, quoted as evidence. */
-  readonly source: string;
-}
+import type { 
+  ExperienceRequirement,
+  JobAdRedFlag,
+  JobAdRequirements,
+  KeywordTerm,
+  LanguageRequirement,
+  LocationRequirement,
+  SalaryRequirement,
+  SeniorityLevel,
+  SeniorityRequirement,
+  WorkMode
+} from "@/types/analysis";
 
 const YEARS_RX = /(\d{1,2})\s*\+?\s*(?:years?|yrs?|jahre?n?|yıl|yil|sene)\b/giu;
 const MAX_PLAUSIBLE_YEARS = 60;
@@ -38,12 +37,7 @@ export function extractExperienceRequirement(jobDescription: string): Experience
   return best;
 }
 
-export type SeniorityLevel = "junior" | "mid" | "senior" | "lead" | "principal";
 
-export interface SeniorityRequirement {
-  readonly level: SeniorityLevel;
-  readonly source: string;
-}
 
 const SENIORITY_PATTERNS = [
   { level: "junior", rx: /\b(junior|entry-?level|graduate|trainee|yeni mezun|deneyimsiz|anfänger)\b/i },
@@ -73,11 +67,7 @@ export function extractSeniority(lines: readonly string[]): SeniorityRequirement
   return null;
 }
 
-export interface LanguageRequirement {
-  readonly language: string;
-  readonly level: string;
-  readonly source: string;
-}
+
 
 const LANGUAGE_RX = /\b(english|german|turkish|englisch|deutsch|türkisch|ingilizce|almanca|türkçe)\b/i;
 const LEVEL_RX = /\b(fluent|native|proficient|working knowledge|b1|b2|c1|c2|fließend|muttersprache|verhandlungssicher|akıcı|anadil|iyi derecede)\b/i;
@@ -105,13 +95,7 @@ export function extractLanguages(lines: readonly string[]): LanguageRequirement[
   return reqs;
 }
 
-export type WorkMode = "on-site" | "hybrid" | "remote";
 
-export interface LocationRequirement {
-  readonly mode: WorkMode;
-  readonly city?: string;
-  readonly source: string;
-}
 
 export function extractLocation(lines: readonly string[]): LocationRequirement | null {
   let bestMode: WorkMode | undefined;
@@ -160,13 +144,7 @@ export function extractLocation(lines: readonly string[]): LocationRequirement |
   return null;
 }
 
-export interface SalaryRequirement {
-  readonly min: number;
-  readonly max: number;
-  readonly currency: string;
-  readonly period: "yearly" | "monthly" | "hourly";
-  readonly source: string;
-}
+
 
 export function extractSalary(lines: readonly string[]): SalaryRequirement | null {
   for (const line of lines) {
@@ -210,17 +188,7 @@ export function extractSalary(lines: readonly string[]): SalaryRequirement | nul
   return null;
 }
 
-export interface JobAdRequirements {
-  readonly experience: ExperienceRequirement | null;
-  readonly seniority: SeniorityRequirement | null;
-  readonly languages: readonly LanguageRequirement[];
-  readonly location: LocationRequirement | null;
-  readonly salary: SalaryRequirement | null;
-  readonly terms: {
-    readonly required: readonly KeywordTerm[];
-    readonly preferred: readonly KeywordTerm[];
-  };
-}
+
 
 export function parseJobAd(jobDescription: string, terms: readonly KeywordTerm[]): JobAdRequirements {
   const lines = jobDescription.split("\n").map(l => l.trim()).filter(l => l.length > 0);
@@ -241,6 +209,44 @@ export function parseJobAd(jobDescription: string, terms: readonly KeywordTerm[]
     languages: extractLanguages(lines),
     location: extractLocation(lines),
     salary: extractSalary(lines),
-    terms: { required, preferred }
+    terms: { required, preferred },
+    redFlags: extractRedFlags(jobDescription, extractExperienceRequirement(jobDescription), extractSeniority(lines), required)
   };
+}
+
+function extractRedFlags(
+  text: string,
+  experience: ExperienceRequirement | null,
+  seniority: SeniorityRequirement | null,
+  requiredTerms: readonly KeywordTerm[]
+): JobAdRedFlag[] {
+  const flags: JobAdRedFlag[] = [];
+
+  // Laundry list of skills
+  if (requiredTerms.length > 15) {
+    flags.push({
+      id: "laundry-list",
+      description: "The ad demands an unusually high number of required skills, which often points to an unrealistic job description.",
+      // No single line evidence for a laundry list
+    });
+  }
+
+  // Seniority mismatch
+  if (seniority?.level === "junior" && experience && experience.years >= 3) {
+    flags.push({
+      id: "seniority-mismatch",
+      description: `The role is advertised as Junior but asks for ${experience.years} years of experience.`,
+      evidence: experience.source
+    });
+  }
+
+  // Vague role
+  if (text.split(/\s+/).length < 80) {
+    flags.push({
+      id: "vague-role",
+      description: "The job description is extremely short and may lack important context about the responsibilities.",
+    });
+  }
+
+  return flags;
 }

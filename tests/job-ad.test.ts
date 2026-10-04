@@ -46,4 +46,26 @@ describe("job ad parsing", () => {
     expect(result.terms.preferred.map(t => t.term)).toEqual(["Vue"]);
     expect(result.seniority).toMatchObject({ level: "senior" });
   });
+
+  describe("red flags", () => {
+    it("flags an unusually long list of required skills", () => {
+      const terms = Array.from({ length: 16 }, (_, i) => ({ term: `Skill${i}`, weight: 1, hits: 0, tier: "required" as const }));
+      const result = parseJobAd("We need everything.", terms);
+      const flag = result.redFlags.find(f => f.id === "laundry-list");
+      expect(flag).toBeDefined();
+    });
+
+    it("flags a seniority mismatch (e.g. junior needing 5 years)", () => {
+      const result = parseJobAd("Junior Developer\nMust have 5+ years of experience.", []);
+      const flag = result.redFlags.find(f => f.id === "seniority-mismatch");
+      expect(flag).toBeDefined();
+      expect(flag?.evidence).toContain("5+ years");
+    });
+
+    it("flags an extremely short/vague job description", () => {
+      const result = parseJobAd("Developer needed.", []);
+      const flag = result.redFlags.find(f => f.id === "vague-role");
+      expect(flag).toBeDefined();
+    });
+  });
 });

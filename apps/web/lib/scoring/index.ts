@@ -7,6 +7,7 @@ import { scoreKeywords } from "./keywords";
 import { scoreParseability } from "./parseability";
 import { scoreStructure } from "./structure";
 import { clamp } from "./text";
+import { parseJobAd } from "./job-ad";
 
 export { buildContext } from "./context";
 export { extractJobKeywords, countOccurrences } from "./keywords";
@@ -76,6 +77,7 @@ export function analyzeCv(input: AnalysisInput): AnalysisResult {
     keywords: keywords.report,
     sections: context.sections,
     stats: context.stats,
+    jobAd: jobDescription ? parseJobAd(jobDescription, [...keywords.report.matched, ...keywords.report.missing]) : undefined,
     generatedAt: new Date().toISOString()
   };
 }

@@ -65,21 +65,7 @@ YENİ MESAJ ANAHTARI
 
 
 
-## H.3 — İlana özel mülakat soruları `M`
 
-```
-MASTERPLAN'den H.3'ü uygula. Bağımlılıkları (H.2, L.4) bitti, iş hazır.
-
-H.1/H.2 bitti: lib/interview/ altında kural tabanlı STAR hikâye bankası ve 18 şablon
-soru var, hepsi AI'sız çalışıyor. H.3 Layer 2/3 ile ilana özel soru üretir.
-
-Kabul: üretilen her soru ilandan bir terim ALINTILAYACAK. Alıntısı olmayan soru
-gösterilmez. L.4 (şema doğrulaması) zaten yerinde — şemasına uymayan model çıktısı
-kullanıcıya hiç ulaşmaz, o yolu kullan.
-
-AI katmanı kapalıysa H.2'nin şablon soruları kalır; H.3 bir üst katman, yerine geçen
-bir şey değil.
-```
 
 ---
 

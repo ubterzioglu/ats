@@ -1,5 +1,58 @@
 export type Severity = "critical" | "high" | "medium" | "low";
 
+export interface JobAdRedFlag {
+  readonly id: "laundry-list" | "seniority-mismatch" | "vague-role";
+  readonly description: string;
+  readonly evidence?: string;
+}
+
+export interface ExperienceRequirement {
+  readonly years: number;
+  readonly source: string;
+}
+
+export type SeniorityLevel = "junior" | "mid" | "senior" | "lead" | "principal";
+
+export interface SeniorityRequirement {
+  readonly level: SeniorityLevel;
+  readonly source: string;
+}
+
+export interface LanguageRequirement {
+  readonly language: string;
+  readonly level: string;
+  readonly source: string;
+}
+
+export type WorkMode = "on-site" | "hybrid" | "remote";
+
+export interface LocationRequirement {
+  readonly mode: WorkMode;
+  readonly city?: string;
+  readonly source: string;
+}
+
+export interface SalaryRequirement {
+  readonly min: number;
+  readonly max: number;
+  readonly currency: string;
+  readonly period: "yearly" | "monthly" | "hourly";
+  readonly source: string;
+}
+
+export interface JobAdRequirements {
+  readonly experience: ExperienceRequirement | null;
+  readonly seniority: SeniorityRequirement | null;
+  readonly languages: readonly LanguageRequirement[];
+  readonly location: LocationRequirement | null;
+  readonly salary: SalaryRequirement | null;
+  readonly terms: {
+    readonly required: readonly KeywordTerm[];
+    readonly preferred: readonly KeywordTerm[];
+  };
+  readonly redFlags: readonly JobAdRedFlag[];
+}
+
 export type DimensionId =
   | "parseability"
   | "contact"
@@ -115,6 +168,7 @@ export interface AnalysisResult {
   readonly keywords: KeywordReport;
   readonly sections: readonly DetectedSection[];
   readonly stats: DocumentStats;
+  readonly jobAd?: JobAdRequirements;
   readonly generatedAt: string;
 }
 
