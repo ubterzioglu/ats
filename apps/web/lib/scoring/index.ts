@@ -6,6 +6,7 @@ import { scoreImpact } from "./impact";
 import { scoreKeywords } from "./keywords";
 import { scoreParseability } from "./parseability";
 import { scoreStructure } from "./structure";
+import { evaluateSuitability } from "./suitability";
 import { clamp } from "./text";
 import { parseJobAd } from "./job-ad";
 
@@ -58,6 +59,7 @@ export function analyzeCv(input: AnalysisInput): AnalysisResult {
   const outcomes = [parseability, contact, structure, keywords, impact];
   const dimensions = outcomes.map((outcome) => outcome.dimension);
   const findings = rankFindings(outcomes.flatMap((outcome) => outcome.findings));
+  const parsedJobAd = jobDescription ? parseJobAd(jobDescription, [...keywords.report.matched, ...keywords.report.missing]) : undefined;
 
   const total = clamp(
     dimensions.reduce((sum, dimension) => sum + dimension.score, 0),
@@ -77,7 +79,8 @@ export function analyzeCv(input: AnalysisInput): AnalysisResult {
     keywords: keywords.report,
     sections: context.sections,
     stats: context.stats,
-    jobAd: jobDescription ? parseJobAd(jobDescription, [...keywords.report.matched, ...keywords.report.missing]) : undefined,
+    jobAd: parsedJobAd,
+    suitability: parsedJobAd ? evaluateSuitability(context, parsedJobAd, keywords.report) : undefined,
     generatedAt: new Date().toISOString()
   };
 }

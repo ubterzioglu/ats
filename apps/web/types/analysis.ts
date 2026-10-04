@@ -53,6 +53,15 @@ export interface JobAdRequirements {
   readonly redFlags: readonly JobAdRedFlag[];
 }
 
+export type SuitabilityStatus = "passed" | "failed" | "unknown";
+
+export interface SuitabilityCheck {
+  readonly id: "experience" | "language" | "location" | "skills";
+  readonly status: SuitabilityStatus;
+  readonly title: string;
+  readonly detail?: string;
+}
+
 export type DimensionId =
   | "parseability"
   | "contact"
@@ -169,6 +178,7 @@ export interface AnalysisResult {
   readonly sections: readonly DetectedSection[];
   readonly stats: DocumentStats;
   readonly jobAd?: JobAdRequirements;
+  readonly suitability?: readonly SuitabilityCheck[];
   readonly generatedAt: string;
 }
 
