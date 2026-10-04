@@ -95,17 +95,7 @@ Kabul: proxy aday verisi taşımıyor.
 
 # DALGA 3
 
-## D.3 — "Bu beceri bende var" onay kapısı `M` · D.2'den sonra
 
-```
-MASTERPLAN'den D.3'ü uygula.
-
-Hiçbir terim, kullanıcı onaylamadan CV'ye giremez. Bu ürünün dürüstlük sözü: araç
-kullanıcıya yalan söyletmez.
-
-Kabul: ONAYLANMAMIŞ BİR BECERİNİN EKLENEMEYECEĞİNİ KANITLAYAN OTOMATİK BİR TEST.
-Bu testi yazmadan batch bitmiş sayılmaz — kabul kriteri birebir bunu istiyor.
-```
 
 ## F.4 — Çoklu ilan karşılaştırma `L` · F.3'ten sonra
 
