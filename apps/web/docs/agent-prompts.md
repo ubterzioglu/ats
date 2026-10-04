@@ -126,14 +126,7 @@ MASTERPLAN'den G.3'ü uygula.
 bildirim servisi yok, e-posta yok. Kabul: hatırlatmalar yerel hesaplanıyor.
 ```
 
-## G.4 — CSV ve JSON dışa aktarma `S` · G.1'den sonra
 
-```
-MASTERPLAN'den G.4'ü uygula.
-Kanban verisini CSV ve JSON olarak dışa aktar. Kabul: round-trip — dışa aktarılan
-dosya geri içe aktarıldığında aynı veriyi verir. Testle kanıtla.
-Bu kullanıcının verisini rehin almadığımızın kanıtı; ciddiye al.
-```
 
 ## G.5 — Tek tıkla silme `S` · G.1 + ST.3'ten sonra
 
