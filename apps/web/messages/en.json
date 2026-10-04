@@ -441,6 +441,13 @@
     "probing": "Probing localhost:11434…",
     "ollamaUnreachable": "Ollama did not answer on localhost:11434. Start it, and set OLLAMA_ORIGINS to include this site."
   },
+  "ollamaSetup": {
+    "heading": "Localhost connection",
+    "intro": "The browser blocks access to your local machine for security. You must start Ollama with CORS configured so it accepts requests from this site.",
+    "modelLabel": "Model name",
+    "testConnection": "Test connection",
+    "testing": "Testing…"
+  },
   "aiConsent": {
     "ready": "Semantic model ready.",
     "readyDetail": "Hints below run locally against the parsed text; scores are unaffected.",

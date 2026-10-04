@@ -441,6 +441,13 @@
     "probing": "localhost:11434 yoklanıyor…",
     "ollamaUnreachable": "Ollama localhost:11434 üzerinde yanıt vermedi. Başlatın ve OLLAMA_ORIGINS değerine bu siteyi ekleyin."
   },
+  "ollamaSetup": {
+    "heading": "Localhost bağlantısı",
+    "intro": "Güvenlik nedeniyle tarayıcı kendi bilgisayarınıza erişimi engeller. Bu sitenin Ollama'ya erişebilmesi için CORS ayarıyla başlatılması gerekir.",
+    "modelLabel": "Model adı",
+    "testConnection": "Bağlantıyı test et",
+    "testing": "Test ediliyor…"
+  },
   "aiConsent": {
     "ready": "Anlamsal model hazır.",
     "readyDetail": "Aşağıdaki ipuçları ayrıştırılmış metne karşı yerelde çalışır; puanlar etkilenmez.",

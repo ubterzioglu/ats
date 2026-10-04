@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { detectTier, probeOllama } from "@/lib/ai/detect";
+import { OllamaSetup } from "./ollama-setup";
 import type { ModelTier, TierStatus } from "@/lib/ai/providers/types";
 import { cx } from "@/lib/ui";
 
@@ -48,7 +49,6 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
       );
       if (!reachable) {
         setNote(t("ollamaUnreachable"));
-        return;
       }
     }
     setActive(tier);
@@ -102,7 +102,13 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
       </ul>
 
       {probing ? <p className="mt-2 text-xs text-muted">{t("probing")}</p> : null}
-      {note ? <p className="mt-2 text-xs text-caution">{note}</p> : null}
+      {note && active !== "ollama" ? <p className="mt-2 text-xs text-caution">{note}</p> : null}
+
+      {active === "ollama" && (
+        <div className="mt-6">
+          <OllamaSetup onReady={() => setNote(null)} />
+        </div>
+      )}
     </section>
   );
 }
