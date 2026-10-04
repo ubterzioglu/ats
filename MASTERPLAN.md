@@ -53,7 +53,7 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 2 October 2026
 
-**69 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
+**70 of 75 batches done.** Phases 0, 1 and 3 are complete in full.
 
 | Phase | Batches | State |
 |---|---|---|
@@ -62,7 +62,7 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 | 2 — Semantic layer | B.1-B.3, F.1-F.5 | Started. `B.1`, `B.3`, `F.1`, `F.2`, `F.3` and `F.4` landed; `F.1` unblocks most of module D |
 | 3 — Builder | E.1-E.10 | Done in full (`E.1a` alongside `E.1`) |
 | 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1`, `L.2`, `L.3`, `L.4`, `D.1`, `D.2`, `D.3` and `D.6` done; `D.4`, `D.5`, `D.7` open |
-| 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Started: `G.1`, `G.2`, `G.3`, `G.4`, `G.5`, `H.1`, `H.2`, `H.3`, `I.1` and `I.2` done; `H.4` and `F.6` open |
+| 5 — Close the loop | G.1-G.5, H.1-H.4, I.1-I.2, F.6 | Started: `G.1`, `G.2`, `G.3`, `G.4`, `G.5`, `H.1`, `H.2`, `H.3`, `H.4`, `I.1` and `I.2` done; `F.6` open |
 
 The gate is clean: lint, typecheck, 674 tests across 64 files, and a production build.
 
