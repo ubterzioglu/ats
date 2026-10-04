@@ -86,8 +86,13 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
       <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
-        <ByokConsentListener />
+        <NextIntlClientProvider>
+          {children}
+          {/* Inside the provider, not beside it: the listener reads messages,
+              and a client component outside the provider has no context to
+              read them from. */}
+          <ByokConsentListener />
+        </NextIntlClientProvider>
         <Script
           id="clarity-script"
           strategy="afterInteractive"
