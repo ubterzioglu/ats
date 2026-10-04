@@ -55,29 +55,7 @@ YENİ MESAJ ANAHTARI
 
 
 
-## B.2 — Mod karşılaştırma özeti `M`
 
-```
-MASTERPLAN'den B.2'yi uygula.
-
-B.1 bitti: lib/scoring/match.ts üç modda çalışıyor — strict (yalnız kanonik yazım),
-normalized (eşanlamlı + taksonomi + TR gövde + DE bileşik, puanın kullandığı mod),
-semantic (normalized + dışarıdan gelen benzerlik okuması, SemanticHit olarak).
-
-Kullanıcıya göster: "61 katı eşleşme, 78 anlamsal. Farkı şu 4 terim yaratıyor."
-Fark NAMED terimlere indirgenebilmeli — "şu terimler yalnızca eşanlamlı tablosu olan
-bir filtrede geçiyor", "şu terimler yalnızca anlamsal eşleşmede geçiyor".
-
-matchTerms'ü üç kez çağır, sonuçları karşılaştır. Puan normalized'dan gelir ve öyle
-kalır — modla oynayan bir sayı puan değildir.
-
-Anlamsal mod gömme gerektirir: model ağırlıkları yalnızca açık kullanıcı onayından
-sonra iner, boyut/ilerleme/iptal gösterilir. Onay yoksa iki modu göster, üçüncüsünü
-"açmak ister misin" olarak sun.
-
-Alan: components/**, app/**, messages/*.json. lib/scoring'e DOKUNMA.
-Kabul: fark adı konmuş terimlere atfedilebiliyor.
-```
 
 ## B.3 — Anlamsal etiketleme `S` · B.2'den sonra
 
