@@ -531,7 +531,14 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 sections={result.sections}
                 onSelectLine={setMarkedIndex}
               />
-              <KeywordPanel report={result.keywords} hints={hints} coverage={coverage} />
+              <KeywordPanel 
+                report={result.keywords} 
+                hints={hints} 
+                coverage={coverage} 
+                cvText={cvText}
+                language={result.language}
+                embedderReady={embedder !== null}
+              />
               <AiConsent onReady={setEmbedder} />
               <AiStatus onTierChange={setModelTier} />
               <ParserView

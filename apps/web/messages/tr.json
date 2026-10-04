@@ -366,7 +366,12 @@
     "statusPartial": "KISMİ",
     "titlePartial": "KISMİ: CV'de buna yakın bir ifade var - \"{passage}\" (%{percent} benzer)",
     "titleAlias": "CV'de \"{alias}\" olarak eşleşti",
-    "titleMissing": "CV'de hiç geçmiyor"
+    "titleMissing": "CV'de hiç geçmiyor",
+    "modeSummary": "{strict} katı eşleşme, {semantic} anlamsal. Farkı şu {count} terim yaratıyor:",
+    "modeSummaryNoSemantic": "{strict} katı eşleşme, {normalized} normalize edilmiş. Farkı şu {count} terim yaratıyor:",
+    "modeAliasOnly": "yalnızca eşanlamlı tablosu veya kök bulucu ile eşleşti",
+    "modeSemanticOnly": "yalnızca anlamsal model ile eşleşti",
+    "enableSemantic": "Anlamsal eşleşmeleri görmek için alttaki AI modelini indirin."
   },
   "askDock": {
     "heading": "Bu rapor hakkında sorun",

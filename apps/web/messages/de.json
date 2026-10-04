@@ -366,7 +366,12 @@
     "statusPartial": "TEILWEISE",
     "titlePartial": "TEILWEISE: Der Lebenslauf sagt etwas Ähnliches - \"{passage}\" ({percent} % ähnlich)",
     "titleAlias": "im Lebenslauf als \"{alias}\" gefunden",
-    "titleMissing": "kommt im Lebenslauf nicht vor"
+    "titleMissing": "kommt im Lebenslauf nicht vor",
+    "modeSummary": "{strict} exakte Treffer, {semantic} semantisch. Der Unterschied sind diese {count} Begriffe:",
+    "modeSummaryNoSemantic": "{strict} exakte Treffer, {normalized} normalisiert. Der Unterschied sind diese {count} Begriffe:",
+    "modeAliasOnly": "nur durch Synonymtabelle oder Stammform erkannt",
+    "modeSemanticOnly": "nur durch semantisches Modell erkannt",
+    "enableSemantic": "Aktivieren Sie das KI-Modell unten, um semantische Treffer zu sehen."
   },
   "askDock": {
     "heading": "Zu diesem Bericht nachfragen",

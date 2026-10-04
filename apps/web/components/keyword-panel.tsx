@@ -1,9 +1,11 @@
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 
-import type { KeywordReport, KeywordTerm, KeywordTier } from "@/types/analysis";
+import type { KeywordReport, KeywordTerm, KeywordTier, DocumentLanguage } from "@/types/analysis";
 
 import type { CoverageMapReport } from "@/lib/ai/coverage-map";
 import type { PartialMatchHint } from "@/lib/ai/semantic-match";
+import { matchTerms } from "@/lib/scoring/match";
 import { cx } from "@/lib/ui";
 
 interface KeywordPanelProps {
@@ -12,6 +14,9 @@ interface KeywordPanelProps {
   readonly hints?: readonly PartialMatchHint[];
   /** Advisory coverage in embedding space; never affects scores. */
   readonly coverage?: CoverageMapReport | null;
+  readonly cvText?: string;
+  readonly language?: DocumentLanguage;
+  readonly embedderReady?: boolean;
 }
 
 type Status = "found" | "alias" | "missing";
@@ -91,14 +96,44 @@ const TIER_GROUPS: ReadonlyArray<{
  * The coverage section is absent until a model has produced one, so the panel
  * is complete without AI.
  */
-export function KeywordPanel({ report, hints, coverage }: KeywordPanelProps) {
+export function KeywordPanel({ report, hints, coverage, cvText, language, embedderReady }: KeywordPanelProps) {
   const t = useTranslations("keywordPanel");
   const c = useTranslations("coverageMap");
   const matchedFromAd = report.source === "job-description";
   const percentage = Math.round(report.coverage * 100);
-  const all = matchedFromAd ? [...report.matched, ...report.missing] : [];
+  const all = useMemo(
+    () => (matchedFromAd ? [...report.matched, ...report.missing] : []),
+    [matchedFromAd, report.matched, report.missing]
+  );
   const hintByTerm = new Map((hints ?? []).map((hint) => [hint.term, hint]));
   const showCoverage = matchedFromAd && coverage !== null && coverage !== undefined && coverage.adChunks > 0;
+
+  const baseTerms = useMemo(
+    () => all.map(t => ({ term: t.term, weight: t.weight, tier: t.tier, hits: 0 })),
+    [all]
+  );
+
+  const strictOutcome = useMemo(() => {
+    if (!matchedFromAd || !cvText) return null;
+    return matchTerms(baseTerms, cvText, language, "strict");
+  }, [baseTerms, cvText, language, matchedFromAd]);
+
+  const semanticOutcome = useMemo(() => {
+    if (!matchedFromAd || !cvText || !embedderReady) return null;
+    return matchTerms(baseTerms, cvText, language, "semantic", hints ?? []);
+  }, [baseTerms, cvText, language, hints, matchedFromAd, embedderReady]);
+
+  const strictCount = strictOutcome?.matched.length ?? 0;
+  const normalizedCount = report.matched.length;
+  const semanticCount = semanticOutcome?.matched.length ?? 0;
+
+  const strictNames = useMemo(() => new Set(strictOutcome?.matched.map(t => t.term)), [strictOutcome]);
+  const normalizedNames = useMemo(() => new Set(report.matched.map(t => t.term)), [report]);
+  const semanticNames = useMemo(() => new Set(semanticOutcome?.matched.map(t => t.term)), [semanticOutcome]);
+
+  const aliasDiff = useMemo(() => all.filter(t => !strictNames.has(t.term) && normalizedNames.has(t.term)), [all, strictNames, normalizedNames]);
+  const semanticDiff = useMemo(() => all.filter(t => !normalizedNames.has(t.term) && semanticNames.has(t.term)), [all, normalizedNames, semanticNames]);
+  const totalDiffCount = aliasDiff.length + semanticDiff.length;
 
   return (
     <section className="bench overflow-hidden" aria-labelledby="keywords-heading">
@@ -121,6 +156,45 @@ export function KeywordPanel({ report, hints, coverage }: KeywordPanelProps) {
       ) : null}
 
       <div className="space-y-6 px-5 py-5 sm:px-6">
+        {matchedFromAd && strictOutcome ? (
+          <div className="rounded-control border border-line bg-bench p-4 text-sm">
+            <p className="text-muted">
+              {embedderReady ? 
+                t("modeSummary", { strict: strictCount, semantic: semanticCount, count: totalDiffCount }) :
+                t("modeSummaryNoSemantic", { strict: strictCount, normalized: normalizedCount, count: aliasDiff.length })
+              }
+            </p>
+            {totalDiffCount > 0 && embedderReady ? (
+              <ul className="mt-3 space-y-2">
+                {aliasDiff.length > 0 && (
+                  <li>
+                    <span className="condensed mr-2 text-micro uppercase text-muted">{t("modeAliasOnly")}</span>
+                    {aliasDiff.map(t => t.term).join(", ")}
+                  </li>
+                )}
+                {semanticDiff.length > 0 && (
+                  <li>
+                    <span className="condensed mr-2 text-micro uppercase text-muted">{t("modeSemanticOnly")}</span>
+                    {semanticDiff.map(t => t.term).join(", ")}
+                  </li>
+                )}
+              </ul>
+            ) : aliasDiff.length > 0 && !embedderReady ? (
+              <ul className="mt-3 space-y-2">
+                <li>
+                  <span className="condensed mr-2 text-micro uppercase text-muted">{t("modeAliasOnly")}</span>
+                  {aliasDiff.map(t => t.term).join(", ")}
+                </li>
+              </ul>
+            ) : null}
+            {!embedderReady && (
+              <p className="mt-3 text-micro text-live-ink">
+                {t("enableSemantic")}
+              </p>
+            )}
+          </div>
+        ) : null}
+
         {matchedFromAd
           ? TIER_GROUPS.map(({ tier, labelKey }) => {
               const terms = all

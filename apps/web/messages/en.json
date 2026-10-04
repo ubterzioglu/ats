@@ -366,7 +366,12 @@
     "statusPartial": "PARTIAL",
     "titlePartial": "PARTIAL: the CV says something close - \"{passage}\" ({percent}% similar)",
     "titleAlias": "matched in the CV as \"{alias}\"",
-    "titleMissing": "never appears in the CV"
+    "titleMissing": "never appears in the CV",
+    "modeSummary": "{strict} strict matches, {semantic} semantic. The difference is these {count} terms:",
+    "modeSummaryNoSemantic": "{strict} strict matches, {normalized} normalized. The difference is these {count} terms:",
+    "modeAliasOnly": "matched only via synonym table or stemming",
+    "modeSemanticOnly": "matched only semantically",
+    "enableSemantic": "Enable the semantic model below to see meaning-based matches."
   },
   "askDock": {
     "heading": "Ask about this report",
