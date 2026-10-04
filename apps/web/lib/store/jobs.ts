@@ -23,6 +23,18 @@ export async function getJob(id: string): Promise<StoreResult<JobRecord | null>>
   return read;
 }
 
+export async function listJobs(): Promise<StoreResult<readonly JobRecord[]>> {
+  const opened = await openStore();
+  if (!opened.ok) return opened;
+  
+  const records = await opened.value.getAll("jobs");
+  opened.value.close();
+  
+  if (!records.ok) return records;
+  const sorted = [...records.value].sort((a, b) => b.updatedAt - a.updatedAt);
+  return ok(sorted);
+}
+
 export async function deleteJob(id: string): Promise<StoreResult<void>> {
   const opened = await openStore();
   if (!opened.ok) return opened;

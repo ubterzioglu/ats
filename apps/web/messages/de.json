@@ -267,6 +267,7 @@
     "createShareLink": "Freigabelink erstellen",
     "editAndRerun": "Bearbeiten und erneut ausführen",
     "tailorToAd": "Auf diese Anzeige zuschneiden",
+    "compareAds": "Anzeigen vergleichen",
     "prepareInterview": "Auf das Interview vorbereiten",
     "backToReport": "Zurück zum Bericht",
     "shareNote": "30 Tage teilbar, nur Punktzahlen — es wird kein Text des Lebenslaufs gespeichert:",
@@ -575,6 +576,10 @@
     "url": "Stellenanzeige URL (optional)",
     "save": "Speichern",
     "cancel": "Abbrechen",
+    "exportJSON": "JSON exportieren",
+    "exportCSV": "CSV exportieren",
+    "import": "Importieren",
+    "remindersHeading": "Erinnerungen zur Nachfassung",
     "stages": {
       "saved": "Gespeichert",
       "applied": "Beworben",
@@ -582,6 +587,43 @@
       "offer": "Angebot",
       "rejected": "Abgelehnt"
     }
+  },
+  "adAnalysis": {
+    "heading": "Anzeigenpassung",
+    "suitabilityHeading": "Eignungsprüfungen",
+    "redFlagsHeading": "Anzeigenwarnungen",
+    "status": {
+      "passed": "Erfüllt",
+      "failed": "Nicht erfüllt",
+      "unknown": "Unklar"
+    }
+  },
+  "variantComparison": {
+    "heading": "Original vs. angepasst",
+    "masterScore": "Original",
+    "currentScore": "Angepasst",
+    "delta": "Änderung",
+    "noChange": "Noch keine Änderungen. Akzeptieren Sie einen Begriff, um den Unterschied zu sehen.",
+    "findingsResolved": "{count, plural, one {# Befund geschlossen} other {# Befunde geschlossen}}",
+    "findingsIntroduced": "{count, plural, one {# Befund eröffnet} other {# Befunde eröffnet}}",
+    "keywordsGained": "{count, plural, one {# Begriff gewonnen} other {# Begriffe gewonnen}}",
+    "keywordsLost": "{count, plural, one {# Begriff verloren} other {# Begriffe verloren}}"
+  },
+  "adCompare": {
+    "heading": "Anzeigenvergleich",
+    "lede": "Ihr Lebenslauf wurde gegen jede gespeicherte Anzeige bewertet. Die beste Übereinstimmung steht oben. Nichts wird an einen Server gesendet.",
+    "empty": "Keine gespeicherten Anzeigen zum Vergleichen. Speichern Sie eine Stellenanzeige aus dem Analyzer, um zu vergleichen.",
+    "matchScore": "Passung: {score}",
+    "coverage": "Schlüsselbegriffe: {percent}%",
+    "passed": "Prüfungen: {count}/{total}",
+    "redFlagsCount": "{count, plural, one {# Warnung} other {# Warnungen}}",
+    "delete": "Anzeige entfernen"
+  },
+  "learningList": {
+    "heading": "Lernprioritäten",
+    "lede": "Begriffe, die in gespeicherten Anzeigen vorkommen, aber nicht in Ihrem Lebenslauf, sortiert nach Häufigkeit. Eine Lückenliste, keine Aufforderung etwas hinzuzufügen.",
+    "empty": "Noch keine gespeicherten Anzeigen. Speichern Sie eine Stellenanzeige, um wiederkehrende Begriffe zu sehen.",
+    "allCovered": "Jeder Begriff aus gespeicherten Anzeigen kommt bereits in Ihrem Lebenslauf vor."
   },
   "interview": {
     "heading": "Interviewvorbereitung",

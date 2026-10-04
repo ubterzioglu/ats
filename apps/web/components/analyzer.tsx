@@ -25,6 +25,7 @@ import { appendTrailPoint, readTrail, startNewSession } from "@/lib/store/trail"
 import { cx } from "@/lib/ui";
 import type { AnalysisResult, Finding } from "@/types/analysis";
 
+import { AdAnalysisPanel } from "./bench/ad-analysis-panel";
 import { AiConsent } from "./ai-consent";
 import { AiStatus } from "./ai-status";
 import { MeasureRail } from "./bench/measure-rail";
@@ -34,15 +35,18 @@ import { EntriesTable } from "./bench/entries-table";
 import { IdentityTable } from "./bench/identity-table";
 import { ScoreTrail } from "./bench/score-trail";
 import { WorkList } from "./bench/work-list";
+import { AdCompareView } from "./ad-compare";
 import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
 import { KeywordPanel } from "./keyword-panel";
+import { LearningList } from "./learning-list";
 import { ParserView } from "./parser-view";
 import { InterviewMode } from "./interview/interview-mode";
 import { TailorMode } from "./tailor/tailor-mode";
+import { VariantComparison } from "./tailor/variant-comparison";
 
 
-type View = "input" | "report" | "tailor" | "interview";
+type View = "input" | "report" | "tailor" | "compare" | "interview";
 
 interface AnalyzerProps {
   readonly sharingEnabled: boolean;
@@ -505,6 +509,9 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 {t("tailorToAd")}
               </button>
             ) : null}
+            <button type="button" className="btn-quiet" onClick={() => setView("compare")}>
+              {t("compareAds")}
+            </button>
             <button type="button" className="btn-quiet" onClick={() => setView("interview")}>
               {t("prepareInterview")}
             </button>
@@ -562,6 +569,12 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 language={result.language}
                 embedderReady={embedder !== null}
               />
+              {result.jobAd ? (
+                <AdAnalysisPanel
+                  redFlags={result.jobAd.redFlags}
+                  suitability={result.suitability ?? []}
+                />
+              ) : null}
               <AiConsent onReady={setEmbedder} />
               <AiStatus onTierChange={setModelTier} />
               <ParserView
@@ -606,6 +619,45 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 onApply={applyAndRescore}
                 draftLetter={modelTier === "none" ? undefined : draftLetter}
               />
+            </div>
+
+            <div className="space-y-5">
+              <MeasureRail
+                result={result}
+                previous={previous ?? lastVisit}
+                comparedTo={previous ? "previousRun" : "lastVisit"}
+                sticky
+              />
+              {previous ? (
+                <VariantComparison master={previous} current={result} />
+              ) : null}
+              <ParserView
+                text={cvText}
+                highlights={highlights}
+                markedIndex={markedIndex}
+                caption={t("parserCaption", {
+                  words: result.stats.words,
+                  lines: result.stats.lines,
+                  language: result.language.toUpperCase()
+                })}
+              />
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {view === "compare" && result ? (
+        <div className="space-y-5">
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" className="btn-quiet" onClick={() => setView("report")}>
+              {t("backToReport")}
+            </button>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+            <div className="space-y-5">
+              <AdCompareView cvText={cvText} />
+              <LearningList cvText={cvText} />
             </div>
 
             <div className="space-y-5">

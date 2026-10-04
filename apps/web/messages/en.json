@@ -267,6 +267,7 @@
     "createShareLink": "Create share link",
     "editAndRerun": "Edit and re-run",
     "tailorToAd": "Tailor to this ad",
+    "compareAds": "Compare ads",
     "prepareInterview": "Prepare for the interview",
     "backToReport": "Back to the report",
     "shareNote": "Shareable for 30 days, scores only — no CV text is stored:",
@@ -575,6 +576,10 @@
     "url": "Job ad URL (optional)",
     "save": "Save",
     "cancel": "Cancel",
+    "exportJSON": "Export JSON",
+    "exportCSV": "Export CSV",
+    "import": "Import",
+    "remindersHeading": "Follow-up reminders",
     "stages": {
       "saved": "Saved",
       "applied": "Applied",
@@ -582,6 +587,43 @@
       "offer": "Offer",
       "rejected": "Rejected"
     }
+  },
+  "adAnalysis": {
+    "heading": "Ad fit",
+    "suitabilityHeading": "Eligibility checks",
+    "redFlagsHeading": "Ad warnings",
+    "status": {
+      "passed": "Passed",
+      "failed": "Not met",
+      "unknown": "Unclear"
+    }
+  },
+  "variantComparison": {
+    "heading": "Master vs tailored",
+    "masterScore": "Master",
+    "currentScore": "Tailored",
+    "delta": "Change",
+    "noChange": "No changes yet. Accept a term to see the difference.",
+    "findingsResolved": "{count, plural, one {# finding closed} other {# findings closed}}",
+    "findingsIntroduced": "{count, plural, one {# finding opened} other {# findings opened}}",
+    "keywordsGained": "{count, plural, one {# term gained} other {# terms gained}}",
+    "keywordsLost": "{count, plural, one {# term lost} other {# terms lost}}"
+  },
+  "adCompare": {
+    "heading": "Ad comparison",
+    "lede": "Your CV scored against every stored ad. The best fit is on top. Nothing is sent to a server.",
+    "empty": "No saved ads to compare. Save a job ad from the analyzer to start comparing.",
+    "matchScore": "Match: {score}",
+    "coverage": "Keywords: {percent}%",
+    "passed": "Checks: {count}/{total}",
+    "redFlagsCount": "{count, plural, one {# warning} other {# warnings}}",
+    "delete": "Remove ad"
+  },
+  "learningList": {
+    "heading": "Learning priorities",
+    "lede": "Terms that appear across stored ads but not in your CV, ordered by how often they recur. A list of gaps, not a suggestion to add anything.",
+    "empty": "No saved ads yet. Save a job ad to see which terms recur across postings.",
+    "allCovered": "Every term from stored ads already appears in your CV."
   },
   "interview": {
     "heading": "Interview preparation",

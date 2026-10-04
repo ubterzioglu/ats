@@ -267,6 +267,7 @@
     "createShareLink": "Paylaşım bağlantısı oluştur",
     "editAndRerun": "Düzenle ve yeniden çalıştır",
     "tailorToAd": "Bu ilana göre uyarla",
+    "compareAds": "İlanları karşılaştır",
     "prepareInterview": "Mülakata hazırlan",
     "backToReport": "Rapora dön",
     "shareNote": "30 gün paylaşılabilir, yalnızca puanlar — hiçbir CV metni saklanmaz:",
@@ -575,6 +576,10 @@
     "url": "İlan URL (isteğe bağlı)",
     "save": "Kaydet",
     "cancel": "İptal",
+    "exportJSON": "JSON olarak dışa aktar",
+    "exportCSV": "CSV olarak dışa aktar",
+    "import": "İçe aktar",
+    "remindersHeading": "Takip hatırlatıcıları",
     "stages": {
       "saved": "Kaydedildi",
       "applied": "Başvuruldu",
@@ -582,6 +587,43 @@
       "offer": "Teklif",
       "rejected": "Reddedildi"
     }
+  },
+  "adAnalysis": {
+    "heading": "İlan uyumu",
+    "suitabilityHeading": "Uygunluk kontrolleri",
+    "redFlagsHeading": "İlan uyarıları",
+    "status": {
+      "passed": "Karşılandı",
+      "failed": "Karşılanmadı",
+      "unknown": "Belirsiz"
+    }
+  },
+  "variantComparison": {
+    "heading": "Orijinal ve uyarlanmış",
+    "masterScore": "Orijinal",
+    "currentScore": "Uyarlanmış",
+    "delta": "Değişim",
+    "noChange": "Henüz değişiklik yok. Farkı görmek için bir terim kabul edin.",
+    "findingsResolved": "{count, plural, other {# bulgu kapatıldı}}",
+    "findingsIntroduced": "{count, plural, other {# bulgu açıldı}}",
+    "keywordsGained": "{count, plural, other {# terim kazanıldı}}",
+    "keywordsLost": "{count, plural, other {# terim kaybedildi}}"
+  },
+  "adCompare": {
+    "heading": "İlan karşılaştırması",
+    "lede": "CV'niz kayıtlı her ilana karşı puanlandı. En iyi uyum üstte. Sunucuya hiçbir şey gönderilmez.",
+    "empty": "Karşılaştırılacak kayıtlı ilan yok. Karşılaştırmaya başlamak için analizden bir ilan kaydedin.",
+    "matchScore": "Uyum: {score}",
+    "coverage": "Anahtar kelimeler: %{percent}",
+    "passed": "Kontroller: {count}/{total}",
+    "redFlagsCount": "{count, plural, other {# uyarı}}",
+    "delete": "İlanı kaldır"
+  },
+  "learningList": {
+    "heading": "Öğrenme öncelikleri",
+    "lede": "Kayıtlı ilanlarda görünen ama CV'nizde olmayan terimler, tekrar sıklığına göre sıralı. Bir öneri değil, eksik listesi.",
+    "empty": "Henüz kayıtlı ilan yok. İlanlar arası tekrar eden terimleri görmek için bir ilan kaydedin.",
+    "allCovered": "Kayıtlı ilanlardaki her terim CV'nizde zaten var."
   },
   "interview": {
     "heading": "Mülakat hazırlığı",
