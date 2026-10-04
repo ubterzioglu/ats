@@ -57,40 +57,7 @@ YENİ MESAJ ANAHTARI
 
 
 
-## B.3 — Anlamsal etiketleme `S` · B.2'den sonra
 
-```
-MASTERPLAN'den B.3'ü uygula.
-
-Anlamsal eşleşmeler "olası eşleşme" olarak sunulur, asla doğrulanmış beceri olarak.
-Altyapı hazır: semantic modda kabul edilen terimin `hits` değeri sıfır kalır ve
-`semantic: { passage, similarity }` taşır — yani hiçbir görünüm onu gerçek bir geçiş
-sanamaz. Bunu arayüzde görünür kıl: farklı rozet, "CV'nde şuna benzer bir cümle var:
-…" biçiminde pasaj alıntısı.
-
-Profil kartlarında satıcı adı geçmesin (şu ATS'den geçer gibi iddia yok).
-
-Kabul: hiçbir anlamsal eşleşme kesin olarak sunulmuyor.
-```
-
-## L.2 — Kullanıcının kendi Ollama'sı `M`
-
-```
-MASTERPLAN'den L.2'yi uygula. Review focus 4'ün sahibi.
-
-L.1 bitti: LLMProvider sözleşmesi id / health() / chat() / structured<T>() ile
-lib/ai/providers/ altında duruyor, health() { ok, detail } döndürüyor — L.2'nin
-"bağlantıyı test et" düğmesi tam olarak bunu kullanacak.
-
-Gerekenler:
-  - OLLAMA_ORIGINS kurulum rehberi (kullanıcının tarayıcısından localhost'taki
-    Ollama'ya erişim CORS'a takılır; komutu platform platform göster)
-  - "Bağlantıyı test et" düğmesi
-  - Her başarısızlık biçimi için kullanılabilir bir mesaj: Ollama kapalı, yanlış port,
-    CORS reddi, model inmemiş, zaman aşımı. Asla kilitlenmiş bir arayüz bırakma.
-
-Kabul: her başarısızlık biçimi kullanılabilir bir mesaj üretiyor, arayüz asla kilitlenmiyor.
-```
 
 ## L.3 — BYOK (kendi anahtarını getir) `M`
 
