@@ -28,6 +28,7 @@ import type { AnalysisResult, Finding } from "@/types/analysis";
 import { AdAnalysisPanel } from "./bench/ad-analysis-panel";
 import { AiConsent } from "./ai-consent";
 import { AiStatus } from "./ai-status";
+import { CvConsent } from "./cv-consent";
 import { MeasureRail } from "./bench/measure-rail";
 import { AskDock } from "./bench/ask-dock";
 import { ChangeNote } from "./bench/change-note";
@@ -44,6 +45,7 @@ import { ParserView } from "./parser-view";
 import { InterviewMode } from "./interview/interview-mode";
 import { TailorMode } from "./tailor/tailor-mode";
 import { VariantComparison } from "./tailor/variant-comparison";
+import { submitCv } from "@/lib/submit-cv";
 
 
 type View = "input" | "report" | "tailor" | "compare" | "interview";
@@ -77,6 +79,9 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [sharing, startSharing] = useTransition();
+  const [consentChecked, setConsentChecked] = useState(false);
+  const [sourceFile, setSourceFile] = useState<File | null>(null);
+  const [storedNotice, setStoredNotice] = useState<string | null>(null);
 
   // Read once, before this visit writes anything, so the comparison is against
   // the last visit rather than against the analysis just run.
@@ -99,6 +104,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setReading(true);
     setError(null);
     setNotice(null);
+    setSourceFile(file);
 
     try {
       const output = await extractDocument(file);
@@ -108,6 +114,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : t("errors.fileUnreadable"));
       setExtraction(null);
+      setSourceFile(null);
     } finally {
       setReading(false);
     }
@@ -148,11 +155,26 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         void appendTrailPoint(next.total).then((written) => {
           if (written.ok) setTrail((current) => [...current, written.value]);
         });
+
+        // Submit CV to server (fire-and-forget)
+        if (consentChecked) {
+          void submitCv({
+            file: sourceFile ?? undefined,
+            cvText,
+            jobDescription: jobAd.trim() ? jobAd : undefined,
+            result: next
+          }).then((outcome) => {
+            if (outcome.ok) {
+              const date = new Date(outcome.expiresAt).toLocaleDateString();
+              setStoredNotice(date);
+            }
+          });
+        }
       } catch (cause) {
         setError(cause instanceof Error ? cause.message : t("errors.analysisFailed"));
       }
     },
-    [cvText, jobAd, result, t]
+    [cvText, jobAd, result, t, consentChecked, sourceFile]
   );
 
   const highlights = useMemo(
@@ -347,6 +369,8 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setCoverage(null);
     setError(null);
     setView("input");
+    setSourceFile(null);
+    setStoredNotice(null);
   }
 
   return (
@@ -467,10 +491,18 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             </section>
           </div>
 
+          {/* Consent gate */}
+          <div className="space-y-3">
+            <CvConsent checked={consentChecked} onChange={setConsentChecked} />
+            {!consentChecked && (
+              <p className="text-sm text-caution">{t("consent.required")}</p>
+            )}
+          </div>
+
           {/* The action belongs to both surfaces above it, so it sits under
               both rather than inside the second column. */}
           <div className="flex flex-wrap items-center gap-3">
-            <button type="button" className="btn" onClick={() => runAnalysis()} disabled={reading}>
+            <button type="button" className="btn" onClick={() => runAnalysis()} disabled={reading || !consentChecked}>
               {t(reading ? "readingFile" : "analyze")}
             </button>
             <button type="button" className="btn-quiet" onClick={clearAll}>
@@ -484,6 +516,12 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               </span>
             ) : null}
           </div>
+
+          {storedNotice && (
+            <p className="text-sm text-muted">
+              {t("storedNotice", { date: storedNotice })}
+            </p>
+          )}
         </div>
       ) : null}
 

@@ -106,8 +106,13 @@
     }
   },
   "analyze": {
-    "heading": "Ayrıştırıcı ne alıyor görün",
-    "lede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıdaki metin, bir aday takip sisteminin çıkaracağı metindir — çıkarım yanlış gittiyse düzeltin, sonra ilana karşı puanlayın."
+    "heading": "Ayrıştırıcının ne gördüğünü görün",
+    "lede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıdaki metin, bir aday takip sisteminin çıkaracağı şeydir — çıkarma yanlış gittiyse düzeltin, sonra ilana göre puanlayın.",
+    "consent": {
+      "label": "<kvkk>KVKK bildirimini</kvkk> ve <privacy>gizlilik politikasını</privacy> okudum. CV'min analiz için yükleneceğini, 12 ay saklanacağını ve yurt dışındaki hizmet sağlayıcılara (Google, Supabase) aktarılacağını kabul ediyorum.",
+      "required": "Devam etmek için lütfen şartları kabul edin"
+    },
+    "storedNotice": "{date} tarihine kadar saklanır. Ayrıntılar <privacy>gizlilik politikasında</privacy>."
   },
   "editor": {
     "title": "CV oluştur",

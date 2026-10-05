@@ -107,7 +107,12 @@
   },
   "analyze": {
     "heading": "See what the parser gets",
-    "lede": "Upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad."
+    "lede": "Upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad.",
+    "consent": {
+      "label": "I have read the <kvkk>KVKK notice</kvkk> and <privacy>privacy policy</privacy>. I agree that my CV is uploaded for analysis, stored for 12 months and transferred to service providers abroad (Google, Supabase).",
+      "required": "Please accept the terms to continue"
+    },
+    "storedNotice": "Stored until {date}. Details in the <privacy>privacy policy</privacy>."
   },
   "editor": {
     "title": "Build a CV",

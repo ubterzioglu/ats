@@ -107,7 +107,12 @@
   },
   "analyze": {
     "heading": "Sehen Sie, was der Parser bekommt",
-    "lede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber schicken. Der Text unten ist das, was ein Bewerbermanagementsystem extrahieren würde — korrigieren Sie ihn, falls die Extraktion schiefging, und bewerten Sie ihn dann gegen die Anzeige."
+    "lede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber senden. Der folgende Text ist das, was ein Bewerber-Tracking-System extrahieren würde — korrigieren Sie ihn, wenn die Extraktion falsch war, dann bewerten Sie ihn gegen die Anzeige.",
+    "consent": {
+      "label": "Ich habe die <kvkk>KVKK-Hinweise</kvkk> und die <privacy>Datenschutzerklärung</privacy> gelesen. Ich stimme zu, dass mein Lebenslauf zur Analyse hochgeladen, 12 Monate gespeichert und an Dienstleister im Ausland (Google, Supabase) übertragen wird.",
+      "required": "Bitte akzeptieren Sie die Bedingungen, um fortzufahren"
+    },
+    "storedNotice": "Gespeichert bis {date}. Details in der <privacy>Datenschutzerklärung</privacy>."
   },
   "editor": {
     "title": "Lebenslauf erstellen",
