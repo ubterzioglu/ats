@@ -375,6 +375,10 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
   return (
     <div className="space-y-6">
+      {/* Persistent live region for screen readers */}
+      <div role="status" aria-live="polite" className="sr-only">
+        {reading ? t("readingFile") : result ? t("tabReport") : ""}
+      </div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <nav
           className="inline-flex gap-2"
