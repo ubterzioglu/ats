@@ -6,6 +6,7 @@
     "label": "Ana gezinme",
     "analyze": "CV analizi",
     "builder": "CV oluşturucu",
+    "about": "Hakkında",
     "cta": "CV'nizi analiz edin"
   },
   "languageSwitcher": {
@@ -58,6 +59,17 @@
       "title": "CV'nizi ayrıştırıcının okuduğu gibi okuyun.",
       "cta": "CV'nizi analiz edin"
     }
+  },
+  "about": {
+    "title": "Hakkında",
+    "whatHeading": "Ne yapar",
+    "privacyHeading": "Gizlilik",
+    "privacy": "CV'niz tarayıcınızda okunur. Hiçbir şey yüklenmez ve sunucu belgeyi hiç almaz.",
+    "limitsHeading": "Sınırlar",
+    "formatsHeading": "Biçimler",
+    "formats": "Düzenleyici <link>JSON Resume</link> biçimini içe ve dışa aktarır.",
+    "contactHeading": "İletişim",
+    "contact": "Sorular ve düzeltmeler: <mail>{email}</mail>"
   },
   "analyze": {
     "heading": "Ayrıştırıcı ne alıyor görün",

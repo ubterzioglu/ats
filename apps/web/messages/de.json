@@ -6,6 +6,7 @@
     "label": "Hauptnavigation",
     "analyze": "CV-Analyse",
     "builder": "Editor",
+    "about": "Über uns",
     "cta": "Lebenslauf analysieren"
   },
   "languageSwitcher": {
@@ -58,6 +59,17 @@
       "title": "Lesen Sie Ihren Lebenslauf, wie der Parser ihn liest.",
       "cta": "Lebenslauf analysieren"
     }
+  },
+  "about": {
+    "title": "Über uns",
+    "whatHeading": "Was es tut",
+    "privacyHeading": "Datenschutz",
+    "privacy": "Ihr Lebenslauf wird in Ihrem Browser gelesen. Nichts wird hochgeladen, und der Server erhält das Dokument nie.",
+    "limitsHeading": "Grenzen",
+    "formatsHeading": "Formate",
+    "formats": "Der Editor importiert und exportiert das Format <link>JSON Resume</link>.",
+    "contactHeading": "Kontakt",
+    "contact": "Fragen und Korrekturen: <mail>{email}</mail>"
   },
   "analyze": {
     "heading": "Sehen Sie, was der Parser bekommt",

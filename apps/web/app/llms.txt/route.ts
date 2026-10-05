@@ -12,7 +12,7 @@ export async function GET(): Promise<Response> {
 
   const pageLinks = PUBLIC_PATHS.filter((p) => p !== "/")
     .map((path) => {
-      const key = path === "/analyze" ? "analyze" : "builder";
+      const key = path === "/analyze" ? "analyze" : path === "/builder" ? "builder" : "about";
       return `- [${nav(key)}](${SITE_URL}${path})`;
     })
     .join("\n");

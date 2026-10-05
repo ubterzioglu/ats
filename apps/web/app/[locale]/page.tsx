@@ -41,6 +41,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const t = await getTranslations("home");
   const common = await getTranslations("common");
   const metadata = await getTranslations("metadata");
+  const nav = await getTranslations("nav");
 
   const jsonLd = buildHomeJsonLd(locale as AppLocale, metadata("openGraphTitle"), metadata("description"));
 
@@ -120,6 +121,9 @@ export default async function HomePage({ params }: HomePageProps) {
         <p className="max-w-measure text-nav-label font-normal text-ash">
           {common("disclaimer")}
         </p>
+        <GhostLink href="/about" className="mt-4 -ml-3">
+          {nav("about")}
+        </GhostLink>
       </footer>
     </main>
   );

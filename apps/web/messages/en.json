@@ -6,6 +6,7 @@
     "label": "Main",
     "analyze": "Analyze CV",
     "builder": "Builder",
+    "about": "About",
     "cta": "Analyze a CV"
   },
   "languageSwitcher": {
@@ -58,6 +59,17 @@
       "title": "Read your CV the way the parser does.",
       "cta": "Analyze a CV"
     }
+  },
+  "about": {
+    "title": "About",
+    "whatHeading": "What it does",
+    "privacyHeading": "Privacy",
+    "privacy": "Your CV is read in your browser. Nothing is uploaded and the server never receives the document.",
+    "limitsHeading": "Limits",
+    "formatsHeading": "Formats",
+    "formats": "The editor imports and exports the <link>JSON Resume</link> format.",
+    "contactHeading": "Contact",
+    "contact": "Questions and corrections: <mail>{email}</mail>"
   },
   "analyze": {
     "heading": "See what the parser gets",
