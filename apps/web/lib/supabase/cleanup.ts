@@ -1,8 +1,7 @@
 import "server-only";
 
 import { createServiceClient } from "./client";
-import { removeCvFile } from "./storage";
-import { deleteFromDrive } from "@/lib/drive/client";
+import { deleteSubmissionWithCleanup } from "@/lib/admin/delete-submission";
 
 export interface ExpiredSubmission {
   id: string;
@@ -44,17 +43,13 @@ export async function deleteSubmission(id: string): Promise<boolean> {
 
 export interface CleanupPorts {
   readonly getExpiredSubmissions: typeof getExpiredSubmissions;
-  readonly deleteFromDrive: typeof deleteFromDrive;
-  readonly removeCvFile: typeof removeCvFile;
-  readonly deleteSubmission: typeof deleteSubmission;
+  readonly deleteSubmissionWithCleanup: typeof deleteSubmissionWithCleanup;
 }
 
 export async function cleanupExpiredSubmissions(
   ports: CleanupPorts = {
     getExpiredSubmissions,
-    deleteFromDrive,
-    removeCvFile,
-    deleteSubmission
+    deleteSubmissionWithCleanup
   }
 ): Promise<{
   deleted: number;
@@ -66,31 +61,9 @@ export async function cleanupExpiredSubmissions(
 
   for (const sub of expired) {
     try {
-      // A5: Delete from Google Drive first, check result
-      if (sub.drive_file_id) {
-        const driveResult = await ports.deleteFromDrive(sub.drive_file_id);
-        if (!driveResult.ok && driveResult.reason !== "not-found") {
-          // Drive delete failed (not 404), keep the row
-          console.error("[cleanup] Drive delete failed for", sub.id, driveResult.reason);
-          failed++;
-          continue;
-        }
-      }
-
-      // A5: Delete from storage, check result
-      if (sub.storage_path) {
-        const storageResult = await ports.removeCvFile(sub.storage_path);
-        if (!storageResult.ok && storageResult.reason !== "not-found") {
-          // Storage delete failed (not 404), keep the row
-          console.error("[cleanup] Storage delete failed for", sub.id, storageResult.reason);
-          failed++;
-          continue;
-        }
-      }
-
-      // Delete from database
-      const success = await ports.deleteSubmission(sub.id);
-      if (success) {
+      // Use shared delete function with system email
+      const result = await ports.deleteSubmissionWithCleanup(sub, "system@cleanup");
+      if (result.ok) {
         deleted++;
       } else {
         failed++;
