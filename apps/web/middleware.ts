@@ -19,6 +19,6 @@ export const config = {
      * and the email confirmation handler have no page and no locale, and
      * rewriting them to a locale segment routes them to a 404.
      */
-    "/((?!api/|_next/static|_next/image|favicon.ico|auth/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!api/|_next/static|_next/image|favicon.ico|auth/|vendor/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
