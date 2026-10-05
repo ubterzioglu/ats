@@ -756,5 +756,109 @@
     "submitAnother": "Başka bir talep gönder",
     "success": "Talebiniz başarıyla gönderildi!",
     "successDetails": "Talebinizi inceleyecek ve 30 gün içinde yanıt vereceğiz."
+  },
+  "kvkk": {
+    "title": "Kişisel Verilerin Korunması Aydınlatma Metni",
+    "lastUpdated": "Son güncelleme: {date}",
+    "section1": {
+      "title": "1. Veri Sorumlusu",
+      "content": "atsfreeforall.com veri sorumlusu {controllerName}'dır. Adres: {controllerAddress}. İletişim: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. İşlenen Kişisel Veriler",
+      "intro": "Aşağıdaki verileri işliyoruz:",
+      "item1": "Yüklediğiniz veya yapıştırdığınız CV verileri (ad, iletişim bilgileri, eğitim, iş deneyimi, beceriler, varsa fotoğraf)",
+      "item2": "CV'nizden çıkarılan metin ve varsa iş tanımı metni",
+      "item3": "Analiz sonuçları (puanlar ve bulgular)",
+      "item4": "Dosya adı, türü, boyutu ve yükleme zamanı",
+      "item5": "Giriş yapmışsanız hesap e-postası",
+      "item6": "IP adresinizden türetilen tek yönlü özet değer (IP adresinin kendisi saklanmaz)",
+      "item7": "Onay verirseniz analitik ve çerez verileri"
+    },
+    "section3": {
+      "title": "3. İşleme Amaçları",
+      "item1": "CV analiz hizmetinin sunulması",
+      "item2": "Hizmet güvenliğinin sağlanması ve kötüye kullanımın önlenmesi",
+      "item3": "Taleplerinizin yanıtlanması"
+    },
+    "section4": {
+      "title": "4. Hukuki Sebep",
+      "intro": "Verilerinizi aşağıdaki hukuki sebeplere dayanarak işliyoruz:",
+      "item1": "KVKK m.5/2-c: Bir sözleşmenin kurulması veya ifasıyla doğrudan ilgili olması",
+      "item2": "KVKK m.5/2-f: Veri sorumlusunun meşru menfaati",
+      "item3": "KVKK m.5/2-ç: Kanunlara uyum yükümlülüğü"
+    },
+    "section5": {
+      "title": "5. Veri Aktarımı",
+      "content": "Verileriniz şu kurumlara aktarılır: Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion}); Google LLC (Google Drive yedeği, ABD); barındırma sağlayıcısı (konum: {hostingLocation}). Yurt dışına aktarımlar KVKK m.9 kapsamında uygun güvencelerle yapılır."
+    },
+    "section6": {
+      "title": "6. Saklama Süresi",
+      "content": "CV'niz, çıkarılan metin ve analiz sonuçları yükleme tarihinden itibaren 12 ay saklanır ve ardından otomatik olarak silinir. Daha erken silme talebinde bulunabilirsiniz."
+    },
+    "section7": {
+      "title": "7. Haklarınız (Madde 11)",
+      "item1": "Verilerinizin işlenip işlenmediğini öğrenme hakkı",
+      "item2": "İşlenmişse bilgi talep etme hakkı",
+      "item3": "Verilerinizin silinmesini talep etme hakkı",
+      "item4": "İşlemeye itiraz etme hakkı",
+      "item5": "Zarara uğramanız halinde tazminat talep etme hakkı"
+    },
+    "section8": {
+      "title": "8. Haklarınızı Nasıl Kullanırsınız",
+      "content": "Haklarınızı {controllerEmail} adresine başvurarak veya Veri Talebi formunu kullanarak kullanabilirsiniz. 30 gün içinde yanıt vereceğiz."
+    }
+  },
+  "privacy": {
+    "title": "Gizlilik Bildirimi",
+    "lastUpdated": "Son güncelleme: {date}",
+    "section1": {
+      "title": "1. Veri Sorumlusu",
+      "content": "atsfreeforall.com veri sorumlusu {controllerName}'dır. Adres: {controllerAddress}. İletişim: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. İşlediğimiz Veriler",
+      "item1": "Yüklediğiniz veya yapıştırdığınız CV verileri (ad, iletişim bilgileri, eğitim, iş deneyimi, beceriler, varsa fotoğraf)",
+      "item2": "CV'nizden çıkarılan metin ve varsa iş tanımı metni",
+      "item3": "Analiz sonuçları (puanlar ve bulgular)",
+      "item4": "Dosya adı, türü, boyutu ve yükleme zamanı",
+      "item5": "Giriş yapmışsanız hesap e-postası",
+      "item6": "IP adresinizden türetilen tek yönlü özet değer (IP adresinin kendisi saklanmaz)"
+    },
+    "section3": {
+      "title": "3. İşleme Amaçları",
+      "item1": "CV analiz hizmetinin sunulması (GDPR Madde 6(1)(b))",
+      "item2": "Hizmet güvenliğinin sağlanması ve kötüye kullanımın önlenmesi (GDPR Madde 6(1)(f))",
+      "item3": "Taleplerinizin yanıtlanması (GDPR Madde 6(1)(c))",
+      "item4": "Onayınızla analitik (GDPR Madde 6(1)(a))"
+    },
+    "section4": {
+      "title": "4. Veri Alıcıları",
+      "intro": "Verileriniz şu kurumlara aktarılır:",
+      "item1": "Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion})",
+      "item2": "Google LLC (Google Drive yedeği, ABD)",
+      "item3": "Barındırma sağlayıcısı (konum: {hostingLocation})",
+      "item4": "Microsoft Corporation (Clarity analitiği, ABD, sadece onayınızla)"
+    },
+    "section5": {
+      "title": "5. Uluslararası Aktarımlar",
+      "content": "ABD'ye aktarımlar, Standart Sözleşme Maddeleri (GDPR Madde 46) ve uygulanabilir yerlerde AB-ABD Veri Gizliliği Çerçevesi'ne dayanır."
+    },
+    "section6": {
+      "title": "6. Saklama Süresi",
+      "content": "CV'niz, çıkarılan metin ve analiz sonuçları yükleme tarihinden itibaren 12 ay saklanır ve ardından tüm depolama konumlarından otomatik olarak silinir. Daha erken silme talebinde bulunabilirsiniz."
+    },
+    "section7": {
+      "title": "7. Otomatik Karar Alma",
+      "content": "Analiz puanı, CV'nizin aday takip sistemleri için ne kadar okunabilir olduğunu tanımlar. Bu, sizin hakkınızda bir karar değildir ve yasal veya benzer şekilde önemli bir etkisi yoktur."
+    },
+    "section8": {
+      "title": "8. Haklarınız",
+      "content": "GDPR kapsamında, erişim, düzeltme, silme, kısıtlama, veri taşınabilirliği ve itiraz haklarına sahipsiniz. {controllerEmail} adresine başvurun veya Veri Talebi formunu kullanın. 30 gün içinde yanıt vereceğiz."
+    },
+    "section9": {
+      "title": "9. Önemli Uyarı",
+      "content": "Yüklemeden önce CV'nizden özel kategori verileri (sağlık, din, sendika üyeliği vb.) ve üçüncü taraf bilgilerini (referanslar) çıkarın. Analiz için gerekli değildirler."
+    }
   }
 }

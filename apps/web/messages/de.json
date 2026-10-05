@@ -756,5 +756,109 @@
     "submitAnother": "Weitere Anfrage einreichen",
     "success": "Ihre Anfrage wurde erfolgreich eingereicht!",
     "successDetails": "Wir werden Ihre Anfrage prüfen und innerhalb von 30 Tagen antworten."
+  },
+  "kvkk": {
+    "title": "Datenschutzhinweis (KVKK)",
+    "lastUpdated": "Zuletzt aktualisiert: {date}",
+    "section1": {
+      "title": "1. Verantwortlicher",
+      "content": "Der Verantwortliche für atsfreeforall.com ist {controllerName}. Adresse: {controllerAddress}. Kontakt: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. Verarbeitete personenbezogene Daten",
+      "intro": "Wir verarbeiten folgende Daten:",
+      "item1": "CV-Daten, die Sie hochladen oder einfügen (Name, Kontaktinformationen, Bildung, Berufserfahrung, Fähigkeiten, Foto falls enthalten)",
+      "item2": "Aus Ihrem CV extrahierter Text und Stellenbeschreibungstext falls angegeben",
+      "item3": "Analyseergebnisse (Punktzahlen und Befunde)",
+      "item4": "Dateiname, Typ, Größe und Upload-Zeit",
+      "item5": "Konto-E-Mail falls Sie angemeldet sind",
+      "item6": "Einweg-Hash abgeleitet von Ihrer IP-Adresse (IP-Adresse selbst wird nicht gespeichert) zur Missbrauchsprävention",
+      "item7": "Analytik- und Cookie-Daten wenn Sie zustimmen"
+    },
+    "section3": {
+      "title": "3. Verarbeitungszwecke",
+      "item1": "Bereitstellung des CV-Analyse-Dienstes",
+      "item2": "Sicherstellung der Dienstesicherheit und Verhinderung von Missbrauch",
+      "item3": "Beantwortung Ihrer Anfragen"
+    },
+    "section4": {
+      "title": "4. Rechtsgrundlage",
+      "intro": "Wir verarbeiten Ihre Daten basierend auf:",
+      "item1": "Artikel 5/2-c des KVKK: Erforderlich für den Abschluss oder die Erfüllung eines Vertrags",
+      "item2": "Artikel 5/2-f des KVKK: Berechtigtes Interesse des Verantwortlichen",
+      "item3": "Artikel 5/2-ç des KVKK: Erfüllung einer gesetzlichen Verpflichtung"
+    },
+    "section5": {
+      "title": "5. Datenübermittlung",
+      "content": "Ihre Daten werden übermittelt an: Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion}); Google LLC (Google Drive Backup, USA); Hosting-Anbieter (Standort: {hostingLocation}). Internationale Übermittlungen erfolgen mit geeigneten Garantien gemäß KVKK Artikel 9."
+    },
+    "section6": {
+      "title": "6. Aufbewahrungsfrist",
+      "content": "Ihr CV, extrahierter Text und Analyseergebnisse werden 12 Monate ab dem Upload-Datum gespeichert und dann automatisch gelöscht. Sie können eine frühere Löschung beantragen."
+    },
+    "section7": {
+      "title": "7. Ihre Rechte (Artikel 11)",
+      "item1": "Recht zu erfahren, ob Ihre Daten verarbeitet werden",
+      "item2": "Recht auf Auskunft wenn verarbeitet",
+      "item3": "Recht auf Löschung Ihrer Daten",
+      "item4": "Recht auf Widerspruch gegen die Verarbeitung",
+      "item5": "Recht auf Schadensersatz bei Schäden"
+    },
+    "section8": {
+      "title": "8. Wie Sie Ihre Rechte ausüben",
+      "content": "Sie können Ihre Rechte ausüben, indem Sie {controllerEmail} kontaktieren oder das Datenanfrage-Formular verwenden. Wir werden innerhalb von 30 Tagen antworten."
+    }
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "lastUpdated": "Zuletzt aktualisiert: {date}",
+    "section1": {
+      "title": "1. Verantwortlicher",
+      "content": "Der Verantwortliche für atsfreeforall.com ist {controllerName}. Adresse: {controllerAddress}. Kontakt: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. Daten, die wir verarbeiten",
+      "item1": "CV-Daten, die Sie hochladen oder einfügen (Name, Kontaktinformationen, Bildung, Berufserfahrung, Fähigkeiten, Foto falls enthalten)",
+      "item2": "Aus Ihrem CV extrahierter Text und Stellenbeschreibungstext falls angegeben",
+      "item3": "Analyseergebnisse (Punktzahlen und Befunde)",
+      "item4": "Dateiname, Typ, Größe und Upload-Zeit",
+      "item5": "Konto-E-Mail falls Sie angemeldet sind",
+      "item6": "Einweg-Hash abgeleitet von Ihrer IP-Adresse (IP-Adresse selbst wird nicht gespeichert)"
+    },
+    "section3": {
+      "title": "3. Verarbeitungszwecke",
+      "item1": "Bereitstellung des CV-Analyse-Dienstes (DSGVO Art. 6(1)(b))",
+      "item2": "Sicherstellung der Dienstesicherheit und Verhinderung von Missbrauch (DSGVO Art. 6(1)(f))",
+      "item3": "Beantwortung Ihrer Anfragen (DSGVO Art. 6(1)(c))",
+      "item4": "Analytik mit Ihrer Einwilligung (DSGVO Art. 6(1)(a))"
+    },
+    "section4": {
+      "title": "4. Datenempfänger",
+      "intro": "Ihre Daten werden übermittelt an:",
+      "item1": "Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion})",
+      "item2": "Google LLC (Google Drive Backup, USA)",
+      "item3": "Hosting-Anbieter (Standort: {hostingLocation})",
+      "item4": "Microsoft Corporation (Clarity-Analytik, USA, nur mit Ihrer Einwilligung)"
+    },
+    "section5": {
+      "title": "5. Internationale Übermittlungen",
+      "content": "Übermittlungen in die USA basieren auf Standardvertragsklauseln (DSGVO Art. 46) und dem EU-US-Datenschutzrahmen wo zutreffend."
+    },
+    "section6": {
+      "title": "6. Aufbewahrungsfrist",
+      "content": "Ihr CV, extrahierter Text und Analyseergebnisse werden 12 Monate ab dem Upload-Datum gespeichert und dann automatisch von allen Speicherorten gelöscht. Sie können eine frühere Löschung beantragen."
+    },
+    "section7": {
+      "title": "7. Automatisierte Entscheidungsfindung",
+      "content": "Der Analyse-Score beschreibt, wie lesbar Ihr CV für Bewerber-Tracking-Systeme ist. Es ist keine Entscheidung über Sie und hat keine rechtliche oder ähnlich erhebliche Wirkung."
+    },
+    "section8": {
+      "title": "8. Ihre Rechte",
+      "content": "Gemäß DSGVO haben Sie das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch. Kontaktieren Sie {controllerEmail} oder verwenden Sie das Datenanfrage-Formular. Wir werden innerhalb von 30 Tagen antworten."
+    },
+    "section9": {
+      "title": "9. Wichtiger Hinweis",
+      "content": "Bitte entfernen Sie besondere Kategorien personenbezogener Daten (Gesundheit, Religion, Gewerkschaftszugehörigkeit usw.) und Drittpartei-Details (Referenzen) aus Ihrem CV vor dem Upload. Sie werden für die Analyse nicht benötigt."
+    }
   }
 }
