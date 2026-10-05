@@ -12,7 +12,8 @@ export function parseAdminEmails(env: string | undefined): readonly string[] {
     .filter((e) => e.length > 0);
 }
 
-export async function isAdminEmail(email: string | null | undefined): Promise<boolean> {
+// A9: Made synchronous
+export function isAdminEmail(email: string | null | undefined): boolean {
   if (!email) return false;
   const admins = parseAdminEmails(process.env.ADMIN_EMAILS);
   return admins.includes(email.toLowerCase());
@@ -30,7 +31,7 @@ export async function requireAdmin(): Promise<string> {
     notFound();
   }
 
-  const isAdmin = await isAdminEmail(data.user.email);
+  const isAdmin = isAdminEmail(data.user.email);
   if (!isAdmin) {
     notFound();
   }

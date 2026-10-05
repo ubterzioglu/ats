@@ -4,7 +4,9 @@ import type { AnalysisResult } from "@/types/analysis";
 
 import { createServiceClient } from "./client";
 
-export type InsertSubmissionInput = {
+export interface InsertSubmissionInput {
+  readonly id: string;
+  readonly storagePath: string;
   readonly userId?: string;
   readonly clientHash?: string;
   readonly fileName?: string;
@@ -17,7 +19,7 @@ export type InsertSubmissionInput = {
   readonly band?: string;
   readonly result?: AnalysisResult;
   readonly consentVersion: string;
-};
+}
 
 export type InsertSubmissionOutcome =
   | { readonly ok: true; readonly id: string; readonly expiresAt: string }
@@ -33,6 +35,8 @@ export async function insertSubmission(
     const { data, error } = await supabase
       .from("cv_submissions")
       .insert({
+        id: input.id,
+        storage_path: input.storagePath,
         user_id: input.userId,
         client_hash: input.clientHash,
         file_name: input.fileName,
@@ -118,5 +122,28 @@ export async function countRecentByClient(
   } catch (cause) {
     console.error("[submissions] count threw", cause);
     return 0;
+  }
+}
+
+export type DeleteSubmissionOutcome =
+  | { readonly ok: true }
+  | { readonly ok: false; readonly reason: "env-missing" | "error" };
+
+export async function deleteSubmissionRow(id: string): Promise<DeleteSubmissionOutcome> {
+  const supabase = createServiceClient();
+  if (!supabase) return { ok: false, reason: "env-missing" };
+
+  try {
+    const { error } = await supabase.from("cv_submissions").delete().eq("id", id);
+
+    if (error) {
+      console.error("[submissions] delete failed", error.message);
+      return { ok: false, reason: "error" };
+    }
+
+    return { ok: true };
+  } catch (cause) {
+    console.error("[submissions] delete threw", cause);
+    return { ok: false, reason: "error" };
   }
 }

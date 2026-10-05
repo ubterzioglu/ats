@@ -1,5 +1,6 @@
 import "server-only";
 
+import { randomUUID } from "node:crypto";
 import { headers } from "next/headers";
 import type { AnalysisResult } from "@/types/analysis";
 import { LEGAL_VERSION } from "@/lib/legal-entity";
@@ -7,7 +8,7 @@ import { isPlausibleResult } from "@/lib/analysis-guard";
 import { validateFile, cvTextSchema } from "@/lib/cv-submission/validate";
 import { MAX_CV_BYTES, RATE_LIMIT_PER_HOUR } from "@/lib/cv-submission/limits";
 import { clientHash } from "@/lib/cv-submission/client-hash";
-import { insertSubmission, markDriveStatus, countRecentByClient } from "@/lib/supabase/submissions";
+import { insertSubmission, markDriveStatus, countRecentByClient, deleteSubmissionRow } from "@/lib/supabase/submissions";
 import { uploadCvFile } from "@/lib/supabase/storage";
 import { uploadToDrive } from "@/lib/drive/client";
 import { getSupabaseEnv } from "@/lib/supabase/client";
@@ -18,9 +19,10 @@ interface SubmissionPorts {
   readonly uploadToDrive: typeof uploadToDrive;
   readonly markDriveStatus: typeof markDriveStatus;
   readonly countRecentByClient: typeof countRecentByClient;
+  readonly deleteSubmissionRow: typeof deleteSubmissionRow;
 }
 
-export type HandleSubmissionInput = {
+export interface HandleSubmissionInput {
   readonly file?: { readonly name: string; readonly bytes: Uint8Array; readonly mime: string };
   readonly cvText: string;
   readonly jobDescription?: string;
@@ -28,7 +30,7 @@ export type HandleSubmissionInput = {
   readonly consent: string;
   readonly consentVersion: string;
   readonly ip: string | null;
-};
+}
 
 export type HandleSubmissionOutcome =
   | { readonly ok: true; readonly id: string; readonly expiresAt: string }
@@ -51,7 +53,8 @@ export async function handleSubmission(
     uploadCvFile,
     uploadToDrive,
     markDriveStatus,
-    countRecentByClient
+    countRecentByClient,
+    deleteSubmissionRow
   }
 ): Promise<HandleSubmissionOutcome> {
   // 1. Validate consent
@@ -106,6 +109,13 @@ export async function handleSubmission(
 
   // 5. Rate limit
   const hash = clientHash(input.ip);
+  
+  // A4: Check salt in production
+  if (!process.env.CLIENT_HASH_SALT && process.env.NODE_ENV === "production") {
+    console.error("[handleSubmission] CLIENT_HASH_SALT not set in production");
+    return { ok: false, status: 503, error: "storage-unavailable" };
+  }
+  
   const oneHourAgo = new Date(Date.now() - 3600_000).toISOString();
   const recentCount = await ports.countRecentByClient(hash, oneHourAgo);
   if (recentCount >= RATE_LIMIT_PER_HOUR) {
@@ -117,8 +127,15 @@ export async function handleSubmission(
     return { ok: false, status: 503, error: "storage-unavailable" };
   }
 
-  // 7. Insert row to get ID
+  // 7. Generate ID and compute storage path BEFORE insert
+  const submissionId = randomUUID();
+  const ext = fileName?.split(".").pop() ?? "txt";
+  const storagePath = `${new Date().toISOString().slice(0, 7).replace("-", "/")}/${submissionId}.${ext}`;
+
+  // 8. Insert row with ID and storage path
   const insertResult = await ports.insertSubmission({
+    id: submissionId,
+    storagePath,
     clientHash: hash ?? undefined,
     fileName,
     fileMime,
@@ -136,20 +153,17 @@ export async function handleSubmission(
     return { ok: false, status: 502, error: "insert-failed" };
   }
 
-  const submissionId = insertResult.id;
   const expiresAt = insertResult.expiresAt;
 
-  // 8. Upload file to storage
-  const ext = fileName?.split(".").pop() ?? "txt";
-  const storagePath = `${new Date().toISOString().slice(0, 7).replace("-", "/")}/${submissionId}.${ext}`;
-  
+  // 9. Upload file to storage
   const uploadResult = await ports.uploadCvFile(storagePath, fileBytes, fileMime ?? "text/plain");
   if (!uploadResult.ok) {
-    // Rollback: delete the row (we don't have a delete function yet, so just return error)
+    // Rollback: delete the row
+    await ports.deleteSubmissionRow(submissionId);
     return { ok: false, status: 502, error: "storage-upload-failed" };
   }
 
-  // 9. Upload to Drive (fire-and-forget, don't fail the request)
+  // 10. Upload to Drive (fire-and-forget, don't fail the request)
   const driveResult = await ports.uploadToDrive({
     name: `${submissionId}.${ext}`,
     mime: fileMime ?? "text/plain",

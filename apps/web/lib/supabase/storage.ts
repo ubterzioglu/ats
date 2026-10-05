@@ -81,7 +81,7 @@ export async function createDownloadUrl(path: string, expiresInSeconds: number):
 
 export type RemoveOutcome =
   | { readonly ok: true }
-  | { readonly ok: false; readonly reason: "env-missing" | "error" };
+  | { readonly ok: false; readonly reason: "env-missing" | "not-found" | "error" };
 
 export async function removeCvFile(path: string): Promise<RemoveOutcome> {
   const supabase = createServiceClient();
@@ -91,6 +91,11 @@ export async function removeCvFile(path: string): Promise<RemoveOutcome> {
     const { error } = await supabase.storage.from(BUCKET).remove([path]);
 
     if (error) {
+      // Check if it's a "not found" error
+      const errorMessage = error.message.toLowerCase();
+      if (errorMessage.includes("not found") || errorMessage.includes("does not exist")) {
+        return { ok: false, reason: "not-found" };
+      }
       console.error("[storage] remove failed", error.message);
       return { ok: false, reason: "error" };
     }

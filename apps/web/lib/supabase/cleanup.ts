@@ -42,28 +42,54 @@ export async function deleteSubmission(id: string): Promise<boolean> {
   return true;
 }
 
-export async function cleanupExpiredSubmissions(): Promise<{
+export interface CleanupPorts {
+  readonly getExpiredSubmissions: typeof getExpiredSubmissions;
+  readonly deleteFromDrive: typeof deleteFromDrive;
+  readonly removeCvFile: typeof removeCvFile;
+  readonly deleteSubmission: typeof deleteSubmission;
+}
+
+export async function cleanupExpiredSubmissions(
+  ports: CleanupPorts = {
+    getExpiredSubmissions,
+    deleteFromDrive,
+    removeCvFile,
+    deleteSubmission
+  }
+): Promise<{
   deleted: number;
   failed: number;
 }> {
-  const expired = await getExpiredSubmissions();
+  const expired = await ports.getExpiredSubmissions();
   let deleted = 0;
   let failed = 0;
 
   for (const sub of expired) {
     try {
-      // Delete from Google Drive
+      // A5: Delete from Google Drive first, check result
       if (sub.drive_file_id) {
-        await deleteFromDrive(sub.drive_file_id);
+        const driveResult = await ports.deleteFromDrive(sub.drive_file_id);
+        if (!driveResult.ok && driveResult.reason !== "not-found") {
+          // Drive delete failed (not 404), keep the row
+          console.error("[cleanup] Drive delete failed for", sub.id, driveResult.reason);
+          failed++;
+          continue;
+        }
       }
 
-      // Delete from storage
+      // A5: Delete from storage, check result
       if (sub.storage_path) {
-        await removeCvFile(sub.storage_path);
+        const storageResult = await ports.removeCvFile(sub.storage_path);
+        if (!storageResult.ok && storageResult.reason !== "not-found") {
+          // Storage delete failed (not 404), keep the row
+          console.error("[cleanup] Storage delete failed for", sub.id, storageResult.reason);
+          failed++;
+          continue;
+        }
       }
 
       // Delete from database
-      const success = await deleteSubmission(sub.id);
+      const success = await ports.deleteSubmission(sub.id);
       if (success) {
         deleted++;
       } else {

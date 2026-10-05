@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { handleSubmission, getClientIp } from "@/lib/cv-submission/handle";
+import { MAX_CV_BYTES } from "@/lib/cv-submission/limits";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const MAX_REQUEST_SIZE = MAX_CV_BYTES + 1024 * 1024; // 1 MiB overhead for form data
+
 export async function POST(request: NextRequest) {
   try {
+    // A3: Check content-length before parsing
+    const contentLength = request.headers.get("content-length");
+    if (contentLength && parseInt(contentLength, 10) > MAX_REQUEST_SIZE) {
+      return NextResponse.json({ error: "request-too-large" }, { status: 413 });
+    }
+
     const formData = await request.formData();
 
     // Extract fields
@@ -38,6 +47,10 @@ export async function POST(request: NextRequest) {
     // Prepare file if present
     let fileData: { name: string; bytes: Uint8Array; mime: string } | undefined;
     if (file instanceof File && file.size > 0) {
+      // A3: Check file size before reading
+      if (file.size > MAX_CV_BYTES) {
+        return NextResponse.json({ error: "file-too-large" }, { status: 413 });
+      }
       const arrayBuffer = await file.arrayBuffer();
       fileData = {
         name: file.name,

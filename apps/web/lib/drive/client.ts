@@ -130,7 +130,7 @@ export async function uploadToDrive(input: UploadToDriveInput): Promise<UploadTo
 
 export type DeleteFromDriveOutcome =
   | { readonly ok: true }
-  | { readonly ok: false; readonly reason: "env-missing" | "auth" | "error" };
+  | { readonly ok: false; readonly reason: "env-missing" | "auth" | "not-found" | "error" };
 
 export async function deleteFromDrive(fileId: string): Promise<DeleteFromDriveOutcome> {
   const env = getDriveEnv();
@@ -145,7 +145,11 @@ export async function deleteFromDrive(fileId: string): Promise<DeleteFromDriveOu
       headers: { Authorization: `Bearer ${accessToken}` }
     });
 
-    if (!response.ok && response.status !== 404) {
+    if (response.status === 404) {
+      return { ok: false, reason: "not-found" };
+    }
+
+    if (!response.ok) {
       console.error("[drive] delete failed", response.status);
       return { ok: false, reason: "error" };
     }
