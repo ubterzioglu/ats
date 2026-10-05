@@ -700,5 +700,43 @@
     "practiceNoMatch": "Keine Karte teilt genug Wörter mit Ihrer Antwort, um eine zu empfehlen.",
     "practiceMatchFound": "Beste passende Karte",
     "practiceOverlap": "{count, plural, one {# gemeinsames Wort} other {# gemeinsame Wörter}}"
+  },
+  "admin": {
+    "title": "Admin-Panel",
+    "description": "Verwalten Sie CV-Einreichungen, Datenanfragen und Prüfprotokolle",
+    "nav": {
+      "overview": "Übersicht",
+      "requests": "Datenanfragen",
+      "audit": "Prüfprotokoll"
+    },
+    "stats": {
+      "today": "Heute",
+      "week": "Diese Woche",
+      "month": "Dieser Monat",
+      "total": "Gesamt",
+      "avgScore": "Durchschn. Punktzahl",
+      "driveFailures": "Drive-Fehler",
+      "openRequests": "Offene Anfragen"
+    },
+    "filters": {
+      "search": "Suche",
+      "searchPlaceholder": "Nach Dateiname oder CV-Text suchen...",
+      "band": "Band",
+      "allBands": "Alle Bänder",
+      "language": "Sprache",
+      "allLanguages": "Alle Sprachen",
+      "driveStatus": "Drive-Status",
+      "allStatuses": "Alle Status"
+    },
+    "table": {
+      "created": "Erstellt",
+      "file": "Datei",
+      "language": "Sprache",
+      "score": "Punktzahl",
+      "band": "Band",
+      "drive": "Drive",
+      "expires": "Läuft ab",
+      "noSubmissions": "Keine Einreichungen gefunden"
+    }
   }
 }

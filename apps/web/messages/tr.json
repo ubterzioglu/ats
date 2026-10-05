@@ -700,5 +700,43 @@
     "practiceNoMatch": "Yanıtınızla yeterince kelime paylaşan kart bulunamadı.",
     "practiceMatchFound": "En uygun kart",
     "practiceOverlap": "{count, plural, one {# ortak kelime} other {# ortak kelime}}"
+  },
+  "admin": {
+    "title": "Yönetim Paneli",
+    "description": "CV gönderilerini, veri taleplerini ve denetim kayıtlarını yönetin",
+    "nav": {
+      "overview": "Genel Bakış",
+      "requests": "Veri Talepleri",
+      "audit": "Denetim Kaydı"
+    },
+    "stats": {
+      "today": "Bugün",
+      "week": "Bu Hafta",
+      "month": "Bu Ay",
+      "total": "Toplam",
+      "avgScore": "Ort Puan",
+      "driveFailures": "Drive Hataları",
+      "openRequests": "Açık Talepler"
+    },
+    "filters": {
+      "search": "Ara",
+      "searchPlaceholder": "Dosya adı veya CV metnine göre ara...",
+      "band": "Bant",
+      "allBands": "Tüm Bantlar",
+      "language": "Dil",
+      "allLanguages": "Tüm Diller",
+      "driveStatus": "Drive Durumu",
+      "allStatuses": "Tüm Durumlar"
+    },
+    "table": {
+      "created": "Oluşturulma",
+      "file": "Dosya",
+      "language": "Dil",
+      "score": "Puan",
+      "band": "Bant",
+      "drive": "Drive",
+      "expires": "Son Kullanma",
+      "noSubmissions": "Gönderim bulunamadı"
+    }
   }
 }

@@ -700,5 +700,43 @@
     "practiceNoMatch": "No card shares enough words with your answer to recommend one.",
     "practiceMatchFound": "Best matching card",
     "practiceOverlap": "{count, plural, one {# shared word} other {# shared words}}"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "description": "Manage CV submissions, data requests, and audit logs",
+    "nav": {
+      "overview": "Overview",
+      "requests": "Data Requests",
+      "audit": "Audit Log"
+    },
+    "stats": {
+      "today": "Today",
+      "week": "This Week",
+      "month": "This Month",
+      "total": "Total",
+      "avgScore": "Avg Score",
+      "driveFailures": "Drive Failures",
+      "openRequests": "Open Requests"
+    },
+    "filters": {
+      "search": "Search",
+      "searchPlaceholder": "Search by file name or CV text...",
+      "band": "Band",
+      "allBands": "All Bands",
+      "language": "Language",
+      "allLanguages": "All Languages",
+      "driveStatus": "Drive Status",
+      "allStatuses": "All Statuses"
+    },
+    "table": {
+      "created": "Created",
+      "file": "File",
+      "language": "Language",
+      "score": "Score",
+      "band": "Band",
+      "drive": "Drive",
+      "expires": "Expires",
+      "noSubmissions": "No submissions found"
+    }
   }
 }

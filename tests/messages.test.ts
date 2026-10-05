@@ -52,7 +52,7 @@ const EVERY_LOCALE: readonly string[] = [
 const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
   // Turkish for "Model" is "Model", and Turkish for "Modern PDF" is
   // "Modern PDF".
-  tr: new Set([...EVERY_LOCALE, "askDock.roleModel", "editor.export.template.modern"]),
+  tr: new Set([...EVERY_LOCALE, "askDock.roleModel", "editor.export.template.modern", "admin.table.drive"]),
   // German and English share a great many short nouns, and most of the editor's
   // field labels are short nouns: Name, Position, Region, Organisation, URL,
   // Website, Version, System.
@@ -76,7 +76,10 @@ const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
     "editor.fields.meta.version",
     "kanban.stages.interview",
     "interview.starSituation",
-    "interview.category.motivation"
+    "interview.category.motivation",
+    "admin.filters.band",
+    "admin.table.band",
+    "admin.table.drive"
   ])
 };
 
