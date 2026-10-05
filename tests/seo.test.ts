@@ -205,3 +205,34 @@ describe("FAQ message completeness", () => {
     }
   });
 });
+
+describe("SearchAction in buildHomeJsonLd", () => {
+  it("WebSite node has potentialAction with SearchAction", () => {
+    const nodes = buildHomeJsonLd("en", "ATS readability", "Desc");
+    const website = nodes[1] as {
+      readonly potentialAction: {
+        readonly "@type": string;
+        readonly target: string;
+        readonly "query-input": string;
+      };
+    };
+    expect(website.potentialAction["@type"]).toBe("SearchAction");
+    expect(website.potentialAction.target).toContain("search_term_string");
+    expect(website.potentialAction["query-input"]).toContain("search_term_string");
+  });
+});
+
+describe("AI and feed route files exist", () => {
+  it("all route modules can be imported", async () => {
+    const summary = await import("@/app/ai/summary.json/route");
+    expect(typeof summary.GET).toBe("function");
+    const faq = await import("@/app/ai/faq.json/route");
+    expect(typeof faq.GET).toBe("function");
+    const service = await import("@/app/ai/service.json/route");
+    expect(typeof service.GET).toBe("function");
+    const feed = await import("@/app/feed.xml/route");
+    expect(typeof feed.GET).toBe("function");
+    const aiTxt = await import("@/app/.well-known/ai.txt/route");
+    expect(typeof aiTxt.GET).toBe("function");
+  });
+});

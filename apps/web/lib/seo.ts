@@ -75,7 +75,12 @@ export function buildHomeJsonLd(
       url,
       description,
       inLanguage: locale,
-      publisher: { "@id": ORGANIZATION_ID }
+      publisher: { "@id": ORGANIZATION_ID },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${SITE_URL}/analyze?q={search_term_string}`,
+        "query-input": "required name=search_term_string"
+      }
     },
     {
       "@context": "https://schema.org",
