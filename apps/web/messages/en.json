@@ -863,5 +863,11 @@
       "title": "9. Important Notice",
       "content": "Please remove special category data (health, religion, trade union membership, etc.) and third-party details (referees) from your CV before uploading. They are not needed for the analysis."
     }
+  },
+  "consent": {
+    "message": "We use cookies for analytics to improve the service. You can accept or reject. Your CV data is never used for analytics.",
+    "version": "Consent version: {version}",
+    "accept": "Accept analytics",
+    "reject": "Reject"
   }
 }

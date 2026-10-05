@@ -1,7 +1,6 @@
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
@@ -9,6 +8,8 @@ import type { ReactNode } from "react";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { OPEN_GRAPH_LOCALE } from "@/lib/seo";
 import { ByokConsentListener } from "@/components/byok-consent-listener";
+import { ClarityLoader } from "@/components/clarity-loader";
+import { ConsentBanner } from "@/components/consent-banner";
 import { NavBar } from "@/components/ui/nav-bar";
 
 import "../globals.css";
@@ -78,20 +79,9 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
               and a client component outside the provider has no context to
               read them from. */}
           <ByokConsentListener />
+          <ConsentBanner />
+          <ClarityLoader />
         </NextIntlClientProvider>
-        <Script
-          id="clarity-script"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(c,l,a,r,i,t,y){
-                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-              })(window, document, "clarity", "script", "yr25yt3zqx");
-            `
-          }}
-        />
       </body>
     </html>
   );

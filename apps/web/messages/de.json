@@ -863,5 +863,11 @@
       "title": "9. Wichtiger Hinweis",
       "content": "Bitte entfernen Sie besondere Kategorien personenbezogener Daten (Gesundheit, Religion, Gewerkschaftszugehörigkeit usw.) und Drittpartei-Details (Referenzen) aus Ihrem CV vor dem Upload. Sie werden für die Analyse nicht benötigt."
     }
+  },
+  "consent": {
+    "message": "Wir verwenden Cookies für Analytik, um den Dienst zu verbessern. Sie können zustimmen oder ablehnen. Ihre CV-Daten werden niemals für Analytik verwendet.",
+    "version": "Einwilligungsversion: {version}",
+    "accept": "Analytik akzeptieren",
+    "reject": "Ablehnen"
   }
 }

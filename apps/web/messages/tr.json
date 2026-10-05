@@ -863,5 +863,11 @@
       "title": "9. Önemli Uyarı",
       "content": "Yüklemeden önce CV'nizden özel kategori verileri (sağlık, din, sendika üyeliği vb.) ve üçüncü taraf bilgilerini (referanslar) çıkarın. Analiz için gerekli değildirler."
     }
+  },
+  "consent": {
+    "message": "Hizmeti iyileştirmek için analitik çerezler kullanıyoruz. Kabul edebilir veya reddedebilirsiniz. CV verileriniz asla analitik için kullanılmaz.",
+    "version": "Onay sürümü: {version}",
+    "accept": "Analitiği kabul et",
+    "reject": "Reddet"
   }
 }
