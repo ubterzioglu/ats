@@ -6,6 +6,7 @@
     "label": "Main",
     "analyze": "Analyze CV",
     "builder": "Builder",
+    "about": "About",
     "cta": "Analyze a CV"
   },
   "languageSwitcher": {
@@ -29,7 +30,7 @@
   "home": {
     "eyebrow": "CV readability check",
     "headline": "Your CV is read as text, not as a design.",
-    "lede": "An applicant tracking system throws away your layout and keeps whatever text it can pull out. This shows you that text, scores what survived out of 100, and lists the fixes in order of value.",
+    "lede": "ATS readability is a free tool that shows a CV the way an applicant tracking system reads it: as text. It scores what survived out of 100 and lists the fixes in order of value.",
     "cta": "Analyze a CV",
     "privacyTag": "Read in your browser, never uploaded",
     "analyze": {
@@ -57,6 +58,46 @@
     "closing": {
       "title": "Read your CV the way the parser does.",
       "cta": "Analyze a CV"
+    }
+  },
+  "about": {
+    "title": "About",
+    "whatHeading": "What it does",
+    "privacyHeading": "Privacy",
+    "privacy": "Your CV is read in your browser. Nothing is uploaded and the server never receives the document.",
+    "limitsHeading": "Limits",
+    "formatsHeading": "Formats",
+    "formats": "The editor imports and exports the <link>JSON Resume</link> format.",
+    "contactHeading": "Contact",
+    "contact": "Questions and corrections: <mail>{email}</mail>"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "items": {
+      "upload": {
+        "q": "Is my CV uploaded?",
+        "a": "No. The file is read in your browser and the server never receives the document."
+      },
+      "score": {
+        "q": "How is the score calculated?",
+        "a": "Five dimensions add up to 100 points: parseability 25, keyword match 25, structure 20, impact 20, contact 10. Every lost point is attached to a named finding with a fix."
+      },
+      "languages": {
+        "q": "Which languages are recognised?",
+        "a": "Section headings, action verbs and stopwords are recognised in English, German and Turkish, and the document language is detected automatically."
+      },
+      "shared": {
+        "q": "What does a shared report store?",
+        "a": "Scores and advice only. Lines taken from your CV are never stored, and the link expires after 30 days."
+      },
+      "guarantee": {
+        "q": "Does a high score mean I will be invited?",
+        "a": "No. The checks are heuristics built from how mainstream parsers behave, not a reproduction of any named vendor. A good score means nothing stands between your CV and a human reader."
+      },
+      "noAd": {
+        "q": "What changes without a job ad?",
+        "a": "The keyword dimension is capped at 20 of 25 points and the report says so; a generic skill list is not a match score."
+      }
     }
   },
   "analyze": {

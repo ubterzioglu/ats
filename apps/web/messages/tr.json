@@ -6,6 +6,7 @@
     "label": "Ana gezinme",
     "analyze": "CV analizi",
     "builder": "CV oluşturucu",
+    "about": "Hakkında",
     "cta": "CV'nizi analiz edin"
   },
   "languageSwitcher": {
@@ -29,7 +30,7 @@
   "home": {
     "eyebrow": "CV okunabilirlik kontrolü",
     "headline": "CV'niz bir tasarım olarak değil, metin olarak okunur.",
-    "lede": "Bir aday takip sistemi sayfa düzeninizi atar ve çıkarabildiği metni tutar. Bu araç size o metni gösterir, geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
+    "lede": "ATS readability, bir CV'yi aday takip sisteminin okuduğu gibi gösteren ücretsiz bir araçtır: metin olarak. Geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
     "cta": "CV'nizi analiz edin",
     "privacyTag": "Tarayıcınızda okunur, yüklenmez",
     "analyze": {
@@ -57,6 +58,46 @@
     "closing": {
       "title": "CV'nizi ayrıştırıcının okuduğu gibi okuyun.",
       "cta": "CV'nizi analiz edin"
+    }
+  },
+  "about": {
+    "title": "Hakkında",
+    "whatHeading": "Ne yapar",
+    "privacyHeading": "Gizlilik",
+    "privacy": "CV'niz tarayıcınızda okunur. Hiçbir şey yüklenmez ve sunucu belgeyi hiç almaz.",
+    "limitsHeading": "Sınırlar",
+    "formatsHeading": "Biçimler",
+    "formats": "Düzenleyici <link>JSON Resume</link> biçimini içe ve dışa aktarır.",
+    "contactHeading": "İletişim",
+    "contact": "Sorular ve düzeltmeler: <mail>{email}</mail>"
+  },
+  "faq": {
+    "title": "Sık sorulan sorular",
+    "items": {
+      "upload": {
+        "q": "CV'm yükleniyor mu?",
+        "a": "Hayır. Dosya tarayıcınızda okunur; sunucu belgeyi hiç almaz."
+      },
+      "score": {
+        "q": "Puan nasıl hesaplanıyor?",
+        "a": "Beş boyut toplam 100 puan eder: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20, iletişim 10. Kaybedilen her puan, adı ve düzeltmesi olan bir bulguya bağlanır."
+      },
+      "languages": {
+        "q": "Hangi diller tanınıyor?",
+        "a": "Bölüm başlıkları, eylem fiilleri ve durak sözcükler İngilizce, Almanca ve Türkçe için tanınır; belge dili otomatik algılanır."
+      },
+      "shared": {
+        "q": "Paylaşılan rapor neyi saklar?",
+        "a": "Yalnızca puanları ve önerileri. CV'nizden alınan satırlar saklanmaz; bağlantı 30 gün sonra geçersiz olur."
+      },
+      "guarantee": {
+        "q": "Yüksek puan görüşmeye çağrılacağım anlamına gelir mi?",
+        "a": "Hayır. Kontroller yaygın ayrıştırıcıların davranışından çıkarılmış sezgilerdir, belirli bir firmanın yazılımının kopyası değildir. İyi bir puan, CV'niz ile bir insan okuyucu arasında engel kalmadığı anlamına gelir."
+      },
+      "noAd": {
+        "q": "İş ilanı olmadan ne değişir?",
+        "a": "Anahtar kelime boyutu en fazla 25 yerine 20 puan alır ve rapor bunu belirtir; genel bir beceri listesi eşleşme puanı değildir."
+      }
     }
   },
   "analyze": {

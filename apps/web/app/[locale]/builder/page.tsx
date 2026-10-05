@@ -11,7 +11,12 @@ interface BuildPageProps {
 
 export async function generateMetadata({ params }: BuildPageProps): Promise<Metadata> {
   const { locale } = await params;
-  return { alternates: pageAlternates(locale as AppLocale, "/builder") };
+  const t = await getTranslations({ locale, namespace: "editor" });
+  return {
+    title: t("title"),
+    description: t("lede"),
+    alternates: pageAlternates(locale as AppLocale, "/builder")
+  };
 }
 
 export default async function BuildPage({ params }: BuildPageProps) {

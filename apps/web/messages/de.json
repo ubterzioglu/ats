@@ -6,6 +6,7 @@
     "label": "Hauptnavigation",
     "analyze": "CV-Analyse",
     "builder": "Editor",
+    "about": "Über uns",
     "cta": "Lebenslauf analysieren"
   },
   "languageSwitcher": {
@@ -29,7 +30,7 @@
   "home": {
     "eyebrow": "Lesbarkeitsprüfung für Lebensläufe",
     "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Design.",
-    "lede": "Ein Bewerbermanagementsystem verwirft Ihr Layout und behält nur den Text, den es herauslösen kann. Sie sehen diesen Text, erhalten eine Bewertung von 100 Punkten für das, was übrig blieb, und eine Liste der Korrekturen, geordnet nach Wert.",
+    "lede": "ATS readability ist ein kostenloses Werkzeug, das einen Lebenslauf so zeigt, wie ein Bewerbermanagementsystem ihn liest: als Text. Es bewertet, was übrig blieb, auf 100 Punkte und listet die Korrekturen nach Wert.",
     "cta": "Lebenslauf analysieren",
     "privacyTag": "Im Browser gelesen, nie hochgeladen",
     "analyze": {
@@ -57,6 +58,46 @@
     "closing": {
       "title": "Lesen Sie Ihren Lebenslauf, wie der Parser ihn liest.",
       "cta": "Lebenslauf analysieren"
+    }
+  },
+  "about": {
+    "title": "Über uns",
+    "whatHeading": "Was es tut",
+    "privacyHeading": "Datenschutz",
+    "privacy": "Ihr Lebenslauf wird in Ihrem Browser gelesen. Nichts wird hochgeladen, und der Server erhält das Dokument nie.",
+    "limitsHeading": "Grenzen",
+    "formatsHeading": "Formate",
+    "formats": "Der Editor importiert und exportiert das Format <link>JSON Resume</link>.",
+    "contactHeading": "Kontakt",
+    "contact": "Fragen und Korrekturen: <mail>{email}</mail>"
+  },
+  "faq": {
+    "title": "Häufige Fragen",
+    "items": {
+      "upload": {
+        "q": "Wird mein Lebenslauf hochgeladen?",
+        "a": "Nein. Die Datei wird in Ihrem Browser gelesen; der Server erhält das Dokument nie."
+      },
+      "score": {
+        "q": "Wie wird die Punktzahl berechnet?",
+        "a": "Fünf Dimensionen ergeben zusammen 100 Punkte: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20, Kontakt 10. Jeder verlorene Punkt gehört zu einem benannten Befund mit Korrektur."
+      },
+      "languages": {
+        "q": "Welche Sprachen werden erkannt?",
+        "a": "Abschnittsüberschriften, Aktionsverben und Stoppwörter werden für Englisch, Deutsch und Türkisch erkannt; die Dokumentsprache wird automatisch bestimmt."
+      },
+      "shared": {
+        "q": "Was speichert ein geteilter Bericht?",
+        "a": "Nur Punktzahlen und Hinweise. Zeilen aus Ihrem Lebenslauf werden nie gespeichert; der Link läuft nach 30 Tagen ab."
+      },
+      "guarantee": {
+        "q": "Heißt eine hohe Punktzahl, dass ich eingeladen werde?",
+        "a": "Nein. Die Prüfungen sind Heuristiken aus dem Verhalten gängiger Parser, keine Nachbildung einer bestimmten Software. Eine gute Punktzahl heißt: Zwischen Ihrem Lebenslauf und einem Menschen steht nichts mehr."
+      },
+      "noAd": {
+        "q": "Was ändert sich ohne Stellenanzeige?",
+        "a": "Die Schlüsselwort-Dimension erreicht höchstens 20 von 25 Punkten, und der Bericht sagt das; eine allgemeine Fähigkeitenliste ist keine Übereinstimmung."
+      }
     }
   },
   "analyze": {

@@ -16,7 +16,8 @@ import { PrimaryButton } from "./primary-button";
 const LINKS = [
   { href: "/analyze", key: "analyze" },
   { href: "/builder", key: "builder" },
-  { href: "/applications", key: "applications" }
+  { href: "/applications", key: "applications" },
+  { href: "/about", key: "about" }
 ] as const;
 
 /**
