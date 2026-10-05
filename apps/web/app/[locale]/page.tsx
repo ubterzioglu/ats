@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import { FaqSection } from "@/components/faq-section";
 import { GhostLink } from "@/components/ui/ghost-link";
+import { JsonLd } from "@/components/json-ld";
 import { ParticleField } from "@/components/ui/particle-field";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { SectionHeadline } from "@/components/ui/section-headline";
@@ -58,10 +59,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
       <section className="mx-auto grid w-full max-w-page items-center gap-12 px-4 py-section-sm sm:px-6 lg:min-h-[calc(100dvh-4rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16 lg:py-0">
         <div>
           <SectionHeadline as="h1" scale="lg" label={t("eyebrow")} title={t("headline")}>

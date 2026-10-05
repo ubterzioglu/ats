@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 
 import { Link } from "@/i18n/navigation";
 import { type AppLocale } from "@/i18n/routing";
-import { pageAlternates } from "@/lib/seo";
+import { buildAboutPageJsonLd, buildBreadcrumbJsonLd, pageAlternates } from "@/lib/seo";
 import { SITE_ENTITY } from "@/lib/site-entity";
 
+import { JsonLd } from "@/components/json-ld";
 import { SectionHeadline } from "@/components/ui/section-headline";
 
 interface AboutPageProps {
@@ -29,9 +30,23 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const home = await getTranslations("home");
   const common = await getTranslations("common");
   const metadata = await getTranslations("metadata");
+  const nav = await getTranslations("nav");
+
+  const aboutJsonLd = buildAboutPageJsonLd(
+    locale as AppLocale,
+    metadata("openGraphTitle"),
+    metadata("description")
+  );
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(
+    locale as AppLocale,
+    "/about",
+    t("title"),
+    nav("home")
+  );
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
+      <JsonLd data={[aboutJsonLd, breadcrumbJsonLd]} />
       <main className="py-8 sm:py-10">
         <div className="mb-10 max-w-measure">
           <h1 className="text-heading-sm font-normal">{t("title")}</h1>

@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import {
   absoluteUrl,
   BUILD_DATE,
+  buildAboutPageJsonLd,
+  buildBreadcrumbJsonLd,
   buildFaqJsonLd,
   buildHomeJsonLd,
   buildOrganizationJsonLd,
@@ -11,7 +13,8 @@ import {
   ORGANIZATION_ID,
   pageAlternates,
   PUBLIC_PATHS,
-  SITE_URL
+  SITE_URL,
+  WEBSITE_ID
 } from "@/lib/seo";
 
 import { routing } from "@/i18n/routing";
@@ -117,12 +120,13 @@ describe("sitemap output", () => {
 });
 
 describe("buildOrganizationJsonLd", () => {
-  it("has the correct @id, name, logo, contactPoint and sameAs", () => {
-    const org = buildOrganizationJsonLd();
+  it("has the correct @id, name, logo, contactPoint, description and sameAs", () => {
+    const org = buildOrganizationJsonLd("A test description");
     expect(org["@id"]).toBe(ORGANIZATION_ID);
     expect(org["@type"]).toBe("Organization");
     expect(org.name).toBe(SITE_ENTITY.name);
     expect(org.url).toBe(SITE_URL);
+    expect(org.description).toBe("A test description");
     const logo = org.logo as { readonly url: string };
     expect(logo.url).toMatch(new RegExp(`^${SITE_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`));
     const contact = org.contactPoint as { readonly email: string };
@@ -131,7 +135,7 @@ describe("buildOrganizationJsonLd", () => {
   });
 
   it("serialized output contains no placeholders", () => {
-    const serialized = JSON.stringify(buildOrganizationJsonLd());
+    const serialized = JSON.stringify(buildOrganizationJsonLd("A description"));
     expect(serialized).not.toContain("YOUR_");
     expect(serialized).not.toContain("FILL_ME");
     expect(serialized).not.toContain("example.com");
@@ -234,5 +238,55 @@ describe("AI and feed route files exist", () => {
     expect(typeof feed.GET).toBe("function");
     const aiTxt = await import("@/app/.well-known/ai.txt/route");
     expect(typeof aiTxt.GET).toBe("function");
+  });
+});
+
+describe("buildBreadcrumbJsonLd", () => {
+  it("returns a BreadcrumbList with 2 items in increasing position order", () => {
+    const breadcrumb = buildBreadcrumbJsonLd("en", "/about", "About", "Home");
+    expect(breadcrumb["@type"]).toBe("BreadcrumbList");
+    const items = breadcrumb.itemListElement as readonly { readonly position: number; readonly name: string }[];
+    expect(items).toHaveLength(2);
+    expect(items[0]!.position).toBe(1);
+    expect(items[0]!.name).toBe("Home");
+    expect(items[1]!.position).toBe(2);
+    expect(items[1]!.name).toBe("About");
+  });
+
+  it("uses correct URLs for each item", () => {
+    const breadcrumb = buildBreadcrumbJsonLd("tr", "/analyze", "Analiz", "Ana Sayfa");
+    const items = breadcrumb.itemListElement as readonly { readonly item: string }[];
+    expect(items[0]!.item).toBe(`${SITE_URL}/tr`);
+    expect(items[1]!.item).toBe(`${SITE_URL}/tr/analyze`);
+  });
+});
+
+describe("buildAboutPageJsonLd", () => {
+  it("returns an AboutPage with correct references", () => {
+    const aboutPage = buildAboutPageJsonLd("en", "About ATS readability", "Learn about us");
+    expect(aboutPage["@type"]).toBe("AboutPage");
+    expect(aboutPage.name).toBe("About ATS readability");
+    expect(aboutPage.description).toBe("Learn about us");
+    expect(aboutPage.url).toBe(`${SITE_URL}/about`);
+    expect(aboutPage.inLanguage).toBe("en");
+    const isPartOf = aboutPage.isPartOf as { readonly "@id": string };
+    expect(isPartOf["@id"]).toBe(WEBSITE_ID);
+    const about = aboutPage.about as { readonly "@id": string };
+    expect(about["@id"]).toBe(ORGANIZATION_ID);
+  });
+});
+
+describe("WebSite node has @id", () => {
+  it("WebSite node has @id matching WEBSITE_ID", () => {
+    const nodes = buildHomeJsonLd("en", "ATS readability", "Desc");
+    const website = nodes[1] as { readonly "@id": string };
+    expect(website["@id"]).toBe(WEBSITE_ID);
+  });
+});
+
+describe("sameAs has no duplicates", () => {
+  it("SITE_ENTITY.sameAs has unique entries", () => {
+    const unique = new Set(SITE_ENTITY.sameAs);
+    expect(unique.size).toBe(SITE_ENTITY.sameAs.length);
   });
 });

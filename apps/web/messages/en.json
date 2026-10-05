@@ -4,6 +4,7 @@
   },
   "nav": {
     "label": "Main",
+    "home": "Home",
     "analyze": "Analyze CV",
     "builder": "Builder",
     "about": "About",

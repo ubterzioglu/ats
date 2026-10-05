@@ -4,6 +4,7 @@
   },
   "nav": {
     "label": "Hauptnavigation",
+    "home": "Startseite",
     "analyze": "CV-Analyse",
     "builder": "Editor",
     "about": "Über uns",

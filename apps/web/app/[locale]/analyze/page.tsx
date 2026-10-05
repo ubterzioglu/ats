@@ -2,8 +2,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
 import { Analyzer } from "@/components/analyzer";
+import { JsonLd } from "@/components/json-ld";
 import { type AppLocale } from "@/i18n/routing";
-import { pageAlternates } from "@/lib/seo";
+import { buildBreadcrumbJsonLd, pageAlternates } from "@/lib/seo";
 import { isPersistenceConfigured } from "@/lib/supabase/client";
 
 // isPersistenceConfigured() reads the environment, which prerendering would
@@ -32,9 +33,18 @@ export default async function AnalyzePage({ params }: AnalyzePageProps) {
   const t = await getTranslations("analyze");
   const common = await getTranslations("common");
   const brand = await getTranslations("brand");
+  const nav = await getTranslations("nav");
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(
+    locale as AppLocale,
+    "/analyze",
+    t("heading"),
+    nav("home")
+  );
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <JsonLd data={breadcrumbJsonLd} />
       <main className="py-8 sm:py-10">
         <div className="mb-8 max-w-measure">
           <h1 className="text-heading-sm font-normal">{t("heading")}</h1>
