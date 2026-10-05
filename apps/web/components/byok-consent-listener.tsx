@@ -23,23 +23,28 @@ export function ByokConsentListener() {
 
   if (!request) return null;
 
+  // Dala inner-page adaptation: a dialog has to separate itself from the page
+  // beneath it, so it is solid black with the one allowed hairline. No shadow.
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/10 p-4">
-      <div className="bg-sheet rounded-modal shadow-float max-w-md w-full p-6 space-y-5 animate-in fade-in zoom-in-95 duration-200 border border-line">
-        <h2 className="text-lg font-semibold">{t("consentHeading")}</h2>
-        <p className="text-sm text-muted leading-relaxed">
-          {t("consentIntro")}
-        </p>
-        <div className="bg-bench-sunk rounded-control p-3 text-sm font-mono text-ink border border-line break-all">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-void/90 p-4">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="byok-consent-heading"
+        className="w-full max-w-md space-y-6 border border-line bg-void p-8"
+      >
+        <h2 id="byok-consent-heading" className="text-heading-2xs font-normal">
+          {t("consentHeading")}
+        </h2>
+        <p className="text-sm leading-relaxed text-muted">{t("consentIntro")}</p>
+        <p className="break-all border-b border-line pb-2 font-mono text-sm text-ink">
           {request.endpoint}
-        </div>
-        <p className="text-sm text-caution-ink font-medium bg-caution/[0.08] border border-caution/40 p-3 rounded-control">
-          {t("consentWarning")}
         </p>
-        <div className="flex justify-end gap-3 pt-2">
-          <button 
+        <p className="border-l-2 border-saffron pl-4 text-sm text-saffron">{t("consentWarning")}</p>
+        <div className="flex items-center justify-end gap-3 pt-2">
+          <button
             type="button"
-            className="px-4 py-2 text-sm font-medium hover:bg-bench-sunk transition-colors rounded-control border border-transparent"
+            className="btn-quiet"
             onClick={() => {
               request.resolve(false);
               setRequest(null);
@@ -47,9 +52,9 @@ export function ByokConsentListener() {
           >
             {t("consentReject")}
           </button>
-          <button 
+          <button
             type="button"
-            className="px-4 py-2 text-sm font-medium bg-action text-white hover:opacity-90 transition-opacity rounded-control shadow-sm"
+            className="btn"
             onClick={() => {
               request.resolve(true);
               setRequest(null);

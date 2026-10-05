@@ -71,8 +71,8 @@ export function FieldInput({ resume, path, input, label, hint, onChange, reviewP
       <span
         className={
           flagged
-            ? "condensed text-micro font-medium text-caution"
-            : "condensed text-micro font-medium text-muted"
+            ? "condensed text-micro font-normal text-caution"
+            : "condensed text-micro font-normal text-muted"
         }
       >
         {label}
@@ -138,8 +138,8 @@ export function StringListInput({ resume, path, label, onChange, reviewPaths }: 
       <span
         className={
           flagged
-            ? "condensed text-micro font-medium text-caution"
-            : "condensed text-micro font-medium text-muted"
+            ? "condensed text-micro font-normal text-caution"
+            : "condensed text-micro font-normal text-muted"
         }
       >
         {label}

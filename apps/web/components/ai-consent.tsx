@@ -64,7 +64,7 @@ export function AiConsent({ onReady }: AiConsentProps) {
     return (
       <section className="bench px-5 py-4 sm:px-6">
         <p className="text-sm text-muted">
-          <span className="font-medium text-good">{t("ready")}</span> {t("readyDetail")}
+          <span className="font-normal text-good">{t("ready")}</span> {t("readyDetail")}
         </p>
       </section>
     );
@@ -73,7 +73,7 @@ export function AiConsent({ onReady }: AiConsentProps) {
   return (
     <section className="bench space-y-3 px-5 py-4 sm:px-6" aria-labelledby="ai-consent-heading">
       <div>
-        <h2 id="ai-consent-heading" className="text-base font-semibold">
+        <h2 id="ai-consent-heading" className="text-base font-normal">
           {t("heading")}
         </h2>
         <p className="mt-1.5 max-w-measure text-sm leading-relaxed text-muted">
@@ -85,7 +85,7 @@ export function AiConsent({ onReady }: AiConsentProps) {
         <div className="space-y-2">
           <div className="h-1.5 overflow-hidden rounded-full border border-line bg-bench-sunk">
             <div
-              className="h-full bg-action transition-[width] duration-300"
+              className="h-full bg-saffron transition-[width] duration-300"
               style={{ width: `${progress}%` }}
               role="progressbar"
               aria-valuenow={progress}

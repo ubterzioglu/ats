@@ -60,7 +60,7 @@ export function DataControls() {
 
   return (
     <section className="bench px-5 py-4 sm:px-6" aria-labelledby="data-controls-heading">
-      <h2 id="data-controls-heading" className="text-sm font-semibold">
+      <h2 id="data-controls-heading" className="text-sm font-normal">
         {t("heading")}
       </h2>
 

@@ -38,7 +38,7 @@ export function FindingExplainButton({ finding, explain }: FindingExplainButtonP
   return (
     <div className="mt-3">
       {explanation ? (
-        <div className="rounded-control border border-line bg-bench-sunk px-3 py-2.5">
+        <div className="border-l border-line pl-3">
           <p className="text-sm leading-relaxed">{explanation.why}</p>
           <p className="mt-1.5 border-l-2 border-action/30 pl-3 text-sm leading-relaxed text-muted">
             {explanation.nextStep}

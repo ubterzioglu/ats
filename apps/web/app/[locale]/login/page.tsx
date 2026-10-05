@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
+import { ParticleField } from "@/components/ui/particle-field";
 import { Link } from "@/i18n/navigation";
 
 import { login, signup } from "./actions";
@@ -19,21 +20,22 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const message = isLoginMessageKey(messageKey) ? t(`messages.${messageKey}`) : null;
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-sm flex-col justify-center px-4 py-12">
-      <Link
-        href="/"
-        className="font-mono text-sm font-medium tracking-tight transition-colors hover:text-action"
-      >
-        {brand("name")}
-      </Link>
+    <div className="relative overflow-hidden">
+      <ParticleField shape="ambient" seed={5} className="absolute inset-0" />
 
-      <div className="bench mt-6 p-7">
-        <h1 className="text-h2 font-semibold">{t("heading")}</h1>
-        <p className="mt-2 text-sm leading-relaxed text-muted">{t("lede")}</p>
+      <div className="relative mx-auto flex min-h-[calc(100dvh-4rem)] w-full max-w-sm flex-col justify-center px-4 py-12">
+        <Link href="/" className="text-nav-label text-ash transition-colors hover:text-bone">
+          {brand("name")}
+        </Link>
 
-        <form className="mt-7 flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label className="condensed text-micro font-medium text-muted" htmlFor="email">
+        {/* Dala inner-page adaptation: the form has no box; the particle field
+            behind it carries the page. */}
+        <h1 className="mt-10 text-heading-sm font-normal">{t("heading")}</h1>
+        <p className="mt-4 text-body font-extralight text-mist">{t("lede")}</p>
+
+        <form className="mt-10 flex flex-col gap-6">
+          <div className="flex flex-col gap-1">
+            <label className="text-caption uppercase text-ash" htmlFor="email">
               {t("emailLabel")}
             </label>
             <input
@@ -47,8 +49,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="condensed text-micro font-medium text-muted" htmlFor="password">
+          <div className="flex flex-col gap-1">
+            <label className="text-caption uppercase text-ash" htmlFor="password">
               {t("passwordLabel")}
             </label>
             <input
@@ -63,29 +65,28 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           </div>
 
           {message ? (
-            <p
-              role="alert"
-              className="rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm text-caution"
-            >
+            <p role="alert" className="border-l-2 border-saffron pl-4 text-sm text-saffron">
               {message}
             </p>
           ) : null}
 
-          <button formAction={login} className="btn mt-2">
-            {t("submit")}
-          </button>
+          <div className="mt-2 flex flex-wrap items-center gap-4">
+            <button formAction={login} className="btn">
+              {t("submit")}
+            </button>
 
-          <button formAction={signup} className="btn-quiet">
-            {t("createAccount")}
-          </button>
+            <button formAction={signup} className="btn-quiet">
+              {t("createAccount")}
+            </button>
+          </div>
         </form>
-      </div>
 
-      <p className="mt-6 text-center text-sm text-muted">
-        <Link href="/" className="underline underline-offset-2 transition-colors hover:text-ink">
-          {t("whatThisChecks")}
-        </Link>
-      </p>
+        <p className="mt-10">
+          <Link href="/" className="text-sm text-saffron underline underline-offset-4">
+            {t("whatThisChecks")}
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

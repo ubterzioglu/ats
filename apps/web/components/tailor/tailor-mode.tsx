@@ -37,7 +37,7 @@ export function TailorMode({ result, jobAd, cvText, onApply, draftLetter }: Tail
     <div className="space-y-5">
       <section className="bench">
         <div className="border-b border-line px-5 py-5 sm:px-6">
-          <h2 className="text-h3 font-semibold">{t("heading")}</h2>
+          <h2 className="text-h3 font-normal">{t("heading")}</h2>
           <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("lede")}</p>
         </div>
 

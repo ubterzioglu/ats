@@ -37,12 +37,13 @@ export function LanguageSwitcher() {
           disabled={pending}
           aria-current={locale === active ? "true" : undefined}
           onClick={() => switchTo(locale)}
+          aria-label={LOCALE_NAMES[locale]}
           className={cx(
-            "inline-flex min-h-11 items-center rounded-control px-3 text-sm transition-colors disabled:opacity-50",
+            "inline-flex min-h-11 items-center px-2 text-nav-label font-normal uppercase transition-colors disabled:opacity-50",
             locale === active ? "text-ink" : "text-muted hover:text-ink"
           )}
         >
-          {LOCALE_NAMES[locale]}
+          {locale}
         </button>
       ))}
     </nav>

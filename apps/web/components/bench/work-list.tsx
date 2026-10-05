@@ -40,7 +40,7 @@ export function WorkList({
   if (findings.length === 0) {
     return (
       <section className="bench p-5 sm:p-6">
-        <h2 className="text-h3 font-semibold">{t("emptyHeading")}</h2>
+        <h2 className="text-h3 font-normal">{t("emptyHeading")}</h2>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("emptyBody")}</p>
       </section>
     );
@@ -51,7 +51,7 @@ export function WorkList({
   return (
     <section className="bench overflow-hidden" aria-labelledby="work-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
-        <h2 id="work-heading" className="text-h3 font-semibold">
+        <h2 id="work-heading" className="text-h3 font-normal">
           {t("heading")}
         </h2>
         <span className="font-mono text-micro tabular-nums text-muted">

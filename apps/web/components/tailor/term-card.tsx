@@ -52,7 +52,7 @@ export function TermCard({ card, cvText, sections, onApply }: TermCardProps) {
   return (
     <li className="px-5 py-5 sm:px-6">
       <div className="flex items-baseline gap-3">
-        <h3 className="min-w-0 flex-1 text-sm font-semibold">{card.term.term}</h3>
+        <h3 className="min-w-0 flex-1 text-sm font-normal">{card.term.term}</h3>
         <span className="shrink-0 font-mono text-micro text-muted">
           {t(`section.${card.suggestedSection}`)}
         </span>

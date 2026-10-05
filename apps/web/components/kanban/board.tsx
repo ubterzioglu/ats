@@ -27,6 +27,7 @@ export function KanbanBoard() {
   const [loading, setLoading] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [overStage, setOverStage] = useState<ApplicationStage | null>(null);
   const [addingToStage, setAddingToStage] = useState<ApplicationStage | null>(null);
   const [newCompany, setNewCompany] = useState("");
   const [newRole, setNewRole] = useState("");
@@ -63,13 +64,15 @@ export function KanbanBoard() {
     e.dataTransfer.effectAllowed = "move";
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = (e: React.DragEvent, stage: ApplicationStage) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
+    setOverStage(stage);
   };
 
   const handleDrop = async (e: React.DragEvent, stage: ApplicationStage) => {
     e.preventDefault();
+    setOverStage(null);
     const id = e.dataTransfer.getData("applicationId");
     if (!id) return;
 
@@ -158,7 +161,7 @@ export function KanbanBoard() {
   );
 
   if (loading) {
-    return <div className="animate-pulse h-64 rounded-md bg-bench-sunk" />;
+    return <div className="h-64 animate-pulse border-t border-line" />;
   }
 
   return (
@@ -183,8 +186,8 @@ export function KanbanBoard() {
       </div>
 
       {reminders.length > 0 ? (
-        <div className="bench rounded-control border border-caution/30 bg-caution/[0.04] px-4 py-3">
-          <p className="condensed text-micro font-medium text-caution">
+        <div className="bench border-l-2 border-caution px-4 py-3">
+          <p className="condensed text-micro font-normal text-caution">
             {t("remindersHeading")}
           </p>
           <ul className="mt-2 space-y-1">
@@ -205,11 +208,12 @@ export function KanbanBoard() {
             <div
               key={stage}
               className="flex-1 shrink-0 lg:w-80"
-              onDragOver={handleDragOver}
+              onDragOver={(e) => handleDragOver(e, stage)}
+              onDragLeave={() => setOverStage((current) => (current === stage ? null : current))}
               onDrop={(e) => handleDrop(e, stage)}
             >
               <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-sm font-medium text-ink">
+                <h2 className="text-sm font-normal text-ink">
                   {t(`stages.${stage}`)}
                   <span className="ml-2 text-muted">{stageApps.length}</span>
                 </h2>
@@ -223,7 +227,14 @@ export function KanbanBoard() {
                 </button>
               </div>
 
-              <div className="flex min-h-[150px] flex-col gap-3 rounded-lg bg-bench-sunk p-3">
+              {/* Dala inner-page adaptation: columns have no box; a drag target is
+                  marked by a thin violet top line. */}
+              <div
+                className={cx(
+                  "flex min-h-[150px] flex-col gap-5 border-t pt-4 transition-colors",
+                  overStage === stage ? "border-iris" : "border-line"
+                )}
+              >
                 {stageApps.map((app) => {
                   const appReminders = remindersByApp.get(app.id);
                   return (
@@ -231,9 +242,11 @@ export function KanbanBoard() {
                       key={app.id}
                       draggable
                       onDragStart={(e) => handleDragStart(e, app.id)}
-                      className="group relative cursor-grab rounded-md border border-line bg-sheet p-4 shadow-sm active:cursor-grabbing"
+                      className="group relative cursor-grab active:cursor-grabbing"
                     >
-                      <h3 className="font-medium text-ink">{app.roleTitle}</h3>
+                      <h3 className="font-normal text-ink transition-colors group-hover:text-saffron">
+                        {app.roleTitle}
+                      </h3>
                       <p className="mt-1 text-sm text-muted">{app.companyName}</p>
 
                       {app.url ? (
@@ -241,7 +254,7 @@ export function KanbanBoard() {
                           href={app.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-3 block text-xs text-action hover:underline"
+                          className="mt-3 block text-xs text-saffron hover:underline"
                         >
                           {safeHostname(app.url)}
                         </a>
@@ -253,10 +266,8 @@ export function KanbanBoard() {
                             <p
                               key={rem.id}
                               className={cx(
-                                "rounded-chip px-2 py-0.5 text-xs",
-                                rem.type === "no-response"
-                                  ? "bg-caution/10 text-caution"
-                                  : "bg-action/10 text-action"
+                                "text-xs",
+                                rem.type === "no-response" ? "text-saffron" : "text-muted"
                               )}
                             >
                               {rem.message}
@@ -280,33 +291,33 @@ export function KanbanBoard() {
                 {addingToStage === stage ? (
                   <form
                     onSubmit={handleCreate}
-                    className="rounded-md border border-line bg-sheet p-4 shadow-sm"
+                    className="border-t border-line pt-4"
                   >
                     <div className="space-y-3">
                       <input
                         autoFocus
                         required
                         placeholder={t("companyName")}
-                        className="w-full rounded bg-transparent text-sm text-ink outline-none"
+                        className="field"
                         value={newCompany}
                         onChange={(e) => setNewCompany(e.target.value)}
                       />
                       <input
                         required
                         placeholder={t("roleTitle")}
-                        className="w-full rounded bg-transparent text-sm text-ink outline-none"
+                        className="field"
                         value={newRole}
                         onChange={(e) => setNewRole(e.target.value)}
                       />
                       <input
                         type="url"
                         placeholder={t("url")}
-                        className="w-full rounded bg-transparent text-sm text-ink outline-none"
+                        className="field"
                         value={newUrl}
                         onChange={(e) => setNewUrl(e.target.value)}
                       />
                       <div className="mt-3 flex items-center gap-2">
-                        <button type="submit" className="text-xs font-medium text-action hover:underline">
+                        <button type="submit" className="text-xs font-normal text-saffron hover:underline">
                           {t("save")}
                         </button>
                         <button
@@ -346,3 +357,4 @@ function safeHostname(url: string): string {
     return url;
   }
 }
+

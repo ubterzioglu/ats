@@ -72,7 +72,7 @@ export function MeasureRail({
     >
       <div className="border-b border-line px-5 py-5 sm:px-6">
         <h2 id="score-heading" className="flex items-baseline gap-2">
-          <span className="font-mono text-score font-medium tabular-nums">{result.total}</span>
+          <span className="font-mono text-score font-normal tabular-nums">{result.total}</span>
           <span className="font-mono text-sm text-muted">{t("outOf")}</span>
           {previous ? <Delta value={totalDelta} title={deltaTitle(totalDelta)} /> : null}
         </h2>
@@ -94,7 +94,7 @@ export function MeasureRail({
           return (
             <div key={dimension.id} className="px-5 py-4 sm:px-6">
               <div className="flex items-baseline justify-between gap-4">
-                <dt className="condensed text-micro font-medium text-ink">{dimension.label}</dt>
+                <dt className="condensed text-micro font-normal text-ink">{dimension.label}</dt>
                 <dd className="shrink-0 font-mono text-micro tabular-nums text-muted">
                   <span className="text-ink">{dimension.score}</span>/{dimension.max}
                   {previousDimension ? (

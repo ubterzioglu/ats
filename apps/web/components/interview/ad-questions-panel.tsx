@@ -48,7 +48,7 @@ export function AdQuestionsPanel({ bank, terms, modelTier }: AdQuestionsPanelPro
   return (
     <section className="bench">
       <div className="border-b border-line px-5 py-5 sm:px-6">
-        <h2 className="text-h3 font-semibold">{t("adHeading")}</h2>
+        <h2 className="text-h3 font-normal">{t("adHeading")}</h2>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("adLede")}</p>
       </div>
 
@@ -87,8 +87,8 @@ export function AdQuestionsPanel({ bank, terms, modelTier }: AdQuestionsPanelPro
                 {mode.prepared.map((entry) => (
                   <li key={entry.question.id} className="py-4 first:pt-0 last:pb-0">
                     <div className="flex items-start justify-between gap-3">
-                      <p className="text-sm font-medium">{entry.question.text}</p>
-                      <span className="shrink-0 rounded-chip border border-line px-2 py-0.5 text-micro text-muted">
+                      <p className="text-sm font-normal">{entry.question.text}</p>
+                      <span className="shrink-0 rounded-full border border-edge/50 px-3 py-0.5 text-micro text-muted">
                         {t(`category.${entry.question.category}`)}
                       </span>
                     </div>
@@ -103,7 +103,7 @@ export function AdQuestionsPanel({ bank, terms, modelTier }: AdQuestionsPanelPro
                         {entry.cards.map((card) => (
                           <li
                             key={card.id}
-                            className="rounded-control border border-line bg-bench-sunk px-3 py-2"
+                            className="border-l border-line pl-3"
                           >
                             <p className="font-mono text-micro text-muted">
                               {t("sourceLine", { line: card.sourceLine + 1 })}

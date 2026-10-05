@@ -44,8 +44,6 @@ const EVERY_LOCALE: readonly string[] = [
   "notFound.code",
   "analyzer.previewOutOf",
   "measureRail.outOf",
-  "benchPreview.outOf",
-  "benchPreview.worth",
   "workItem.worth",
   "aiStatus.size",
   "fixDrafts.quantifyToken"
@@ -60,7 +58,6 @@ const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
   // Website, Version, System.
   de: new Set([
     ...EVERY_LOCALE,
-    "theme.system",
     "identityTable.fields.name",
     "editor.fields.basics.name",
     "editor.fields.basics.url",

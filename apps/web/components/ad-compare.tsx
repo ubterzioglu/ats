@@ -60,7 +60,7 @@ export function AdCompareView({ cvText }: AdCompareViewProps) {
   if (jobs.length === 0) {
     return (
       <section className="bench px-5 py-5 sm:px-6">
-        <h2 className="text-h3 font-semibold">{t("heading")}</h2>
+        <h2 className="text-h3 font-normal">{t("heading")}</h2>
         <p className="mt-2 text-sm text-muted">{t("empty")}</p>
       </section>
     );
@@ -69,7 +69,7 @@ export function AdCompareView({ cvText }: AdCompareViewProps) {
   return (
     <section className="bench">
       <div className="border-b border-line px-5 py-5 sm:px-6">
-        <h2 className="text-h3 font-semibold">{t("heading")}</h2>
+        <h2 className="text-h3 font-normal">{t("heading")}</h2>
         <p className="mt-2 max-w-measure text-sm text-muted">{t("lede")}</p>
       </div>
 
@@ -102,11 +102,11 @@ function AdCompareRow({ result, job, rank, onDelete }: AdCompareRowProps) {
 
   return (
     <div className="flex items-start gap-4 px-5 py-4 sm:px-6">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink text-bench font-mono text-sm tabular-nums">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-edge text-ink font-mono text-sm tabular-nums">
         {rank}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="font-medium text-ink">{job.title}</p>
+        <p className="font-normal text-ink">{job.title}</p>
         <p className="text-sm text-muted">{job.companyName}</p>
         <div className="mt-2 flex flex-wrap gap-4 text-xs">
           <span className="font-mono tabular-nums">

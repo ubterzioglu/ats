@@ -353,7 +353,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <nav
-          className="inline-flex rounded-control border border-line bg-bench p-1"
+          className="inline-flex gap-2"
           aria-label={t("sections")}
         >
           {(["input", "report"] as const).map((tab) => (
@@ -364,8 +364,8 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               onClick={() => setView(tab)}
               aria-current={view === tab ? "page" : undefined}
               className={cx(
-                "inline-flex min-h-11 items-center rounded-chip px-4 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40",
-                view === tab ? "bg-ink text-bench" : "text-muted hover:text-ink"
+                "inline-flex min-h-11 items-center border-b px-3 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40",
+                view === tab ? "border-iris text-ink" : "border-transparent text-muted hover:text-ink"
               )}
             >
               {t(tab === "input" ? "tabInput" : "tabReport")}
@@ -373,7 +373,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                 <span
                   className={cx(
                     "ml-2 font-mono text-micro tabular-nums",
-                    view === tab ? "text-bench/70" : "text-muted"
+                    view === tab ? "text-saffron" : "text-muted"
                   )}
                 >
                   {result.total}
@@ -395,13 +395,13 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       </div>
 
       {error ? (
-        <p role="alert" className="rounded-control border border-mark/35 bg-mark/[0.06] px-4 py-3 text-sm text-mark">
+        <p role="alert" className="border-l-2 border-mark px-4 py-3 text-sm text-mark">
           {error}
         </p>
       ) : null}
 
       {notice ? (
-        <p className="rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm text-caution">
+        <p className="border-l-2 border-caution px-4 py-3 text-sm text-caution">
           {notice}
         </p>
       ) : null}
@@ -409,7 +409,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       {gate ? (
         <div
           role="alert"
-          className="rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm"
+          className="border-l-2 border-caution px-4 py-3 text-sm"
         >
           <p className="text-caution">{gate.reason}</p>
           <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -428,7 +428,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           <div className="grid gap-5 lg:grid-cols-2">
             <section className="bench space-y-4 p-5 sm:p-6">
               <div>
-                <h2 className="text-h3 font-semibold">{t("cvHeading")}</h2>
+                <h2 className="text-h3 font-normal">{t("cvHeading")}</h2>
                 <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
                   {t("cvLede")}
                 </p>
@@ -437,7 +437,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               <DocumentIntake extraction={extraction} busy={reading} onFile={handleFile} />
 
               <label className="block">
-                <span className="condensed text-micro font-medium text-muted">
+                <span className="condensed text-micro font-normal text-muted">
                   {t("extractedLabel")}
                 </span>
                 <textarea
@@ -452,7 +452,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
             <section className="bench flex flex-col gap-4 p-5 sm:p-6">
               <div>
-                <h2 className="text-h3 font-semibold">{t("adHeading")}</h2>
+                <h2 className="text-h3 font-normal">{t("adHeading")}</h2>
                 <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
                   {t("adLede")}
                 </p>
@@ -518,9 +518,9 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           </div>
 
           {shareUrl ? (
-            <p className="rounded-control border border-line bg-bench px-4 py-3 text-sm">
+            <p className="border-l border-line pl-4 text-sm">
               {t("shareNote")}{" "}
-              <a className="font-mono text-action underline underline-offset-2" href={shareUrl}>
+              <a className="font-mono text-saffron underline underline-offset-2" href={shareUrl}>
                 {shareUrl}
               </a>
             </p>

@@ -2,14 +2,14 @@
   "brand": {
     "name": "ats readability"
   },
+  "nav": {
+    "label": "Hauptnavigation",
+    "analyze": "CV-Analyse",
+    "builder": "Editor",
+    "cta": "Lebenslauf analysieren"
+  },
   "languageSwitcher": {
     "label": "Sprache"
-  },
-  "theme": {
-    "label": "Darstellung",
-    "light": "Hell",
-    "system": "System",
-    "dark": "Dunkel"
   },
   "metadata": {
     "defaultTitle": "ATS readability — sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest",
@@ -27,34 +27,36 @@
     "applications": "Bewerbungen"
   },
   "home": {
-    "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Gestaltung.",
-    "lede": "Ein Bewerbermanagementsystem verwirft Ihr Layout und behält den Text, den es herausziehen kann. Hier sehen Sie diesen Text, bekommen eine Punktzahl von 100 für das, was übrig bleibt, und eine Liste dessen, was zu ändern ist — sortiert danach, wie viele Punkte jede Korrektur wert ist.",
-    "analyzeCta": "Lebenslauf analysieren",
-    "privacyNote": "Die Datei wird in Ihrem Browser gelesen und dort bewertet. Sie wird nie hochgeladen.",
-    "methodHeading": "Wie sich die 100 Punkte aufteilen",
-    "methodIntro": "Jede Dimension startet mit ihrem vollen Gewicht und verliert Punkte nur an einen benannten Befund. So kann der Bericht immer sagen, wohin ein fehlender Punkt gegangen ist.",
-    "methodNoBlackBox": "Hier ist nichts eine Blackbox: Jeder Abzug nennt die Zeile, aus der er stammt, und was stattdessen dort stehen sollte.",
-    "dimensions": {
-      "parseability": {
-        "name": "Lesbarkeit für den Parser",
-        "what": "Ob die Textebene die Extraktion überhaupt übersteht: Spalten, Tabellen, Icon-Schriften, kaputte Kodierungen."
-      },
-      "keywords": {
-        "name": "Begriffsabdeckung",
-        "what": "Abdeckung der aus der Stellenanzeige gewonnenen Begriffe, gewichtet danach, wie zentral jeder für die Ausschreibung ist."
-      },
-      "impact": {
-        "name": "Wirkung",
-        "what": "Quantifizierte Ergebnisse und Verben der Verantwortung, gemessen gegen Aufgabenfüllsel."
-      },
-      "structure": {
-        "name": "Struktur",
-        "what": "Überschriften, die ein Parser auf Felder abbilden kann, datierte Einträge in umgekehrter Reihenfolge, Stichpunkte statt Absätze."
-      },
-      "contact": {
-        "name": "Kontakt",
-        "what": "Die Identitätsfelder, die jedes System speichert: Name, E-Mail, Telefon, Ort, Profillink."
-      }
+    "eyebrow": "Lesbarkeitsprüfung für Lebensläufe",
+    "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Design.",
+    "lede": "Ein Bewerbermanagementsystem verwirft Ihr Layout und behält nur den Text, den es herauslösen kann. Sie sehen diesen Text, erhalten eine Bewertung von 100 Punkten für das, was übrig blieb, und eine Liste der Korrekturen, geordnet nach Wert.",
+    "cta": "Lebenslauf analysieren",
+    "privacyTag": "Im Browser gelesen, nie hochgeladen",
+    "analyze": {
+      "label": "Analyse und Abgleich",
+      "title": "Jeder verlorene Punkt hat einen Namen.",
+      "body": "Lesbarkeit, Schlüsselwörter, Struktur, Wirkung und Kontakt ergeben zusammen 100 Punkte. Jeder Abzug nennt die Zeile, aus der er stammt, und was stattdessen dort stehen sollte. Mit einer Stellenanzeige prüft der Schlüsselwort-Check gegen diese Anzeige.",
+      "link": "Lebenslauf analysieren"
+    },
+    "tracker": {
+      "label": "Bewerbungsübersicht",
+      "title": "Wissen, wo jede Bewerbung steht.",
+      "body": "Verschieben Sie jede Bewerbung durch die Stufen gespeichert, beworben, Interview, Angebot und abgelehnt, mit einer Erinnerung, wenn eine verstummt. Das Board liegt auf Ihrem Gerät und lässt sich jederzeit exportieren.",
+      "link": "Übersicht öffnen"
+    },
+    "interview": {
+      "label": "Interviewvorbereitung",
+      "title": "Üben mit dem eigenen Material.",
+      "body": "Story-Karten stammen aus Ihrem Lebenslauf, nichts davon ist erfunden, und sie sind den gängigen Fragen zugeordnet. Der Übungsmodus schlägt die Karte vor, die zu Ihrer Antwort passt. Fragen aus einer Stellenanzeige brauchen ein Modell, das Sie selbst einschalten."
+    },
+    "report": {
+      "label": "Berichte",
+      "title": "Ein Bericht zum Weitergeben.",
+      "body": "Exportieren Sie Ihre Ergebnisse oder teilen Sie einen Link. Ein geteilter Bericht enthält nur Punkte und Hinweise; Zeilen aus Ihrem Lebenslauf werden nie gespeichert, und der Link läuft nach 30 Tagen ab."
+    },
+    "closing": {
+      "title": "Lesen Sie Ihren Lebenslauf, wie der Parser ihn liest.",
+      "cta": "Lebenslauf analysieren"
     }
   },
   "analyze": {
@@ -480,26 +482,6 @@
   "parserView": {
     "heading": "Was der Parser gelesen hat",
     "truncated": "[…für die Anzeige gekürzt]"
-  },
-  "benchPreview": {
-    "outOf": "/100",
-    "potential": "{score}, sobald diese behoben sind",
-    "worth": "+{points}",
-    "caption": "Ein echter Bericht, sortiert nach dem Wert jeder Korrektur.",
-    "items": {
-      "columns": {
-        "title": "Zwei Spalten zerstören die Textebene",
-        "evidence": "Senior QA-Ingenieur    München    2021 - heute"
-      },
-      "phone": {
-        "title": "Keine Telefonnummer",
-        "evidence": "jonas.weber@beispiel.de · linkedin.com/in/jonasweber"
-      },
-      "kubernetes": {
-        "title": "\"Kubernetes\" kommt nicht vor",
-        "evidence": "die Anzeige nennt es viermal, zweimal unter Anforderungen"
-      }
-    }
   },
   "coverageMap": {
     "fromModel": "vom lokalen Modell",

@@ -43,11 +43,11 @@ export function PracticePanel({ bank }: PracticePanelProps) {
 
   return (
     <section className="bench p-5 sm:p-6">
-      <h2 className="text-h3 font-semibold">{t("practiceHeading")}</h2>
+      <h2 className="text-h3 font-normal">{t("practiceHeading")}</h2>
       <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("practiceLede")}</p>
 
       <label className="mt-4 block">
-        <span className="condensed text-micro font-medium text-muted">
+        <span className="condensed text-micro font-normal text-muted">
           {t("practiceAnswerLabel")}
         </span>
         <textarea
@@ -86,8 +86,8 @@ export function PracticePanel({ bank }: PracticePanelProps) {
       ) : null}
 
       {recommendation !== null ? (
-        <div className="mt-4 rounded-control border border-line bg-bench-sunk p-4">
-          <p className="condensed text-micro font-medium text-good">
+        <div className="mt-4 border-l border-line pl-4">
+          <p className="condensed text-micro font-normal text-good">
             {t("practiceMatchFound")}
           </p>
           <p className="mt-1 font-mono text-xs text-muted">
@@ -102,7 +102,7 @@ export function PracticePanel({ bank }: PracticePanelProps) {
               {sharedTokens.map((token) => (
                 <span
                   key={token}
-                  className="rounded-chip border border-good/30 bg-good/[0.06] px-2 py-0.5 text-micro text-good"
+                  className="border-l-2 border-good px-2 py-0.5 text-micro text-good"
                 >
                   {token}
                 </span>
@@ -112,7 +112,7 @@ export function PracticePanel({ bank }: PracticePanelProps) {
 
           <dl className="mt-3 grid gap-2 sm:grid-cols-2">
             <div>
-              <dt className="condensed text-micro font-medium text-muted">{t("starSituation")}</dt>
+              <dt className="condensed text-micro font-normal text-muted">{t("starSituation")}</dt>
               <dd className="mt-0.5 text-sm">
                 {recommendation.card.situation.present ? recommendation.card.situation.text : (
                   <span className="text-muted italic">{t("starMissing")}</span>
@@ -120,7 +120,7 @@ export function PracticePanel({ bank }: PracticePanelProps) {
               </dd>
             </div>
             <div>
-              <dt className="condensed text-micro font-medium text-muted">{t("starAction")}</dt>
+              <dt className="condensed text-micro font-normal text-muted">{t("starAction")}</dt>
               <dd className="mt-0.5 text-sm">
                 {recommendation.card.action.present ? recommendation.card.action.text : (
                   <span className="text-muted italic">{t("starMissing")}</span>
@@ -128,7 +128,7 @@ export function PracticePanel({ bank }: PracticePanelProps) {
               </dd>
             </div>
             <div>
-              <dt className="condensed text-micro font-medium text-muted">{t("starTask")}</dt>
+              <dt className="condensed text-micro font-normal text-muted">{t("starTask")}</dt>
               <dd className="mt-0.5 text-sm">
                 {recommendation.card.task.present ? recommendation.card.task.text : (
                   <span className="text-muted italic">{t("starMissing")}</span>
@@ -136,7 +136,7 @@ export function PracticePanel({ bank }: PracticePanelProps) {
               </dd>
             </div>
             <div>
-              <dt className="condensed text-micro font-medium text-muted">{t("starResult")}</dt>
+              <dt className="condensed text-micro font-normal text-muted">{t("starResult")}</dt>
               <dd className="mt-0.5 text-sm">
                 {recommendation.card.result.present ? recommendation.card.result.text : (
                   <span className="text-muted italic">{t("starMissing")}</span>

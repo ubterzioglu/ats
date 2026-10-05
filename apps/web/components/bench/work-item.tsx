@@ -97,7 +97,7 @@ export function WorkItem({
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-3">
           <span className="font-mono text-micro tabular-nums text-muted">{index}</span>
-          <h3 className="min-w-0 flex-1 text-sm font-semibold">{finding.title}</h3>
+          <h3 className="min-w-0 flex-1 text-sm font-normal">{finding.title}</h3>
           <span className="shrink-0 font-mono text-micro tabular-nums text-good">
             {t("worth", { points: finding.cost })}
           </span>
@@ -117,12 +117,12 @@ export function WorkItem({
                       type="button"
                       title={t("showLine")}
                       onClick={() => onSelectEvidence(line)}
-                      className="block min-h-11 w-full overflow-x-auto whitespace-pre rounded-chip bg-bench-sunk px-3 py-3 text-left font-mono text-micro text-muted transition-colors hover:bg-action/[0.10] hover:text-ink"
+                      className="block min-h-11 w-full overflow-x-auto whitespace-pre border-b border-line px-3 py-3 text-left font-mono text-micro text-muted transition-colors hover:text-saffron hover:text-ink"
                     >
                       {line}
                     </button>
                   ) : (
-                    <span className="block overflow-x-auto whitespace-pre rounded-chip bg-bench-sunk px-3 py-2 font-mono text-micro text-muted">
+                    <span className="block overflow-x-auto whitespace-pre border-b border-line px-3 py-2 font-mono text-micro text-muted">
                       {line}
                     </span>
                   )}
@@ -138,7 +138,7 @@ export function WorkItem({
           {mode.kind === "editing" ? (
             <div className="mt-3">
               <label className="block">
-                <span className="condensed text-micro font-medium text-muted">
+                <span className="condensed text-micro font-normal text-muted">
                   {t("editLabel")}
                 </span>
                 <textarea
@@ -181,7 +181,7 @@ export function WorkItem({
           {mode.kind === "drafted" ? (
             <div className="mt-3">
               <div
-                className={`rounded-control border border-line bg-bench px-3 py-3 ${draftIsLive ? "live-edge" : ""}`}
+                className={`border-l border-line pl-3 ${draftIsLive ? "live-edge" : ""}`}
               >
                 <p className="whitespace-pre-wrap font-mono text-micro leading-relaxed text-ink">
                   {mode.text}

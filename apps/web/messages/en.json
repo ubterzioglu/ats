@@ -2,14 +2,14 @@
   "brand": {
     "name": "ats readability"
   },
+  "nav": {
+    "label": "Main",
+    "analyze": "Analyze CV",
+    "builder": "Builder",
+    "cta": "Analyze a CV"
+  },
   "languageSwitcher": {
     "label": "Language"
-  },
-  "theme": {
-    "label": "Theme",
-    "light": "Light",
-    "system": "System",
-    "dark": "Dark"
   },
   "metadata": {
     "defaultTitle": "ATS readability — see your CV the way the parser does",
@@ -27,34 +27,36 @@
     "applications": "Applications"
   },
   "home": {
+    "eyebrow": "CV readability check",
     "headline": "Your CV is read as text, not as a design.",
-    "lede": "An applicant tracking system throws away your layout and keeps whatever text it can pull out. This shows you that text, scores what survived out of 100, and lists what to change — ordered by how many points each fix is worth.",
-    "analyzeCta": "Analyze a CV",
-    "privacyNote": "The file is read in your browser and scored there. It is never uploaded.",
-    "methodHeading": "How the 100 points are split",
-    "methodIntro": "Each dimension starts at its full weight and loses points only to a named finding, so the report can always tell you where a missing point went.",
-    "methodNoBlackBox": "Nothing here is a black box: every deduction names the line it came from and what to write instead.",
-    "dimensions": {
-      "parseability": {
-        "name": "Parseability",
-        "what": "Whether the text layer survives extraction at all: columns, tables, icon fonts, broken encodings."
-      },
-      "keywords": {
-        "name": "Keyword match",
-        "what": "Coverage of the terms mined from the job ad, weighted by how central each one is to the posting."
-      },
-      "impact": {
-        "name": "Impact",
-        "what": "Quantified results and ownership verbs, measured against responsibility filler."
-      },
-      "structure": {
-        "name": "Structure",
-        "what": "Headings a parser can map to fields, dated entries in reverse order, bullets instead of paragraphs."
-      },
-      "contact": {
-        "name": "Contact",
-        "what": "The identity fields every system stores: name, email, phone, location, profile link."
-      }
+    "lede": "An applicant tracking system throws away your layout and keeps whatever text it can pull out. This shows you that text, scores what survived out of 100, and lists the fixes in order of value.",
+    "cta": "Analyze a CV",
+    "privacyTag": "Read in your browser, never uploaded",
+    "analyze": {
+      "label": "Analysis and match",
+      "title": "Every lost point has a name.",
+      "body": "Parseability, keywords, structure, impact and contact add up to 100. Each deduction names the line it came from and what to write instead. Add a job ad and the keyword check reads against it.",
+      "link": "Analyze a CV"
+    },
+    "tracker": {
+      "label": "Application tracker",
+      "title": "Know where each application stands.",
+      "body": "Move every application through saved, applied, interview, offer and rejected, with a reminder when one goes quiet. The board lives on your device and can be exported at any time.",
+      "link": "Open the tracker"
+    },
+    "interview": {
+      "label": "Interview preparation",
+      "title": "Practice with your own material.",
+      "body": "Story cards are cut from your CV, never invented, and mapped to common questions. Practice mode suggests the card that best fits your answer. Questions drawn from a job ad need a model you choose to turn on."
+    },
+    "report": {
+      "label": "Reports",
+      "title": "A report you can hand over.",
+      "body": "Export your findings, or share a link. A shared report holds scores and advice only; the lines taken from your CV are never stored, and the link expires after 30 days."
+    },
+    "closing": {
+      "title": "Read your CV the way the parser does.",
+      "cta": "Analyze a CV"
     }
   },
   "analyze": {
@@ -480,26 +482,6 @@
   "parserView": {
     "heading": "What the parser read",
     "truncated": "[…truncated for display]"
-  },
-  "benchPreview": {
-    "outOf": "/100",
-    "potential": "{score} once these are fixed",
-    "worth": "+{points}",
-    "caption": "A real report, ordered by what each fix is worth.",
-    "items": {
-      "columns": {
-        "title": "Two columns break the text layer",
-        "evidence": "Senior QA Engineer    Istanbul    2021 - present"
-      },
-      "phone": {
-        "title": "No phone number",
-        "evidence": "ayse.yilmaz@example.com · linkedin.com/in/ayseyilmaz"
-      },
-      "kubernetes": {
-        "title": "\"Kubernetes\" never appears",
-        "evidence": "the ad names it four times, twice under requirements"
-      }
-    }
   },
   "coverageMap": {
     "fromModel": "from the local model",

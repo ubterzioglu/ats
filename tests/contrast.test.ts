@@ -38,8 +38,8 @@ function ruleBody(selector: string): string {
   return CSS.slice(open, close);
 }
 
-const LIGHT = tokensIn(ruleBody(":root {"));
-const DARK = tokensIn(ruleBody(':root[data-theme="dark"] {'));
+/** Dala is one pure-black theme; there is no light or system variant to measure. */
+const THEME = tokensIn(ruleBody(":root {"));
 
 function channel(value: number): number {
   const srgb = value / 255;
@@ -84,8 +84,12 @@ const PAIRS: readonly Pair[] = [
   { fg: "mark", bg: "bench-sunk", min: TEXT, what: "a loss on a recessed surface" },
   { fg: "live-ink", bg: "bench", min: TEXT, what: "AI text" },
   { fg: "live-ink", bg: "bench-sunk", min: TEXT, what: "AI text on a recessed surface" },
-  { fg: "bench", bg: "action", min: TEXT, what: "the label on a primary button" },
+  { fg: "ink", bg: "action", min: TEXT, what: "the white label on the violet primary button" },
   { fg: "bench", bg: "ink", min: TEXT, what: "the label on an active tab" },
+  { fg: "saffron", bg: "void", min: TEXT, what: "amber labels and links on the void" },
+  { fg: "mist", bg: "void", min: TEXT, what: "tertiary body text on the void" },
+  { fg: "ash", bg: "void", min: TEXT, what: "ghost links and muted nav on the void" },
+  { fg: "verdant", bg: "void", min: TEXT, what: "teal text on the void" },
   // WCAG 1.4.11 covers the boundary of a control, not a divider between
   // sections. `line` draws dividers and card edges and is deliberately quiet;
   // `edge` draws the outline of an input or button and is held to 3:1.
@@ -101,18 +105,20 @@ function colour(theme: Record<string, Rgb>, name: string): Rgb {
   return value;
 }
 
-describe.each([
-  ["light", LIGHT],
-  ["dark", DARK]
-])("%s theme contrast", (_name, theme) => {
+describe("theme contrast", () => {
   it("defines every token the system names", () => {
-    for (const token of ["bed", "bench", "bench-sunk", "bench-raised", "ink", "muted", "line", "edge", "action", "live", "live-ink", "good", "caution", "mark"]) {
-      expect(colour(theme, token)).toHaveLength(3);
+    for (const token of ["void", "bone", "ash", "mist", "iris", "saffron", "verdant", "bed", "bench", "bench-sunk", "bench-raised", "ink", "muted", "line", "edge", "action", "live", "live-ink", "good", "caution", "mark"]) {
+      expect(colour(THEME, token)).toHaveLength(3);
     }
   });
 
+  it("keeps the canvas pure black", () => {
+    expect(colour(THEME, "void")).toEqual([0, 0, 0]);
+    expect(colour(THEME, "bed")).toEqual([0, 0, 0]);
+  });
+
   it.each(PAIRS)("clears $min:1 for $what ($fg on $bg)", ({ fg, bg, min }) => {
-    const measured = ratio(colour(theme, fg), colour(theme, bg));
+    const measured = ratio(colour(THEME, fg), colour(THEME, bg));
     expect(Number(measured.toFixed(2))).toBeGreaterThanOrEqual(min);
   });
 });

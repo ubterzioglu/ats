@@ -2,14 +2,14 @@
   "brand": {
     "name": "ats readability"
   },
+  "nav": {
+    "label": "Ana gezinme",
+    "analyze": "CV analizi",
+    "builder": "CV oluşturucu",
+    "cta": "CV'nizi analiz edin"
+  },
   "languageSwitcher": {
     "label": "Dil"
-  },
-  "theme": {
-    "label": "Tema",
-    "light": "Açık",
-    "system": "Sistem",
-    "dark": "Koyu"
   },
   "metadata": {
     "defaultTitle": "ATS readability — CV'nizi ayrıştırıcının gördüğü gibi görün",
@@ -27,34 +27,36 @@
     "applications": "Başvurular"
   },
   "home": {
-    "headline": "CV'niz tasarım olarak değil, metin olarak okunur.",
-    "lede": "Aday takip sistemi düzeninizi atar ve çekebildiği metni tutar. Burada o metni görür, hayatta kalanın 100 üzerinden puanını alır ve neyi değiştirmeniz gerektiğini görürsünüz — her düzeltmenin kaç puan ettiğine göre sıralanmış olarak.",
-    "analyzeCta": "Bir CV analiz et",
-    "privacyNote": "Dosya tarayıcınızda okunur ve orada puanlanır. Hiçbir zaman yüklenmez.",
-    "methodHeading": "100 puan nasıl bölünüyor",
-    "methodIntro": "Her boyut tam ağırlığıyla başlar ve yalnızca adı konmuş bir bulguya puan kaybeder; böylece rapor, eksilen puanın nereye gittiğini her zaman söyleyebilir.",
-    "methodNoBlackBox": "Burada kara kutu yok: her kesinti hangi satırdan geldiğini ve onun yerine ne yazılacağını söyler.",
-    "dimensions": {
-      "parseability": {
-        "name": "Ayrıştırılabilirlik",
-        "what": "Metin katmanının çıkarımdan sağ çıkıp çıkmadığı: sütunlar, tablolar, ikon yazı tipleri, bozuk kodlamalar."
-      },
-      "keywords": {
-        "name": "Anahtar kelime eşleşmesi",
-        "what": "İlandan çıkarılan terimlerin kapsanması; her terim ilan için ne kadar merkezi olduğuna göre ağırlıklandırılır."
-      },
-      "impact": {
-        "name": "Etki",
-        "what": "Sayısallaştırılmış sonuçlar ve sahiplenme fiilleri; sorumluluk doldurusuna karşı ölçülür."
-      },
-      "structure": {
-        "name": "Yapı",
-        "what": "Ayrıştırıcının alanlara eşleyebileceği başlıklar, tersten sıralı tarihli kayıtlar, paragraf yerine madde imleri."
-      },
-      "contact": {
-        "name": "İletişim",
-        "what": "Her sistemin sakladığı kimlik alanları: ad, e-posta, telefon, konum, profil bağlantısı."
-      }
+    "eyebrow": "CV okunabilirlik kontrolü",
+    "headline": "CV'niz bir tasarım olarak değil, metin olarak okunur.",
+    "lede": "Bir aday takip sistemi sayfa düzeninizi atar ve çıkarabildiği metni tutar. Bu araç size o metni gösterir, geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
+    "cta": "CV'nizi analiz edin",
+    "privacyTag": "Tarayıcınızda okunur, yüklenmez",
+    "analyze": {
+      "label": "Analiz ve eşleştirme",
+      "title": "Kaybedilen her puanın bir adı var.",
+      "body": "Ayrıştırılabilirlik, anahtar kelimeler, yapı, etki ve iletişim toplamda 100 eder. Her kesinti, hangi satırdan geldiğini ve onun yerine ne yazmanız gerektiğini söyler. Bir iş ilanı eklerseniz anahtar kelime kontrolü ilana göre yapılır.",
+      "link": "CV'nizi analiz edin"
+    },
+    "tracker": {
+      "label": "Başvuru takibi",
+      "title": "Her başvurunun nerede olduğunu bilin.",
+      "body": "Her başvuruyu kaydedildi, başvuruldu, mülakat, teklif ve reddedildi aşamalarında ilerletin; sessiz kalan bir başvuru için hatırlatma alın. Pano cihazınızda durur ve istediğiniz zaman dışa aktarılabilir.",
+      "link": "Takibi açın"
+    },
+    "interview": {
+      "label": "Mülakat hazırlığı",
+      "title": "Kendi malzemenizle çalışın.",
+      "body": "Hikâye kartları CV'nizden kesilir, hiçbir şey uydurulmaz ve yaygın sorulara eşlenir. Çalışma modu, cevabınıza en uygun kartı önerir. İlandan üretilen sorular, sizin açtığınız bir model gerektirir."
+    },
+    "report": {
+      "label": "Raporlar",
+      "title": "Elden verebileceğiniz bir rapor.",
+      "body": "Bulgularınızı dışa aktarın ya da bir bağlantı paylaşın. Paylaşılan rapor yalnızca puan ve önerileri içerir; CV'nizden alınan satırlar asla saklanmaz ve bağlantı 30 gün sonra sona erer."
+    },
+    "closing": {
+      "title": "CV'nizi ayrıştırıcının okuduğu gibi okuyun.",
+      "cta": "CV'nizi analiz edin"
     }
   },
   "analyze": {
@@ -480,26 +482,6 @@
   "parserView": {
     "heading": "Ayrıştırıcının okuduğu",
     "truncated": "[…görüntü için kısaltıldı]"
-  },
-  "benchPreview": {
-    "outOf": "/100",
-    "potential": "bunlar düzelince {score}",
-    "worth": "+{points}",
-    "caption": "Gerçek bir rapor, her düzeltmenin değerine göre sıralanmış.",
-    "items": {
-      "columns": {
-        "title": "İki sütun metin katmanını bozuyor",
-        "evidence": "Kıdemli Test Mühendisi    İstanbul    2021 - halen"
-      },
-      "phone": {
-        "title": "Telefon numarası yok",
-        "evidence": "ayse.yilmaz@ornek.com · linkedin.com/in/ayseyilmaz"
-      },
-      "kubernetes": {
-        "title": "\"Kubernetes\" hiç geçmiyor",
-        "evidence": "ilan dört kez anıyor, ikisi gereksinimler altında"
-      }
-    }
   },
   "coverageMap": {
     "fromModel": "yerel modelden",

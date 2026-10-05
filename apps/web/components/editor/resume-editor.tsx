@@ -163,7 +163,7 @@ export function ResumeEditor() {
       </div>
 
       {save === "refused" ? (
-        <p className="rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm text-caution">
+        <p className="border-l-2 border-caution px-4 py-3 text-sm text-caution">
           {t("saveFailed")}
         </p>
       ) : null}
@@ -171,14 +171,14 @@ export function ResumeEditor() {
       {error ? (
         <p
           role="alert"
-          className="rounded-control border border-mark/35 bg-mark/[0.06] px-4 py-3 text-sm text-mark"
+          className="border-l-2 border-mark px-4 py-3 text-sm text-mark"
         >
           {error}
         </p>
       ) : null}
 
       {importReport !== null ? (
-        <div className="rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm">
+        <div className="border-l-2 border-caution px-4 py-3 text-sm">
           <p className="text-caution">{t("reviewTitle")}</p>
           <p className="mt-1">
             {t("importSummary", {
@@ -201,7 +201,7 @@ export function ResumeEditor() {
       ) : null}
 
       {confirming ? (
-        <div className="rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm">
+        <div className="border-l-2 border-caution px-4 py-3 text-sm">
           <p className="text-caution">{t("confirmClear")}</p>
           <div className="mt-3 flex flex-wrap gap-2">
             <button

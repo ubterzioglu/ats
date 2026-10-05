@@ -70,8 +70,8 @@ export function SpecNodes({ resume, nodes, path, labelScope, onChange, reviewPat
 
         if (node.kind === "object") {
           return (
-            <fieldset key={node.key} className="rounded-control border border-line p-4">
-              <legend className="condensed px-2 text-micro font-medium text-muted">{label}</legend>
+            <fieldset key={node.key} className="border-t border-line pt-4">
+              <legend className="condensed px-2 text-micro font-normal text-muted">{label}</legend>
               <SpecNodes
                 resume={resume}
                 nodes={node.children}
@@ -87,12 +87,12 @@ export function SpecNodes({ resume, nodes, path, labelScope, onChange, reviewPat
         const items = readList(resume, childPath);
 
         return (
-          <fieldset key={node.key} className="rounded-control border border-line p-4">
-            <legend className="condensed px-2 text-micro font-medium text-muted">{label}</legend>
+          <fieldset key={node.key} className="border-t border-line pt-4">
+            <legend className="condensed px-2 text-micro font-normal text-muted">{label}</legend>
 
             <ol className="space-y-4">
               {items.map((_, index) => (
-                <li key={`${node.key}-${index}`} className="rounded-control bg-bench-sunk p-4">
+                <li key={`${node.key}-${index}`} className="py-4">
                   <div className="mb-3 flex items-center justify-between gap-3">
                     <span className="font-mono text-micro tabular-nums text-muted">{index + 1}</span>
                     <div className="flex flex-wrap gap-2">

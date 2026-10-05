@@ -19,7 +19,7 @@ export const SEVERITY_TEXT: Readonly<Record<Severity, string>> = {
 export function barTone(score: number, max: number): string {
   const share = max > 0 ? score / max : 0;
   if (share >= 0.85) return "bg-good";
-  if (share >= 0.6) return "bg-action";
+  if (share >= 0.6) return "bg-ink/70";
   return "bg-mark";
 }
 

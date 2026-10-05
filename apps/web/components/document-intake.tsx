@@ -36,7 +36,7 @@ export function DocumentIntake({ extraction, busy, onFile }: DocumentIntakeProps
       onDrop={handleDrop}
       className={cx(
         "flex flex-col items-center justify-center gap-3 rounded-control border border-dashed px-6 py-10 text-center transition-colors",
-        dragging ? "border-action bg-action/[0.06]" : "border-line bg-bench-sunk"
+        dragging ? "border-action" : "border-edge/50"
       )}
     >
       <input
@@ -63,7 +63,7 @@ export function DocumentIntake({ extraction, busy, onFile }: DocumentIntakeProps
         </>
       ) : (
         <>
-          <p className="text-sm font-medium">{t("drop")}</p>
+          <p className="text-sm font-normal">{t("drop")}</p>
           <p className="max-w-[34ch] text-micro leading-relaxed text-muted">
             {t("formats")}
           </p>

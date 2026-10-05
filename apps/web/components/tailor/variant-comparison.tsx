@@ -23,21 +23,21 @@ export function VariantComparison({ master, current }: VariantComparisonProps) {
   return (
     <section className="bench">
       <div className="border-b border-line px-5 py-5 sm:px-6">
-        <h2 className="text-h3 font-semibold">{t("heading")}</h2>
+        <h2 className="text-h3 font-normal">{t("heading")}</h2>
       </div>
 
       <div className="px-5 py-5 sm:px-6">
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
-            <p className="condensed text-micro font-medium text-muted">{t("masterScore")}</p>
+            <p className="condensed text-micro font-normal text-muted">{t("masterScore")}</p>
             <p className="mt-1 font-mono text-2xl tabular-nums text-ink">{master.total}</p>
           </div>
           <div>
-            <p className="condensed text-micro font-medium text-muted">{t("currentScore")}</p>
+            <p className="condensed text-micro font-normal text-muted">{t("currentScore")}</p>
             <p className="mt-1 font-mono text-2xl tabular-nums text-ink">{current.total}</p>
           </div>
           <div>
-            <p className="condensed text-micro font-medium text-muted">{t("delta")}</p>
+            <p className="condensed text-micro font-normal text-muted">{t("delta")}</p>
             <p
               className={cx(
                 "mt-1 font-mono text-2xl tabular-nums",

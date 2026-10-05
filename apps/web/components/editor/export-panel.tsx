@@ -97,10 +97,10 @@ export function ExportPanel({ resume }: ExportPanelProps) {
 
   return (
     <section className="bench space-y-4 p-5 sm:p-6">
-      <h2 className="text-sm font-semibold">{t("title")}</h2>
+      <h2 className="text-sm font-normal">{t("title")}</h2>
 
       <fieldset className="space-y-2">
-        <legend className="condensed px-2 text-micro font-medium text-muted">
+        <legend className="condensed px-2 text-micro font-normal text-muted">
           {t("formatLabel")}
         </legend>
         {RESUME_TEMPLATES.map((template) => (
@@ -135,7 +135,7 @@ export function ExportPanel({ resume }: ExportPanelProps) {
       </button>
 
       {phase.state === "passed" ? (
-        <p role="status" className="rounded-control border border-good/35 bg-good/[0.06] px-4 py-3 text-sm text-good">
+        <p role="status" className="border-l-2 border-good px-4 py-3 text-sm text-good">
           {t("passed", { score: phase.score, max: phase.max })}
         </p>
       ) : null}
@@ -143,14 +143,14 @@ export function ExportPanel({ resume }: ExportPanelProps) {
       {phase.state === "degraded" ? (
         <div
           role="alert"
-          className="space-y-3 rounded-control border border-caution/35 bg-caution/[0.07] px-4 py-3 text-sm"
+          className="space-y-3 border-l-2 border-caution px-4 py-3 text-sm"
         >
           <p className="text-caution">{t("degradedTitle")}</p>
           <p>{t("degradedDetail", { score: phase.score, max: phase.max })}</p>
           <ul className="space-y-2">
             {phase.findings.map((finding) => (
               <li key={finding.id}>
-                <span className="font-medium">{finding.title}</span>{" "}
+                <span className="font-normal">{finding.title}</span>{" "}
                 <span className="text-muted">{finding.fix}</span>
               </li>
             ))}
@@ -166,7 +166,7 @@ export function ExportPanel({ resume }: ExportPanelProps) {
       ) : null}
 
       {phase.state === "failed" ? (
-        <p role="alert" className="rounded-control border border-mark/35 bg-mark/[0.06] px-4 py-3 text-sm text-mark">
+        <p role="alert" className="border-l-2 border-mark px-4 py-3 text-sm text-mark">
           {t("failed")}
         </p>
       ) : null}

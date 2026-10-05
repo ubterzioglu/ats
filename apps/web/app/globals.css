@@ -2,109 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-/* The product is a workbench: a repair list ordered by value, with a local
-   model that drafts the repairs. Measurement is matte and still; the AI is the
-   only live thing on the screen. `live` therefore appears nowhere except
-   AI-produced output and AI-working state - if it leaks into a focus ring the
-   split stops teaching anything. */
+/* One flat stage: pure black, white type, a single violet that means "press
+   this", and amber for emphasis. There is no light theme and no elevation.
+   The first seven tokens are the Dala palette; every role below them resolves
+   to one of those seven so a page can only be painted from the palette.
+
+   `live` still means AI-produced output and nothing else, which is why it has
+   its own role even though it shares a value with `good`. */
 :root {
-  --bed: 243 245 248;
-  --bench: 255 255 255;
-  --bench-sunk: 247 249 251;
-  --bench-raised: 255 255 255;
-  --ink: 15 20 30;
-  --muted: 92 102 120;
-  --line: 221 226 234;
-  /* The visible boundary of a control. `line` is a divider and may stay quiet;
-     an input or button edge is a UI component boundary and owes 3:1, or a
-     reader with low vision cannot see where the field is. */
-  --edge: 126 136 154;
-  --action: 26 88 224;
-  --live: 0 190 214;
-  --live-ink: 0 110 128;
-  --good: 17 122 92;
-  --caution: 166 98 10;
-  --mark: 196 38 54;
-}
+  --void: 0 0 0;
+  --bone: 255 255 255;
+  --ash: 154 154 154;
+  --mist: 189 189 189;
+  --iris: 128 82 255;
+  --saffron: 255 184 41;
+  --verdant: 21 132 110;
 
-/* Depth here is a four-step graphite ladder rather than a near-black canvas
-   with one bright accent, which is a known generic cluster. Cyan stays
-   confined to the AI. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bed: 18 22 29;
-    --bench-sunk: 22 27 35;
-    --bench: 27 32 41;
-    --bench-raised: 35 41 52;
-    --ink: 232 236 243;
-    --muted: 150 160 176;
-    --line: 48 56 69;
-    --edge: 118 128 146;
-    --action: 110 160 255;
-    --live: 34 211 238;
-    --live-ink: 103 224 243;
-    --good: 52 199 150;
-    --caution: 226 159 56;
-    --mark: 255 118 128;
-  }
-}
-
-:root[data-theme="dark"] {
-  --bed: 18 22 29;
-  --bench-sunk: 22 27 35;
-  --bench: 27 32 41;
-  --bench-raised: 35 41 52;
-  --ink: 232 236 243;
-  --muted: 150 160 176;
-  --line: 48 56 69;
-  --edge: 118 128 146;
-  --action: 110 160 255;
-  --live: 34 211 238;
-  --live-ink: 103 224 243;
-  --good: 52 199 150;
-  --caution: 226 159 56;
-  --mark: 255 118 128;
+  --bed: 0 0 0;
+  --bench: 0 0 0;
+  --bench-sunk: 0 0 0;
+  --bench-raised: 0 0 0;
+  --ink: 255 255 255;
+  --muted: 154 154 154;
+  /* Always drawn at 8% (see tailwind.config.ts); the one hairline allowed. */
+  --line: 255 255 255;
+  /* The visible boundary of a control owes 3:1, which `line` does not give. */
+  --edge: 154 154 154;
+  --action: 128 82 255;
+  --live: 21 132 110;
+  --live-ink: 21 132 110;
+  --good: 21 132 110;
+  --caution: 255 184 41;
+  --mark: 255 184 41;
 }
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    color-scheme: light;
-  }
-
-  :root[data-theme="dark"] {
     color-scheme: dark;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      color-scheme: dark;
-    }
-  }
-
   body {
-    background-color: rgb(var(--bed));
-    color: rgb(var(--ink));
+    background-color: rgb(var(--void));
+    color: rgb(var(--bone));
     font-family: var(--font-sans), system-ui, sans-serif;
+    font-feature-settings: "ss01" on;
+    font-size: 1.125rem;
+    font-weight: 200;
+    line-height: 1.5;
     min-height: 100dvh;
   }
 
-  /* One family for everything the interface says. Mono is reserved for values
-     the machine produced, so it is never applied here. */
+  /* Hierarchy is scale, not weight. */
   h1,
   h2,
   h3 {
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: -0.02em;
   }
 
   ::selection {
-    background-color: rgb(var(--action) / 0.22);
+    background-color: rgb(var(--iris) / 0.4);
   }
 
   :focus-visible {
     outline: 2px solid rgb(var(--action));
-    outline-offset: 2px;
+    outline-offset: 3px;
     border-radius: 2px;
   }
 
@@ -117,29 +80,24 @@
 }
 
 @layer components {
-  /* The work surface. Depth comes from the surface ladder and a 1px top
-     highlight, not from shadow blur: identical rounded cards sharing one soft
-     grey shadow is the generic SaaS-card pattern. */
-  .bench {
-    @apply rounded-surface border border-line bg-bench;
-
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.55);
+  /* The filled violet pill: the only saturated button in the system. */
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-pill bg-iris px-4 py-[14.4px]
+      text-nav-label font-semibold uppercase text-bone transition-colors hover:bg-iris/85
+      disabled:cursor-not-allowed disabled:bg-ash/40;
   }
 
-  :root[data-theme="dark"] .bench,
-  :root[data-theme="dark"] .bench-sunk {
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  /* A ghost link: no fill, no border. Colour is the only state. */
+  .btn-quiet {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 px-3 text-nav-label font-semibold uppercase
+      text-ash transition-colors hover:text-bone disabled:cursor-not-allowed disabled:opacity-40;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .bench,
-    :root:not([data-theme="light"]) .bench-sunk {
-      box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
-    }
-  }
-
+  /* Surfaces carry no fill, border, radius or shadow: whitespace separates.
+     Both names stay because inner pages still use them. */
+  .bench,
   .bench-sunk {
-    @apply rounded-surface border border-line bg-bench-sunk;
+    @apply bg-bench;
   }
 
   /* The one bold element and the system's only glow: an animated edge shown
@@ -170,22 +128,21 @@
     pointer-events: none;
   }
 
+  /* Inputs sit on a bottom line; focus turns it violet. The keyboard ring
+     still draws on top of it. */
   .field {
-    @apply w-full resize-y rounded-control border border-edge bg-bench-sunk px-4 py-3 text-sm
-      leading-relaxed transition-colors placeholder:text-muted/70 focus:border-action focus:bg-bench
-      focus:outline-none;
+    @apply w-full resize-y rounded-none border-0 border-b border-edge bg-transparent px-0 py-3 text-sm
+      leading-relaxed transition-colors placeholder:text-muted/70 focus:border-action focus:outline-none;
   }
 
-  .btn {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-control bg-action px-4 py-3 text-sm
-      font-medium text-bench transition-colors hover:bg-ink hover:text-bench
-      disabled:cursor-not-allowed disabled:bg-muted/50;
-  }
-
-  .btn-quiet {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-control border border-edge bg-bench
-      px-4 py-3 text-sm text-ink transition-colors hover:border-ink hover:bg-bench-sunk
-      disabled:cursor-not-allowed disabled:opacity-40;
+  /* Body copy is 18px at weight 200. Anything smaller is interface text and
+     goes to 400, because a 200 hairline at 14px does not hold up on black. */
+  .text-sm,
+  .text-xs,
+  .text-micro,
+  .text-caption,
+  .text-nav-label {
+    font-weight: 400;
   }
 
   .rail-label {
@@ -234,7 +191,8 @@
 
 /* Reduced motion removes the live edge animation and the meter fill. The edge
    itself stays visible, because it is what says which part of the screen the
-   model wrote - that is meaning, not decoration. */
+   model wrote - that is meaning, not decoration. The particle field is drawn
+   in script and checks the same media query itself. */
 @media (prefers-reduced-motion: reduce) {
   .live-edge::after {
     animation: none;
@@ -249,3 +207,4 @@
     transition-duration: 0.01ms !important;
   }
 }
+

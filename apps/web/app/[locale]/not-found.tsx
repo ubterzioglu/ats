@@ -8,7 +8,7 @@ export default function NotFound() {
   return (
     <main className="mx-auto flex min-h-[70dvh] w-full max-w-2xl flex-col justify-center px-4 py-12 sm:px-6">
       <p className="font-mono text-micro tabular-nums text-muted">{t("code")}</p>
-      <h1 className="mt-2 text-h2 font-semibold">{t("heading")}</h1>
+      <h1 className="mt-2 text-heading-sm font-normal">{t("heading")}</h1>
       <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("body")}</p>
       <p className="mt-6">
         <Link className="btn" href="/">

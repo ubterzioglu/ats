@@ -36,7 +36,7 @@ export function EntriesTable({ cvText, sections, onSelectLine }: EntriesTablePro
   return (
     <section className="bench overflow-hidden" aria-labelledby="entries-heading">
       <div className="border-b border-line px-5 py-4 sm:px-6">
-        <h2 id="entries-heading" className="text-h3 font-semibold">
+        <h2 id="entries-heading" className="text-h3 font-normal">
           {t("heading")}
         </h2>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("lede")}</p>
@@ -72,7 +72,7 @@ export function EntriesTable({ cvText, sections, onSelectLine }: EntriesTablePro
               {onSelectLine ? (
                 <button
                   type="button"
-                  className="mt-1 inline-flex min-h-11 items-center text-micro text-muted transition-colors hover:text-action"
+                  className="mt-1 inline-flex min-h-11 items-center text-micro text-muted transition-colors hover:text-saffron"
                   onClick={() => onSelectLine(entry.line)}
                 >
                   {t("showLine")}
@@ -84,15 +84,15 @@ export function EntriesTable({ cvText, sections, onSelectLine }: EntriesTablePro
       )}
 
       <div className="border-t border-line px-5 py-4 sm:px-6">
-        <h3 className="condensed text-micro font-medium text-muted">{t("sectionsHeading")}</h3>
+        <h3 className="condensed text-micro font-normal text-muted">{t("sectionsHeading")}</h3>
         <ul className="mt-3 flex flex-wrap gap-2">
           {EXPECTED.map((id) => (
             <li
               key={id}
               className={cx(
-                "rounded-chip border px-2 py-1 text-micro",
+                "rounded-full border px-3 py-1 text-micro",
                 found.has(id)
-                  ? "border-line bg-action/[0.10] text-ink"
+                  ? "border-line text-ink"
                   : "border-line text-muted"
               )}
             >

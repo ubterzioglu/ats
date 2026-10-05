@@ -14,7 +14,7 @@ export function StoryBankPanel({ bank }: StoryBankPanelProps) {
   return (
     <section className="bench">
       <div className="border-b border-line px-5 py-5 sm:px-6">
-        <h2 className="text-h3 font-semibold">{t("storyBankHeading")}</h2>
+        <h2 className="text-h3 font-normal">{t("storyBankHeading")}</h2>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("storyBankLede")}</p>
       </div>
 
@@ -31,7 +31,7 @@ export function StoryBankPanel({ bank }: StoryBankPanelProps) {
 
               <dl className="mt-3 grid gap-2 sm:grid-cols-2">
                 <div>
-                  <dt className="condensed text-micro font-medium text-muted">
+                  <dt className="condensed text-micro font-normal text-muted">
                     {t("starSituation")}
                   </dt>
                   <dd className="mt-0.5 text-sm">
@@ -41,7 +41,7 @@ export function StoryBankPanel({ bank }: StoryBankPanelProps) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="condensed text-micro font-medium text-muted">
+                  <dt className="condensed text-micro font-normal text-muted">
                     {t("starTask")}
                   </dt>
                   <dd className="mt-0.5 text-sm">
@@ -51,7 +51,7 @@ export function StoryBankPanel({ bank }: StoryBankPanelProps) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="condensed text-micro font-medium text-muted">
+                  <dt className="condensed text-micro font-normal text-muted">
                     {t("starAction")}
                   </dt>
                   <dd className="mt-0.5 text-sm">
@@ -61,7 +61,7 @@ export function StoryBankPanel({ bank }: StoryBankPanelProps) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="condensed text-micro font-medium text-muted">
+                  <dt className="condensed text-micro font-normal text-muted">
                     {t("starResult")}
                   </dt>
                   <dd className="mt-0.5 text-sm">
@@ -77,7 +77,7 @@ export function StoryBankPanel({ bank }: StoryBankPanelProps) {
                   {card.topics.map((topic) => (
                     <span
                       key={topic}
-                      className="rounded-chip border border-line px-2 py-0.5 text-micro text-muted"
+                      className="rounded-full border border-edge/50 px-3 py-0.5 text-micro text-muted"
                     >
                       {topic}
                     </span>
@@ -91,7 +91,7 @@ export function StoryBankPanel({ bank }: StoryBankPanelProps) {
 
       {bank.skipped.length > 0 ? (
         <div className="border-t border-line px-5 py-4 sm:px-6">
-          <p className="condensed text-micro font-medium text-caution">
+          <p className="condensed text-micro font-normal text-caution">
             {t("skippedHeading", { count: bank.skipped.length })}
           </p>
           <ul className="mt-2 space-y-1">

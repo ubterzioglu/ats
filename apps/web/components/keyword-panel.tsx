@@ -27,9 +27,9 @@ function statusOf(term: KeywordTerm): Status {
 }
 
 const CHIP_STYLE: Readonly<Record<Status, string>> = {
-  found: "border-line bg-action/[0.10] text-ink",
-  alias: "border-caution/40 bg-caution/[0.08] text-ink",
-  missing: "border-mark/35 bg-mark/[0.06] text-mark"
+  found: "border-line text-ink",
+  alias: "border-caution text-ink",
+  missing: "border-mark text-mark"
 };
 
 const COVERAGE_SHOWN = 6;
@@ -45,8 +45,8 @@ function TermChip({ term, hint }: { readonly term: KeywordTerm; readonly hint?: 
   return (
     <li
       className={cx(
-        "rounded-chip border px-2 py-1 font-mono text-micro",
-        hint ? "border-caution/40 bg-caution/[0.08] text-ink" : CHIP_STYLE[status]
+        "rounded-full border px-3 py-1 font-mono text-micro",
+        hint ? "border-caution text-ink" : CHIP_STYLE[status]
       )}
       title={
         hint
@@ -138,7 +138,7 @@ export function KeywordPanel({ report, hints, coverage, cvText, language, embedd
   return (
     <section className="bench overflow-hidden" aria-labelledby="keywords-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
-        <h2 id="keywords-heading" className="text-h3 font-semibold">
+        <h2 id="keywords-heading" className="text-h3 font-normal">
           {t(matchedFromAd ? "headingFromAd" : "headingBaseline")}
         </h2>
         {matchedFromAd ? (
@@ -151,13 +151,13 @@ export function KeywordPanel({ report, hints, coverage, cvText, language, embedd
 
       {matchedFromAd ? (
         <div className="h-1 border-b border-line bg-bench-sunk">
-          <div className="h-full bg-action" style={{ width: `${percentage}%` }} />
+          <div className="h-full bg-saffron" style={{ width: `${percentage}%` }} />
         </div>
       ) : null}
 
       <div className="space-y-6 px-5 py-5 sm:px-6">
         {matchedFromAd && strictOutcome ? (
-          <div className="rounded-control border border-line bg-bench p-4 text-sm">
+          <div className="border-l border-line pl-4 text-sm">
             <p className="text-muted">
               {embedderReady ? 
                 t("modeSummary", { strict: strictCount, semantic: semanticCount, count: totalDiffCount }) :
@@ -203,7 +203,7 @@ export function KeywordPanel({ report, hints, coverage, cvText, language, embedd
               if (terms.length === 0) return null;
               return (
                 <div key={labelKey}>
-                  <h3 className="condensed text-micro font-medium text-muted">{t(labelKey)}</h3>
+                  <h3 className="condensed text-micro font-normal text-muted">{t(labelKey)}</h3>
                   <ul className="mt-3 flex flex-wrap gap-2">
                     {terms.map((term) => (
                       <TermChip key={term.term} term={term} hint={hintByTerm.get(term.term)} />
@@ -216,7 +216,7 @@ export function KeywordPanel({ report, hints, coverage, cvText, language, embedd
 
         {!matchedFromAd ? (
           <div>
-            <h3 className="condensed text-micro font-medium text-muted">{t("recognised")}</h3>
+            <h3 className="condensed text-micro font-normal text-muted">{t("recognised")}</h3>
             {report.matched.length === 0 ? (
               <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("noTerms")}</p>
             ) : (
@@ -224,7 +224,7 @@ export function KeywordPanel({ report, hints, coverage, cvText, language, embedd
                 {report.matched.map((term) => (
                   <li
                     key={term.term}
-                    className="rounded-chip border border-line bg-action/[0.10] px-2 py-1 font-mono text-micro"
+                    className="rounded-full border border-edge/50 px-3 py-1 font-mono text-micro"
                   >
                     {term.term}
                     {term.hits > 1 ? <span className="ml-1 text-muted">×{term.hits}</span> : null}
@@ -238,9 +238,9 @@ export function KeywordPanel({ report, hints, coverage, cvText, language, embedd
       </div>
 
       {showCoverage ? (
-        <div className="border-t border-line bg-bench-sunk px-5 py-5 sm:px-6">
+        <div className="border-t border-line px-5 py-5 sm:px-6">
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <h3 className="text-sm font-semibold">{c("heading")}</h3>
+            <h3 className="text-sm font-normal">{c("heading")}</h3>
             <span className="condensed text-micro text-live-ink">{c("fromModel")}</span>
           </div>
           <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">
@@ -257,7 +257,7 @@ export function KeywordPanel({ report, hints, coverage, cvText, language, embedd
               {coverage.weak.slice(0, COVERAGE_SHOWN).map((entry) => (
                 <li
                   key={entry.chunk.slice(0, 60)}
-                  className="rounded-control border border-line bg-bench px-3 py-3"
+                  className="border-l border-line pl-3"
                 >
                   <p className="font-mono text-micro leading-relaxed text-muted">
                     {snippet(entry.chunk)}

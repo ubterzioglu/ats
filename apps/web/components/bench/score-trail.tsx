@@ -46,7 +46,7 @@ export function ScoreTrail({ points }: ScoreTrailProps) {
         id="trail-caption"
         className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1"
       >
-        <span className="condensed text-micro font-medium text-ink">{t("heading")}</span>
+        <span className="condensed text-micro font-normal text-ink">{t("heading")}</span>
         <span className="font-mono text-micro tabular-nums text-muted">
           {t("span", { count: points.length })}
         </span>

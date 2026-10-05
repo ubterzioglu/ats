@@ -40,7 +40,7 @@ export default async function SharedReportPage({ params }: SharedReportPageProps
         <p className="condensed text-micro text-muted">
           {t("eyebrow", { date: report.generatedAt.slice(0, 10) })}
         </p>
-        <h1 className="mt-2 font-mono text-h3 font-medium tracking-tight">{brand("name")}</h1>
+        <h1 className="mt-2 text-heading-2xs font-normal">{brand("name")}</h1>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("lede")}</p>
       </header>
 

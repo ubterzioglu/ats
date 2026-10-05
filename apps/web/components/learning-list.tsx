@@ -80,7 +80,7 @@ export function LearningList({ cvText }: LearningListProps) {
   if (jobs.length === 0) {
     return (
       <section className="bench px-5 py-5 sm:px-6">
-        <h2 className="text-h3 font-semibold">{t("heading")}</h2>
+        <h2 className="text-h3 font-normal">{t("heading")}</h2>
         <p className="mt-2 text-sm text-muted">{t("empty")}</p>
       </section>
     );
@@ -89,7 +89,7 @@ export function LearningList({ cvText }: LearningListProps) {
   if (entries.length === 0) {
     return (
       <section className="bench px-5 py-5 sm:px-6">
-        <h2 className="text-h3 font-semibold">{t("heading")}</h2>
+        <h2 className="text-h3 font-normal">{t("heading")}</h2>
         <p className="mt-2 text-sm text-muted">{t("allCovered")}</p>
       </section>
     );
@@ -98,7 +98,7 @@ export function LearningList({ cvText }: LearningListProps) {
   return (
     <section className="bench">
       <div className="border-b border-line px-5 py-5 sm:px-6">
-        <h2 className="text-h3 font-semibold">{t("heading")}</h2>
+        <h2 className="text-h3 font-normal">{t("heading")}</h2>
         <p className="mt-2 max-w-measure text-sm text-muted">{t("lede")}</p>
       </div>
 
@@ -109,7 +109,7 @@ export function LearningList({ cvText }: LearningListProps) {
               {entry.count}×
             </span>
             <div className="min-w-0">
-              <p className="font-medium text-ink">{entry.term}</p>
+              <p className="font-normal text-ink">{entry.term}</p>
               <p className="truncate text-xs text-muted">
                 {entry.ads.join(", ")}
               </p>

@@ -1,14 +1,25 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { BenchPreview } from "@/components/bench-preview";
-import { Link } from "@/i18n/navigation";
+import { GhostLink } from "@/components/ui/ghost-link";
+import { ParticleField } from "@/components/ui/particle-field";
+import { PrimaryButton } from "@/components/ui/primary-button";
+import { SectionHeadline } from "@/components/ui/section-headline";
+import { Tag } from "@/components/ui/tag";
+import type { ShapeName } from "@/lib/particles/shapes";
+import { cx } from "@/lib/ui";
 
-const DIMENSIONS: ReadonlyArray<{ readonly key: string; readonly weight: number }> = [
-  { key: "parseability", weight: 25 },
-  { key: "keywords", weight: 25 },
-  { key: "impact", weight: 20 },
-  { key: "structure", weight: 20 },
-  { key: "contact", weight: 10 }
+interface Feature {
+  readonly key: "analyze" | "tracker" | "interview" | "report";
+  readonly shape: ShapeName;
+  readonly seed: number;
+  readonly href?: "/analyze" | "/applications";
+}
+
+const FEATURES: readonly Feature[] = [
+  { key: "analyze", shape: "match", seed: 11, href: "/analyze" },
+  { key: "tracker", shape: "pipeline", seed: 23, href: "/applications" },
+  { key: "interview", shape: "orbit", seed: 37 },
+  { key: "report", shape: "report", seed: 41 }
 ];
 
 interface HomePageProps {
@@ -21,79 +32,80 @@ export default async function HomePage({ params }: HomePageProps) {
 
   const t = await getTranslations("home");
   const common = await getTranslations("common");
-  const brand = await getTranslations("brand");
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-      <main>
-        <section className="grid items-center gap-10 py-10 lg:grid-cols-[1fr_minmax(0,27rem)] lg:gap-14 lg:py-16">
-          <div>
-            <h1 className="max-w-[16ch] text-display font-semibold">
-              {t("headline")}
-            </h1>
+    <main>
+      <section className="mx-auto grid w-full max-w-page items-center gap-12 px-4 py-section-sm sm:px-6 lg:min-h-[calc(100dvh-4rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16 lg:py-0">
+        <div>
+          <SectionHeadline as="h1" scale="lg" label={t("eyebrow")} title={t("headline")}>
+            <p>{t("lede")}</p>
+          </SectionHeadline>
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <PrimaryButton href="/analyze">{t("cta")}</PrimaryButton>
+            <Tag tone="quiet">{t("privacyTag")}</Tag>
+          </div>
+        </div>
 
-            <p className="mt-6 max-w-measure text-base leading-relaxed text-muted sm:text-lg">
-              {t("lede")}
-            </p>
+        <ParticleField
+          shape="brain"
+          seed={7}
+          className="relative aspect-[5/4] w-full lg:aspect-auto lg:h-[min(72vh,680px)]"
+        />
+      </section>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link href="/analyze" className="btn">
-                {t("analyzeCta")}
-              </Link>
-              <Link href="/login" className="btn-quiet">
-                {common("signInToSave")}
-              </Link>
+      {FEATURES.map((feature, index) => {
+        const number = String(index + 1).padStart(2, "0");
+        const headingId = `feature-${feature.key}`;
+        return (
+          <section
+            key={feature.key}
+            aria-labelledby={headingId}
+            className="mx-auto grid w-full max-w-page items-center gap-10 px-4 py-section-sm sm:px-6 lg:grid-cols-2 lg:gap-24 lg:py-section"
+          >
+            {/* Zigzag: the picture alternates sides. The picture is decorative,
+                so reading order stays text-first on every screen. */}
+            <div className={cx(index % 2 === 0 ? "lg:order-2" : "lg:order-1")}>
+              <SectionHeadline
+                id={headingId}
+                label={`${number} - ${t(`${feature.key}.label`)}`}
+                title={t(`${feature.key}.title`)}
+              >
+                <p>{t(`${feature.key}.body`)}</p>
+              </SectionHeadline>
+              {feature.href ? (
+                <GhostLink href={feature.href} className="mt-8 -ml-3">
+                  {t(`${feature.key}.link`)}
+                </GhostLink>
+              ) : null}
             </div>
 
-            <p className="mt-6 max-w-measure text-sm leading-relaxed text-muted">
-              {t("privacyNote")}
-            </p>
+            <ParticleField
+              shape={feature.shape}
+              seed={feature.seed}
+              className={cx(
+                "relative aspect-[4/3] w-full lg:aspect-square",
+                index % 2 === 0 ? "lg:order-1" : "lg:order-2"
+              )}
+            />
+          </section>
+        );
+      })}
+
+      <section className="relative overflow-hidden py-section-sm lg:py-section">
+        <ParticleField shape="ambient" seed={3} className="absolute inset-0" />
+        <div className="relative mx-auto w-full max-w-page px-4 sm:px-6">
+          <h2 className="max-w-[16ch] text-display font-normal text-bone">{t("closing.title")}</h2>
+          <div className="mt-12">
+            <PrimaryButton href="/analyze">{t("closing.cta")}</PrimaryButton>
           </div>
+        </div>
+      </section>
 
-          <BenchPreview />
-        </section>
-
-        <section className="border-t border-line py-12 lg:py-16" aria-labelledby="method-heading">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-16">
-            <div className="lg:sticky lg:top-10 lg:self-start">
-              <h2 id="method-heading" className="text-h2 font-semibold">
-                {t("methodHeading")}
-              </h2>
-              <p className="mt-4 max-w-measure text-sm leading-relaxed text-muted">
-                {t("methodIntro")}
-              </p>
-              <p className="mt-4 max-w-measure text-sm leading-relaxed text-muted">
-                {t("methodNoBlackBox")}
-              </p>
-            </div>
-
-            <dl className="space-y-7">
-              {DIMENSIONS.map((dimension) => (
-                <div key={dimension.key}>
-                  <div className="flex items-baseline justify-between gap-4">
-                    <dt className="text-sm font-medium">{t(`dimensions.${dimension.key}.name`)}</dt>
-                    <span className="font-mono text-micro tabular-nums text-ink">
-                      {dimension.weight}
-                    </span>
-                  </div>
-                  {/* A weight, not a score: drawn in ink rather than in the
-                      action colour, which belongs to things you can press. */}
-                  <div aria-hidden className="mt-2 h-1 overflow-hidden rounded-chip bg-bench-sunk">
-                    <div className="h-full bg-ink/70" style={{ width: `${dimension.weight}%` }} />
-                  </div>
-                  <dd className="mt-3 max-w-measure text-sm leading-relaxed text-muted">
-                    {t(`dimensions.${dimension.key}.what`)}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
-      </main>
-
-      <footer className="border-t border-line py-8">
-        <p className="max-w-measure text-sm leading-relaxed text-muted">{common("disclaimer")}</p>
+      <footer className="mx-auto w-full max-w-page px-4 pb-12 pt-section-sm sm:px-6">
+        <p className="max-w-measure text-nav-label font-normal text-ash">
+          {common("disclaimer")}
+        </p>
       </footer>
-    </div>
+    </main>
   );
 }

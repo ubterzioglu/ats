@@ -38,7 +38,7 @@ export function IdentityTable({ cvText, findings, onSelectLine }: IdentityTableP
       <div key={field.id} className="flex items-baseline gap-3 px-5 py-3 sm:px-6">
         <span aria-hidden className={cx("mt-1.5 size-2 shrink-0 rounded-full", DOT[field.status])} />
 
-        <dt className="condensed w-20 shrink-0 text-micro font-medium text-ink">
+        <dt className="condensed w-20 shrink-0 text-micro font-normal text-ink">
           {t(`fields.${field.id}`)}
         </dt>
 
@@ -49,7 +49,7 @@ export function IdentityTable({ cvText, findings, onSelectLine }: IdentityTableP
                 type="button"
                 title={t("showLine")}
                 onClick={() => onSelectLine(at)}
-                className="block w-full truncate text-left font-mono text-micro text-ink transition-colors hover:text-action"
+                className="block w-full truncate text-left font-mono text-micro text-ink transition-colors hover:text-saffron"
               >
                 {field.value}
               </button>
@@ -89,7 +89,7 @@ export function IdentityTable({ cvText, findings, onSelectLine }: IdentityTableP
   return (
     <section className="bench overflow-hidden" aria-labelledby="identity-heading">
       <div className="border-b border-line px-5 py-4 sm:px-6">
-        <h2 id="identity-heading" className="text-h3 font-semibold">
+        <h2 id="identity-heading" className="text-h3 font-normal">
           {t("heading")}
         </h2>
         <p className="mt-2 max-w-measure text-sm leading-relaxed text-muted">{t("lede")}</p>

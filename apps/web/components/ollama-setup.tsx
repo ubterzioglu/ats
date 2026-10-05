@@ -45,9 +45,9 @@ export function OllamaSetup({ onReady }: OllamaSetupProps) {
   }
 
   return (
-    <div className="space-y-6 rounded-control border border-line bg-bench p-5 sm:p-6 text-sm">
+    <div className="space-y-6 text-sm">
       <div className="space-y-2">
-        <h3 className="font-semibold">{t("heading")}</h3>
+        <h3 className="font-normal">{t("heading")}</h3>
         <p className="text-muted leading-relaxed">
           {t("intro")}
         </p>
@@ -55,23 +55,23 @@ export function OllamaSetup({ onReady }: OllamaSetupProps) {
 
       <div className="space-y-4">
         <div>
-          <h4 className="font-medium text-xs uppercase condensed text-muted mb-2">macOS / Linux</h4>
-          <code className="block bg-bench-sunk rounded-control px-3 py-2 font-mono text-xs border border-line">
+          <h4 className="font-normal text-xs uppercase condensed text-muted mb-2">macOS / Linux</h4>
+          <code className="block border-b border-line py-2 font-mono text-xs">
             OLLAMA_ORIGINS=&quot;{origin}&quot; ollama serve
           </code>
         </div>
         
         <div>
-          <h4 className="font-medium text-xs uppercase condensed text-muted mb-2">Windows (Command Prompt)</h4>
-          <code className="block bg-bench-sunk rounded-control px-3 py-2 font-mono text-xs border border-line">
+          <h4 className="font-normal text-xs uppercase condensed text-muted mb-2">Windows (Command Prompt)</h4>
+          <code className="block border-b border-line py-2 font-mono text-xs">
             set OLLAMA_ORIGINS={origin}<br/>
             ollama serve
           </code>
         </div>
         
         <div>
-          <h4 className="font-medium text-xs uppercase condensed text-muted mb-2">Windows (PowerShell)</h4>
-          <code className="block bg-bench-sunk rounded-control px-3 py-2 font-mono text-xs border border-line">
+          <h4 className="font-normal text-xs uppercase condensed text-muted mb-2">Windows (PowerShell)</h4>
+          <code className="block border-b border-line py-2 font-mono text-xs">
             $env:OLLAMA_ORIGINS=&quot;{origin}&quot;<br/>
             ollama serve
           </code>
@@ -86,7 +86,7 @@ export function OllamaSetup({ onReady }: OllamaSetupProps) {
               type="text" 
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
-              className="w-full bg-bench-sunk border border-line rounded-control px-3 py-2 text-sm focus:border-action focus:outline-none"
+              className="field"
               placeholder={OLLAMA_DEFAULT_MODEL}
               list="ollama-models"
             />
@@ -100,7 +100,7 @@ export function OllamaSetup({ onReady }: OllamaSetupProps) {
             type="button"
             onClick={testConnection}
             disabled={testing || !selectedModel}
-            className="w-full sm:w-auto shrink-0 bg-ink text-bench px-4 py-2 rounded-control font-medium disabled:opacity-50 transition-opacity"
+            className="btn-quiet"
           >
             {testing ? t("testing") : t("testConnection")}
           </button>
@@ -109,7 +109,7 @@ export function OllamaSetup({ onReady }: OllamaSetupProps) {
         {health && (
           <div className={cx(
             "p-3 rounded-control text-sm border",
-            health.ok ? "border-good/40 bg-good/[0.08] text-good" : "border-caution/40 bg-caution/[0.08] text-caution-ink"
+            health.ok ? "border-good text-good" : "border-caution text-caution"
           )}>
             {health.detail}
           </div>

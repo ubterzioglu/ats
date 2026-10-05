@@ -84,7 +84,7 @@ export function AskDock({ tier, result }: AskDockProps) {
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30">
       <div className="pointer-events-auto mx-auto w-full max-w-6xl px-4 pb-4 sm:px-6">
         <section
-          className={cx("bench overflow-hidden shadow-lg", busy && "live-edge")}
+          className={cx("bench overflow-hidden border border-line", busy && "live-edge")}
           aria-label={t("heading")}
         >
           {open && hasConversation ? (
@@ -101,7 +101,7 @@ export function AskDock({ tier, result }: AskDockProps) {
                         the colour only has to say who wrote it. */}
                     <p
                       className={cx(
-                        "condensed text-micro font-medium",
+                        "condensed text-micro font-normal",
                         turn.role === "user" ? "text-muted" : "text-live-ink"
                       )}
                     >

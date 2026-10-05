@@ -34,7 +34,7 @@ function renderLine(line: string, pattern: RegExp | null, key: number) {
   const parts = pattern ? line.split(pattern) : [line];
   return parts.map((part, index) =>
     index % 2 === 1 ? (
-      <mark key={`${part}-${key}-${index}`} className="rounded-chip bg-action/20 px-0.5 text-ink">
+      <mark key={`${part}-${key}-${index}`} className="bg-transparent text-saffron underline underline-offset-2">
         {part}
       </mark>
     ) : (
@@ -79,13 +79,13 @@ export function ParserView({ text, highlights, caption, markedIndex }: ParserVie
       aria-labelledby="parser-heading"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
-        <h2 id="parser-heading" className="text-h3 font-semibold">
+        <h2 id="parser-heading" className="text-h3 font-normal">
           {t("heading")}
         </h2>
         <span className="readout">{caption}</span>
       </div>
 
-      <pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words bg-bench-sunk px-5 py-4 font-mono text-micro leading-relaxed text-muted sm:px-6">
+      <pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words px-5 py-4 font-mono text-micro leading-relaxed text-muted sm:px-6">
         {lines.map((line, index) => (
           <span
             key={`line-${index}`}
@@ -94,7 +94,7 @@ export function ParserView({ text, highlights, caption, markedIndex }: ParserVie
             aria-current={index === marked ? "true" : undefined}
             className={cx(
               "block scroll-my-8",
-              index === marked && "-mx-1.5 rounded-chip bg-action/20 px-1.5 text-ink"
+              index === marked && "-mx-1.5 border-l-2 border-iris px-1.5 text-ink"
             )}
           >
             {renderLine(line, pattern, index)}

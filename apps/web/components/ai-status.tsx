@@ -58,7 +58,7 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
 
   return (
     <section className="bench px-5 py-4 sm:px-6" aria-labelledby="ai-tier-heading">
-      <h2 id="ai-tier-heading" className="text-sm font-semibold">
+      <h2 id="ai-tier-heading" className="text-sm font-normal">
         {t("heading")}
       </h2>
       <p className="mt-1 max-w-measure text-xs leading-relaxed text-muted">
@@ -76,14 +76,14 @@ export function AiStatus({ onTierChange }: AiStatusProps) {
                 onClick={() => select(status.tier)}
                 aria-pressed={active === status.tier}
                 className={cx(
-                  "w-full rounded-control border px-3 py-2 text-left transition-colors",
+                  "w-full border-l-2 px-3 py-2 text-left transition-colors",
                   active === status.tier
-                    ? "border-action bg-action/[0.07]"
-                    : "border-line hover:border-muted disabled:cursor-not-allowed disabled:opacity-45"
+                    ? "border-action"
+                    : "border-transparent hover:border-edge disabled:cursor-not-allowed disabled:opacity-45"
                 )}
               >
                 <span className="flex flex-wrap items-baseline gap-x-2">
-                  <span className="text-sm font-medium">{status.label}</span>
+                  <span className="text-sm font-normal">{status.label}</span>
                   {status.sizeMb ? (
                     <span className="font-mono text-xs text-muted">
                       {t("size", { sizeMb: status.sizeMb })}
