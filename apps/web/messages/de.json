@@ -57,8 +57,12 @@
       "body": "Exportieren Sie Ihre Ergebnisse oder teilen Sie einen Link. Ein geteilter Bericht enthält nur Punkte und Hinweise; Zeilen aus Ihrem Lebenslauf werden nie gespeichert, und der Link läuft nach 30 Tagen ab."
     },
     "closing": {
-      "title": "Lesen Sie Ihren Lebenslauf, wie der Parser ihn liest.",
+      "title": "Lesen Sie Ihren Lebenslauf so, wie der Parser ihn liest.",
       "cta": "Lebenslauf analysieren"
+    },
+    "how": {
+      "title": "So funktioniert das Lesen",
+      "body": "Der Reader zieht Text aus PDF, DOCX oder Nur-Text-Dateien und baut Zeilen aus den Glyphenpositionen neu auf, damit Zeilenumbrüche und Spaltenabstände erhalten bleiben. Daran erkennt er, wo ein Abschnitt endet und der nächste beginnt. Der Text wird dann in fünf Dimensionen mit zusammen 100 Punkten bewertet: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20 und Kontakt 10. Jeder verlorene Punkt wird einem benannten Befund zugeordnet, mit der Zeile, aus der er stammt, und dem, was stattdessen zu schreiben ist; die Befunde stehen nach Kosten sortiert. Ohne Stellenanzeige erreicht die Schlüsselwort-Dimension höchstens 20 von 25 Punkten, und der Bericht sagt das. Alles läuft in Ihrem Browser."
     }
   },
   "about": {

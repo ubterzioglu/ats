@@ -290,3 +290,24 @@ describe("sameAs has no duplicates", () => {
     expect(unique.size).toBe(SITE_ENTITY.sameAs.length);
   });
 });
+
+describe("home.how section messages", () => {
+  it("all three locales have home.how.title and home.how.body", async () => {
+    const en = (await import("@/messages/en.json")).default;
+    const tr = (await import("@/messages/tr.json")).default;
+    const de = (await import("@/messages/de.json")).default;
+    for (const locale of [en, tr, de]) {
+      const how = (locale as { home: { how: { title: string; body: string } } }).home.how;
+      expect(how.title.trim().length).toBeGreaterThan(0);
+      expect(how.body.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it("English body is between 90 and 160 words", async () => {
+    const en = (await import("@/messages/en.json")).default;
+    const body = (en as { home: { how: { body: string } } }).home.how.body;
+    const wordCount = body.split(/\s+/).length;
+    expect(wordCount).toBeGreaterThanOrEqual(90);
+    expect(wordCount).toBeLessThanOrEqual(160);
+  });
+});

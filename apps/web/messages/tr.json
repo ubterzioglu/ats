@@ -57,8 +57,12 @@
       "body": "Bulgularınızı dışa aktarın ya da bir bağlantı paylaşın. Paylaşılan rapor yalnızca puan ve önerileri içerir; CV'nizden alınan satırlar asla saklanmaz ve bağlantı 30 gün sonra sona erer."
     },
     "closing": {
-      "title": "CV'nizi ayrıştırıcının okuduğu gibi okuyun.",
+      "title": "CV'nizi ayrıştırıcının gördüğü gibi okuyun.",
       "cta": "CV'nizi analiz edin"
+    },
+    "how": {
+      "title": "Okuma nasıl çalışır",
+      "body": "Okuyucu PDF, DOCX veya düz metin dosyasından metni çıkarır; satırları glif konumlarından yeniden kurduğu için satır sonları ve sütun boşlukları korunur. Bu işaretler bir bölümün nerede bitip diğerinin nerede başladığını gösterir. Metin sonra 100 puanlık beş boyutta puanlanır: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20 ve iletişim 10. Kaybedilen her puan, geldiği satırı ve yerine ne yazılacağını söyleyen adlandırılmış bir bulguya yazılır; bulgular en pahalıdan başlayarak sıralanır. İş ilanı yoksa anahtar kelime boyutu 25 yerine en fazla 20 puan alır ve rapor bunu belirtir. Hepsi tarayıcınızda çalışır."
     }
   },
   "about": {

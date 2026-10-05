@@ -116,6 +116,12 @@ export default async function HomePage({ params }: HomePageProps) {
         );
       })}
 
+      <section className="mx-auto w-full max-w-page px-4 py-section-sm sm:px-6 lg:py-section">
+        <SectionHeadline title={t("how.title")}>
+          <p>{t("how.body")}</p>
+        </SectionHeadline>
+      </section>
+
       <section className="relative overflow-hidden py-section-sm lg:py-section">
         <ParticleField shape="ambient" seed={3} className="absolute inset-0" />
         <div className="relative mx-auto w-full max-w-page px-4 sm:px-6">
