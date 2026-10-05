@@ -1,9 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { Link } from "@/i18n/navigation";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { BenchPreview } from "@/components/bench-preview";
+import { Link } from "@/i18n/navigation";
 
 const DIMENSIONS: ReadonlyArray<{ readonly key: string; readonly weight: number }> = [
   { key: "parseability", weight: 25 },
@@ -27,20 +25,6 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-      <header className="flex items-center justify-between gap-4 py-5">
-        <span className="font-mono text-sm font-medium tracking-tight">{brand("name")}</span>
-        <div className="flex items-center gap-4">
-          <Link href="/applications" className="text-sm font-medium text-muted transition-colors hover:text-ink">
-            {common("applications")}
-          </Link>
-          <ThemeToggle />
-          <LanguageSwitcher />
-          <Link href="/login" className="text-sm text-muted transition-colors hover:text-ink">
-            {common("signIn")}
-          </Link>
-        </div>
-      </header>
-
       <main>
         <section className="grid items-center gap-10 py-10 lg:grid-cols-[1fr_minmax(0,27rem)] lg:gap-14 lg:py-16">
           <div>

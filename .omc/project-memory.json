@@ -1,69 +1,22 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1790876272456,
+  "lastScanned": 1791143596544,
   "projectRoot": "c:\\temp_private\\ats",
   "techStack": {
-    "languages": [
-      {
-        "name": "JavaScript/TypeScript",
-        "version": null,
-        "confidence": "high",
-        "markers": [
-          "package.json"
-        ]
-      },
-      {
-        "name": "TypeScript",
-        "version": null,
-        "confidence": "high",
-        "markers": [
-          "tsconfig.json"
-        ]
-      }
-    ],
-    "frameworks": [
-      {
-        "name": "next",
-        "version": "15.5.14",
-        "category": "fullstack"
-      },
-      {
-        "name": "react",
-        "version": "19.1.0",
-        "category": "frontend"
-      },
-      {
-        "name": "react-dom",
-        "version": "19.1.0",
-        "category": "frontend"
-      },
-      {
-        "name": "vitest",
-        "version": "2.1.9",
-        "category": "testing"
-      }
-    ],
-    "packageManager": "npm",
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
     "runtime": null
   },
   "build": {
-    "buildCommand": "npm run build",
-    "testCommand": "npm test",
-    "lintCommand": "npm run lint",
-    "devCommand": "npm run dev",
-    "scripts": {
-      "dev": "next dev",
-      "build": "next build",
-      "start": "next start",
-      "lint": "eslint . --max-warnings=0",
-      "typecheck": "tsc --noEmit",
-      "test": "vitest run",
-      "test:watch": "vitest",
-      "postinstall": "node scripts/copy-pdf-worker.mjs"
-    }
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
   },
   "conventions": {
-    "namingStyle": "camelCase",
+    "namingStyle": null,
     "importStyle": null,
     "testPattern": "*.test.ts",
     "fileOrganization": null
@@ -72,12 +25,6 @@
     "isMonorepo": false,
     "workspaces": [],
     "mainDirectories": [
-      "app",
-      "components",
-      "docs",
-      "lib",
-      "public",
-      "scripts",
       "tests"
     ],
     "gitBranches": {
@@ -87,117 +34,112 @@
   },
   "customNotes": [],
   "directoryMap": {
-    "app": {
-      "path": "app",
-      "purpose": "Application code",
-      "fileCount": 6,
-      "lastAccessed": 1790876272281,
-      "keyFiles": [
-        "actions.ts",
-        "globals.css",
-        "icon.svg",
-        "layout.tsx",
-        "not-found.tsx"
-      ]
-    },
-    "components": {
-      "path": "components",
-      "purpose": "UI components",
-      "fileCount": 7,
-      "lastAccessed": 1790876272283,
-      "keyFiles": [
-        "analyzer.tsx",
-        "coming-soon.tsx",
-        "document-intake.tsx",
-        "fix-list.tsx",
-        "keyword-panel.tsx"
-      ]
-    },
-    "docs": {
-      "path": "docs",
-      "purpose": "Documentation",
-      "fileCount": 3,
-      "lastAccessed": 1790876272412,
-      "keyFiles": [
-        "ats-research.md",
-        "ats-rules.md",
-        "handover-2026-09-28.md"
-      ]
-    },
-    "lib": {
-      "path": "lib",
-      "purpose": "Library code",
-      "fileCount": 1,
-      "lastAccessed": 1790876272413,
-      "keyFiles": [
-        "ui.ts"
-      ]
-    },
-    "public": {
-      "path": "public",
-      "purpose": "Public files",
-      "fileCount": 1,
-      "lastAccessed": 1790876272416,
-      "keyFiles": [
-        "yakinda-geliyor.png"
-      ]
-    },
-    "scripts": {
-      "path": "scripts",
-      "purpose": "Build/utility scripts",
-      "fileCount": 1,
-      "lastAccessed": 1790876272419,
-      "keyFiles": [
-        "copy-pdf-worker.mjs"
-      ]
-    },
-    "supabase": {
-      "path": "supabase",
+    "apps": {
+      "path": "apps",
       "purpose": null,
       "fileCount": 0,
-      "lastAccessed": 1790876272420,
+      "lastAccessed": 1791143596528,
       "keyFiles": []
     },
     "tests": {
       "path": "tests",
       "purpose": "Test files",
-      "fileCount": 4,
-      "lastAccessed": 1790876272421,
+      "fileCount": 78,
+      "lastAccessed": 1791143596529,
       "keyFiles": [
-        "experience.test.ts",
-        "extract.test.ts",
-        "fixtures.ts",
-        "scoring.test.ts"
-      ]
-    },
-    "types": {
-      "path": "types",
-      "purpose": "Type definitions",
-      "fileCount": 1,
-      "lastAccessed": 1790876272423,
-      "keyFiles": [
-        "analysis.ts"
-      ]
-    },
-    "public\\vendor": {
-      "path": "public\\vendor",
-      "purpose": "Third-party code",
-      "fileCount": 1,
-      "lastAccessed": 1790876272430,
-      "keyFiles": [
-        "pdf.worker.min.mjs"
-      ]
-    },
-    "supabase\\migrations": {
-      "path": "supabase\\migrations",
-      "purpose": "Database migrations",
-      "fileCount": 1,
-      "lastAccessed": 1790876272434,
-      "keyFiles": [
-        "0001_ats_reports.sql"
+        "acronym-pair.test.ts",
+        "ai-tasks.test.ts",
+        "ambiguous-terms.test.ts",
+        "application-links.test.ts",
+        "applications.test.ts"
       ]
     }
   },
-  "hotPaths": [],
+  "hotPaths": [
+    {
+      "path": "apps\\web\\lib\\ai\\tasks\\rewrite.ts",
+      "accessCount": 5,
+      "lastAccessed": 1791143891968,
+      "type": "file"
+    },
+    {
+      "path": "apps\\web\\lib\\ai\\grounding.ts",
+      "accessCount": 5,
+      "lastAccessed": 1791145278879,
+      "type": "file"
+    },
+    {
+      "path": "apps\\web\\lib\\tailor\\apply-term.ts",
+      "accessCount": 2,
+      "lastAccessed": 1791144492812,
+      "type": "file"
+    },
+    {
+      "path": "apps\\web\\messages\\en.json",
+      "accessCount": 2,
+      "lastAccessed": 1791144623881,
+      "type": "file"
+    },
+    {
+      "path": "apps\\web\\messages\\de.json",
+      "accessCount": 2,
+      "lastAccessed": 1791144631958,
+      "type": "file"
+    },
+    {
+      "path": "apps\\web\\messages\\tr.json",
+      "accessCount": 2,
+      "lastAccessed": 1791144641178,
+      "type": "file"
+    },
+    {
+      "path": "apps\\web",
+      "accessCount": 2,
+      "lastAccessed": 1791148047890,
+      "type": "directory"
+    },
+    {
+      "path": "MASTERPLAN.md",
+      "accessCount": 2,
+      "lastAccessed": 1791148135441,
+      "type": "directory"
+    },
+    {
+      "path": "apps\\web\\docs\\handover-2026-10-03.md",
+      "accessCount": 2,
+      "lastAccessed": 1791148369399,
+      "type": "file"
+    },
+    {
+      "path": "tests\\grounding.test.ts",
+      "accessCount": 1,
+      "lastAccessed": 1791143928209,
+      "type": "file"
+    },
+    {
+      "path": "tests\\tailor-apply-term.test.ts",
+      "accessCount": 1,
+      "lastAccessed": 1791144422936,
+      "type": "file"
+    },
+    {
+      "path": "apps\\web\\lib\\ai\\tasks\\cover-letter.ts",
+      "accessCount": 1,
+      "lastAccessed": 1791145299725,
+      "type": "file"
+    },
+    {
+      "path": "tests\\cover-letter.test.ts",
+      "accessCount": 1,
+      "lastAccessed": 1791145323466,
+      "type": "file"
+    },
+    {
+      "path": "apps\\web\\components\\analyzer.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1791148116507,
+      "type": "file"
+    }
+  ],
   "userDirectives": []
 }

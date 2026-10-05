@@ -9,6 +9,7 @@ import type { ReactNode } from "react";
 import { routing } from "@/i18n/routing";
 import { THEME_SCRIPT } from "@/lib/theme";
 import { ByokConsentListener } from "@/components/byok-consent-listener";
+import { SiteHeader } from "@/components/site-header";
 
 import "../globals.css";
 
@@ -87,6 +88,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       </head>
       <body>
         <NextIntlClientProvider>
+          <SiteHeader />
           {children}
           {/* Inside the provider, not beside it: the listener reads messages,
               and a client component outside the provider has no context to
