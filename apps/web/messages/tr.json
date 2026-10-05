@@ -30,7 +30,7 @@
   "home": {
     "eyebrow": "CV okunabilirlik kontrolü",
     "headline": "CV'niz bir tasarım olarak değil, metin olarak okunur.",
-    "lede": "Bir aday takip sistemi sayfa düzeninizi atar ve çıkarabildiği metni tutar. Bu araç size o metni gösterir, geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
+    "lede": "ATS readability, bir CV'yi aday takip sisteminin okuduğu gibi gösteren ücretsiz bir araçtır: metin olarak. Geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
     "cta": "CV'nizi analiz edin",
     "privacyTag": "Tarayıcınızda okunur, yüklenmez",
     "analyze": {

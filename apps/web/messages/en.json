@@ -30,7 +30,7 @@
   "home": {
     "eyebrow": "CV readability check",
     "headline": "Your CV is read as text, not as a design.",
-    "lede": "An applicant tracking system throws away your layout and keeps whatever text it can pull out. This shows you that text, scores what survived out of 100, and lists the fixes in order of value.",
+    "lede": "ATS readability is a free tool that shows a CV the way an applicant tracking system reads it: as text. It scores what survived out of 100 and lists the fixes in order of value.",
     "cta": "Analyze a CV",
     "privacyTag": "Read in your browser, never uploaded",
     "analyze": {

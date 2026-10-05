@@ -30,7 +30,7 @@
   "home": {
     "eyebrow": "Lesbarkeitsprüfung für Lebensläufe",
     "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Design.",
-    "lede": "Ein Bewerbermanagementsystem verwirft Ihr Layout und behält nur den Text, den es herauslösen kann. Sie sehen diesen Text, erhalten eine Bewertung von 100 Punkten für das, was übrig blieb, und eine Liste der Korrekturen, geordnet nach Wert.",
+    "lede": "ATS readability ist ein kostenloses Werkzeug, das einen Lebenslauf so zeigt, wie ein Bewerbermanagementsystem ihn liest: als Text. Es bewertet, was übrig blieb, auf 100 Punkte und listet die Korrekturen nach Wert.",
     "cta": "Lebenslauf analysieren",
     "privacyTag": "Im Browser gelesen, nie hochgeladen",
     "analyze": {
