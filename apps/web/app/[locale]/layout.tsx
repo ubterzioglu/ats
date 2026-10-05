@@ -6,7 +6,8 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
-import { routing } from "@/i18n/routing";
+import { routing, type AppLocale } from "@/i18n/routing";
+import { OPEN_GRAPH_LOCALE } from "@/lib/seo";
 import { ByokConsentListener } from "@/components/byok-consent-listener";
 import { NavBar } from "@/components/ui/nav-bar";
 
@@ -45,6 +46,8 @@ export async function generateMetadata({
     description: t("description"),
     openGraph: {
       type: "website",
+      siteName: "ATS readability",
+      locale: OPEN_GRAPH_LOCALE[locale as AppLocale],
       title: t("openGraphTitle"),
       description: t("openGraphDescription")
     },

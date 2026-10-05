@@ -1,9 +1,17 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
 
+import { type AppLocale } from "@/i18n/routing";
 import { ResumeEditor } from "@/components/editor/resume-editor";
+import { pageAlternates } from "@/lib/seo";
 
 interface BuildPageProps {
   readonly params: Promise<{ readonly locale: string }>;
+}
+
+export async function generateMetadata({ params }: BuildPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return { alternates: pageAlternates(locale as AppLocale, "/builder") };
 }
 
 export default async function BuildPage({ params }: BuildPageProps) {

@@ -1,10 +1,13 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
 
 import { GhostLink } from "@/components/ui/ghost-link";
 import { ParticleField } from "@/components/ui/particle-field";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { SectionHeadline } from "@/components/ui/section-headline";
 import { Tag } from "@/components/ui/tag";
+import { routing, type AppLocale } from "@/i18n/routing";
+import { buildHomeJsonLd, pageAlternates } from "@/lib/seo";
 import type { ShapeName } from "@/lib/particles/shapes";
 import { cx } from "@/lib/ui";
 
@@ -26,15 +29,27 @@ interface HomePageProps {
   readonly params: Promise<{ readonly locale: string }>;
 }
 
+export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return { alternates: pageAlternates(locale as AppLocale, "/") };
+}
+
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
   const t = await getTranslations("home");
   const common = await getTranslations("common");
+  const metadata = await getTranslations("metadata");
+
+  const jsonLd = buildHomeJsonLd(locale as AppLocale, metadata("openGraphTitle"), metadata("description"));
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <section className="mx-auto grid w-full max-w-page items-center gap-12 px-4 py-section-sm sm:px-6 lg:min-h-[calc(100dvh-4rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16 lg:py-0">
         <div>
           <SectionHeadline as="h1" scale="lg" label={t("eyebrow")} title={t("headline")}>
