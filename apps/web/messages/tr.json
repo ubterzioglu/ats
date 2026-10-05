@@ -285,9 +285,10 @@
   },
   "notFound": {
     "code": "404",
-    "heading": "Burada bir şey yok",
-    "body": "Paylaşılan bir rapor 30 gün yaşar, sonra kendini siler. Bu ya süresi dolmuş ya da hiç var olmamış.",
-    "cta": "Bir CV analiz et"
+    "title": "Bu sayfa yok.",
+    "body": "Adres yanlış yazılmış ya da sayfa taşınmış olabilir. Paylaşılan rapor bağlantıları da 30 gün sonra çalışmaz.",
+    "home": "Başa dön",
+    "analyze": "CV analiz et"
   },
   "analyzer": {
     "sections": "Bölümler",

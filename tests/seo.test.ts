@@ -120,11 +120,12 @@ describe("sitemap output", () => {
 });
 
 describe("buildOrganizationJsonLd", () => {
-  it("has the correct @id, name, logo, contactPoint, description and sameAs", () => {
+  it("has the correct @id, name, alternateName, logo, contactPoint, description and sameAs", () => {
     const org = buildOrganizationJsonLd("A test description");
     expect(org["@id"]).toBe(ORGANIZATION_ID);
     expect(org["@type"]).toBe("Organization");
     expect(org.name).toBe(SITE_ENTITY.name);
+    expect(org.alternateName).toEqual(["affa", "ats free for all"]);
     expect(org.url).toBe(SITE_URL);
     expect(org.description).toBe("A test description");
     const logo = org.logo as { readonly url: string };
@@ -309,5 +310,21 @@ describe("home.how section messages", () => {
     const wordCount = body.split(/\s+/).length;
     expect(wordCount).toBeGreaterThanOrEqual(90);
     expect(wordCount).toBeLessThanOrEqual(160);
+  });
+});
+
+describe("notFound message keys", () => {
+  it("all three locales have the required notFound keys", async () => {
+    const en = (await import("@/messages/en.json")).default;
+    const tr = (await import("@/messages/tr.json")).default;
+    const de = (await import("@/messages/de.json")).default;
+    for (const locale of [en, tr, de]) {
+      const notFound = (locale as { notFound: { code: string; title: string; body: string; home: string; analyze: string } }).notFound;
+      expect(notFound.code).toBe("404");
+      expect(notFound.title.trim().length).toBeGreaterThan(0);
+      expect(notFound.body.trim().length).toBeGreaterThan(0);
+      expect(notFound.home.trim().length).toBeGreaterThan(0);
+      expect(notFound.analyze.trim().length).toBeGreaterThan(0);
+    }
   });
 });

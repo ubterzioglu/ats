@@ -2,6 +2,7 @@
 
 import { createBrowserClient } from "@supabase/ssr";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
@@ -10,7 +11,6 @@ import { cx } from "@/lib/ui";
 import { LanguageSwitcher } from "../language-switcher";
 
 import { GhostLink } from "./ghost-link";
-import { LogoMark } from "./logo";
 import { PrimaryButton } from "./primary-button";
 
 const LINKS = [
@@ -66,8 +66,24 @@ export function NavBar() {
       <div className="mx-auto w-full max-w-page px-4 sm:px-6">
         <div className="flex min-h-16 flex-wrap items-center justify-between gap-x-6 gap-y-0">
           <Link href="/" className="flex items-center gap-3 py-3 text-nav-label font-semibold text-bone">
-            <LogoMark />
-            <span>{brand("name")}</span>
+            <Image
+              src="/brand/affa-icon-square-rounded.svg"
+              alt={brand("name")}
+              width={32}
+              height={32}
+              unoptimized
+              priority
+              className="sm:hidden"
+            />
+            <Image
+              src="/brand/affa-dark-tight.svg"
+              alt={brand("name")}
+              width={120}
+              height={36}
+              unoptimized
+              priority
+              className="hidden sm:block"
+            />
           </Link>
 
           <nav

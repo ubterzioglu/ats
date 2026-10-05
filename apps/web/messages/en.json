@@ -285,9 +285,10 @@
   },
   "notFound": {
     "code": "404",
-    "heading": "Nothing here",
-    "body": "A shared report lives for 30 days and then deletes itself. This one has either expired or never existed.",
-    "cta": "Analyze a CV"
+    "title": "This page does not exist.",
+    "body": "The address may be misspelled, or the page moved. A shared report link also stops working after 30 days.",
+    "home": "Back to the start",
+    "analyze": "Analyze a CV"
   },
   "analyzer": {
     "sections": "Sections",

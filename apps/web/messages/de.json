@@ -285,9 +285,10 @@
   },
   "notFound": {
     "code": "404",
-    "heading": "Hier ist nichts",
-    "body": "Ein geteilter Bericht lebt 30 Tage und löscht sich dann selbst. Dieser ist entweder abgelaufen oder hat nie existiert.",
-    "cta": "Lebenslauf analysieren"
+    "title": "Diese Seite gibt es nicht.",
+    "body": "Die Adresse ist möglicherweise falsch geschrieben, oder die Seite wurde verschoben. Auch Links zu geteilten Berichten funktionieren nach 30 Tagen nicht mehr.",
+    "home": "Zur Startseite",
+    "analyze": "Lebenslauf analysieren"
   },
   "analyzer": {
     "sections": "Bereiche",

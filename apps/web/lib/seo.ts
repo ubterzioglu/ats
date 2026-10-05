@@ -49,6 +49,7 @@ export function buildOrganizationJsonLd(description: string): JsonLdNode {
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
     name: SITE_ENTITY.name,
+    alternateName: ["affa", "ats free for all"],
     url: SITE_URL,
     description,
     logo: { "@type": "ImageObject", url: `${SITE_URL}${SITE_ENTITY.logoPath}` },
