@@ -16,6 +16,7 @@ export const OPEN_GRAPH_LOCALE: Readonly<Record<AppLocale, string>> = {
 };
 
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+export const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
@@ -42,13 +43,14 @@ export function pageAlternates(
   return { canonical: absoluteUrl(locale, path), languages };
 }
 
-export function buildOrganizationJsonLd(): JsonLdNode {
+export function buildOrganizationJsonLd(description: string): JsonLdNode {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
     name: SITE_ENTITY.name,
     url: SITE_URL,
+    description,
     logo: { "@type": "ImageObject", url: `${SITE_URL}${SITE_ENTITY.logoPath}` },
     ...(SITE_ENTITY.sameAs.length > 0 ? { sameAs: SITE_ENTITY.sameAs } : {}),
     contactPoint: {
@@ -65,12 +67,13 @@ export function buildHomeJsonLd(
   description: string
 ): readonly JsonLdNode[] {
   const url = absoluteUrl(locale, "/");
-  const organization = buildOrganizationJsonLd();
+  const organization = buildOrganizationJsonLd(description);
   return [
     organization,
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": WEBSITE_ID,
       name,
       url,
       description,
@@ -108,5 +111,48 @@ export function buildFaqJsonLd(
       name: i.question,
       acceptedAnswer: { "@type": "Answer", text: i.answer }
     }))
+  };
+}
+
+export function buildBreadcrumbJsonLd(
+  locale: AppLocale,
+  path: PublicPath,
+  label: string,
+  homeLabel: string
+): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: homeLabel,
+        item: absoluteUrl(locale, "/")
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: label,
+        item: absoluteUrl(locale, path)
+      }
+    ]
+  };
+}
+
+export function buildAboutPageJsonLd(
+  locale: AppLocale,
+  name: string,
+  description: string
+): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name,
+    description,
+    url: absoluteUrl(locale, "/about"),
+    inLanguage: locale,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": ORGANIZATION_ID }
   };
 }

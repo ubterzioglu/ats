@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 
 import { type AppLocale } from "@/i18n/routing";
 import { ResumeEditor } from "@/components/editor/resume-editor";
-import { pageAlternates } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import { buildBreadcrumbJsonLd, pageAlternates } from "@/lib/seo";
 
 interface BuildPageProps {
   readonly params: Promise<{ readonly locale: string }>;
@@ -26,9 +27,18 @@ export default async function BuildPage({ params }: BuildPageProps) {
   const t = await getTranslations("editor");
   const common = await getTranslations("common");
   const brand = await getTranslations("brand");
+  const nav = await getTranslations("nav");
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(
+    locale as AppLocale,
+    "/builder",
+    t("title"),
+    nav("home")
+  );
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
+      <JsonLd data={breadcrumbJsonLd} />
       <main className="py-8 sm:py-10">
         <div className="mb-8 max-w-measure">
           <h1 className="text-heading-sm font-normal">{t("title")}</h1>

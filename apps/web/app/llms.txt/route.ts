@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { PUBLIC_PATHS, SITE_URL } from "@/lib/seo";
+import { SITE_ENTITY } from "@/lib/site-entity";
 
 export const dynamic = "force-static";
 
@@ -9,13 +10,16 @@ export async function GET(): Promise<Response> {
   const home = await getTranslations({ locale: "en", namespace: "home" });
   const common = await getTranslations({ locale: "en", namespace: "common" });
   const nav = await getTranslations({ locale: "en", namespace: "nav" });
+  const faq = await getTranslations({ locale: "en", namespace: "faq" });
 
-  const pageLinks = PUBLIC_PATHS.filter((p) => p !== "/")
-    .map((path) => {
+  const pageLinks = [
+    `- [${nav("home")}](${SITE_URL}/)`,
+    ...PUBLIC_PATHS.filter((p) => p !== "/").map((path) => {
       const key = path === "/analyze" ? "analyze" : path === "/builder" ? "builder" : "about";
       return `- [${nav(key)}](${SITE_URL}${path})`;
-    })
-    .join("\n");
+    }),
+    `- [${faq("title")}](${SITE_URL}/#faq)`
+  ].join("\n");
 
   const body = `# ATS readability
 
@@ -26,6 +30,9 @@ ${home("privacyTag")}
 ## Pages
 ${pageLinks}
 
+## How it works
+${home("how.body")}
+
 ## Languages
 - English: ${SITE_URL}/
 - Turkce: ${SITE_URL}/tr
@@ -33,6 +40,9 @@ ${pageLinks}
 
 ## Limits
 ${common("disclaimer")}
+
+## Contact
+${SITE_ENTITY.contactEmail}
 `;
 
   return new Response(body, {

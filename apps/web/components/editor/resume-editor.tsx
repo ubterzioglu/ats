@@ -163,7 +163,7 @@ export function ResumeEditor() {
       </div>
 
       {save === "refused" ? (
-        <p className="border-l-2 border-caution px-4 py-3 text-sm text-caution">
+        <p role="alert" className="border-l-2 border-caution px-4 py-3 text-sm text-caution">
           {t("saveFailed")}
         </p>
       ) : null}

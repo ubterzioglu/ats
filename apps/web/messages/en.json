@@ -4,6 +4,7 @@
   },
   "nav": {
     "label": "Main",
+    "home": "Home",
     "analyze": "Analyze CV",
     "builder": "Builder",
     "about": "About",
@@ -58,6 +59,10 @@
     "closing": {
       "title": "Read your CV the way the parser does.",
       "cta": "Analyze a CV"
+    },
+    "how": {
+      "title": "How the reading works",
+      "body": "The reader extracts text from a PDF, DOCX or plain text file, rebuilding lines from glyph positions so line breaks and column gaps survive. Those signals tell it where one section ends and the next begins. The text is then scored across five dimensions worth 100 points: parseability 25, keyword match 25, structure 20, impact 20 and contact 10. Every lost point is charged to a named finding, with the line it came from and what to write instead, and findings are listed most expensive first. Without a job ad the keyword dimension is capped at 20 of 25 points, and the report says so. All of this runs in your browser."
     }
   },
   "about": {

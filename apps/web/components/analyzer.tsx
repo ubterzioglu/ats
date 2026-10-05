@@ -401,7 +401,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       ) : null}
 
       {notice ? (
-        <p className="border-l-2 border-caution px-4 py-3 text-sm text-caution">
+        <p aria-live="polite" className="border-l-2 border-caution px-4 py-3 text-sm text-caution">
           {notice}
         </p>
       ) : null}
