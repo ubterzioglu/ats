@@ -41,7 +41,7 @@ export function SiteHeader() {
 
   const navLinks = [
     { href: "/analyze", label: "Analyze CV" },
-    { href: "/build", label: "Builder" },
+    { href: "/builder", label: "Builder" },
     { href: "/applications", label: "Tracker" },
   ];
 
