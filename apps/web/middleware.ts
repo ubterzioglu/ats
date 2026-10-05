@@ -15,10 +15,10 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Every path except static assets and `/auth`, which holds the email
-     * confirmation handler. It has no page and no locale, and rewriting it to
-     * a locale segment would route it to nothing.
+     * Every path except static assets, `/api` and `/auth`. Route handlers
+     * and the email confirmation handler have no page and no locale, and
+     * rewriting them to a locale segment routes them to a 404.
      */
-    "/((?!_next/static|_next/image|favicon.ico|auth/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!api/|_next/static|_next/image|favicon.ico|auth/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

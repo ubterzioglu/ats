@@ -53,7 +53,7 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 
 ### Status — 4 October 2026
 
-**76 of 76 batches landed; all reachable from a screen.** Phases 0, 1, 3 and 5 are complete in full. Phase 2 is complete. Phase 4 has D.4 and D.5 with surfaces that need acceptance verification through the screen path.
+**76 of 76 batches landed; all reachable from a screen.** Phases 0, 1, 3 and 5 are complete in full. Phase 2 is complete. Phase 4 is complete; the owner accepted D.4 and D.5 on 2026-10-05 without a recorded browser run, and an explorative test is still pending.
 
 | Phase | Batches | State |
 |---|---|---|
@@ -61,7 +61,7 @@ boundary. **L** = multi-day, a new subsystem or dependency, or a cross-cutting c
 | 1 — Deepen the engine | V.1-V.10, C.2-C.3, A.1-A.4, J.1-J.7 | Done |
 | 2 — Semantic layer | B.1-B.3, F.1-F.5 | Done in full |
 | 3 — Builder | E.1-E.10 | Done in full (`E.1a` alongside `E.1`) |
-| 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1`-`L.4`, `D.1`-`D.3`, `D.6` and `D.7` landed. `D.4` and `D.5` have a surface and need their acceptance verified |
+| 4 — AI layers | L.1-L.4, D.1-D.7 | `L.1`-`L.4`, `D.1`-`D.3`, `D.6` and `D.7` landed. `D.4` and `D.5` landed; accepted by the owner on 2026-10-05, explorative browser test still pending |
 | 5 — Close the loop | G.1-G.5, H.0-H.4, I.1-I.2, F.6 | Done in full |
 
 The gate is clean: lint, typecheck, 809 tests across 83 files, and a production build.
@@ -630,8 +630,8 @@ produces can be read by a parser.
 | ~~**D.1**~~ OK | **CV variants.** Each variant bound to one ad and derived from the master CV, stored in IndexedDB. | L | ST.1, E.2 | Variants persist across reloads |
 | ~~**D.2**~~ ✅ | **Missing-term cards.** Where the term appears in the ad, how central it is, and where it would go in the CV. | M | F.1 | Each card cites the ad |
 | ~~**D.3**~~ ✅ | **"I have this skill" gate.** No term enters a CV without confirmation, enforced by an automated test. | M | D.2 | A test proves an unconfirmed skill cannot be added |
-| **D.4** | **Bullet rewriting.** Rephrases existing bullets only. No invented numbers; placeholders (`[X%]`, `[N people]`) where a measurable result is missing. Builds on `lib/ai/tasks/rewrite.ts` and `grounding.ts`. | L | L.4, D.3 | Output containing a number or organisation absent from the input is rejected *Status: a surface exists (`components/analyzer.tsx` `draftFix`: rule first, model second, one line at a time, re-measured on apply) and `grounding` rejects invented numbers, technologies and organisations (`19e67f9`). The acceptance looks met; verify it with a test through the surface, then tick.* |
-| **D.5** | **Per-bullet diff accept/reject.** | M | D.4 | Each change independently acceptable *Status: each draft applies to one line independently; there is no side-by-side accept/reject view. Verify against the acceptance wording before ticking.* |
+| ~~**D.4**~~ ✅ | **Bullet rewriting.** Rephrases existing bullets only. No invented numbers; placeholders (`[X%]`, `[N people]`) where a measurable result is missing. Builds on `lib/ai/tasks/rewrite.ts` and `grounding.ts`. | L | L.4, D.3 | Output containing a number or organisation absent from the input is rejected *Status: a surface exists (`components/analyzer.tsx` `draftFix`: rule first, model second, one line at a time, re-measured on apply) and `grounding` rejects invented numbers, technologies and organisations (`19e67f9`). The acceptance looks met; verify it with a test through the surface, then tick.* |
+| ~~**D.5**~~ ✅ | **Per-bullet diff accept/reject.** | M | D.4 | Each change independently acceptable *Status: each draft applies to one line independently; there is no side-by-side accept/reject view. Verify against the acceptance wording before ticking.* |
 | ~~**D.6**~~ ✅ | **Variant comparison.** Master score against tailored variant score. | M | D.1 | Both scores shown together |
 | ~~**D.7**~~ ✅ | **Cover letter helper.** Same guardrails as D.4. | M | D.4 | No invented claims |
 
