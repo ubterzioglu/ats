@@ -1,13 +1,14 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
+import { FaqSection } from "@/components/faq-section";
 import { GhostLink } from "@/components/ui/ghost-link";
 import { ParticleField } from "@/components/ui/particle-field";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { SectionHeadline } from "@/components/ui/section-headline";
 import { Tag } from "@/components/ui/tag";
 import { routing, type AppLocale } from "@/i18n/routing";
-import { buildHomeJsonLd, pageAlternates } from "@/lib/seo";
+import { buildFaqJsonLd, buildHomeJsonLd, FAQ_IDS, pageAlternates } from "@/lib/seo";
 import type { ShapeName } from "@/lib/particles/shapes";
 import { cx } from "@/lib/ui";
 
@@ -42,8 +43,18 @@ export default async function HomePage({ params }: HomePageProps) {
   const common = await getTranslations("common");
   const metadata = await getTranslations("metadata");
   const nav = await getTranslations("nav");
+  const faqT = await getTranslations("faq");
 
-  const jsonLd = buildHomeJsonLd(locale as AppLocale, metadata("openGraphTitle"), metadata("description"));
+  const faqItems = FAQ_IDS.map((id) => ({
+    id,
+    question: faqT(`items.${id}.q`),
+    answer: faqT(`items.${id}.a`)
+  }));
+
+  const jsonLd = [
+    ...buildHomeJsonLd(locale as AppLocale, metadata("openGraphTitle"), metadata("description")),
+    buildFaqJsonLd(faqItems)
+  ];
 
   return (
     <main>
@@ -116,6 +127,8 @@ export default async function HomePage({ params }: HomePageProps) {
           </div>
         </div>
       </section>
+
+      <FaqSection items={faqItems} />
 
       <footer className="mx-auto w-full max-w-page px-4 pb-12 pt-section-sm sm:px-6">
         <p className="max-w-measure text-nav-label font-normal text-ash">

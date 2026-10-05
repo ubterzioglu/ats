@@ -19,6 +19,8 @@ export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 
 export const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
+export const FAQ_IDS = ["upload", "score", "languages", "shared", "guarantee", "noAd"] as const;
+
 export type JsonLdNode = Readonly<Record<string, unknown>>;
 
 export function localizedPath(locale: AppLocale, path: PublicPath): string {
@@ -87,4 +89,18 @@ export function buildHomeJsonLd(
       publisher: { "@id": ORGANIZATION_ID }
     }
   ] as const;
+}
+
+export function buildFaqJsonLd(
+  items: readonly { readonly question: string; readonly answer: string }[]
+): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((i) => ({
+      "@type": "Question",
+      name: i.question,
+      acceptedAnswer: { "@type": "Answer", text: i.answer }
+    }))
+  };
 }

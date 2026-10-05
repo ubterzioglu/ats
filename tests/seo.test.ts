@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 
 import {
   absoluteUrl,
+  buildFaqJsonLd,
   buildHomeJsonLd,
   buildOrganizationJsonLd,
+  FAQ_IDS,
   localizedPath,
   ORGANIZATION_ID,
   pageAlternates,
@@ -155,5 +157,42 @@ describe("buildHomeJsonLd", () => {
     const nodes = buildHomeJsonLd("de", "ATS readability", "Desc");
     expect(nodes[1]!.url).toBe(`${SITE_URL}/de`);
     expect(nodes[1]!.inLanguage).toBe("de");
+  });
+});
+
+describe("buildFaqJsonLd", () => {
+  it("returns a FAQPage with one Question per FAQ_ID", () => {
+    const items = FAQ_IDS.map((id) => ({ question: `Q-${id}`, answer: `A-${id}` }));
+    const node = buildFaqJsonLd(items) as {
+      readonly mainEntity: readonly { readonly name: string; readonly acceptedAnswer: { readonly text: string } }[];
+    };
+    expect(node["@type"]).toBe("FAQPage");
+    expect(node.mainEntity).toHaveLength(FAQ_IDS.length);
+    for (const [i, id] of FAQ_IDS.entries()) {
+      expect(node.mainEntity[i]!.name).toBe(`Q-${id}`);
+      expect(node.mainEntity[i]!.acceptedAnswer.text).toBe(`A-${id}`);
+    }
+  });
+
+  it("no question or answer is empty or contains placeholder text", () => {
+    const items = FAQ_IDS.map((id) => ({ question: `Q-${id}`, answer: `A-${id}` }));
+    const serialized = JSON.stringify(buildFaqJsonLd(items));
+    expect(serialized).not.toContain("FILL_ME");
+    expect(serialized).not.toContain("YOUR_");
+  });
+});
+
+describe("FAQ message completeness", () => {
+  it("all three locale files contain every faq.items.<id>.q and .a", async () => {
+    const en = (await import("@/messages/en.json")).default;
+    const tr = (await import("@/messages/tr.json")).default;
+    const de = (await import("@/messages/de.json")).default;
+    for (const locale of [en, tr, de]) {
+      const faq = (locale as { faq: { items: Record<string, { q: string; a: string }> } }).faq;
+      for (const id of FAQ_IDS) {
+        expect(faq.items[id]?.q?.trim().length).toBeGreaterThan(0);
+        expect(faq.items[id]?.a?.trim().length).toBeGreaterThan(0);
+      }
+    }
   });
 });

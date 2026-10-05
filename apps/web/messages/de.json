@@ -71,6 +71,35 @@
     "contactHeading": "Kontakt",
     "contact": "Fragen und Korrekturen: <mail>{email}</mail>"
   },
+  "faq": {
+    "title": "Häufige Fragen",
+    "items": {
+      "upload": {
+        "q": "Wird mein Lebenslauf hochgeladen?",
+        "a": "Nein. Die Datei wird in Ihrem Browser gelesen; der Server erhält das Dokument nie."
+      },
+      "score": {
+        "q": "Wie wird die Punktzahl berechnet?",
+        "a": "Fünf Dimensionen ergeben zusammen 100 Punkte: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20, Kontakt 10. Jeder verlorene Punkt gehört zu einem benannten Befund mit Korrektur."
+      },
+      "languages": {
+        "q": "Welche Sprachen werden erkannt?",
+        "a": "Abschnittsüberschriften, Aktionsverben und Stoppwörter werden für Englisch, Deutsch und Türkisch erkannt; die Dokumentsprache wird automatisch bestimmt."
+      },
+      "shared": {
+        "q": "Was speichert ein geteilter Bericht?",
+        "a": "Nur Punktzahlen und Hinweise. Zeilen aus Ihrem Lebenslauf werden nie gespeichert; der Link läuft nach 30 Tagen ab."
+      },
+      "guarantee": {
+        "q": "Heißt eine hohe Punktzahl, dass ich eingeladen werde?",
+        "a": "Nein. Die Prüfungen sind Heuristiken aus dem Verhalten gängiger Parser, keine Nachbildung einer bestimmten Software. Eine gute Punktzahl heißt: Zwischen Ihrem Lebenslauf und einem Menschen steht nichts mehr."
+      },
+      "noAd": {
+        "q": "Was ändert sich ohne Stellenanzeige?",
+        "a": "Die Schlüsselwort-Dimension erreicht höchstens 20 von 25 Punkten, und der Bericht sagt das; eine allgemeine Fähigkeitenliste ist keine Übereinstimmung."
+      }
+    }
+  },
   "analyze": {
     "heading": "Sehen Sie, was der Parser bekommt",
     "lede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber schicken. Der Text unten ist das, was ein Bewerbermanagementsystem extrahieren würde — korrigieren Sie ihn, falls die Extraktion schiefging, und bewerten Sie ihn dann gegen die Anzeige."
