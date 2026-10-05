@@ -13,6 +13,10 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
+# NEXT_PUBLIC_* values are inlined at build time. Canonical URLs, the sitemap and
+# JSON-LD read this one, so a runtime-only variable would leave them on localhost.
+ARG NEXT_PUBLIC_SITE_URL=http://localhost:3000
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 RUN node scripts/copy-pdf-worker.mjs && npm run build
 
 FROM base AS runner
