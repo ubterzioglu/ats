@@ -86,7 +86,8 @@ export function buildHomeJsonLd(
       inLanguage: locale,
       applicationCategory: "BusinessApplication",
       operatingSystem: "Any",
-      publisher: { "@id": ORGANIZATION_ID }
+      publisher: { "@id": ORGANIZATION_ID },
+      dateModified: BUILD_DATE
     }
   ] as const;
 }

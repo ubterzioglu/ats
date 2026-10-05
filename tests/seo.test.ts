@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   absoluteUrl,
+  BUILD_DATE,
   buildFaqJsonLd,
   buildHomeJsonLd,
   buildOrganizationJsonLd,
@@ -97,7 +98,7 @@ describe("robots output", () => {
 });
 
 describe("sitemap output", () => {
-  it("has 12 entries with 4 language keys each and includes /about", async () => {
+  it("has 12 entries with lastModified, 4 language keys each and includes /about", async () => {
     const { default: sitemap } = await import("@/app/sitemap");
     const entries = sitemap();
     expect(entries).toHaveLength(12);
@@ -110,6 +111,7 @@ describe("sitemap output", () => {
       expect(entry.url).not.toContain("/applications");
       expect(entry.url).not.toContain("/login");
       expect(entry.url).not.toContain("/r/");
+      expect(entry.lastModified).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     }
   });
 });
@@ -157,6 +159,13 @@ describe("buildHomeJsonLd", () => {
     const nodes = buildHomeJsonLd("de", "ATS readability", "Desc");
     expect(nodes[1]!.url).toBe(`${SITE_URL}/de`);
     expect(nodes[1]!.inLanguage).toBe("de");
+  });
+
+  it("WebApplication node has dateModified matching BUILD_DATE format", () => {
+    const nodes = buildHomeJsonLd("en", "ATS readability", "Desc");
+    const webApp = nodes[2] as { readonly dateModified: string };
+    expect(webApp.dateModified).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(webApp.dateModified).toBe(BUILD_DATE);
   });
 });
 

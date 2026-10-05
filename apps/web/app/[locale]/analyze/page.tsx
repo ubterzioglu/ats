@@ -17,7 +17,12 @@ interface AnalyzePageProps {
 
 export async function generateMetadata({ params }: AnalyzePageProps): Promise<Metadata> {
   const { locale } = await params;
-  return { alternates: pageAlternates(locale as AppLocale, "/analyze") };
+  const t = await getTranslations({ locale, namespace: "analyze" });
+  return {
+    title: t("heading"),
+    description: t("lede"),
+    alternates: pageAlternates(locale as AppLocale, "/analyze")
+  };
 }
 
 export default async function AnalyzePage({ params }: AnalyzePageProps) {
