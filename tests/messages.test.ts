@@ -51,11 +51,11 @@ const EVERY_LOCALE: readonly string[] = [
 
 const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
   // Turkish for "Model" is "Model", and Turkish for "Modern PDF" is
-  // "Modern PDF".
-  tr: new Set([...EVERY_LOCALE, "askDock.roleModel", "editor.export.template.modern", "admin.table.drive"]),
+  // "Modern PDF". KVKK is a Turkish acronym that stays the same in all locales.
+  tr: new Set([...EVERY_LOCALE, "askDock.roleModel", "editor.export.template.modern", "admin.table.drive", "nav.kvkk"]),
   // German and English share a great many short nouns, and most of the editor's
   // field labels are short nouns: Name, Position, Region, Organisation, URL,
-  // Website, Version, System.
+  // Website, Version, System. KVKK is a Turkish acronym that stays the same.
   de: new Set([
     ...EVERY_LOCALE,
     "identityTable.fields.name",
@@ -79,7 +79,8 @@ const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
     "interview.category.motivation",
     "admin.filters.band",
     "admin.table.band",
-    "admin.table.drive"
+    "admin.table.drive",
+    "nav.kvkk"
   ])
 };
 

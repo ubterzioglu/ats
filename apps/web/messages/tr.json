@@ -8,6 +8,9 @@
     "analyze": "CV analizi",
     "builder": "CV oluşturucu",
     "about": "Hakkında",
+    "privacy": "Gizlilik",
+    "kvkk": "KVKK",
+    "dataRequest": "Veri Talebi",
     "cta": "CV'nizi analiz edin"
   },
   "languageSwitcher": {
@@ -16,9 +19,9 @@
   "metadata": {
     "defaultTitle": "ATS readability — CV'nizi ayrıştırıcının gördüğü gibi görün",
     "titleTemplate": "%s · ATS readability",
-    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tamamen tarayıcıda çalışır.",
+    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tarayıcınızda puanlanır, 12 ay saklanır.",
     "openGraphTitle": "ATS readability",
-    "openGraphDescription": "CV'nizi ayrıştırıcının gördüğü gibi görün. Hiçbir şey yüklenmez.",
+    "openGraphDescription": "CV'nizi ayrıştırıcının gördüğü gibi görün.",
     "sharedReportTitle": "Paylaşılan rapor"
   },
   "common": {
@@ -33,7 +36,7 @@
     "headline": "CV'niz bir tasarım olarak değil, metin olarak okunur.",
     "lede": "ATS readability, bir CV'yi aday takip sisteminin okuduğu gibi gösteren ücretsiz bir araçtır: metin olarak. Geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
     "cta": "CV'nizi analiz edin",
-    "privacyTag": "Tarayıcınızda okunur, yüklenmez",
+    "privacyTag": "Tarayıcıda puanlanır. 12 ay saklanır.",
     "analyze": {
       "label": "Analiz ve eşleştirme",
       "title": "Kaybedilen her puanın bir adı var.",
@@ -62,14 +65,14 @@
     },
     "how": {
       "title": "Okuma nasıl çalışır",
-      "body": "Okuyucu PDF, DOCX veya düz metin dosyasından metni çıkarır; satırları glif konumlarından yeniden kurduğu için satır sonları ve sütun boşlukları korunur. Bu işaretler bir bölümün nerede bitip diğerinin nerede başladığını gösterir. Metin sonra 100 puanlık beş boyutta puanlanır: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20 ve iletişim 10. Kaybedilen her puan, geldiği satırı ve yerine ne yazılacağını söyleyen adlandırılmış bir bulguya yazılır; bulgular en pahalıdan başlayarak sıralanır. İş ilanı yoksa anahtar kelime boyutu 25 yerine en fazla 20 puan alır ve rapor bunu belirtir. Hepsi tarayıcınızda çalışır."
+      "body": "Okuyucu PDF, DOCX veya düz metin dosyasından metni çıkarır; satırları glif konumlarından yeniden kurduğu için satır sonları ve sütun boşlukları korunur. Bu işaretler bir bölümün nerede bitip diğerinin nerede başladığını gösterir. Metin sonra 100 puanlık beş boyutta puanlanır: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20 ve iletişim 10. Kaybedilen her puan, geldiği satırı ve yerine ne yazılacağını söyleyen adlandırılmış bir bulguya yazılır; bulgular en pahalıdan başlayarak sıralanır. İş ilanı yoksa anahtar kelime boyutu 25 yerine en fazla 20 puan alır ve rapor bunu belirtir. Okuma ve puanlama tarayıcınızda çalışır; CV ardından 12 ay saklanır, gizlilik bildirimine bakın."
     }
   },
   "about": {
     "title": "Hakkında",
     "whatHeading": "Ne yapar",
     "privacyHeading": "Gizlilik",
-    "privacy": "CV'niz tarayıcınızda okunur. Hiçbir şey yüklenmez ve sunucu belgeyi hiç almaz.",
+    "privacy": "CV'niz tarayıcınızda okunur ve puanlanır. Analiz ettiğinizde dosya, metni ve sonuç ayrıca sunucumuzda 12 ay saklanır ve sonra silinir.",
     "limitsHeading": "Sınırlar",
     "formatsHeading": "Biçimler",
     "formats": "Düzenleyici <link>JSON Resume</link> biçimini içe ve dışa aktarır.",
@@ -80,8 +83,8 @@
     "title": "Sık sorulan sorular",
     "items": {
       "upload": {
-        "q": "CV'm yükleniyor mu?",
-        "a": "Hayır. Dosya tarayıcınızda okunur; sunucu belgeyi hiç almaz."
+        "q": "CV'm saklanıyor mu?",
+        "a": "Evet. CV'niz önce tarayıcınızda okunur ve puanlanır. Analiz ettiğinizde dosya, metni ve sonuç sunucumuza gönderilir, 12 ay saklanır ve sonra silinir. Ayrıntılar için gizlilik bildirimine bakın."
       },
       "score": {
         "q": "Puan nasıl hesaplanıyor?",
@@ -273,7 +276,7 @@
   },
   "login": {
     "heading": "Giriş yap",
-    "lede": "CV'niz tarayıcınızda okunur ve puanlanır. Hesap yalnızca paylaşım bağlantılarınızı tutar.",
+    "lede": "CV'niz tarayıcınızda okunur ve puanlanır. Hesap yalnızca paylaşım bağlantılarınızı ve saklanan analizlerinizi tutar.",
     "emailLabel": "E-posta",
     "emailPlaceholder": "siz@ornek.com",
     "passwordLabel": "Parola",

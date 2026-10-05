@@ -8,6 +8,9 @@
     "analyze": "CV-Analyse",
     "builder": "Editor",
     "about": "Über uns",
+    "privacy": "Datenschutz",
+    "kvkk": "KVKK",
+    "dataRequest": "Datenanfrage",
     "cta": "Lebenslauf analysieren"
   },
   "languageSwitcher": {
@@ -16,9 +19,9 @@
   "metadata": {
     "defaultTitle": "ATS readability — sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest",
     "titleTemplate": "%s · ATS readability",
-    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Läuft vollständig im Browser.",
+    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Im Browser bewertet, 12 Monate gespeichert.",
     "openGraphTitle": "ATS readability",
-    "openGraphDescription": "Sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest. Nichts wird hochgeladen.",
+    "openGraphDescription": "Sehen Sie Ihren Lebenslauf so, wie der Parser ihn sieht.",
     "sharedReportTitle": "Geteilter Bericht"
   },
   "common": {
@@ -33,7 +36,7 @@
     "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Design.",
     "lede": "ATS readability ist ein kostenloses Werkzeug, das einen Lebenslauf so zeigt, wie ein Bewerbermanagementsystem ihn liest: als Text. Es bewertet, was übrig blieb, auf 100 Punkte und listet die Korrekturen nach Wert.",
     "cta": "Lebenslauf analysieren",
-    "privacyTag": "Im Browser gelesen, nie hochgeladen",
+    "privacyTag": "Im Browser bewertet. 12 Monate gespeichert.",
     "analyze": {
       "label": "Analyse und Abgleich",
       "title": "Jeder verlorene Punkt hat einen Namen.",
@@ -62,14 +65,14 @@
     },
     "how": {
       "title": "So funktioniert das Lesen",
-      "body": "Der Reader zieht Text aus PDF, DOCX oder Nur-Text-Dateien und baut Zeilen aus den Glyphenpositionen neu auf, damit Zeilenumbrüche und Spaltenabstände erhalten bleiben. Daran erkennt er, wo ein Abschnitt endet und der nächste beginnt. Der Text wird dann in fünf Dimensionen mit zusammen 100 Punkten bewertet: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20 und Kontakt 10. Jeder verlorene Punkt wird einem benannten Befund zugeordnet, mit der Zeile, aus der er stammt, und dem, was stattdessen zu schreiben ist; die Befunde stehen nach Kosten sortiert. Ohne Stellenanzeige erreicht die Schlüsselwort-Dimension höchstens 20 von 25 Punkten, und der Bericht sagt das. Alles läuft in Ihrem Browser."
+      "body": "Der Reader zieht Text aus PDF, DOCX oder Nur-Text-Dateien und baut Zeilen aus den Glyphenpositionen neu auf, damit Zeilenumbrüche und Spaltenabstände erhalten bleiben. Daran erkennt er, wo ein Abschnitt endet und der nächste beginnt. Der Text wird dann in fünf Dimensionen mit zusammen 100 Punkten bewertet: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20 und Kontakt 10. Jeder verlorene Punkt wird einem benannten Befund zugeordnet, mit der Zeile, aus der er stammt, und dem, was stattdessen zu schreiben ist; die Befunde stehen nach Kosten sortiert. Ohne Stellenanzeige erreicht die Schlüsselwort-Dimension höchstens 20 von 25 Punkten, und der Bericht sagt das. Das Lesen und Bewerten läuft in Ihrem Browser; der Lebenslauf wird dann 12 Monate gespeichert, siehe Datenschutzerklärung."
     }
   },
   "about": {
     "title": "Über uns",
     "whatHeading": "Was es tut",
     "privacyHeading": "Datenschutz",
-    "privacy": "Ihr Lebenslauf wird in Ihrem Browser gelesen. Nichts wird hochgeladen, und der Server erhält das Dokument nie.",
+    "privacy": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Wenn Sie ihn analysieren, werden die Datei, ihr Text und das Ergebnis zusätzlich 12 Monate auf unserem Server gespeichert und danach gelöscht.",
     "limitsHeading": "Grenzen",
     "formatsHeading": "Formate",
     "formats": "Der Editor importiert und exportiert das Format <link>JSON Resume</link>.",
@@ -80,8 +83,8 @@
     "title": "Häufige Fragen",
     "items": {
       "upload": {
-        "q": "Wird mein Lebenslauf hochgeladen?",
-        "a": "Nein. Die Datei wird in Ihrem Browser gelesen; der Server erhält das Dokument nie."
+        "q": "Wird mein Lebenslauf gespeichert?",
+        "a": "Ja. Ihr Lebenslauf wird zuerst in Ihrem Browser gelesen und bewertet. Wenn Sie ihn analysieren, werden die Datei, ihr Text und das Ergebnis zusätzlich an unseren Server gesendet, 12 Monate gespeichert und danach gelöscht. Details stehen in der Datenschutzerklärung."
       },
       "score": {
         "q": "Wie wird die Punktzahl berechnet?",
@@ -273,7 +276,7 @@
   },
   "login": {
     "heading": "Anmelden",
-    "lede": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Das Konto speichert nur Ihre Freigabelinks.",
+    "lede": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Das Konto speichert nur Ihre Freigabelinks und gespeicherten Analysen.",
     "emailLabel": "E-Mail",
     "emailPlaceholder": "sie@beispiel.de",
     "passwordLabel": "Passwort",

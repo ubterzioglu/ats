@@ -22,13 +22,16 @@ npm test            # vitest run
 
 - **`lib/scoring/` is pure.** No DOM, no network, no React, no I/O. One file per dimension. Everything there is
   unit-testable and must stay that way.
-- **`lib/extract/` is browser-only.** Reads files in the client; the server never receives a CV.
+- **`lib/extract/` is browser-only.** Reads files in the client. The CV is parsed and scored in the browser;
+  when a CV is analysed, the file, extracted text and result are then sent to the server for storage.
 - **`lib/ai/` is browser-only and advisory.** Models run locally (Web Worker, WebGPU/WASM); nothing in this
   directory may feed inputs into `lib/scoring/` — scores stay deterministic. Model weights download only after
-  explicit user consent, with size, progress and cancel shown. CV text never leaves the browser; downloading
-  weights is allowed because no CV text is sent.
+  explicit user consent, with size, progress and cancel shown. CV text is not sent to a model provider unless
+  the user turns that on; downloading weights is allowed because no CV text is sent.
 - **`lib/supabase/` is server-only.** Every file starts with `import "server-only"`. Service-role client
   bypasses RLS, so validate before writing — see `app/actions.ts` for the boundary check.
+- **`lib/cv-submission/` is server-only.** Handles CV storage, validation and Drive backup. See
+  `docs/adr-0001-cv-storage.md` for the decision record.
 - Persistence is optional everywhere. If `getSupabaseEnv()` returns `null`, callers degrade quietly and never
   throw.
 
@@ -67,6 +70,5 @@ not claim to predict hiring outcomes, and it does not claim to replicate a named
 
 ## Privacy contract
 
-The CV never leaves the browser. Share links persist scores and findings with `evidence` stripped, because
-evidence can contain lines lifted from the document. Any feature that would send CV text to a server breaks the
+The CV is read and scored in the browser. When a CV is analysed, the file, extracted text and result are sent to the server, stored in Supabase (database and private bucket) and backed up to a Google Drive folder, kept 12 months, then purged. Share links persist scores and findings with `evidence` stripped, because evidence can contain lines lifted from the document. Any further use of CV data needs an explicit product decision. See `docs/adr-0001-cv-storage.md` for the decision record.
 promise printed on the front page and needs an explicit product decision first.

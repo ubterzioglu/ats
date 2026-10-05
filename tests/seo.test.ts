@@ -101,19 +101,23 @@ describe("robots output", () => {
 });
 
 describe("sitemap output", () => {
-  it("has 12 entries with lastModified, 4 language keys each and includes /about", async () => {
+  it("has 21 entries with lastModified, 4 language keys each and includes legal pages", async () => {
     const { default: sitemap } = await import("@/app/sitemap");
     const entries = sitemap();
-    expect(entries).toHaveLength(12);
+    expect(entries).toHaveLength(21);
     const urls = entries.map((e) => e.url);
     expect(urls).toContain(`${SITE_URL}/about`);
     expect(urls).toContain(`${SITE_URL}/tr/about`);
     expect(urls).toContain(`${SITE_URL}/de/about`);
+    expect(urls).toContain(`${SITE_URL}/privacy`);
+    expect(urls).toContain(`${SITE_URL}/kvkk`);
+    expect(urls).toContain(`${SITE_URL}/data-request`);
     for (const entry of entries) {
       expect(Object.keys(entry.alternates!.languages!)).toHaveLength(4);
       expect(entry.url).not.toContain("/applications");
       expect(entry.url).not.toContain("/login");
       expect(entry.url).not.toContain("/r/");
+      expect(entry.url).not.toContain("/admin");
       expect(entry.lastModified).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     }
   });

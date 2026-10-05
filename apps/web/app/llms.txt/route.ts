@@ -15,10 +15,13 @@ export async function GET(): Promise<Response> {
   const pageLinks = [
     `- [${nav("home")}](${SITE_URL}/)`,
     ...PUBLIC_PATHS.filter((p) => p !== "/").map((path) => {
-      const key = path === "/analyze" ? "analyze" : path === "/builder" ? "builder" : "about";
+      const key = path === "/analyze" ? "analyze" : path === "/builder" ? "builder" : path === "/about" ? "about" : path;
       return `- [${nav(key)}](${SITE_URL}${path})`;
     }),
-    `- [${faq("title")}](${SITE_URL}/#faq)`
+    `- [${faq("title")}](${SITE_URL}/#faq)`,
+    `- [Privacy Notice](${SITE_URL}/privacy)`,
+    `- [KVKK Notice](${SITE_URL}/kvkk)`,
+    `- [Data Request](${SITE_URL}/data-request)`
   ].join("\n");
 
   const body = `# ATS readability
