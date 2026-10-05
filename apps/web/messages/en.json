@@ -738,5 +738,23 @@
       "expires": "Expires",
       "noSubmissions": "No submissions found"
     }
+  },
+  "dataRequest": {
+    "title": "Data Request",
+    "description": "Submit a request regarding your personal data. We will respond within 30 days.",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "your.email@example.com",
+    "typeLabel": "Request Type",
+    "typeAccess": "Access - I want to see what data you have about me",
+    "typeRectification": "Rectification - I want to correct inaccurate data",
+    "typeErasure": "Erasure - I want my data deleted",
+    "typeOther": "Other",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Please describe your request in detail...",
+    "submit": "Submit Request",
+    "submitting": "Submitting...",
+    "submitAnother": "Submit another request",
+    "success": "Your request has been submitted successfully!",
+    "successDetails": "We will review your request and respond within 30 days."
   }
 }

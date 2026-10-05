@@ -738,5 +738,23 @@
       "expires": "Son Kullanma",
       "noSubmissions": "Gönderim bulunamadı"
     }
+  },
+  "dataRequest": {
+    "title": "Veri Talebi",
+    "description": "Kişisel verilerinizle ilgili bir talep gönderin. 30 gün içinde yanıt vereceğiz.",
+    "emailLabel": "E-posta Adresi",
+    "emailPlaceholder": "email.adresiniz@ornek.com",
+    "typeLabel": "Talep Türü",
+    "typeAccess": "Erişim - Hakkımda hangi verileri tuttuğunuzu görmek istiyorum",
+    "typeRectification": "Düzeltme - Yanlış verileri düzeltmek istiyorum",
+    "typeErasure": "Silme - Verilerimin silinmesini istiyorum",
+    "typeOther": "Diğer",
+    "descriptionLabel": "Açıklama",
+    "descriptionPlaceholder": "Lütfen talebinizi detaylı olarak açıklayın...",
+    "submit": "Talebi Gönder",
+    "submitting": "Gönderiliyor...",
+    "submitAnother": "Başka bir talep gönder",
+    "success": "Talebiniz başarıyla gönderildi!",
+    "successDetails": "Talebinizi inceleyecek ve 30 gün içinde yanıt vereceğiz."
   }
 }

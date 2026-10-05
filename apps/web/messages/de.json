@@ -738,5 +738,23 @@
       "expires": "Läuft ab",
       "noSubmissions": "Keine Einreichungen gefunden"
     }
+  },
+  "dataRequest": {
+    "title": "Datenanfrage",
+    "description": "Reichen Sie eine Anfrage zu Ihren persönlichen Daten ein. Wir werden innerhalb von 30 Tagen antworten.",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "ihre.email@beispiel.com",
+    "typeLabel": "Anfragetyp",
+    "typeAccess": "Auskunft - Ich möchte sehen, welche Daten Sie über mich haben",
+    "typeRectification": "Berichtigung - Ich möchte ungenaue Daten korrigieren",
+    "typeErasure": "Löschung - Ich möchte, dass meine Daten gelöscht werden",
+    "typeOther": "Sonstiges",
+    "descriptionLabel": "Beschreibung",
+    "descriptionPlaceholder": "Bitte beschreiben Sie Ihre Anfrage detailliert...",
+    "submit": "Anfrage einreichen",
+    "submitting": "Wird eingereicht...",
+    "submitAnother": "Weitere Anfrage einreichen",
+    "success": "Ihre Anfrage wurde erfolgreich eingereicht!",
+    "successDetails": "Wir werden Ihre Anfrage prüfen und innerhalb von 30 Tagen antworten."
   }
 }
