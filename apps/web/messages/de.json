@@ -138,6 +138,22 @@
       "noAd": {
         "q": "Was ändert sich ohne Stellenanzeige?",
         "a": "Die Schlüsselwort-Dimension erreicht höchstens 20 von 25 Punkten, und der Bericht sagt das; eine allgemeine Fähigkeitenliste ist keine Übereinstimmung."
+      },
+      "formats": {
+        "q": "Welche Dateiformate werden unterstützt?",
+        "a": "PDF, DOCX und Nur-Text-Dateien bis 10 MB. PDFs mit Textschicht funktionieren am besten; gescannte Bilder benötigen zuerst OCR."
+      },
+      "retention": {
+        "q": "Wie lange werden meine Daten aufbewahrt?",
+        "a": "Zwölf Monate ab dem Upload-Datum. Danach werden Datei, extrahierter Text und Analyseergebnis aus der Datenbank, dem Speicher und dem Google Drive-Backup gelöscht."
+      },
+      "delete": {
+        "q": "Wie lösche ich meine Daten?",
+        "a": "Verwenden Sie das Datenanfrage-Formular, um Löschung zu beantragen. Wir antworten innerhalb von 30 Tagen. Sie können uns auch direkt per E-Mail kontaktieren, die in der Datenschutzerklärung steht."
+      },
+      "accuracy": {
+        "q": "Wie genau ist die Punktzahl?",
+        "a": "Die Prüfungen basieren auf dem Verhalten gängiger Parser. Sie sind keine Nachbildung eines bestimmten Anbieters, aber sie erkennen dieselben Probleme, die ein Parser erkennen würde: fehlende Textschichten, beschädigte Überschriften, Tabellen, die Kontaktdaten durcheinanderbringen."
       }
     }
   },

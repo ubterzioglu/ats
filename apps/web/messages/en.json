@@ -138,6 +138,22 @@
       "noAd": {
         "q": "What changes without a job ad?",
         "a": "The keyword dimension is capped at 20 of 25 points and the report says so; a generic skill list is not a match score."
+      },
+      "formats": {
+        "q": "Which file formats are supported?",
+        "a": "PDF, DOCX and plain text files up to 10 MB. PDFs with a text layer work best; scanned images need OCR first."
+      },
+      "retention": {
+        "q": "How long is my data kept?",
+        "a": "Twelve months from the upload date. After that, the file, extracted text and analysis result are deleted from the database, storage and Google Drive backup."
+      },
+      "delete": {
+        "q": "How do I delete my data?",
+        "a": "Use the data request form to ask for erasure. We respond within 30 days. You can also contact us directly at the email in the privacy notice."
+      },
+      "accuracy": {
+        "q": "How accurate is the score?",
+        "a": "The checks are built from how mainstream parsers behave. They are not a reproduction of any named vendor, but they catch the same issues a parser would: missing text layers, broken headings, tables that scramble contact details."
       }
     }
   },
