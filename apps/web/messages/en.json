@@ -712,8 +712,14 @@
   },
   "adAnalysis": {
     "heading": "Ad fit",
+    "requirementsHeading": "Requirements",
     "suitabilityHeading": "Eligibility checks",
     "redFlagsHeading": "Ad warnings",
+    "seniority": "Seniority",
+    "experience": "Experience",
+    "languages": "Languages",
+    "location": "Location",
+    "salary": "Salary",
     "status": {
       "passed": "Passed",
       "failed": "Not met",

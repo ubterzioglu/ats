@@ -602,6 +602,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               />
               {result.jobAd ? (
                 <AdAnalysisPanel
+                  jobAd={result.jobAd}
                   redFlags={result.jobAd.redFlags}
                   suitability={result.suitability ?? []}
                 />

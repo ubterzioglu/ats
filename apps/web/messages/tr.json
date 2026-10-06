@@ -712,8 +712,14 @@
   },
   "adAnalysis": {
     "heading": "İlan uyumu",
+    "requirementsHeading": "Gereksinimler",
     "suitabilityHeading": "Uygunluk kontrolleri",
     "redFlagsHeading": "İlan uyarıları",
+    "seniority": "Kıdem",
+    "experience": "Deneyim",
+    "languages": "Diller",
+    "location": "Konum",
+    "salary": "Maaş",
     "status": {
       "passed": "Karşılandı",
       "failed": "Karşılanmadı",

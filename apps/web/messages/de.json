@@ -712,8 +712,14 @@
   },
   "adAnalysis": {
     "heading": "Anzeigenpassung",
+    "requirementsHeading": "Anforderungen",
     "suitabilityHeading": "Eignungsprüfungen",
     "redFlagsHeading": "Anzeigenwarnungen",
+    "seniority": "Karrierelevel",
+    "experience": "Erfahrung",
+    "languages": "Sprachen",
+    "location": "Standort",
+    "salary": "Gehalt",
     "status": {
       "passed": "Erfüllt",
       "failed": "Nicht erfüllt",

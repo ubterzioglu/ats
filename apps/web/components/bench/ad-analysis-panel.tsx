@@ -1,10 +1,11 @@
 import { useTranslations } from "next-intl";
 
-import type { JobAdRedFlag, SuitabilityCheck } from "@/types/analysis";
+import type { JobAdRequirements, JobAdRedFlag, SuitabilityCheck } from "@/types/analysis";
 
 import { cx } from "@/lib/ui";
 
 interface AdAnalysisPanelProps {
+  readonly jobAd?: JobAdRequirements;
   readonly redFlags: readonly JobAdRedFlag[];
   readonly suitability: readonly SuitabilityCheck[];
 }
@@ -15,16 +16,60 @@ const STATUS_STYLES: Readonly<Record<string, string>> = {
   unknown: "border-caution text-caution",
 };
 
-export function AdAnalysisPanel({ redFlags, suitability }: AdAnalysisPanelProps) {
+export function AdAnalysisPanel({ jobAd, redFlags, suitability }: AdAnalysisPanelProps) {
   const t = useTranslations("adAnalysis");
 
-  if (redFlags.length === 0 && suitability.length === 0) return null;
+  if (!jobAd && redFlags.length === 0 && suitability.length === 0) return null;
 
   return (
     <section className="bench">
       <div className="border-b border-line px-5 py-5 sm:px-6">
         <h2 className="text-h3 font-normal">{t("heading")}</h2>
       </div>
+
+      {jobAd ? (
+        <div className="border-b border-line px-5 py-5 sm:px-6">
+          <h3 className="condensed text-micro font-normal text-muted">
+            {t("requirementsHeading")}
+          </h3>
+          <dl className="mt-3 space-y-2 text-sm">
+            {jobAd.seniority ? (
+              <div className="flex gap-2">
+                <dt className="font-normal text-muted">{t("seniority")}:</dt>
+                <dd className="font-normal">{jobAd.seniority.level}</dd>
+              </div>
+            ) : null}
+            {jobAd.experience ? (
+              <div className="flex gap-2">
+                <dt className="font-normal text-muted">{t("experience")}:</dt>
+                <dd className="font-normal">{jobAd.experience.years} years</dd>
+              </div>
+            ) : null}
+            {jobAd.languages.length > 0 ? (
+              <div className="flex gap-2">
+                <dt className="font-normal text-muted">{t("languages")}:</dt>
+                <dd className="font-normal">{jobAd.languages.map(l => l.language).join(", ")}</dd>
+              </div>
+            ) : null}
+            {jobAd.location ? (
+              <div className="flex gap-2">
+                <dt className="font-normal text-muted">{t("location")}:</dt>
+                <dd className="font-normal">
+                  {jobAd.location.city ? `${jobAd.location.city} (${jobAd.location.mode})` : jobAd.location.mode}
+                </dd>
+              </div>
+            ) : null}
+            {jobAd.salary ? (
+              <div className="flex gap-2">
+                <dt className="font-normal text-muted">{t("salary")}:</dt>
+                <dd className="font-normal">
+                  {jobAd.salary.min.toLocaleString()} - {jobAd.salary.max.toLocaleString()} {jobAd.salary.currency}
+                </dd>
+              </div>
+            ) : null}
+          </dl>
+        </div>
+      ) : null}
 
       {suitability.length > 0 ? (
         <div className="border-b border-line px-5 py-5 sm:px-6">
