@@ -592,3 +592,16 @@ h3.font-normal {
     scale: 1;
   }
 }
+
+/* The help stack sits fixed at the bottom-right. When the AskDock is open,
+   the stack lifts above it so the two never overlap. :has support is broad
+   enough; in older browsers the stack sits on top of the dock, which is
+   usable if slightly ugly. */
+.help-stack {
+  bottom: 1rem;
+  right: 1rem;
+}
+
+body:has([data-ask-dock]) .help-stack {
+  bottom: 6.5rem;
+}

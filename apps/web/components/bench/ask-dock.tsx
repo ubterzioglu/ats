@@ -84,11 +84,12 @@ export function AskDock({ tier, result }: AskDockProps) {
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30">
       <div className="pointer-events-auto mx-auto w-full max-w-6xl px-4 pb-4 sm:px-6">
         <section
+          data-ask-dock
           className={cx("bench overflow-hidden border border-line", busy && "live-edge")}
           aria-label={t("heading")}
         >
           {open && hasConversation ? (
-            <ol className="max-h-[40dvh] divide-y divide-line overflow-y-auto">
+            <ol className="max-h-[40dvh] divide-y divide-line overflow-y-auto pr-16">
               {turns.map((turn, index) =>
                 turn.failed ? (
                   <li key={`turn-${index}`} className="px-5 py-3 text-sm text-mark sm:px-6">

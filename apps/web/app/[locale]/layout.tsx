@@ -10,6 +10,7 @@ import { OPEN_GRAPH_LOCALE } from "@/lib/seo";
 import { ByokConsentListener } from "@/components/byok-consent-listener";
 import { ClarityLoader } from "@/components/clarity-loader";
 import { ConsentBanner } from "@/components/consent-banner";
+import { HelpStack } from "@/components/help/help-stack";
 import { NavBar } from "@/components/ui/nav-bar";
 
 import "../globals.css";
@@ -107,6 +108,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
               read them from. */}
           <ByokConsentListener />
           <ConsentBanner />
+          <HelpStack />
           <ClarityLoader />
         </NextIntlClientProvider>
       </body>
