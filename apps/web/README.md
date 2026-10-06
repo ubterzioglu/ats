@@ -41,24 +41,26 @@ npm test           # vitest, scoring engine
 npm run build      # production build (standalone output)
 ```
 
-## Supabase (optional)
+## Supabase
 
-Everything works without it. Supabase only backs the **share link** feature, which stores scores and findings —
-never the CV text, and never the finding evidence lifted from it.
+Supabase provides authentication and storage. Without it configured, the gate is disabled (local development).
 
-1. Create a project, then run `supabase/migrations/0001_ats_reports.sql` in the SQL editor.
+1. Create a project, then run migrations in `supabase/migrations/` in order.
 2. Copy `.env.example` to `.env.local` and fill in:
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://<project>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key>
 SUPABASE_SERVICE_ROLE_KEY=<service role key>
 NEXT_PUBLIC_SITE_URL=https://your-domain
 ```
 
-With the variables absent, `getSupabaseEnv()` returns `null`, the share button is not rendered, and nothing
-throws. Reports expire after 30 days; `purge_expired_ats_reports()` deletes the expired rows when called.
+3. In Supabase Dashboard -> Auth -> Providers, enable Google and set the callback URL to `https://<project>.supabase.co/auth/v1/callback`.
+4. In Auth -> URL Configuration, set Site URL to `NEXT_PUBLIC_SITE_URL` and add `.../auth/confirm` to Redirect URLs.
 
-The table has RLS enabled and no policies, so only the service-role key reaches it.
+With `NEXT_PUBLIC_SUPABASE_URL` absent, `getSupabaseEnv()` returns `null`, the gate is disabled, and the site works without authentication. Reports expire after 30 days; `purge_expired_ats_reports()` deletes the expired rows when called.
+
+The tables have RLS enabled and no policies, so only the service-role key reaches them.
 
 ## Layout
 

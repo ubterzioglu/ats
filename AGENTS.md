@@ -76,5 +76,4 @@ not claim to predict hiring outcomes, and it does not claim to replicate a named
 
 ## Privacy contract
 
-The CV is read and scored in the browser. When a CV is analysed, the file, extracted text and result are sent to the server, stored in Supabase (database and private bucket) and backed up to a Google Drive folder, kept 12 months, then purged. Share links persist scores and findings with `evidence` stripped, because evidence can contain lines lifted from the document. Any further use of CV data needs an explicit product decision. See `docs/adr-0001-cv-storage.md` for the decision record.
-promise printed on the front page and needs an explicit product decision first.
+The CV is read and scored in the browser. When a CV is analysed, the file, extracted text and result are sent to the server, stored in Supabase (database and private bucket) and backed up to a Google Drive folder, kept 12 months, then purged. Submissions and reports are bound to the user's account via `user_id`. Share links persist scores and findings with `evidence` stripped, because evidence can contain lines lifted from the document. Any further use of CV data needs an explicit product decision. See `docs/adr-0001-cv-storage.md` for the decision record.
