@@ -1,13 +1,12 @@
 import "server-only";
 
-import { getSupabaseEnv, getServiceClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/client";
 import type { BlogPost } from "./schema";
 
 export async function listPublishedPosts(locale: "en" | "tr" | "de"): Promise<readonly BlogPost[]> {
-  const env = getSupabaseEnv();
-  if (!env) return [];
+  const supabase = createServiceClient();
+  if (!supabase) return [];
 
-  const supabase = getServiceClient();
   const { data, error } = await supabase
     .from("blog_posts")
     .select("*")
@@ -23,10 +22,9 @@ export async function getPublishedPost(
   slug: string,
   locale: "en" | "tr" | "de"
 ): Promise<BlogPost | null> {
-  const env = getSupabaseEnv();
-  if (!env) return null;
+  const supabase = createServiceClient();
+  if (!supabase) return null;
 
-  const supabase = getServiceClient();
   const { data, error } = await supabase
     .from("blog_posts")
     .select("*")

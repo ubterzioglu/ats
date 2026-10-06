@@ -89,7 +89,7 @@ export function markdownToHtml(markdown: string): string {
     if (headingMatch) {
       flushParagraph();
       flushList();
-      const level = headingMatch[1].length;
+      const level = (headingMatch[1] ?? "#").length;
       const text = inlineMarkdown(headingMatch[2] ?? "");
       html.push(`<h${level}>${text}</h${level}>`);
       continue;

@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
+
 import { Link } from "@/i18n/navigation";
-import { requireAdmin } from "@/lib/auth/require-admin";
+import { requireAdmin } from "@/lib/admin/guard";
 import { listAllPosts } from "@/lib/blog/admin-queries";
 
 export default async function AdminBlogPage({
@@ -9,9 +9,8 @@ export default async function AdminBlogPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  await requireAdmin();
   const { locale } = await params;
-  const user = await requireAdmin();
-  if (!user) redirect("/");
 
   const t = await getTranslations("admin.blog");
   const posts = await listAllPosts(locale as "en" | "tr" | "de");
