@@ -20,7 +20,7 @@ export const BULLET_GLYPHS = /[•▪●■▶‣⁃⁌⁍∙·❖➤➜✔✓�
  * bullets and columns are detected later on.
  */
 export function normalizeDocument(raw: string): string {
-  let text = raw.replace(/\r\n?/g, "\n");
+  let text = raw.normalize("NFC").replace(/\r\n?/g, "\n");
 
   for (const [pattern, replacement] of LIGATURES) {
     text = text.replace(pattern, replacement);

@@ -3,6 +3,7 @@ import type { TargetMarket } from "@/types/analysis";
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { marketFindings } from "./market";
+import { caseFold } from "./text";
 
 export const CONTACT_MAX = 10;
 
@@ -10,7 +11,7 @@ const EMAIL = /[\p{L}\d._%+-]+@[\p{L}\d.-]+\.[\p{L}]{2,}/u;
 const PHONE = /(\+\d{1,3}[\s./-]?)?(\(?\d{2,5}\)?[\s./-]?){2,4}\d{2,4}/;
 const PROFILE = /(linkedin\.com|xing\.com|github\.com|gitlab\.com|behance\.net|dribbble\.com|stackoverflow\.com)/i;
 const PLACE =
-  /\b(\d{4,5}\s+[\p{Lu}][\p{L}]+|remote|hybrid|germany|deutschland|austria|osterreich|österreich|switzerland|schweiz|turkey|turkiye|türkiye|netherlands|berlin|munich|munchen|münchen|hamburg|frankfurt|koln|köln|stuttgart|dusseldorf|düsseldorf|istanbul|ankara|izmir|vienna|wien|zurich|zürich|london|amsterdam)\b/iu;
+  /(?<![\p{L}\p{N}])(\d{4,5}\s+[\p{Lu}][\p{L}]+|remote|hybrid|germany|deutschland|austria|osterreich|österreich|switzerland|schweiz|turkey|turkiye|türkiye|netherlands|berlin|munich|munchen|münchen|hamburg|frankfurt|koln|köln|stuttgart|dusseldorf|düsseldorf|istanbul|ankara|izmir|vienna|wien|zurich|zürich|london|amsterdam)(?![\p{L}\p{N}])/iu;
 
 function looksLikeName(line: string): boolean {
   if (/[@\d]/.test(line)) return false;
@@ -58,7 +59,7 @@ export function scoreContact(context: ScoreContext, market?: TargetMarket): Dime
     });
   }
 
-  if (!PLACE.test(raw)) {
+  if (!PLACE.test(caseFold(raw))) {
     drafts.push({
       id: "contact.location",
       severity: "low",
