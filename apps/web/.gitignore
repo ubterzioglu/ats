@@ -12,3 +12,5 @@ public/vendor/
 coverage
 # Raw ESCO / O*NET downloads for scripts/build-skill-dictionary.mjs
 .skill-sources/
+# Unreviewed output of scripts/mine-synonyms.mjs (regenerate locally)
+scripts/synonym-proposals/

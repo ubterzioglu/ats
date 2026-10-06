@@ -1,4 +1,10 @@
 import { AMBIGUOUS_TERMS } from "./ambiguous-terms";
+import {
+  HUMAN_APPROVED_SYNONYMS,
+  differsByVersion,
+  isGuardedSurface,
+  type ApprovedSynonym
+} from "./approved-synonyms";
 import { DICTIONARY_ENTRIES } from "./skill-dictionary";
 import { isJobNoise, isStopword } from "./stopwords";
 import { tokenize } from "./text";
@@ -369,28 +375,100 @@ export function isDictionarySkill(term: string): boolean {
   return dictionary().terms.has(term);
 }
 
+export interface ApprovedSynonymIndex {
+  readonly aliasOf: ReadonlyMap<string, string>;
+  readonly variants: ReadonlyMap<string, readonly string[]>;
+  /** Token-joined surface of every multi-token approved alias. */
+  readonly phrases: ReadonlyMap<string, string>;
+  readonly maxTokens: number;
+}
+
+/**
+ * An approved alias the engine will accept. It ranks below the curated table
+ * and the dictionary: a curated term, a curated alias or a dictionary alias
+ * keeps its owner. A dictionary term may be folded into an approved canonical
+ * term; joining "datenanalyse" to "data analysis" is what approval is for.
+ */
+function approvableAlias(alias: string, canonical: string): boolean {
+  if (alias === canonical || isGuardedSurface(alias)) return false;
+  if (SKILL_SET.has(alias) || REVERSE_SYNONYMS.has(alias) || dictionary().aliasOf.has(alias)) return false;
+  return !differsByVersion(alias, canonical);
+}
+
+/**
+ * Indexes human-approved synonyms. Pending entries are skipped here as well as
+ * at load time, so a test or a caller cannot slip one in. The canonical side
+ * must already be a known skill and never an alias of another approved entry;
+ * the first entry to claim an alias keeps it.
+ */
+export function buildApprovedSynonymIndex(entries: readonly ApprovedSynonym[]): ApprovedSynonymIndex {
+  const human = entries.filter((entry) => entry.approvedBy === "human");
+  const canonicals = new Set(human.map((entry) => entry.canonical));
+  const aliasOf = new Map<string, string>();
+  const variants = new Map<string, string[]>();
+  const phrases = new Map<string, string>();
+  const dictionaryPhrases = dictionary().phrases;
+  let maxTokens = 1;
+
+  for (const entry of human) {
+    const { canonical } = entry;
+    if (!isKnownSkill(canonical) || aliasOf.has(canonical)) continue;
+    for (const alias of entry.aliases) {
+      if (!approvableAlias(alias, canonical) || canonicals.has(alias) || aliasOf.has(alias)) continue;
+      aliasOf.set(alias, canonical);
+      variants.set(canonical, [...(variants.get(canonical) ?? []), alias]);
+      const key = phraseKey(alias);
+      const width = key.split(" ").length;
+      if (width >= 2 && !phrases.has(key) && !dictionaryPhrases.has(key)) {
+        phrases.set(key, canonical);
+        maxTokens = Math.max(maxTokens, width);
+      }
+    }
+  }
+
+  return { aliasOf, variants, phrases, maxTokens };
+}
+
+let approvedIndex: ApprovedSynonymIndex | undefined;
+
+function approved(): ApprovedSynonymIndex {
+  approvedIndex ??= buildApprovedSynonymIndex(HUMAN_APPROVED_SYNONYMS);
+  return approvedIndex;
+}
+
 export function canonicalize(term: string): string {
-  return REVERSE_SYNONYMS.get(term) ?? dictionary().aliasOf.get(term) ?? term;
+  const owned = REVERSE_SYNONYMS.get(term) ?? dictionary().aliasOf.get(term);
+  if (owned !== undefined) return owned;
+  return approved().aliasOf.get(term) ?? term;
 }
 
 export function variantsOf(term: string): string[] {
   const aliases = SYNONYMS[term] ?? dictionary().variants.get(term) ?? [];
-  return [term, ...aliases];
+  const extra = approved().variants.get(term) ?? [];
+  return extra.length > 0 ? [term, ...aliases, ...extra] : [term, ...aliases];
 }
 
 /**
  * Multi-word dictionary terms written on one line, as canonical terms. Works
  * on tokens, so "Transact SQL", "transact-sql" and "Transact-SQL" all land on
- * the same entry; single words are left to the token pass.
+ * the same entry; single words are left to the token pass. Approved
+ * multi-word aliases are found the same way, and so is a one-word approved
+ * alias of a multi-word term ("marktanalyse" for "market analysis"), which the
+ * token pass skips because its canonical form is a phrase.
  */
 export function findDictionaryPhrases(line: string): string[] {
   const { phrases, maxTokens } = dictionary();
+  const extra = approved();
+  const widest = Math.max(maxTokens, extra.maxTokens);
   const tokens = tokenize(line);
   const found = new Set<string>();
   for (let start = 0; start < tokens.length; start += 1) {
-    for (let width = 2; width <= maxTokens && start + width <= tokens.length; width += 1) {
-      const term = phrases.get(tokens.slice(start, start + width).join(" "));
-      if (term !== undefined) found.add(term);
+    const single = extra.aliasOf.get(tokens[start] ?? "");
+    if (single !== undefined && single.includes(" ")) found.add(single);
+    for (let width = 2; width <= widest && start + width <= tokens.length; width += 1) {
+      const key = tokens.slice(start, start + width).join(" ");
+      const term = phrases.get(key) ?? extra.phrases.get(key);
+      if (term !== undefined) found.add(extra.aliasOf.get(term) ?? term);
     }
   }
   return [...found];

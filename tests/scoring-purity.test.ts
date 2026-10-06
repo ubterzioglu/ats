@@ -19,6 +19,13 @@ const SCORING_DIR = join(__dirname, "..", "apps", "web", "lib", "scoring");
 /** Both spellings of the forbidden dependency: the alias and a relative hop. */
 const MODEL_IMPORT_RX = /from\s+["'](?:@\/lib\/ai|\.{1,2}\/(?:\.\.\/)*ai)(?:\/[^"']*)?["']/;
 
+/**
+ * The offline synonym miner and any model runtime. The engine reads the
+ * approved list as data; it never reaches the scripts that produce it.
+ */
+const MINER_IMPORT_RX =
+  /(?:from\s+|import\s*\(\s*)["'][^"']*(?:\/scripts\/|synonym-miner|synonym-approval|load-engine|@huggingface\/|onnxruntime|@mlc-ai\/)[^"']*["']/;
+
 function sourceFiles(dir: string): string[] {
   return readdirSync(dir).flatMap((entry) => {
     const path = join(dir, entry);
@@ -53,6 +60,7 @@ describe("lib/scoring purity", () => {
     (_name, path) => {
       const source = readFileSync(path, "utf8");
       expect(source).not.toMatch(MODEL_IMPORT_RX);
+      expect(source).not.toMatch(MINER_IMPORT_RX);
 
       const code = codeOnly(source);
       expect(code).not.toMatch(/(?<![.\p{L}\p{N}_$])(?:document|window|navigator|localStorage|indexedDB)\s*\./u);
@@ -71,6 +79,19 @@ describe("the guard itself", () => {
     'import { x } from "./ai/model";'
   ])("catches %s", (line) => {
     expect(line).toMatch(MODEL_IMPORT_RX);
+  });
+
+  it.each([
+    'import { mineSynonyms } from "../../scripts/lib/synonym-miner.mjs";',
+    'import { pipeline } from "@huggingface/transformers";',
+    'const ort = await import("onnxruntime-node");',
+    'import { approveProposal } from "@/scripts/lib/synonym-approval.mjs";'
+  ])("catches the miner or a model runtime: %s", (line) => {
+    expect(line).toMatch(MINER_IMPORT_RX);
+  });
+
+  it("lets the approved list itself through", () => {
+    expect('import raw from "./data/approved-synonyms.json";').not.toMatch(MINER_IMPORT_RX);
   });
 
   it("does not catch an import from a sibling that merely starts with the same letters", () => {
