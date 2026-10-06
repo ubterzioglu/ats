@@ -975,6 +975,7 @@
     "close": "Schliessen",
     "unknown": "Dazu habe ich keine Antwort. Versuchen Sie einen der Vorschläge oben oder",
     "contactLink": "kontaktieren Sie uns",
+    "suggestPrefix": "Meinten Sie:",
     "feedbackHelpful": "Das hat geholfen",
     "feedbackNotHelpful": "Hat nicht geholfen",
     "feedbackThanks": "Danke für die Rückmeldung",

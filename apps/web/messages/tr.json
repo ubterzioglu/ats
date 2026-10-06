@@ -975,6 +975,7 @@
     "close": "Kapat",
     "unknown": "Bunun için bir cevabım yok. Yukarıdaki önerilerden birini deneyin veya",
     "contactLink": "bizimle iletişime geçin",
+    "suggestPrefix": "Bunu mu demek istediniz:",
     "feedbackHelpful": "Yardımcı oldu",
     "feedbackNotHelpful": "Yardımcı olmadı",
     "feedbackThanks": "Geri bildirim için teşekkürler",

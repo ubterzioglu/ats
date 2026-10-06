@@ -163,6 +163,11 @@ export function HelpBubble() {
         ...current,
         { role: "assistant", content: answer.text, ...(answer.href ? { href: answer.href } : {}), id: turnId }
       ]);
+    } else if (answer.kind === "suggest") {
+      setTurns((current) => [
+        ...current,
+        { role: "assistant", content: `${t("suggestPrefix")} ${answer.suggestion}`, id: turnId }
+      ]);
     } else {
       setTurns((current) => [
         ...current,

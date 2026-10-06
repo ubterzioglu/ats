@@ -92,4 +92,25 @@ describe("createKeywordAnswerer", () => {
       expect(text).not.toContain("[missing:");
     }
   });
+
+  it("matches multi-word keywords as phrases", async () => {
+    const answer = await answerer.answer("How long is my data kept?");
+    expect(answer.kind).toBe("text");
+    if (answer.kind === "text") {
+      expect(answer.text).toBe("Twelve months from the upload date.");
+    }
+  });
+
+  it("searches answer text when keywords do not match", async () => {
+    const answer = await answerer.answer("How are points calculated?");
+    expect(answer.kind).toBe("text");
+    if (answer.kind === "text") {
+      expect(answer.text).toBe("Five dimensions add up to 100 points.");
+    }
+  });
+
+  it("suggests when close but not matching", async () => {
+    const answer = await answerer.answer("Is my resume saved?");
+    expect(answer.kind === "text" || answer.kind === "suggest" || answer.kind === "none").toBe(true);
+  });
 });

@@ -6,11 +6,17 @@ export interface HelpAnswerText {
   readonly href?: string;
 }
 
+export interface HelpAnswerSuggest {
+  readonly kind: "suggest";
+  readonly suggestion: string;
+  readonly entryId: string;
+}
+
 export interface HelpAnswerNone {
   readonly kind: "none";
 }
 
-export type HelpAnswer = HelpAnswerText | HelpAnswerNone;
+export type HelpAnswer = HelpAnswerText | HelpAnswerSuggest | HelpAnswerNone;
 
 export interface HelpAnswerer {
   answer(question: string, signal?: AbortSignal): Promise<HelpAnswer>;
