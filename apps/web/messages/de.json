@@ -413,6 +413,7 @@
     "backToReport": "Zurück zum Bericht",
     "shareNote": "30 Tage teilbar, nur Punktzahlen — es wird kein Text des Lebenslaufs gespeichert:",
     "parserCaption": "{words} Wörter · {lines} Zeilen · {language}",
+    "ruleBasedDisclaimer": "Diese Punktzahl ist eine regelbasierte Schätzung der Lesbarkeit, keine Vorhersage des Verhaltens eines bestimmten Parsers.",
     "errors": {
       "fileUnreadable": "Diese Datei konnte nicht gelesen werden.",
       "tooShort": "Fügen Sie zuerst den Text des Lebenslaufs ein — für eine Beurteilung braucht es mindestens ein paar Zeilen.",

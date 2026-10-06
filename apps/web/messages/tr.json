@@ -413,6 +413,7 @@
     "backToReport": "Rapora dön",
     "shareNote": "30 gün paylaşılabilir, yalnızca puanlar — hiçbir CV metni saklanmaz:",
     "parserCaption": "{words} kelime · {lines} satır · {language}",
+    "ruleBasedDisclaimer": "Bu puan kural tabanlı bir okunabilirlik tahminidir, belirli bir ayrıştırıcının davranışının tahmini değildir.",
     "errors": {
       "fileUnreadable": "Bu dosya okunamadı.",
       "tooShort": "Önce CV metnini ekleyin — bir şey değerlendirmek için en az birkaç satır gerekir.",

@@ -413,6 +413,7 @@
     "backToReport": "Back to the report",
     "shareNote": "Shareable for 30 days, scores only — no CV text is stored:",
     "parserCaption": "{words} words · {lines} lines · {language}",
+    "ruleBasedDisclaimer": "This score is a rule-based readability estimate, not a prediction of any specific parser's behaviour.",
     "errors": {
       "fileUnreadable": "That file could not be read.",
       "tooShort": "Add the CV text first — at least a few lines are needed to judge anything.",
