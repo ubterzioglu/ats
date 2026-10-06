@@ -138,6 +138,22 @@
       "noAd": {
         "q": "İş ilanı olmadan ne değişir?",
         "a": "Anahtar kelime boyutu en fazla 25 yerine 20 puan alır ve rapor bunu belirtir; genel bir beceri listesi eşleşme puanı değildir."
+      },
+      "formats": {
+        "q": "Hangi dosya formatları destekleniyor?",
+        "a": "10 MB'a kadar PDF, DOCX ve düz metin dosyaları. Metin katmanı olan PDF'ler en iyi sonucu verir; taranmış görüntüler önce OCR gerektirir."
+      },
+      "retention": {
+        "q": "Verilerim ne kadar süre saklanıyor?",
+        "a": "Yükleme tarihinden itibaren on iki ay. Sonra dosya, çıkarılan metin ve analiz sonucu veritabanından, depolamadan ve Google Drive yedeğinden silinir."
+      },
+      "delete": {
+        "q": "Verilerimi nasıl sildiririm?",
+        "a": "Silme talebi için veri talep formunu kullanın. 30 gün içinde yanıt veririz. Gizlilik bildirimindeki e-postadan da doğrudan bize ulaşabilirsiniz."
+      },
+      "accuracy": {
+        "q": "Puan ne kadar doğru?",
+        "a": "Kontroller yaygın ayrıştırıcıların davranışından çıkarılmıştır. Belirli bir firmanın yazılımının kopyası değildir, ama bir ayrıştırıcının yakalayacağı aynı sorunları yakalar: eksik metin katmanları, bozuk başlıklar, iletişim bilgilerini karıştıran tablolar."
       }
     }
   },

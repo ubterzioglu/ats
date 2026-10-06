@@ -20,7 +20,7 @@ export const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
-export const FAQ_IDS = ["upload", "score", "languages", "shared", "guarantee", "noAd"] as const;
+export const FAQ_IDS = ["upload", "score", "languages", "shared", "guarantee", "noAd", "formats", "retention", "delete", "accuracy"] as const;
 
 export type JsonLdNode = Readonly<Record<string, unknown>>;
 
@@ -155,5 +155,21 @@ export function buildAboutPageJsonLd(
     inLanguage: locale,
     isPartOf: { "@id": WEBSITE_ID },
     about: { "@id": ORGANIZATION_ID }
+  };
+}
+
+export function buildHowToJsonLd(
+  steps: readonly { readonly name: string; readonly text: string }[]
+): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How to analyze your CV with ATS readability",
+    step: steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text
+    }))
   };
 }

@@ -14,7 +14,7 @@ import { SectionHeadline } from "@/components/ui/section-headline";
 import { Tag } from "@/components/ui/tag";
 import { Link } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
-import { buildFaqJsonLd, buildHomeJsonLd, FAQ_IDS, pageAlternates } from "@/lib/seo";
+import { buildFaqJsonLd, buildHomeJsonLd, buildHowToJsonLd, FAQ_IDS, pageAlternates } from "@/lib/seo";
 import { cx } from "@/lib/ui";
 
 interface Feature {
@@ -54,9 +54,17 @@ export default async function HomePage({ params }: HomePageProps) {
     answer: faqT(`items.${id}.a`)
   }));
 
+  const howToSteps = [
+    { name: "Upload", text: "Upload your CV as a PDF, DOCX or plain text file." },
+    { name: "Extract", text: "The reader extracts the text the way a parser would." },
+    { name: "Score", text: "Five dimensions are scored out of 100." },
+    { name: "Fix", text: "Every lost point is attached to a named finding with a fix." }
+  ];
+
   const jsonLd = [
     ...buildHomeJsonLd(locale as AppLocale, metadata("openGraphTitle"), metadata("description")),
-    buildFaqJsonLd(faqItems)
+    buildFaqJsonLd(faqItems),
+    buildHowToJsonLd(howToSteps)
   ];
 
   return (
@@ -89,7 +97,7 @@ export default async function HomePage({ params }: HomePageProps) {
           >
             {/* Zigzag: the picture alternates sides. The picture is decorative,
                 so reading order stays text-first on every screen. */}
-            <div className={cx(flip ? "lg:order-2" : "lg:order-1")}>
+            <div className={cx("reveal-up", flip ? "lg:order-2" : "lg:order-1")}>
               <SectionHeadline
                 id={headingId}
                 label={t(`${feature.key}.label`)}
@@ -104,7 +112,10 @@ export default async function HomePage({ params }: HomePageProps) {
               ) : null}
             </div>
 
-            <div className={cx("mx-auto w-full max-w-[34rem]", flip ? "lg:order-1" : "lg:order-2")}>
+            <div
+              className={cx("reveal-side mx-auto w-full max-w-[34rem]", flip ? "lg:order-1" : "lg:order-2")}
+              style={{ "--from": flip ? "-1" : "1" } as CSSProperties}
+            >
               <FeatureVisual name={feature.key} />
             </div>
           </section>

@@ -60,6 +60,11 @@ export async function generateMetadata({
       title: t("openGraphTitle"),
       description: t("openGraphDescription")
     },
+    twitter: {
+      card: "summary_large_image",
+      title: t("openGraphTitle"),
+      description: t("openGraphDescription")
+    },
     robots: { index: true, follow: true },
     alternates: {
       types: {
@@ -84,10 +89,19 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   return (
     <html lang={locale} className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-iris focus:text-white focus:px-4 focus:py-2 focus:rounded">
+          Skip to main content
+        </a>
         <NextIntlClientProvider>
           <NavBar />
-          {children}
+          <main id="main-content">
+            {children}
+          </main>
           {/* Inside the provider, not beside it: the listener reads messages,
               and a client component outside the provider has no context to
               read them from. */}

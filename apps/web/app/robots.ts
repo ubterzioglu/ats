@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/seo";
 
-const BASE_PRIVATE_PATHS = ["/r/", "/api/", "/auth/", "/login", "/applications"];
+const BASE_PRIVATE_PATHS = ["/r/", "/api/", "/auth/", "/login", "/applications", "/admin"];
 
 function buildPrivatePaths(): string[] {
   const paths = [...BASE_PRIVATE_PATHS];
