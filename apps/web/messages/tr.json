@@ -331,8 +331,21 @@
     "passwordLabel": "Parola",
     "passwordPlaceholder": "••••••••",
     "submit": "Giriş yap",
+    "googleSubmit": "Google ile devam et",
     "createAccount": "Hesap oluştur",
+    "forgotPasswordLink": "Şifrenizi mi unuttunuz?",
     "whatThisChecks": "Bu neyi kontrol ediyor",
+    "forgotPassword": {
+      "heading": "Şifrenizi sıfırlayın",
+      "lede": "E-postanızı girin, size şifre sıfırlama bağlantısı gönderelim.",
+      "submit": "Sıfırlama bağlantısı gönder",
+      "backToLogin": "Giriş sayfasına dön"
+    },
+    "resetPassword": {
+      "heading": "Yeni şifre belirleyin",
+      "lede": "Aşağıya yeni şifrenizi girin.",
+      "submit": "Şifreyi güncelle"
+    },
     "messages": {
       "invalidCredentials": "Bu e-posta ve parola bir hesapla eşleşmiyor.",
       "signupFailed": "Hesap oluşturulamadı. Adresi kontrol edip yeniden deneyin.",

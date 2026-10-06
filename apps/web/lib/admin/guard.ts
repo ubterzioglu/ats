@@ -1,7 +1,10 @@
 import "server-only";
 
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+import { redirect as nextRedirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
 
+import { routing } from "@/i18n/routing";
 import { createServiceClient } from "@/lib/supabase/client";
 import { createClient } from "@/lib/supabase/server";
 
@@ -40,7 +43,9 @@ export async function requireAdmin(): Promise<string> {
   const { data } = await supabase.auth.getUser();
 
   if (!data.user) {
-    redirect("/login?next=/admin");
+    const locale = await getLocale();
+    const loginPath = locale === routing.defaultLocale ? "/login" : `/${locale}/login`;
+    nextRedirect(`${loginPath}?next=/admin` as never);
   }
 
   if (!data.user.email_confirmed_at) {

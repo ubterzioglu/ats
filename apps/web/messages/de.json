@@ -331,8 +331,21 @@
     "passwordLabel": "Passwort",
     "passwordPlaceholder": "••••••••",
     "submit": "Anmelden",
+    "googleSubmit": "Mit Google fortfahren",
     "createAccount": "Konto erstellen",
+    "forgotPasswordLink": "Passwort vergessen?",
     "whatThisChecks": "Was hier geprüft wird",
+    "forgotPassword": {
+      "heading": "Passwort zurücksetzen",
+      "lede": "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.",
+      "submit": "Link zum Zurücksetzen senden",
+      "backToLogin": "Zurück zur Anmeldung"
+    },
+    "resetPassword": {
+      "heading": "Neues Passwort festlegen",
+      "lede": "Geben Sie unten Ihr neues Passwort ein.",
+      "submit": "Passwort aktualisieren"
+    },
     "messages": {
       "invalidCredentials": "Diese E-Mail und dieses Passwort passen zu keinem Konto.",
       "signupFailed": "Das Konto konnte nicht erstellt werden. Prüfen Sie die Adresse und versuchen Sie es erneut.",

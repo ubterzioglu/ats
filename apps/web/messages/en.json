@@ -331,8 +331,21 @@
     "passwordLabel": "Password",
     "passwordPlaceholder": "••••••••",
     "submit": "Sign in",
+    "googleSubmit": "Continue with Google",
     "createAccount": "Create an account",
+    "forgotPasswordLink": "Forgot your password?",
     "whatThisChecks": "What this checks",
+    "forgotPassword": {
+      "heading": "Reset your password",
+      "lede": "Enter your email and we will send you a link to reset your password.",
+      "submit": "Send reset link",
+      "backToLogin": "Back to sign in"
+    },
+    "resetPassword": {
+      "heading": "Set a new password",
+      "lede": "Enter your new password below.",
+      "submit": "Update password"
+    },
     "messages": {
       "invalidCredentials": "That email and password do not match an account.",
       "signupFailed": "The account could not be created. Check the address and try again.",

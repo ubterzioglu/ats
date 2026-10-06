@@ -3,15 +3,15 @@ import { getTranslations } from "next-intl/server";
 import { ParticleField } from "@/components/ui/particle-field";
 import { Link } from "@/i18n/navigation";
 
-import { login, signup } from "./actions";
+import { login, signup, signInWithGoogle } from "./actions";
 import { isLoginMessageKey } from "./messages";
 
 interface LoginPageProps {
-  readonly searchParams: Promise<{ readonly message?: string }>;
+  readonly searchParams: Promise<{ readonly message?: string; readonly next?: string }>;
 }
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
-  const { message: messageKey } = await searchParams;
+  const { message: messageKey, next } = await searchParams;
   const t = await getTranslations("login");
   const brand = await getTranslations("brand");
 
@@ -34,6 +34,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <p className="mt-4 text-body font-extralight text-mist">{t("lede")}</p>
 
         <form className="mt-10 flex flex-col gap-6">
+          {next ? <input type="hidden" name="next" value={next} /> : null}
+
           <div className="flex flex-col gap-1">
             <label className="text-caption uppercase text-ash" htmlFor="email">
               {t("emailLabel")}
@@ -70,9 +72,13 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             </p>
           ) : null}
 
-          <div className="mt-2 flex flex-wrap items-center gap-4">
+          <div className="mt-2 flex flex-col gap-4">
             <button formAction={login} className="btn">
               {t("submit")}
+            </button>
+
+            <button formAction={signInWithGoogle} className="btn-quiet" type="button">
+              {t("googleSubmit")}
             </button>
 
             <button formAction={signup} className="btn-quiet">
@@ -80,6 +86,12 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             </button>
           </div>
         </form>
+
+        <p className="mt-6">
+          <Link href="/forgot-password" className="text-sm text-saffron underline underline-offset-4">
+            {t("forgotPasswordLink")}
+          </Link>
+        </p>
 
         <p className="mt-10">
           <Link href="/" className="text-sm text-saffron underline underline-offset-4">

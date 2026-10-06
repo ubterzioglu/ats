@@ -1,6 +1,7 @@
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { type NextRequest, NextResponse } from "next/server";
 
+import { routing } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/server";
 
 const OTP_TYPES: readonly EmailOtpType[] = [
@@ -25,6 +26,17 @@ function safeNext(value: string | null): string {
   return value;
 }
 
+function extractLocale(pathname: string): string {
+  const match = pathname.match(new RegExp(`^/(${routing.locales.join("|")})(/|$)`));
+  if (match?.[1]) return match[1];
+  return routing.defaultLocale;
+}
+
+function withLocale(path: string, locale: string): string {
+  if (locale === routing.defaultLocale) return path;
+  return `/${locale}${path}`;
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
@@ -36,10 +48,16 @@ export async function GET(request: NextRequest) {
 
   if (code) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) return NextResponse.redirect(new URL(next, request.url));
+    if (!error) {
+      const locale = extractLocale(next);
+      return NextResponse.redirect(new URL(withLocale(next, locale), request.url));
+    }
   } else if (tokenHash && isOtpType(type)) {
     const { error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash });
-    if (!error) return NextResponse.redirect(new URL(next, request.url));
+    if (!error) {
+      const locale = extractLocale(next);
+      return NextResponse.redirect(new URL(withLocale(next, locale), request.url));
+    }
   }
 
   // The login page looks the key up in its own language; the sentence is not
