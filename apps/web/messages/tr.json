@@ -883,7 +883,8 @@
       "item1": "CV analiz hizmetinin sunulması",
       "item2": "Hizmet güvenliğinin sağlanması ve kötüye kullanımın önlenmesi",
       "item3": "Taleplerinizin yanıtlanması",
-      "item4": "Profil yönetimi ve CV oluşturucu verileri"
+      "item4": "Profil yönetimi ve CV oluşturucu verileri",
+      "itemSignupNotice": "Yeni bir hesap onaylandığında site sahibini e-posta ile bilgilendirmek"
     },
     "section4": {
       "title": "4. Hukuki Sebep",
@@ -894,7 +895,7 @@
     },
     "section5": {
       "title": "5. Veri Aktarımı",
-      "content": "Verileriniz şu kurumlara aktarılır: Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion}); Google LLC (Google Drive yedeği, ABD); barındırma sağlayıcısı (konum: {hostingLocation}). Yurt dışına aktarımlar KVKK m.9 kapsamında uygun güvencelerle yapılır."
+      "content": "Verileriniz şu kurumlara aktarılır: Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion}); Google LLC (Google Drive yedeği, ABD); barındırma sağlayıcısı (konum: {hostingLocation}); Zoho Corporation (kayıt bildiriminin site sahibine e-posta ile iletilmesi). Yurt dışına aktarımlar KVKK m.9 kapsamında uygun güvencelerle yapılır."
     },
     "section6": {
       "title": "6. Saklama Süresi",
@@ -936,7 +937,8 @@
       "item2": "Hizmet güvenliğinin sağlanması ve kötüye kullanımın önlenmesi (GDPR Madde 6(1)(f))",
       "item3": "Taleplerinizin yanıtlanması (GDPR Madde 6(1)(c))",
       "item4": "Onayınızla analitik (GDPR Madde 6(1)(a))",
-      "item5": "Profil yönetimi ve CV oluşturucu verileri (GDPR Madde 6(1)(b))"
+      "item5": "Profil yönetimi ve CV oluşturucu verileri (GDPR Madde 6(1)(b))",
+      "itemSignupNotice": "Yeni bir hesap onaylandığında site sahibini e-posta ile bilgilendirmek (GDPR Madde 6(1)(f))"
     },
     "section4": {
       "title": "4. Veri Alıcıları",
@@ -944,7 +946,8 @@
       "item1": "Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion})",
       "item2": "Google LLC (Google Drive yedeği, ABD)",
       "item3": "Barındırma sağlayıcısı (konum: {hostingLocation})",
-      "item4": "Microsoft Corporation (Clarity analitiği, ABD, sadece onayınızla)"
+      "item4": "Microsoft Corporation (Clarity analitiği, ABD, sadece onayınızla)",
+      "item5": "Zoho Corporation (kayıt bildiriminin site sahibine e-posta ile iletilmesi; hesap e-posta adresinizi alır)"
     },
     "section5": {
       "title": "5. Uluslararası Aktarımlar",

@@ -41,6 +41,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
             <li>{t("section3.item2")}</li>
             <li>{t("section3.item3")}</li>
             <li>{t("section3.item4")}</li>
+            <li>{t("section3.itemSignupNotice")}</li>
           </ul>
         </section>
 
@@ -60,6 +61,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
               })}
             </li>
             <li>{t("section4.item4")}</li>
+            <li>{t("section4.item5")}</li>
           </ul>
         </section>
 

@@ -883,7 +883,8 @@
       "item1": "Providing the CV analysis service",
       "item2": "Ensuring service security and preventing abuse",
       "item3": "Responding to your requests",
-      "item4": "Managing your profile and CV builder data"
+      "item4": "Managing your profile and CV builder data",
+      "itemSignupNotice": "Notifying the site owner by email when a new account is confirmed"
     },
     "section4": {
       "title": "4. Legal Basis",
@@ -894,7 +895,7 @@
     },
     "section5": {
       "title": "5. Data Transfer",
-      "content": "Your data is transferred to: Supabase (database and file storage, region: {supabaseRegion}); Google LLC (Google Drive backup, USA); hosting provider (location: {hostingLocation}). International transfers are made with appropriate safeguards under KVKK Article 9."
+      "content": "Your data is transferred to: Supabase (database and file storage, region: {supabaseRegion}); Google LLC (Google Drive backup, USA); hosting provider (location: {hostingLocation}); Zoho Corporation (email delivery of the sign-up notice to the site owner). International transfers are made with appropriate safeguards under KVKK Article 9."
     },
     "section6": {
       "title": "6. Retention Period",
@@ -936,7 +937,8 @@
       "item2": "Ensuring service security and preventing abuse (Art. 6(1)(f) GDPR)",
       "item3": "Responding to your requests (Art. 6(1)(c) GDPR)",
       "item4": "Analytics with your consent (Art. 6(1)(a) GDPR)",
-      "item5": "Managing your profile and CV builder data (Art. 6(1)(b) GDPR)"
+      "item5": "Managing your profile and CV builder data (Art. 6(1)(b) GDPR)",
+      "itemSignupNotice": "Notifying the site owner by email when a new account is confirmed (Art. 6(1)(f) GDPR)"
     },
     "section4": {
       "title": "4. Data Recipients",
@@ -944,7 +946,8 @@
       "item1": "Supabase (database and file storage, region: {supabaseRegion})",
       "item2": "Google LLC (Google Drive backup, USA)",
       "item3": "Hosting provider (location: {hostingLocation})",
-      "item4": "Microsoft Corporation (Clarity analytics, USA, only with your consent)"
+      "item4": "Microsoft Corporation (Clarity analytics, USA, only with your consent)",
+      "item5": "Zoho Corporation (email delivery of the sign-up notice to the site owner; receives your account email address)"
     },
     "section5": {
       "title": "5. International Transfers",

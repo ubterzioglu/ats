@@ -41,6 +41,7 @@ export default async function KvkkPage() {
             <li>{t("section3.item1")}</li>
             <li>{t("section3.item2")}</li>
             <li>{t("section3.item3")}</li>
+            <li>{t("section3.itemSignupNotice")}</li>
           </ul>
         </section>
 

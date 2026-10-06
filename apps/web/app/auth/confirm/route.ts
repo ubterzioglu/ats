@@ -1,6 +1,8 @@
 import { type EmailOtpType } from "@supabase/supabase-js";
-import { type NextRequest, NextResponse } from "next/server";
+import { after, type NextRequest, NextResponse } from "next/server";
 
+import { notifySignup } from "@/lib/notify/notify-signup";
+import type { NotifiableUser } from "@/lib/notify/signup-mail";
 import { createClient } from "@/lib/supabase/server";
 
 const OTP_TYPES: readonly EmailOtpType[] = [
@@ -25,6 +27,19 @@ function safeNext(value: string | null): string {
   return value;
 }
 
+/**
+ * Runs after the redirect is sent, so a slow or failing mail server never
+ * holds up or breaks a sign-in. notifySignup decides whether the user is new.
+ */
+function announceSignup(user: NotifiableUser | null, type: string | null): void {
+  if (!user || type === "email_change") return;
+  try {
+    after(() => notifySignup(user));
+  } catch (cause) {
+    console.error("[notify] could not schedule signup notification", cause);
+  }
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
@@ -37,11 +52,17 @@ export async function GET(request: NextRequest) {
   // `next` already carries its locale prefix when it came from the sign-in
   // page, so it is used as given.
   if (code) {
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) return NextResponse.redirect(new URL(next, request.url));
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error) {
+      announceSignup(data.user, type);
+      return NextResponse.redirect(new URL(next, request.url));
+    }
   } else if (tokenHash && isOtpType(type)) {
-    const { error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash });
-    if (!error) return NextResponse.redirect(new URL(next, request.url));
+    const { data, error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash });
+    if (!error) {
+      announceSignup(data.user, type);
+      return NextResponse.redirect(new URL(next, request.url));
+    }
   }
 
   // The login page looks the key up in its own language; the sentence is not

@@ -883,7 +883,8 @@
       "item1": "Bereitstellung des CV-Analyse-Dienstes",
       "item2": "Sicherstellung der Dienstesicherheit und Verhinderung von Missbrauch",
       "item3": "Beantwortung Ihrer Anfragen",
-      "item4": "Profilverwaltung und CV-Builder-Daten"
+      "item4": "Profilverwaltung und CV-Builder-Daten",
+      "itemSignupNotice": "Benachrichtigung des Website-Betreibers per E-Mail, wenn ein neues Konto bestätigt wird"
     },
     "section4": {
       "title": "4. Rechtsgrundlage",
@@ -894,7 +895,7 @@
     },
     "section5": {
       "title": "5. Datenübermittlung",
-      "content": "Ihre Daten werden übermittelt an: Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion}); Google LLC (Google Drive Backup, USA); Hosting-Anbieter (Standort: {hostingLocation}). Internationale Übermittlungen erfolgen mit geeigneten Garantien gemäß KVKK Artikel 9."
+      "content": "Ihre Daten werden übermittelt an: Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion}); Google LLC (Google Drive Backup, USA); Hosting-Anbieter (Standort: {hostingLocation}); Zoho Corporation (E-Mail-Versand der Registrierungsbenachrichtigung an den Website-Betreiber). Internationale Übermittlungen erfolgen mit geeigneten Garantien gemäß KVKK Artikel 9."
     },
     "section6": {
       "title": "6. Aufbewahrungsfrist",
@@ -936,7 +937,8 @@
       "item2": "Sicherstellung der Dienstesicherheit und Verhinderung von Missbrauch (DSGVO Art. 6(1)(f))",
       "item3": "Beantwortung Ihrer Anfragen (DSGVO Art. 6(1)(c))",
       "item4": "Analytik mit Ihrer Einwilligung (DSGVO Art. 6(1)(a))",
-      "item5": "Profilverwaltung und CV-Builder-Daten (DSGVO Art. 6(1)(b))"
+      "item5": "Profilverwaltung und CV-Builder-Daten (DSGVO Art. 6(1)(b))",
+      "itemSignupNotice": "Benachrichtigung des Website-Betreibers per E-Mail, wenn ein neues Konto bestätigt wird (DSGVO Art. 6(1)(f))"
     },
     "section4": {
       "title": "4. Datenempfänger",
@@ -944,7 +946,8 @@
       "item1": "Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion})",
       "item2": "Google LLC (Google Drive Backup, USA)",
       "item3": "Hosting-Anbieter (Standort: {hostingLocation})",
-      "item4": "Microsoft Corporation (Clarity-Analytik, USA, nur mit Ihrer Einwilligung)"
+      "item4": "Microsoft Corporation (Clarity-Analytik, USA, nur mit Ihrer Einwilligung)",
+      "item5": "Zoho Corporation (E-Mail-Versand der Registrierungsbenachrichtigung an den Website-Betreiber; erhält Ihre Konto-E-Mail-Adresse)"
     },
     "section5": {
       "title": "5. Internationale Übermittlungen",
