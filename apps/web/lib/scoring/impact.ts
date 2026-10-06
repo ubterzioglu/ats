@@ -2,6 +2,7 @@ import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { countWords, ratio } from "./text";
 import { hasTurkishVerbEnding } from "./turkish";
+import { sectionRanges } from "./sections";
 
 export const IMPACT_MAX = 20;
 
@@ -12,10 +13,12 @@ const ACTION_VERBS = [
   "optimised", "scaled", "refactored", "introduced", "established", "drove",
   "coordinated", "mentored", "negotiated", "rolled", "cut", "saved", "shipped",
   "developed", "created", "maintained", "tested", "analysed", "analyzed",
+  "managed", "architected", "spearheaded", "orchestrated", "pioneered",
   // German
   "entwickelt", "umgesetzt", "eingefuhrt", "eingeführt", "aufgebaut", "verbessert",
   "optimiert", "automatisiert", "reduziert", "gesteigert", "geleitet", "betreut",
   "verantwortet", "konzipiert", "migriert", "erstellt", "eingespart",
+  "gemanagt", "architektonisch", "geleitet",
   // Turkish
   "gelistirdim", "geliştirdim", "kurdum", "tasarladim", "tasarladım", "uyguladim",
   "uyguladım", "otomatiklestirdim", "otomatikleştirdim", "azalttim", "azalttım",
@@ -26,7 +29,7 @@ const ACTION_VERBS = [
 const ACTION_VERB_RX = new RegExp(`^(${ACTION_VERBS.join("|")})\\b`, "i");
 
 const GENERIC_RX =
-  /(responsible for|worked on|involved in|assisted with|helped with|duties included|tasks included|verantwortlich fur|verantwortlich für|zustandig fur|zuständig für|mitgewirkt|beteiligt an|unterstutzung bei|unterstützung bei|sorumluydum|sorumlu oldum|gorev aldim|görev aldım|destek verdim|yer aldim|yer aldım)/gi;
+  /(responsible for|worked on|involved in|assisted with|helped with|duties included|tasks included|verantwortlich fur|verantwortlich für|zustandig fur|zuständig für|(mitgewirkt|unterstutzung bei|unterstützung bei)|sorumluydum|sorumlu oldum|gorev aldim|görev aldım|destek verdim|yer aldim|yer aldım)/gi;
 
 const BUZZWORD_RX =
   /(team player|hard.?working|detail.?oriented|results.?driven|self.?starter|go.?getter|think outside the box|dynamic personality|motivated individual|teamfahig|teamfähig|belastbar|engagiert|zuverlassig|zuverlässig|dinamik|ozverili|özverili|takim oyuncusu|takım oyuncusu|calis?kan|çalışkan)/gi;
@@ -40,7 +43,9 @@ const INFLATED_RX =
 const FIRST_PERSON_RX = /\b(i|my|me|ich|mein|meine|meinen|ben|benim)\b/gi;
 
 const QUANTIFIED_RX =
-  /(\d+\s*%|%\s*\d+|[€$£]\s?\d|\d+\s*(k|mio|mn|m\b|million|milyon|tausend|bin)|\b\d{2,}\b|\d+\s*(users?|kunden|müşteri|musteri|tests?|releases?|teams?|projects?|projekte|proje|sprints?|hours?|stunden|saat|days?|tage|gun|gün))/i;
+  /(\d+\s*%|%\s*\d+|[€$£]\s?\d|\d+\s*(k|mio|mn|m\b|million|milyon|tausend|bin)|\d+\s*(users?|kunden|müşteri|musteri|tests?|releases?|teams?|projects?|projekte|proje|sprints?|hours?|stunden|saat|days?|tage|gun|gün))/i;
+
+const DATE_RANGE_RX = /\b(19|20)\d{2}\s*[-–]\s*(19|20)\d{2}\b|\b(19|20)\d{2}\s*[-/]\s*(19|20)\d{2}\b/g;
 
 function countMatches(text: string, pattern: RegExp): number {
   const matches = text.match(pattern);
@@ -52,7 +57,7 @@ function countMatches(text: string, pattern: RegExp): number {
  * human on the other side keeps reading.
  */
 export function scoreImpact(context: ScoreContext): DimensionOutcome {
-  const { bullets, raw, stats } = context;
+  const { bullets, raw, stats, lines } = context;
   const drafts: FindingDraft[] = [];
 
   const quantified = bullets.filter((bullet) => QUANTIFIED_RX.test(bullet));
@@ -122,15 +127,36 @@ export function scoreImpact(context: ScoreContext): DimensionOutcome {
         evidence: longBullets.slice(0, 2).map((bullet) => `${bullet.slice(0, 120)}...`)
       });
     }
-  } else if (!/\d/.test(raw)) {
-    drafts.push({
-      id: "impact.no-numbers-at-all",
-      severity: "high",
-      title: "No figures anywhere in the document",
-      detail: "Nothing in the text quantifies scope, scale or outcome.",
-      fix: "Add team sizes, volumes, durations and before/after numbers to the recent roles.",
-      cost: 6
-    });
+  } else {
+    // Fewer than 4 bullets: measure experience section lines instead
+    const ranges = sectionRanges(context.sections, lines.length);
+    const experienceRange = ranges.find(r => r.id === "experience");
+    
+    if (experienceRange) {
+      const experienceLines = lines.slice(experienceRange.start + 1, experienceRange.end);
+      const nonEmptyLines = experienceLines.filter(l => l.length > 0);
+      const quantifiedLines = nonEmptyLines.filter(l => QUANTIFIED_RX.test(l) && !DATE_RANGE_RX.test(l));
+      
+      if (nonEmptyLines.length > 0 && ratio(quantifiedLines.length, nonEmptyLines.length) < 0.15) {
+        drafts.push({
+          id: "impact.no-numbers",
+          severity: "high",
+          title: "Almost no measurable results",
+          detail: `Few bullets and little quantification in the experience section. Claims without a figure read as job descriptions rather than achievements.`,
+          fix: "Add scale or outcome to at least a third of the lines: runtime cut from 40 to 12 minutes, 15 testers onboarded, coverage raised to 80%.",
+          cost: 6
+        });
+      }
+    } else if (!/\d/.test(raw)) {
+      drafts.push({
+        id: "impact.no-numbers-at-all",
+        severity: "high",
+        title: "No figures anywhere in the document",
+        detail: "Nothing in the text quantifies scope, scale or outcome.",
+        fix: "Add team sizes, volumes, durations and before/after numbers to the recent roles.",
+        cost: 6
+      });
+    }
   }
 
   const generic = countMatches(raw, GENERIC_RX);
