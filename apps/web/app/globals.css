@@ -354,16 +354,45 @@ h3.font-normal {
   }
 
   @supports (animation-timeline: view()) {
+    /* Each block arrives on entry and hands off on exit: it recedes and dims
+       as the next section takes its place. Entry owns opacity and translate;
+       exit owns scale, rotate and filter, so the two never fight. */
     .reveal-up {
-      animation: reveal-up linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 60%;
+      animation: reveal-up linear both, reveal-out linear both;
+      animation-timeline: view(), view();
+      animation-range: entry 0% entry 60%, exit 20% exit 100%;
     }
 
     .reveal-side {
-      animation: reveal-side linear both;
+      animation: reveal-side linear both, reveal-out-side linear both;
+      animation-timeline: view(), view();
+      animation-range: entry 0% entry 70%, exit 20% exit 100%;
+    }
+
+    /* The picture drifts against the scroll, so it and its text move at
+       different speeds and the section has depth. */
+    .parallax {
+      animation: drift linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 70%;
+      animation-range: cover 0% cover 100%;
+    }
+
+    .reveal-pop {
+      animation: reveal-pop linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 85%;
+    }
+
+    .break-line {
+      animation: break-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+
+    .break-mark {
+      animation: break-stamp linear both;
+      animation-timeline: view();
+      animation-range: cover 30% cover 55%;
     }
 
     .stage > svg {
@@ -403,6 +432,67 @@ h3.font-normal {
   to {
     opacity: 1;
     translate: 0 0;
+  }
+}
+
+@keyframes reveal-out {
+  to {
+    scale: 0.94;
+    filter: brightness(0.55);
+  }
+}
+
+@keyframes reveal-out-side {
+  to {
+    rotate: calc(var(--from, 1) * 5deg);
+    filter: brightness(0.55);
+  }
+}
+
+@keyframes drift {
+  from {
+    translate: 0 44px;
+  }
+  to {
+    translate: 0 -44px;
+  }
+}
+
+@keyframes reveal-pop {
+  from {
+    opacity: 0;
+    translate: 0 56px;
+    scale: 0.88;
+    rotate: -7deg;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+
+@keyframes break-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes break-stamp {
+  from {
+    scale: 0;
+    rotate: -140deg;
+  }
+  60% {
+    scale: 1.25;
+  }
+  to {
+    scale: 1;
+    rotate: 0deg;
   }
 }
 

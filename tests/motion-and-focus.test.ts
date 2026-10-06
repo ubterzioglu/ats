@@ -47,11 +47,20 @@ describe("the animations that exist", () => {
     // landing page entrance. marquee: the quiet ticker strip. float, twinkle,
     // scroll-spin, reveal-up, reveal-side: the feature sections' idle and
     // scroll-linked motion, all inside prefers-reduced-motion: no-preference.
+    // Section transitions: reveal-out and reveal-out-side hand a block off on
+    // exit, drift is the picture's parallax, reveal-pop lands the closing
+    // sticker, break-draw and break-stamp are the rule between sections.
     expect(names).toEqual([
+      "break-draw",
+      "break-stamp",
+      "drift",
       "float",
       "live-sweep",
       "marquee",
       "meter-fill",
+      "reveal-out",
+      "reveal-out-side",
+      "reveal-pop",
       "reveal-side",
       "reveal-up",
       "scroll-spin",
@@ -64,7 +73,17 @@ describe("the animations that exist", () => {
     const start = CSS.indexOf("@media (prefers-reduced-motion: no-preference)");
     expect(start).toBeGreaterThanOrEqual(0);
     const rule = CSS.slice(start, CSS.indexOf("\n}\n", start));
-    for (const name of ["float", "twinkle", "scroll-spin", "reveal-up", "reveal-side"]) {
+    for (const name of [
+      "float",
+      "twinkle",
+      "scroll-spin",
+      "reveal-up",
+      "reveal-side",
+      "drift",
+      "reveal-pop",
+      "break-draw",
+      "break-stamp"
+    ]) {
       expect(rule).toMatch(new RegExp(`animation:[^;]*\\b${name}\\b`));
     }
   });

@@ -1,10 +1,11 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
+import { Fragment, type CSSProperties } from "react";
 
 import { FaqSection } from "@/components/faq-section";
 import { FeatureVisual, type FeatureVisualKey } from "@/components/home/feature-visuals";
 import { HeroStickers } from "@/components/home/hero-stickers";
+import { SectionBreak } from "@/components/home/section-break";
 import { Sparkle, Tick } from "@/components/home/sparkle";
 import { Ticker } from "@/components/home/ticker";
 import { GhostLink } from "@/components/ui/ghost-link";
@@ -90,49 +91,57 @@ export default async function HomePage({ params }: HomePageProps) {
         const headingId = `feature-${feature.key}`;
         const flip = index % 2 === 0;
         return (
-          <section
-            key={feature.key}
-            aria-labelledby={headingId}
-            className="mx-auto grid w-full max-w-page items-center gap-10 px-4 py-section-sm sm:px-6 lg:grid-cols-2 lg:gap-24 lg:py-section"
-          >
-            {/* Zigzag: the picture alternates sides. The picture is decorative,
-                so reading order stays text-first on every screen. */}
-            <div className={cx("reveal-up", flip ? "lg:order-2" : "lg:order-1")}>
-              <SectionHeadline
-                id={headingId}
-                label={t(`${feature.key}.label`)}
-                title={t(`${feature.key}.title`)}
-              >
-                <p>{t(`${feature.key}.body`)}</p>
-              </SectionHeadline>
-              {feature.href ? (
-                <GhostLink href={feature.href} className="mt-8 -ml-3">
-                  {t(`${feature.key}.link`)}
-                </GhostLink>
-              ) : null}
-            </div>
-
-            <div
-              className={cx("reveal-side mx-auto w-full max-w-[34rem]", flip ? "lg:order-1" : "lg:order-2")}
-              style={{ "--from": flip ? "-1" : "1" } as CSSProperties}
+          <Fragment key={feature.key}>
+            {index > 0 ? <SectionBreak flip={!flip} /> : null}
+            <section
+              aria-labelledby={headingId}
+              className="mx-auto grid w-full max-w-page items-center gap-10 px-4 py-section-sm sm:px-6 lg:grid-cols-2 lg:gap-24 lg:py-section"
             >
-              <FeatureVisual name={feature.key} />
-            </div>
-          </section>
+              {/* Zigzag: the picture alternates sides. The picture is decorative,
+                  so reading order stays text-first on every screen. */}
+              <div className={cx("reveal-up", flip ? "lg:order-2" : "lg:order-1")}>
+                <SectionHeadline
+                  id={headingId}
+                  label={t(`${feature.key}.label`)}
+                  title={t(`${feature.key}.title`)}
+                >
+                  <p>{t(`${feature.key}.body`)}</p>
+                </SectionHeadline>
+                {feature.href ? (
+                  <GhostLink href={feature.href} className="mt-8 -ml-3">
+                    {t(`${feature.key}.link`)}
+                  </GhostLink>
+                ) : null}
+              </div>
+
+              <div
+                className={cx("reveal-side mx-auto w-full max-w-[34rem]", flip ? "lg:order-1" : "lg:order-2")}
+                style={{ "--from": flip ? "-1" : "1" } as CSSProperties}
+              >
+                <div className="parallax">
+                  <FeatureVisual name={feature.key} />
+                </div>
+              </div>
+            </section>
+          </Fragment>
         );
       })}
 
+      <SectionBreak />
+
       <section className="mx-auto w-full max-w-page px-4 py-section-sm sm:px-6 lg:py-section">
-        <div className="bench p-6 sm:p-10 lg:p-14">
+        <div className="bench reveal-up p-6 sm:p-10 lg:p-14">
           <SectionHeadline title={t("how.title")}>
             <p>{t("how.body")}</p>
           </SectionHeadline>
         </div>
       </section>
 
+      <SectionBreak flip />
+
       <section className="mx-auto w-full max-w-page overflow-x-clip px-4 py-section-sm sm:px-6 lg:py-section">
         <div
-          className="sticker sticker-lime relative p-8 sm:p-12 lg:p-16"
+          className="sticker sticker-lime reveal-pop relative p-8 sm:p-12 lg:p-16"
           style={{ "--tilt": "-1.5deg" } as CSSProperties}
         >
           <h2 className="max-w-[14ch] text-display font-extrabold leading-[0.95] text-void">
