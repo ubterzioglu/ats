@@ -1,4 +1,4 @@
-export const ENGINE_VERSION = "1.1.0";
+export const ENGINE_VERSION = "1.1.1";
 
 export const BAND_THRESHOLDS = [
   [85, "excellent", "Parses cleanly and matches the target role"],

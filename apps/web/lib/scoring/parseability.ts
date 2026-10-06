@@ -5,7 +5,9 @@ import { GARBLED_THRESHOLD, MOJIBAKE_THRESHOLD } from "./config";
 
 export const PARSEABILITY_MAX = 25;
 
-const PRIVATE_USE = /[-]/g;
+// Escaped on purpose: written as literal glyphs, an editor once stripped the
+// invisible range ends and left /[-]/, which counted every hyphen as an icon.
+const PRIVATE_USE = /[-]/g;
 const EMOJI = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu;
 
 /** Basic Latin letters, Latin-1 Supplement letters and Latin Extended-A. */
@@ -63,16 +65,23 @@ function countMatches(text: string, pattern: RegExp): number {
   return matches ? matches.length : 0;
 }
 
+const MIN_FURNITURE_LETTERS = 3;
+
+/**
+ * Digits are folded so "Page 1 of 3" and "Page 2 of 3" count as one footer.
+ * Lines with almost no letters are skipped: after folding, every
+ * "2019-04 - 2022-08" date line of a CV would otherwise read as a footer.
+ */
 function repeatedLines(lines: readonly string[]): string[] {
-  const tally = new Map<string, number>();
+  const tally = new Map<string, { readonly first: string; readonly count: number }>();
   for (const line of lines) {
     if (line.length < 8 || line.length > 90) continue;
+    if (countMatches(line, /\p{L}/gu) < MIN_FURNITURE_LETTERS) continue;
     const normalized = line.replace(/\d/g, "#");
-    tally.set(normalized, (tally.get(normalized) ?? 0) + 1);
+    const entry = tally.get(normalized);
+    tally.set(normalized, { first: entry?.first ?? line, count: (entry?.count ?? 0) + 1 });
   }
-  return [...tally.entries()]
-    .filter(([, count]) => count >= 3)
-    .map(([line]) => line);
+  return [...tally.values()].filter(({ count }) => count >= 3).map(({ first }) => first);
 }
 
 /**
