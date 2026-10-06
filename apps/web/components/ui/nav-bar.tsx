@@ -1,12 +1,12 @@
 "use client";
 
 import { createBrowserClient } from "@supabase/ssr";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
-import { logout } from "@/app/[locale]/login/actions";
+import { withLocale } from "@/lib/auth/routes";
 import { cx } from "@/lib/ui";
 
 import { LanguageSwitcher } from "../language-switcher";
@@ -36,8 +36,25 @@ export function NavBar() {
   const common = useTranslations("common");
   const brand = useTranslations("brand");
   const pathname = usePathname();
+  const locale = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  // A full page load, not a router transition: a server action that signs out
+  // and redirects re-renders the tree while this component is unmounting its
+  // own form, and the client throws.
+  async function signOut() {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+    if (supabaseUrl && supabaseKey) {
+      try {
+        await createBrowserClient(supabaseUrl, supabaseKey).auth.signOut();
+      } catch {
+        // Cookies are cleared below by the reload; the middleware re-checks the session.
+      }
+    }
+    window.location.assign(withLocale("/", locale));
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -130,11 +147,9 @@ export function NavBar() {
               <GhostLink href="/account" active={pathname === "/account"}>
                 {nav("profile")}
               </GhostLink>
-              <form action={logout}>
-                <button type="submit" className="btn-quiet">
-                  {common("signOut")}
-                </button>
-              </form>
+              <button type="button" className="btn-quiet" onClick={() => void signOut()}>
+                {common("signOut")}
+              </button>
             </div>
           ) : onLanding ? null : (
             <GhostLink href="/login">{common("signIn")}</GhostLink>

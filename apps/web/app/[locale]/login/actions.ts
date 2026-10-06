@@ -101,10 +101,3 @@ export async function resetPassword(formData: FormData) {
   revalidatePath("/", "layout");
   redirect({ href: "/analyze", locale: await getLocale() });
 }
-
-export async function logout() {
-  const supabase = await createClient();
-  await supabase.auth.signOut();
-  revalidatePath("/", "layout");
-  redirect({ href: "/", locale: await getLocale() });
-}
