@@ -2,7 +2,7 @@
 
 What is left to do, grouped into batches. Research, prompts and analysis already delivered are left out. The reasoning behind each item lives in the older notes: `engine-strengthening-plan.md`, `research-priority-list.md`, `help-assistant-suggestions.md`. The step-by-step brief for the help bubble is `help-assistant-improvement-brief.md`.
 
-Status: A1, A2, A3, A4, A7, B6, C1, C5 done. D6: `pdfjs-dist` done. Nothing below has been implemented or approved.
+Status: A1, A2, A3, A4, A7, B6, C1, C5 done. D6: `pdfjs-dist` done, `@huggingface/transformers` blocked (see D6). Nothing below has been implemented or approved.
 
 ## Rules for every batch
 
@@ -143,6 +143,7 @@ All of it keeps the score deterministic.
 ### D6. Dependency upgrades (S/M, separate PRs)
 - `@huggingface/transformers` 3.8 to 4.x and `pdfjs-dist` 5.4 to 6.x, each with the existing tests.
 - `pdfjs-dist` 6.4 done. 6.0 removed `PDFDocumentProxy.destroy`; `lib/extract/pdf.ts` now tears down through the loading task. 6.0 also raised the minimum browsers to Chrome 125 / Safari 18. Checked with the node extraction tests and once in headless Chromium against the copied worker.
+- `@huggingface/transformers` 4.x blocked, still on 3.8. 4.3.1 needs no code change: `lib/ai/embed.worker.ts` typechecks, the progress events keep their shape (4.x adds a `progress_total` event that the worker ignores), and lint, tests and `next build` pass. It stays blocked because 4.x swaps in a rewritten WebGPU runtime (onnxruntime-web 1.22-dev to 1.31-dev). Nobody has yet loaded `Xenova/multilingual-e5-small` q8 with it in a real browser, on WebGPU or on the WASM fallback. Before it ships, run that load in Chrome with WebGPU and once without it, and compare the similarity values with 3.8 output for the same texts.
 
 Do not use: open-resume, pyresparser, mupdf, scribe.js-ocr (copyleft), Lightcast Open Skills (non-commercial), scraped real-CV datasets.
 
