@@ -111,7 +111,11 @@
     "formatsHeading": "Biçimler",
     "formats": "Düzenleyici <link>JSON Resume</link> biçimini içe ve dışa aktarır.",
     "contactHeading": "İletişim",
-    "contact": "Sorular ve düzeltmeler: <mail>{email}</mail>"
+    "contact": "Sorular ve düzeltmeler: <mail>{email}</mail>",
+    "sourcesHeading": "Veri kaynakları",
+    "sourcesBody": "Anahtar kelime kontrolü, becerileri ESCO sınıflandırması ile O*NET veritabanından derlenen bir sözlükle ve kendi yazdığımız Türkçe bir listeyle de tanır. İki kaynağı da filtreledik ve kısalttık; <changes>değişikliklerin listesi</changes> herkese açıktır. Aşağıdaki kaynak bildirimleri, lisans sahiplerinin istediği ifadeyle verilmiştir.",
+    "escoCredit": "This service uses the <esco>ESCO classification</esco> of the European Commission.",
+    "onetCredit": "This page includes information from the <onet>O*NET 31.0 Database</onet> by the U.S. Department of Labor, Employment and Training Administration (USDOL/ETA). Used under the <license>CC BY 4.0</license> license. O*NET® is a trademark of USDOL/ETA. ATS readability has modified all or some of this information. USDOL/ETA has not approved, endorsed, or tested these modifications."
   },
   "faq": {
     "title": "Sık sorulan sorular",

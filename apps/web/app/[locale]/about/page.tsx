@@ -10,6 +10,13 @@ import { JsonLd } from "@/components/json-ld";
 import { SiteCredit } from "@/components/site-credit";
 import { SectionHeadline } from "@/components/ui/section-headline";
 
+const LINK_CLASS = "text-iris underline underline-offset-4 hover:text-iris/85";
+const ESCO_URL = "https://esco.ec.europa.eu/";
+const ONET_URL = "https://www.onetcenter.org/database.html";
+const CC_BY_URL = "https://creativecommons.org/licenses/by/4.0/";
+const SOURCES_CHANGES_URL =
+  "https://github.com/ubterzioglu/ats/blob/main/apps/web/docs/skill-dictionary-sources.md";
+
 interface AboutPageProps {
   readonly params: Promise<{ readonly locale: string }>;
 }
@@ -80,6 +87,41 @@ export default async function AboutPage({ params }: AboutPageProps) {
                   >
                     {chunks}
                   </Link>
+                )
+              })}
+            </p>
+          </SectionHeadline>
+
+          <SectionHeadline title={t("sourcesHeading")}>
+            <p>
+              {t.rich("sourcesBody", {
+                changes: (chunks) => (
+                  <a href={SOURCES_CHANGES_URL} className={LINK_CLASS} target="_blank" rel="noopener">
+                    {chunks}
+                  </a>
+                )
+              })}
+            </p>
+            <p className="mt-4 text-sm text-muted">
+              {t.rich("escoCredit", {
+                esco: (chunks) => (
+                  <a href={ESCO_URL} className={LINK_CLASS} target="_blank" rel="noopener">
+                    {chunks}
+                  </a>
+                )
+              })}
+            </p>
+            <p className="mt-2 text-sm text-muted">
+              {t.rich("onetCredit", {
+                onet: (chunks) => (
+                  <a href={ONET_URL} className={LINK_CLASS} target="_blank" rel="noopener">
+                    {chunks}
+                  </a>
+                ),
+                license: (chunks) => (
+                  <a href={CC_BY_URL} className={LINK_CLASS} target="_blank" rel="noopener">
+                    {chunks}
+                  </a>
                 )
               })}
             </p>

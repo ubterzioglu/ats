@@ -10,3 +10,5 @@ next-env.d.ts
 .DS_Store
 public/vendor/
 coverage
+# Raw ESCO / O*NET downloads for scripts/build-skill-dictionary.mjs
+.skill-sources/

@@ -1,3 +1,8 @@
+import { AMBIGUOUS_TERMS } from "./ambiguous-terms";
+import { DICTIONARY_ENTRIES } from "./skill-dictionary";
+import { isJobNoise, isStopword } from "./stopwords";
+import { tokenize } from "./text";
+
 /**
  * A curated skill vocabulary. It does two jobs:
  *  - terms found here get a weight bonus when keywords are mined from a job
@@ -74,8 +79,9 @@ export const MULTI_WORD_SKILLS: readonly string[] = SKILL_TAXONOMY.filter((term)
   term.includes(" ")
 );
 
+/** Curated first; the static dictionary (./skill-dictionary.ts) fills in behind it. */
 export function isKnownSkill(term: string): boolean {
-  return SKILL_SET.has(term);
+  return SKILL_SET.has(term) || isDictionarySkill(term);
 }
 
 /**
@@ -264,12 +270,7 @@ export const SYNONYMS: Readonly<Record<string, readonly string[]>> = {
   "lean management": ["lean-management"]
 };
 
-/**
- * Aliases that are also ordinary words. "go" appears in "go-live", "r" in
- * "R&D"; counting them unconditionally turns prose into skills. They only
- * count on a line that also carries technical context.
- */
-export const AMBIGUOUS_TERMS: ReadonlySet<string> = new Set(["go", "r", "c"]);
+export { AMBIGUOUS_TERMS };
 
 const TECH_CONTEXT_RX =
   /\b(api|apis|backend|back-end|service|services|microservice|microservices|server|golang|cloud|docker|kubernetes|container|containers|deploy|deployment|pipeline|pipelines|programming|program|programmer|language|developer|development|software|engineer|engineering|script|scripting|scripts|compiler|build|builds|tool|tools|ggplot|ggplot2|cran|tidyverse|dplyr|shiny|statistic|statistics|statistical|data|model|models|modeling|modelling|etl|analytics|ci\/cd)\b|\bggplot/i;
@@ -294,11 +295,103 @@ const REVERSE_SYNONYMS: ReadonlyMap<string, string> = (() => {
   return map;
 })();
 
+interface DictionaryIndex {
+  readonly terms: ReadonlySet<string>;
+  readonly aliasOf: ReadonlyMap<string, string>;
+  readonly variants: ReadonlyMap<string, readonly string[]>;
+  /** Token-joined surface ("transact sql") of every multi-token term and alias. */
+  readonly phrases: ReadonlyMap<string, string>;
+  readonly maxTokens: number;
+}
+
+function phraseKey(surface: string): string {
+  return tokenize(surface).join(" ");
+}
+
+/**
+ * A dictionary surface the engine will accept. Anything the curated taxonomy
+ * already spells - a term or one of its aliases - stays curated, and the
+ * runtime re-applies the build's guards so a bad rebuild cannot let "go" or a
+ * stopword in.
+ */
+function usableSurface(surface: string, curated: ReadonlySet<string>): boolean {
+  if (surface.length < 3 || curated.has(surface)) return false;
+  if (isAmbiguousTerm(surface) || isStopword(surface) || isJobNoise(surface)) return false;
+  return tokenize(surface).length > 0;
+}
+
+function buildDictionaryIndex(): DictionaryIndex {
+  const curated = new Set<string>([...SKILL_TAXONOMY, ...REVERSE_SYNONYMS.keys()]);
+  const terms = new Set<string>();
+  const aliasOf = new Map<string, string>();
+  const variants = new Map<string, string[]>();
+  const phrases = new Map<string, string>();
+  let maxTokens = 1;
+
+  const claimPhrase = (surface: string, term: string): void => {
+    const key = phraseKey(surface);
+    const width = key.split(" ").length;
+    if (width < 2 || phrases.has(key) || curated.has(key)) return;
+    phrases.set(key, term);
+    maxTokens = Math.max(maxTokens, width);
+  };
+
+  for (const entry of DICTIONARY_ENTRIES) {
+    if (!usableSurface(entry.term, curated) || terms.has(entry.term) || aliasOf.has(entry.term)) {
+      continue;
+    }
+    terms.add(entry.term);
+    claimPhrase(entry.term, entry.term);
+    const spellings = [entry.term];
+    const key = phraseKey(entry.term);
+    if (key !== entry.term) spellings.push(key);
+    for (const alias of entry.aliases) {
+      if (!usableSurface(alias, curated) || terms.has(alias) || aliasOf.has(alias)) continue;
+      aliasOf.set(alias, entry.term);
+      claimPhrase(alias, entry.term);
+      spellings.push(alias);
+    }
+    variants.set(entry.term, spellings.slice(1));
+  }
+
+  return { terms, aliasOf, variants, phrases, maxTokens };
+}
+
+let dictionaryIndex: DictionaryIndex | undefined;
+
+/** Built on first use, after the curated tables it defers to exist. */
+function dictionary(): DictionaryIndex {
+  dictionaryIndex ??= buildDictionaryIndex();
+  return dictionaryIndex;
+}
+
+export function isDictionarySkill(term: string): boolean {
+  return dictionary().terms.has(term);
+}
+
 export function canonicalize(term: string): string {
-  return REVERSE_SYNONYMS.get(term) ?? term;
+  return REVERSE_SYNONYMS.get(term) ?? dictionary().aliasOf.get(term) ?? term;
 }
 
 export function variantsOf(term: string): string[] {
-  const aliases = SYNONYMS[term] ?? [];
+  const aliases = SYNONYMS[term] ?? dictionary().variants.get(term) ?? [];
   return [term, ...aliases];
+}
+
+/**
+ * Multi-word dictionary terms written on one line, as canonical terms. Works
+ * on tokens, so "Transact SQL", "transact-sql" and "Transact-SQL" all land on
+ * the same entry; single words are left to the token pass.
+ */
+export function findDictionaryPhrases(line: string): string[] {
+  const { phrases, maxTokens } = dictionary();
+  const tokens = tokenize(line);
+  const found = new Set<string>();
+  for (let start = 0; start < tokens.length; start += 1) {
+    for (let width = 2; width <= maxTokens && start + width <= tokens.length; width += 1) {
+      const term = phrases.get(tokens.slice(start, start + width).join(" "));
+      if (term !== undefined) found.add(term);
+    }
+  }
+  return [...found];
 }

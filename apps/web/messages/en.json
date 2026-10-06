@@ -111,7 +111,11 @@
     "formatsHeading": "Formats",
     "formats": "The editor imports and exports the <link>JSON Resume</link> format.",
     "contactHeading": "Contact",
-    "contact": "Questions and corrections: <mail>{email}</mail>"
+    "contact": "Questions and corrections: <mail>{email}</mail>",
+    "sourcesHeading": "Data sources",
+    "sourcesBody": "The keyword check also recognises skills from a dictionary compiled from the ESCO classification and the O*NET database, plus a Turkish list we wrote ourselves. We filtered and shortened both sources; <changes>the list of changes</changes> is public. The credits below use the wording the licensors require.",
+    "escoCredit": "This service uses the <esco>ESCO classification</esco> of the European Commission.",
+    "onetCredit": "This page includes information from the <onet>O*NET 31.0 Database</onet> by the U.S. Department of Labor, Employment and Training Administration (USDOL/ETA). Used under the <license>CC BY 4.0</license> license. O*NET® is a trademark of USDOL/ETA. ATS readability has modified all or some of this information. USDOL/ETA has not approved, endorsed, or tested these modifications."
   },
   "faq": {
     "title": "Frequently asked questions",

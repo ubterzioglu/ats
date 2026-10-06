@@ -48,7 +48,11 @@ const EVERY_LOCALE: readonly string[] = [
   "aiStatus.size",
   "fixDrafts.quantifyToken",
   // "Blog" is the standard word in German and Turkish as well.
-  "blog.title"
+  "blog.title",
+  // Licence credits quoted in the wording ESCO and O*NET prescribe, which is
+  // English; the surrounding about.sourcesBody is translated.
+  "about.escoCredit",
+  "about.onetCredit"
 ];
 
 const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {

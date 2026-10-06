@@ -10,9 +10,11 @@ import { lineSection, sectionRanges } from "./sections";
 import { isJobNoise, isStopword, JOB_POSTING_NOISE } from "./stopwords";
 import {
   MULTI_WORD_SKILLS,
+  SKILL_SET,
   SKILL_TAXONOMY,
   SYNONYMS,
   canonicalize,
+  findDictionaryPhrases,
   hasTechContext,
   isAmbiguousTerm,
   isKnownSkill
@@ -225,7 +227,7 @@ function discoverTerms(
     const trimmed = raw.replace(/^[^\p{L}\d]+|[.,;:!?]+$/gu, "");
     if (trimmed.length < 2) return;
     const term = trimmed.includes(" ")
-      ? PHRASE_ALIASES.get(trimmed.toLowerCase()) ?? trimmed.toLowerCase()
+      ? PHRASE_ALIASES.get(trimmed.toLowerCase()) ?? canonicalize(trimmed.toLowerCase())
       : canonicalize(trimmed.toLowerCase());
     if (known(term)) return;
     discovered.set(term, { tier, minFrequency });
@@ -381,7 +383,9 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
   for (const phrase of phrases) {
     for (const word of phrase.split(" ")) {
       const nested = candidates.get(word);
-      if (nested && !isKnownSkill(word)) candidates.delete(word);
+      // Only a curated skill survives inside a phrase: "github" from the
+      // dictionary would otherwise double-count "GitHub Actions".
+      if (nested && !SKILL_SET.has(word)) candidates.delete(word);
     }
   }
 
@@ -424,6 +428,13 @@ function baselineTerms(context: ScoreContext): KeywordTerm[] {
       if (isAmbiguousTerm(token) && !contextual) continue;
       if (found.some((entry) => entry.term === term)) continue;
       found.push({ term, weight: 1, hits: countOccurrences(context.lower, term, context.language) });
+    }
+    // Dictionary phrases are looked up by token n-grams rather than one
+    // pattern per entry: thousands of entries, one pass per line.
+    for (const term of findDictionaryPhrases(line)) {
+      if (found.some((entry) => entry.term === term)) continue;
+      const hits = countOccurrences(context.lower, term, context.language);
+      found.push({ term, weight: 1, hits: Math.max(1, hits) });
     }
   }
 

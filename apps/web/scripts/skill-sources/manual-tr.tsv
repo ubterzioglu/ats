@@ -1,0 +1,502 @@
+# Hand-made Turkish CV skill list (source tag: manual-tr).
+# Columns: Turkish term <TAB> English cross-reference <TAB> optional extra aliases separated by "|".
+# Terms are lowercase standard Turkish usage. The build script adds the ASCII-folded spelling
+# ("proje yonetimi") as an alias, because many CVs are typed without Turkish characters.
+# Lines starting with # are comments.
+
+# software and IT
+yazılım geliştirme	software development
+yazılım mühendisliği	software engineering
+web geliştirme	web development
+mobil uygulama geliştirme	mobile application development	mobil uygulama
+ön yüz geliştirme	frontend development	önyüz geliştirme
+arka uç geliştirme	backend development
+nesne yönelimli programlama	object-oriented programming
+fonksiyonel programlama	functional programming
+veritabanı yönetimi	database management
+veritabanı tasarımı	database design
+ilişkisel veritabanı	relational database
+sistem yönetimi	system administration
+ağ yönetimi	network administration
+ağ güvenliği	network security
+siber güvenlik	cyber security
+bilgi güvenliği	information security
+sızma testi	penetration testing
+güvenlik duvarı	firewall
+bulut bilişim	cloud computing
+sanallaştırma	virtualization
+sunucu yönetimi	server administration
+yazılım mimarisi	software architecture
+mikroservis mimarisi	microservice architecture
+sürüm kontrolü	version control	versiyon kontrolü
+sürekli entegrasyon	continuous integration
+sürekli teslimat	continuous delivery
+kod gözden geçirme	code review
+hata ayıklama	debugging
+birim testi	unit testing	birim testleri
+entegrasyon testi	integration testing	entegrasyon testleri
+kabul testi	acceptance testing	kullanıcı kabul testi
+fonksiyonel test	functional testing	fonksiyonel testler
+manuel test	manual testing	manuel testler
+otomasyon testi	automation testing	otomasyon testleri
+test senaryosu	test scenario	test senaryoları
+test yönetimi	test management
+hata yönetimi	defect management
+yazılım test	software testing	yazılım testi
+yazılım kalite güvencesi	software quality assurance
+gereksinim analizi	requirements analysis
+iş analizi	business analysis
+sistem analizi	systems analysis
+teknik dokümantasyon	technical documentation
+kullanıcı dokümantasyonu	user documentation
+yapay sinir ağları	artificial neural networks
+derin öğrenme	deep learning
+görüntü işleme	image processing
+bilgisayarlı görü	computer vision
+büyük veri	big data
+veri madenciliği	data mining
+veri analizi	data analysis	veri analizleri
+veri analitiği	data analytics
+veri bilimi	data science
+veri görselleştirme	data visualization	veri görselleştirmesi
+veri modelleme	data modeling
+veri tabanı yönetimi	database management
+veri entegrasyonu	data integration
+veri yönetişimi	data governance
+veri kalitesi	data quality
+istatistiksel analiz	statistical analysis
+regresyon analizi	regression analysis
+zaman serisi analizi	time series analysis
+raporlama araçları	reporting tools
+dashboard tasarımı	dashboard design
+gömülü sistemler	embedded systems
+gömülü yazılım	embedded software
+mikrodenetleyici programlama	microcontroller programming
+plc programlama	plc programming
+scada sistemleri	scada systems
+robotik süreç otomasyonu	robotic process automation
+nesnelerin interneti	internet of things
+oyun geliştirme	game development
+kullanıcı arayüzü tasarımı	user interface design	arayüz tasarımı
+kullanıcı deneyimi tasarımı	user experience design
+grafik tasarım	graphic design
+web tasarımı	web design
+mobil tasarım	mobile design
+teknik destek	technical support
+bilgi işlem	information technology	bilgi teknolojileri
+yardım masası	help desk
+son kullanıcı desteği	end user support
+donanım bakımı	hardware maintenance
+ağ kurulumu	network installation
+active directory yönetimi	active directory administration
+e-posta sunucu yönetimi	email server administration
+yedekleme ve kurtarma	backup and recovery
+felaket kurtarma	disaster recovery
+iş sürekliliği	business continuity
+kvkk	turkish personal data protection law	kişisel verilerin korunması kanunu|kişisel verilerin korunması
+bilgi güvenliği yönetim sistemi	information security management system
+erp sistemleri	erp systems
+sap kullanıcısı	sap user
+logo tiger	logo tiger erp
+logo go	logo go erp
+netsis	netsis erp
+mikro yazılım	mikro accounting software
+e-fatura	e-invoice	e fatura
+e-arşiv	e-archive invoice	e-arşiv fatura
+e-defter	e-ledger
+e-irsaliye	e-dispatch note
+
+# data entry and office
+ofis programları	office software	ofis uygulamaları
+microsoft ofis	microsoft office	ms ofis
+ileri düzey excel	advanced excel	ileri seviye excel
+pivot tablo	pivot table	pivot tablolar
+düşeyara	vlookup
+makro yazımı	macro writing
+veri girişi	data entry
+evrak takibi	document tracking
+arşiv yönetimi	records management	arşivleme
+yazışma kuralları	business correspondence	resmi yazışma
+sekreterya	secretarial work	sekreterlik
+ön büro	front office	önbüro
+randevu yönetimi	appointment scheduling
+toplantı organizasyonu	meeting organization
+hızlı klavye kullanımı	fast typing	10 parmak klavye
+
+# project and process management
+proje planlama	project planning
+proje koordinasyonu	project coordination
+program yönetimi	program management
+portföy yönetimi	portfolio management
+risk yönetimi	risk management
+değişim yönetimi	change management
+süreç yönetimi	process management
+süreç iyileştirme	process improvement
+iş süreçleri yönetimi	business process management
+iş süreçleri analizi	business process analysis
+kalite yönetimi	quality management
+toplam kalite yönetimi	total quality management
+kalite yönetim sistemi	quality management system
+kalite kontrol	quality control
+kalite güvence	quality assurance
+yalın üretim	lean manufacturing
+yalın yönetim	lean management
+sürekli iyileştirme	continuous improvement
+kök neden analizi	root cause analysis
+hata türü ve etkileri analizi	failure mode and effects analysis
+istatistiksel proses kontrol	statistical process control
+çevik proje yönetimi	agile project management
+çevik yazılım geliştirme	agile software development
+paydaş yönetimi	stakeholder management
+kaynak planlaması	resource planning
+kapasite planlama	capacity planning	kapasite planlaması
+performans yönetimi	performance management
+hedef yönetimi	management by objectives
+stratejik planlama	strategic planning
+iş geliştirme	business development
+iş planı hazırlama	business plan writing
+fizibilite analizi	feasibility analysis	fizibilite çalışması
+maliyet analizi	cost analysis
+maliyet kontrolü	cost control
+bütçe yönetimi	budget management
+bütçe kontrolü	budget control
+ihale yönetimi	tender management	ihale süreçleri
+ihale dosyası hazırlama	tender preparation
+sözleşme yönetimi	contract management
+iç denetim	internal audit
+dış denetim	external audit
+iç kontrol	internal control
+uyum yönetimi	compliance management
+kurumsal yönetim	corporate governance
+kurumsal risk yönetimi	enterprise risk management
+
+# finance and accounting
+genel muhasebe	general accounting
+maliyet muhasebesi	cost accounting
+yönetim muhasebesi	management accounting
+finansal muhasebe	financial accounting
+mali tablolar	financial statements	finansal tablolar
+mali analiz	financial analysis
+finansal planlama	financial planning
+finansal modelleme	financial modeling
+finansal raporlama	financial reporting
+konsolidasyon	financial consolidation	konsolide raporlama
+nakit akış yönetimi	cash flow management	nakit yönetimi
+nakit akış tablosu	cash flow statement
+bilanço analizi	balance sheet analysis
+gelir tablosu	income statement
+vergi beyannameleri	tax returns	beyanname hazırlama
+kdv beyannamesi	vat return
+muhtasar beyanname	withholding tax return
+kurumlar vergisi	corporate income tax
+gelir vergisi	income tax
+vergi mevzuatı	tax legislation
+transfer fiyatlandırması	transfer pricing
+tek düzen hesap planı	uniform chart of accounts
+tfrs	turkish financial reporting standards	türkiye finansal raporlama standartları
+ufrs	international financial reporting standards
+bağımsız denetim	independent audit
+hesap mutabakatı	account reconciliation	cari hesap mutabakatı
+cari hesap takibi	accounts tracking	cari takip
+banka mutabakatı	bank reconciliation
+borç takibi	accounts payable tracking
+alacak takibi	accounts receivable tracking
+tahsilat yönetimi	collections management	tahsilat takibi
+fatura kesimi	invoicing	faturalama
+ödeme planlaması	payment planning
+sabit kıymet takibi	fixed asset accounting	demirbaş takibi
+amortisman hesaplama	depreciation calculation
+stok muhasebesi	inventory accounting
+dış ticaret muhasebesi	foreign trade accounting
+yatırım analizi	investment analysis
+kredi analizi	credit analysis
+kredi riski	credit risk
+risk analizi	risk analysis
+hazine yönetimi	treasury management
+fon yönetimi	fund management
+sermaye piyasaları	capital markets
+smmm	certified public accountant	serbest muhasebeci mali müşavir
+ymm	sworn financial advisor	yeminli mali müşavir
+spk lisansı	capital markets board licence	spk lisansları
+bordrolama	payroll processing	bordro hazırlama|bordro işlemleri
+sgk işlemleri	social security procedures	sgk bildirgeleri
+puantaj takibi	timesheet tracking	puantaj
+
+# human resources
+insan kaynakları yönetimi	human resources management	ik yönetimi
+işe alım	recruitment	işe alım süreçleri
+yetenek yönetimi	talent management
+yetenek kazanımı	talent acquisition
+mülakat teknikleri	interview techniques
+yetkinlik bazlı mülakat	competency-based interview
+eğitim ve gelişim	training and development
+eğitim planlama	training planning
+oryantasyon programı	onboarding program	oryantasyon eğitimi
+performans değerlendirme	performance appraisal
+ücret yönetimi	compensation management
+yan haklar yönetimi	benefits administration
+özlük işlemleri	personnel administration	personel özlük işlemleri
+iş hukuku	labor law	iş kanunu
+çalışan bağlılığı	employee engagement
+çalışan ilişkileri	employee relations
+organizasyonel gelişim	organizational development
+kariyer planlama	career planning
+yedekleme planlaması	succession planning
+iş sağlığı ve güvenliği	occupational health and safety	isg
+risk değerlendirmesi	risk assessment
+iş güvenliği uzmanlığı	occupational safety specialist	iş güvenliği uzmanı
+
+# sales, marketing and customer
+satış yönetimi	sales management
+saha satışı	field sales
+kurumsal satış	corporate sales
+bayi yönetimi	dealer management
+kanal yönetimi	channel management
+müşteri ilişkileri	customer relations
+müşteri hizmetleri	customer service
+müşteri memnuniyeti	customer satisfaction
+müşteri deneyimi	customer experience
+müşteri kazanımı	customer acquisition
+müşteri portföy yönetimi	customer portfolio management
+anahtar müşteri yönetimi	key account management
+satış sonrası hizmetler	after-sales service	satış sonrası destek
+çağrı merkezi	call center	çağrı merkezi yönetimi
+şikayet yönetimi	complaint management
+pazar araştırması	market research
+pazar analizi	market analysis
+rakip analizi	competitor analysis
+dijital pazarlama	digital marketing
+sosyal medya yönetimi	social media management
+sosyal medya pazarlaması	social media marketing
+içerik pazarlaması	content marketing
+içerik üretimi	content creation
+e-posta pazarlaması	email marketing
+arama motoru optimizasyonu	search engine optimization
+performans pazarlaması	performance marketing
+marka yönetimi	brand management
+ürün yönetimi	product management
+kategori yönetimi	category management
+fiyatlandırma stratejisi	pricing strategy
+kampanya yönetimi	campaign management
+etkinlik yönetimi	event management	etkinlik organizasyonu
+halkla ilişkiler	public relations
+kurumsal iletişim	corporate communications
+reklam yönetimi	advertising management
+metin yazarlığı	copywriting
+e-ticaret yönetimi	e-commerce management	e-ticaret
+pazaryeri yönetimi	marketplace management
+perakende yönetimi	retail management
+mağaza yönetimi	store management
+görsel düzenleme	visual merchandising
+satış tahminleme	sales forecasting
+crm yönetimi	crm management
+
+# logistics, supply chain, trade
+tedarik zinciri yönetimi	supply chain management
+satın alma yönetimi	purchasing management
+tedarikçi yönetimi	supplier management
+tedarikçi değerlendirme	supplier evaluation
+stratejik satın alma	strategic sourcing
+stok kontrolü	inventory control	stok takibi
+depo operasyonları	warehouse operations
+sevkiyat planlama	shipment planning	sevkiyat planlaması
+rota planlama	route planning
+dağıtım yönetimi	distribution management
+filo yönetimi	fleet management
+dış ticaret	foreign trade
+ithalat işlemleri	import operations
+ihracat işlemleri	export operations
+gümrük mevzuatı	customs legislation
+gümrük işlemleri	customs procedures
+akreditif	letter of credit
+teslim şekilleri	incoterms
+konşimento	bill of lading
+navlun yönetimi	freight management
+deniz yolu taşımacılığı	sea freight
+kara yolu taşımacılığı	road freight	karayolu taşımacılığı
+hava kargo	air cargo
+intermodal taşımacılık	intermodal transport
+forklift kullanımı	forklift operation	forklift ehliyeti
+src belgesi	src certificate	src belgeleri
+üretim planlama	production planning
+malzeme ihtiyaç planlaması	material requirements planning
+talep tahmini	demand forecasting
+
+# production, engineering, quality
+üretim yönetimi	production management
+üretim mühendisliği	production engineering
+endüstri mühendisliği	industrial engineering
+makine mühendisliği	mechanical engineering
+elektrik mühendisliği	electrical engineering
+elektronik mühendisliği	electronics engineering
+inşaat mühendisliği	civil engineering
+kimya mühendisliği	chemical engineering
+bilgisayar mühendisliği	computer engineering
+proses mühendisliği	process engineering
+bakım yönetimi	maintenance management
+önleyici bakım	preventive maintenance	planlı bakım
+kestirimci bakım	predictive maintenance
+toplam verimli bakım	total productive maintenance
+iş etüdü	work study
+zaman etüdü	time study
+verimlilik analizi	productivity analysis
+hat dengeleme	line balancing
+teknik resim	technical drawing
+teknik resim okuma	technical drawing reading
+katı modelleme	solid modeling
+sonlu elemanlar analizi	finite element analysis
+hesaplamalı akışkanlar dinamiği	computational fluid dynamics
+cnc programlama	cnc programming
+cnc operatörlüğü	cnc operation
+kaynak teknolojisi	welding technology
+kalıp tasarımı	mold design
+ürün tasarımı	product design
+ürün geliştirme	product development
+ar-ge	research and development	araştırma geliştirme
+prototip geliştirme	prototyping
+malzeme bilimi	materials science
+ölçüm ve kalibrasyon	measurement and calibration	kalibrasyon
+tahribatsız muayene	non-destructive testing
+giriş kalite kontrol	incoming quality control
+proses kalite kontrol	process quality control
+ppap	production part approval process
+apqp	advanced product quality planning
+iso 9001	iso 9001 quality management
+iso 14001	iso 14001 environmental management
+iso 45001	iso 45001 occupational health and safety
+ohsas 18001	ohsas 18001
+haccp	hazard analysis and critical control points
+gmp	good manufacturing practice	iyi üretim uygulamaları
+5s uygulamaları	5s methodology
+kaizen çalışmaları	kaizen activities
+altı sigma	six sigma
+yeşil kuşak	green belt	six sigma yeşil kuşak
+kara kuşak	black belt	six sigma kara kuşak
+enerji yönetimi	energy management
+çevre yönetimi	environmental management
+atık yönetimi	waste management
+yenilenebilir enerji	renewable energy
+güneş enerjisi sistemleri	solar energy systems
+otomasyon sistemleri	automation systems
+endüstriyel otomasyon	industrial automation
+elektrik tesisatı	electrical installation
+pano tasarımı	electrical panel design
+hidrolik sistemler	hydraulic systems
+pnömatik sistemler	pneumatic systems
+iklimlendirme sistemleri	hvac systems	ısıtma soğutma havalandırma
+mekanik tesisat	mechanical installation
+
+# construction and architecture
+şantiye yönetimi	construction site management	şantiye şefliği
+hakediş hazırlama	progress payment preparation	hakediş
+metraj hesabı	quantity takeoff	metraj
+keşif hazırlama	cost estimate preparation
+yapı denetimi	building inspection
+statik hesap	structural analysis	statik proje
+betonarme tasarım	reinforced concrete design
+çelik yapı tasarımı	steel structure design
+mimari proje	architectural design	mimari tasarım
+iç mimari	interior architecture	iç mimarlık
+peyzaj tasarımı	landscape design
+kentsel planlama	urban planning
+harita mühendisliği	geomatics engineering
+coğrafi bilgi sistemleri	geographic information systems
+tapu işlemleri	land registry procedures
+yapı malzemeleri	building materials
+
+# health care
+hasta bakımı	patient care
+yoğun bakım	intensive care	yoğun bakım hemşireliği
+acil servis	emergency department	acil servis hemşireliği
+ameliyathane hemşireliği	operating room nursing
+temel yaşam desteği	basic life support
+ileri yaşam desteği	advanced life support
+ilaç uygulama	medication administration	ilaç uygulaması
+damar yolu açma	intravenous cannulation
+kan alma	blood sampling
+yara bakımı	wound care
+enfeksiyon kontrolü	infection control
+sterilizasyon	sterilization
+hasta kabul	patient admission	hasta kayıt
+tıbbi sekreterlik	medical secretarial work	tıbbi sekreter
+tıbbi dokümantasyon	medical documentation
+tıbbi cihaz	medical devices	tıbbi cihazlar
+klinik araştırma	clinical research	klinik araştırmalar
+iyi klinik uygulamalar	good clinical practice
+farmakovijilans	pharmacovigilance
+ruhsatlandırma	regulatory affairs	ruhsat işlemleri
+hasta güvenliği	patient safety
+evde bakım	home care
+yaşlı bakımı	elderly care
+fizik tedavi	physical therapy	fizyoterapi
+diyetisyenlik	dietetics	beslenme danışmanlığı
+laboratuvar analizleri	laboratory analysis	laboratuvar teknikleri
+radyoloji	radiology
+sağlık yönetimi	healthcare management	hastane yönetimi
+hbys	hospital information management system	hastane bilgi yönetim sistemi
+medula	medula provision system	medula provizyon sistemi
+e-nabız	e-nabiz health record system
+
+# law and public sector
+sözleşme hazırlama	contract drafting
+hukuki danışmanlık	legal consultancy
+dava takibi	litigation management
+icra takibi	enforcement proceedings	icra işlemleri
+ticaret hukuku	commercial law
+borçlar hukuku	law of obligations
+rekabet hukuku	competition law
+kişisel verilerin korunması	personal data protection
+uyap	national judiciary informatics system
+kamu ihale kanunu	public procurement law	kamu ihale mevzuatı
+ekap	electronic public procurement platform
+mevzuat takibi	regulatory monitoring
+
+# education and social
+eğitim tasarımı	instructional design
+müfredat geliştirme	curriculum development
+ders planı hazırlama	lesson planning
+ölçme ve değerlendirme	assessment and evaluation
+uzaktan eğitim	distance learning
+özel eğitim	special education
+rehberlik ve psikolojik danışmanlık	guidance and counseling
+sınıf yönetimi	classroom management
+çocuk gelişimi	child development
+sosyal hizmet	social work
+proje yazımı	grant writing	hibe proje yazımı
+ab projeleri	eu projects	ab proje yönetimi
+yazılı çeviri	written translation
+ardıl çeviri	consecutive interpreting
+simultane çeviri	simultaneous interpreting
+redaksiyon	proofreading
+
+# hospitality and services
+otel yönetimi	hotel management	otelcilik
+kat hizmetleri	housekeeping
+yiyecek içecek yönetimi	food and beverage management
+mutfak yönetimi	kitchen management
+rezervasyon yönetimi	reservation management	rezervasyon sistemleri
+misafir ilişkileri	guest relations
+turizm yönetimi	tourism management
+tur operasyonu	tour operations	tur operasyonları
+bilet satışı	ticketing	biletleme
+kasa işlemleri	cash register operations	kasa yönetimi
+gıda güvenliği	food safety
+hijyen eğitimi	hygiene training	hijyen belgesi
+
+# tools and certificates commonly written in Turkish CVs
+autocad çizim	autocad drafting
+netcad	netcad gis
+ide yapı	ideyapi structural software	idecad
+sta4cad	sta4cad structural software
+probina	probina structural software
+eta yazılımı	eta software
+tekla structures	tekla structures
+mikro muhasebe	mikro accounting software
+zirve muhasebe	zirve accounting software
+luca muhasebe	luca accounting software
+paraşüt muhasebe	parasut accounting software
+akınsoft	akinsoft erp
+ehliyet b sınıfı	driving licence class b	b sınıfı ehliyet|b sınıfı sürücü belgesi
+mesleki yeterlilik belgesi	vocational qualification certificate	myk belgesi
+psikoteknik belgesi	psychotechnical certificate
+pedagojik formasyon	pedagogical formation certificate
