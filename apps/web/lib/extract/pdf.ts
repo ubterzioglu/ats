@@ -75,7 +75,8 @@ export async function extractPdf(file: File): Promise<ExtractionResult> {
   pdfjs.GlobalWorkerOptions.workerSrc = WORKER_SRC;
 
   const data = new Uint8Array(await file.arrayBuffer());
-  const document = await pdfjs.getDocument({ data }).promise;
+  const loadingTask = pdfjs.getDocument({ data });
+  const document = await loadingTask.promise;
 
   try {
     const pages: string[] = [];
@@ -129,6 +130,7 @@ export async function extractPdf(file: File): Promise<ExtractionResult> {
       warning
     };
   } finally {
-    await document.destroy();
+    // pdfjs 6 removed PDFDocumentProxy.destroy; the loading task owns teardown.
+    await loadingTask.destroy();
   }
 }

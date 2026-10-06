@@ -2,7 +2,7 @@
 
 What is left to do, grouped into batches. Research, prompts and analysis already delivered are left out. The reasoning behind each item lives in the older notes: `engine-strengthening-plan.md`, `research-priority-list.md`, `help-assistant-suggestions.md`. The step-by-step brief for the help bubble is `help-assistant-improvement-brief.md`.
 
-Status: A1, A2, A3, A4, A7, B6, C1, C5 done. Nothing below has been implemented or approved.
+Status: A1, A2, A3, A4, A7, B6, C1, C5 done. D6: `pdfjs-dist` done. Nothing below has been implemented or approved.
 
 ## Rules for every batch
 
@@ -142,6 +142,7 @@ All of it keeps the score deterministic.
 
 ### D6. Dependency upgrades (S/M, separate PRs)
 - `@huggingface/transformers` 3.8 to 4.x and `pdfjs-dist` 5.4 to 6.x, each with the existing tests.
+- `pdfjs-dist` 6.4 done. 6.0 removed `PDFDocumentProxy.destroy`; `lib/extract/pdf.ts` now tears down through the loading task. 6.0 also raised the minimum browsers to Chrome 125 / Safari 18. Checked with the node extraction tests and once in headless Chromium against the copied worker.
 
 Do not use: open-resume, pyresparser, mupdf, scribe.js-ocr (copyleft), Lightcast Open Skills (non-commercial), scraped real-CV datasets.
 

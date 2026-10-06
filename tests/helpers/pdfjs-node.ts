@@ -58,7 +58,7 @@ globals.DOMMatrix ??= DOMMatrixStub;
 globals.Path2D ??= Path2DStub;
 
 /**
- * pdfjs-dist 5.x uses the Uint8Array hex/base64 methods that this Node
+ * pdfjs-dist (5.x and 6.x) uses the Uint8Array hex/base64 methods that this Node
  * runtime does not ship yet. The worker only needs them for document
  * fingerprints and data URLs, so a straightforward polyfill keeps the modern
  * build usable headless instead of switching the whole suite to the legacy
