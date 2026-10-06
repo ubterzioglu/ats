@@ -8,6 +8,7 @@ import { createServiceClient } from "@/lib/supabase/client";
 import { deleteFromDrive } from "@/lib/drive/client";
 import { removeCvFile } from "@/lib/supabase/storage";
 import { deleteSubmissionRow } from "@/lib/supabase/submissions";
+import { deleteProfile } from "@/lib/supabase/profile";
 
 export async function deleteAccount() {
   const user = await requireUser();
@@ -52,6 +53,12 @@ export async function deleteAccount() {
 
   if (reportsError) {
     console.error("[account] failed to delete reports", reportsError);
+  }
+
+  // Delete profile
+  const profileResult = await deleteProfile(user.id);
+  if (!profileResult.ok && profileResult.reason !== "env-missing") {
+    console.error("[account] failed to delete profile", profileResult.reason);
   }
 
   // Delete the auth user

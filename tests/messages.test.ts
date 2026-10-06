@@ -80,7 +80,8 @@ const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
     "admin.filters.band",
     "admin.table.band",
     "admin.table.drive",
-    "nav.kvkk"
+    "nav.kvkk",
+    "account.fieldName"
   ])
 };
 

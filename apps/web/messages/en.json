@@ -356,8 +356,23 @@
   "account": {
     "heading": "Your account",
     "lede": "Manage your account settings here.",
+    "profileHeading": "Profile",
+    "profileEmpty": "Analyze a CV to populate your profile.",
+    "profileSave": "Save profile",
+    "profileSaved": "Profile saved",
+    "profileError": "Could not save profile",
+    "sectionBasics": "Basic information",
+    "sectionWork": "Work experience",
+    "sectionEducation": "Education",
+    "sectionSkills": "Skills",
+    "sectionLanguages": "Languages",
+    "fieldName": "Name",
+    "fieldEmail": "Email",
+    "fieldPhone": "Phone",
+    "fieldLocation": "Location",
+    "fieldSummary": "Summary",
     "dangerZone": "Danger zone",
-    "deleteWarning": "Deleting your account removes all your submissions and reports. This cannot be undone.",
+    "deleteWarning": "Deleting your account removes all your submissions, reports and profile. This cannot be undone.",
     "deleteAccount": "Delete my account"
   },
   "notFound": {
@@ -845,13 +860,15 @@
       "item4": "File name, type, size, and upload time",
       "item5": "Account email if you are logged in",
       "item6": "One-way hash derived from your IP address (IP address itself is not stored) to prevent abuse",
-      "item7": "Analytics and cookie data if you consent"
+      "item7": "Analytics and cookie data if you consent",
+      "item8": "Profile data you confirm from CV analyses (name, contact, experience, education, skills, languages)"
     },
     "section3": {
       "title": "3. Processing Purposes",
       "item1": "Providing the CV analysis service",
       "item2": "Ensuring service security and preventing abuse",
-      "item3": "Responding to your requests"
+      "item3": "Responding to your requests",
+      "item4": "Managing your profile and CV builder data"
     },
     "section4": {
       "title": "4. Legal Basis",
@@ -866,7 +883,7 @@
     },
     "section6": {
       "title": "6. Retention Period",
-      "content": "Your CV, extracted text, and analysis results are stored for 12 months from the upload date and then automatically deleted. You can request earlier deletion."
+      "content": "Your CV, extracted text, and analysis results are stored for 12 months from the upload date and then automatically deleted. Your profile data is stored until you delete your account. You can request earlier deletion."
     },
     "section7": {
       "title": "7. Your Rights (Article 11)",
@@ -895,14 +912,16 @@
       "item3": "Analysis results (scores and findings)",
       "item4": "File name, type, size, and upload time",
       "item5": "Account email if you are logged in",
-      "item6": "One-way hash derived from your IP address (IP address itself is not stored) to prevent abuse"
+      "item6": "One-way hash derived from your IP address (IP address itself is not stored) to prevent abuse",
+      "item7": "Profile data you confirm from CV analyses (name, contact, experience, education, skills, languages)"
     },
     "section3": {
       "title": "3. Processing Purposes",
       "item1": "Providing the CV analysis service (Art. 6(1)(b) GDPR)",
       "item2": "Ensuring service security and preventing abuse (Art. 6(1)(f) GDPR)",
       "item3": "Responding to your requests (Art. 6(1)(c) GDPR)",
-      "item4": "Analytics with your consent (Art. 6(1)(a) GDPR)"
+      "item4": "Analytics with your consent (Art. 6(1)(a) GDPR)",
+      "item5": "Managing your profile and CV builder data (Art. 6(1)(b) GDPR)"
     },
     "section4": {
       "title": "4. Data Recipients",
@@ -918,7 +937,7 @@
     },
     "section6": {
       "title": "6. Retention Period",
-      "content": "Your CV, extracted text, and analysis results are stored for 12 months from the upload date and then automatically deleted from all storage locations. You can request earlier deletion."
+      "content": "Your CV, extracted text, and analysis results are stored for 12 months from the upload date and then automatically deleted from all storage locations. Your profile data is stored until you delete your account. You can request earlier deletion."
     },
     "section7": {
       "title": "7. Automated Decision-Making",
@@ -962,5 +981,21 @@
       "account": "No. The analysis itself needs no account. An account is only needed to save share links.",
       "contact": "You can reach us at {email}."
     }
+  },
+  "profile": {
+    "importHeading": "Add to profile",
+    "importDescription": "Extract information from this CV and save it to your profile.",
+    "importReviewDescription": "Review the extracted information and choose what to save.",
+    "extractButton": "Extract information",
+    "sectionBasics": "Basic information (name, contact, summary)",
+    "sectionWork": "Work experience",
+    "sectionEducation": "Education",
+    "sectionSkills": "Skills",
+    "sectionLanguages": "Languages",
+    "needsReview": "Needs review",
+    "saveToProfile": "Save to profile",
+    "cancel": "Cancel",
+    "savedMessage": "Saved to your profile",
+    "errorMessage": "Could not save to profile"
   }
 }

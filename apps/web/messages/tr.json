@@ -356,8 +356,23 @@
   "account": {
     "heading": "Hesabınız",
     "lede": "Hesap ayarlarınızı buradan yönetin.",
+    "profileHeading": "Profil",
+    "profileEmpty": "Profilinizi doldurmak için bir CV analiz edin.",
+    "profileSave": "Profili kaydet",
+    "profileSaved": "Profil kaydedildi",
+    "profileError": "Profil kaydedilemedi",
+    "sectionBasics": "Temel bilgiler",
+    "sectionWork": "İş deneyimi",
+    "sectionEducation": "Eğitim",
+    "sectionSkills": "Beceriler",
+    "sectionLanguages": "Diller",
+    "fieldName": "Ad",
+    "fieldEmail": "E-posta",
+    "fieldPhone": "Telefon",
+    "fieldLocation": "Konum",
+    "fieldSummary": "Özet",
     "dangerZone": "Tehlikeli bölge",
-    "deleteWarning": "Hesabınızı silmek tüm gönderilerinizi ve raporlarınızı kaldırır. Bu geri alınamaz.",
+    "deleteWarning": "Hesabınızı silmek tüm gönderilerinizi, raporlarınızı ve profilinizi kaldırır. Bu işlem geri alınamaz.",
     "deleteAccount": "Hesabımı sil"
   },
   "notFound": {
@@ -845,13 +860,15 @@
       "item4": "Dosya adı, türü, boyutu ve yükleme zamanı",
       "item5": "Giriş yapmışsanız hesap e-postası",
       "item6": "IP adresinizden türetilen tek yönlü özet değer (IP adresinin kendisi saklanmaz)",
-      "item7": "Onay verirseniz analitik ve çerez verileri"
+      "item7": "Onay verirseniz analitik ve çerez verileri",
+      "item8": "CV analizlerinden onayladığınız profil verileri (ad, iletişim, deneyim, eğitim, beceriler, diller)"
     },
     "section3": {
       "title": "3. İşleme Amaçları",
       "item1": "CV analiz hizmetinin sunulması",
       "item2": "Hizmet güvenliğinin sağlanması ve kötüye kullanımın önlenmesi",
-      "item3": "Taleplerinizin yanıtlanması"
+      "item3": "Taleplerinizin yanıtlanması",
+      "item4": "Profil yönetimi ve CV oluşturucu verileri"
     },
     "section4": {
       "title": "4. Hukuki Sebep",
@@ -866,7 +883,7 @@
     },
     "section6": {
       "title": "6. Saklama Süresi",
-      "content": "CV'niz, çıkarılan metin ve analiz sonuçları yükleme tarihinden itibaren 12 ay saklanır ve ardından otomatik olarak silinir. Daha erken silme talebinde bulunabilirsiniz."
+      "content": "CV'niz, çıkarılan metin ve analiz sonuçları yükleme tarihinden itibaren 12 ay saklanır ve ardından otomatik olarak silinir. Profil verileriniz hesabınızı silene kadar saklanır. Daha erken silme talebinde bulunabilirsiniz."
     },
     "section7": {
       "title": "7. Haklarınız (Madde 11)",
@@ -895,14 +912,16 @@
       "item3": "Analiz sonuçları (puanlar ve bulgular)",
       "item4": "Dosya adı, türü, boyutu ve yükleme zamanı",
       "item5": "Giriş yapmışsanız hesap e-postası",
-      "item6": "IP adresinizden türetilen tek yönlü özet değer (IP adresinin kendisi saklanmaz)"
+      "item6": "IP adresinizden türetilen tek yönlü özet değer (IP adresinin kendisi saklanmaz)",
+      "item7": "CV analizlerinden onayladığınız profil verileri (ad, iletişim, deneyim, eğitim, beceriler, diller)"
     },
     "section3": {
       "title": "3. İşleme Amaçları",
       "item1": "CV analiz hizmetinin sunulması (GDPR Madde 6(1)(b))",
       "item2": "Hizmet güvenliğinin sağlanması ve kötüye kullanımın önlenmesi (GDPR Madde 6(1)(f))",
       "item3": "Taleplerinizin yanıtlanması (GDPR Madde 6(1)(c))",
-      "item4": "Onayınızla analitik (GDPR Madde 6(1)(a))"
+      "item4": "Onayınızla analitik (GDPR Madde 6(1)(a))",
+      "item5": "Profil yönetimi ve CV oluşturucu verileri (GDPR Madde 6(1)(b))"
     },
     "section4": {
       "title": "4. Veri Alıcıları",
@@ -918,7 +937,7 @@
     },
     "section6": {
       "title": "6. Saklama Süresi",
-      "content": "CV'niz, çıkarılan metin ve analiz sonuçları yükleme tarihinden itibaren 12 ay saklanır ve ardından tüm depolama konumlarından otomatik olarak silinir. Daha erken silme talebinde bulunabilirsiniz."
+      "content": "CV'niz, çıkarılan metin ve analiz sonuçları yükleme tarihinden itibaren 12 ay saklanır ve ardından tüm depolama konumlarından otomatik olarak silinir. Profil verileriniz hesabınızı silene kadar saklanır. Daha erken silme talebinde bulunabilirsiniz."
     },
     "section7": {
       "title": "7. Otomatik Karar Alma",
@@ -962,5 +981,21 @@
       "account": "Hayır. Analizin kendisi hesap gerektirmez. Hesap yalnızca paylaşım bağlantılarını kaydetmek için gereklidir.",
       "contact": "Bize {email} adresinden ulaşabilirsiniz."
     }
+  },
+  "profile": {
+    "importHeading": "Profile ekle",
+    "importDescription": "Bu CV'den bilgileri çıkarın ve profilinize kaydedin.",
+    "importReviewDescription": "Çıkarılan bilgileri inceleyin ve neyi kaydedeceğinizi seçin.",
+    "extractButton": "Bilgileri çıkar",
+    "sectionBasics": "Temel bilgiler (ad, iletişim, özet)",
+    "sectionWork": "İş deneyimi",
+    "sectionEducation": "Eğitim",
+    "sectionSkills": "Beceriler",
+    "sectionLanguages": "Diller",
+    "needsReview": "İnceleme gerekli",
+    "saveToProfile": "Profile kaydet",
+    "cancel": "İptal",
+    "savedMessage": "Profilinize kaydedildi",
+    "errorMessage": "Profile kaydedilemedi"
   }
 }

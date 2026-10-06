@@ -19,3 +19,13 @@ SELECT has_function_privilege('authenticated', 'public.purge_expired_ats_reports
 
 -- 5. Service role çağırabilir mi? (true beklenir)
 SELECT has_function_privilege('service_role', 'public.purge_expired_ats_reports()', 'execute') AS service_role_can_execute;
+
+-- 6. Profiles tablosu var mı ve RLS açık mı?
+SELECT relname, relrowsecurity 
+FROM pg_class 
+WHERE relname = 'profiles';
+
+-- 7. Profiles policy var mı? (0 beklenir, service-role only)
+SELECT count(*) 
+FROM pg_policies 
+WHERE tablename = 'profiles';

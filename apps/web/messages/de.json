@@ -356,8 +356,23 @@
   "account": {
     "heading": "Ihr Konto",
     "lede": "Verwalten Sie hier Ihre Kontoeinstellungen.",
+    "profileHeading": "Profil",
+    "profileEmpty": "Analysieren Sie einen CV, um Ihr Profil auszufüllen.",
+    "profileSave": "Profil speichern",
+    "profileSaved": "Profil gespeichert",
+    "profileError": "Profil konnte nicht gespeichert werden",
+    "sectionBasics": "Grundinformationen",
+    "sectionWork": "Berufserfahrung",
+    "sectionEducation": "Bildung",
+    "sectionSkills": "Fähigkeiten",
+    "sectionLanguages": "Sprachen",
+    "fieldName": "Name",
+    "fieldEmail": "E-Mail",
+    "fieldPhone": "Telefon",
+    "fieldLocation": "Standort",
+    "fieldSummary": "Zusammenfassung",
     "dangerZone": "Gefahrenzone",
-    "deleteWarning": "Das Löschen Ihres Kontos entfernt alle Ihre Einreichungen und Berichte. Dies kann nicht rückgängig gemacht werden.",
+    "deleteWarning": "Das Löschen Ihres Kontos entfernt alle Ihre Einreichungen, Berichte und Ihr Profil. Dies kann nicht rückgängig gemacht werden.",
     "deleteAccount": "Mein Konto löschen"
   },
   "notFound": {
@@ -845,13 +860,15 @@
       "item4": "Dateiname, Typ, Größe und Upload-Zeit",
       "item5": "Konto-E-Mail falls Sie angemeldet sind",
       "item6": "Einweg-Hash abgeleitet von Ihrer IP-Adresse (IP-Adresse selbst wird nicht gespeichert) zur Missbrauchsprävention",
-      "item7": "Analytik- und Cookie-Daten wenn Sie zustimmen"
+      "item7": "Analytik- und Cookie-Daten wenn Sie zustimmen",
+      "item8": "Profildaten, die Sie aus CV-Analysen bestätigen (Name, Kontakt, Erfahrung, Bildung, Fähigkeiten, Sprachen)"
     },
     "section3": {
       "title": "3. Verarbeitungszwecke",
       "item1": "Bereitstellung des CV-Analyse-Dienstes",
       "item2": "Sicherstellung der Dienstesicherheit und Verhinderung von Missbrauch",
-      "item3": "Beantwortung Ihrer Anfragen"
+      "item3": "Beantwortung Ihrer Anfragen",
+      "item4": "Profilverwaltung und CV-Builder-Daten"
     },
     "section4": {
       "title": "4. Rechtsgrundlage",
@@ -866,7 +883,7 @@
     },
     "section6": {
       "title": "6. Aufbewahrungsfrist",
-      "content": "Ihr CV, extrahierter Text und Analyseergebnisse werden 12 Monate ab dem Upload-Datum gespeichert und dann automatisch gelöscht. Sie können eine frühere Löschung beantragen."
+      "content": "Ihr CV, extrahierter Text und Analyseergebnisse werden 12 Monate ab dem Upload-Datum gespeichert und dann automatisch gelöscht. Ihre Profildaten werden gespeichert, bis Sie Ihr Konto löschen. Sie können eine frühere Löschung beantragen."
     },
     "section7": {
       "title": "7. Ihre Rechte (Artikel 11)",
@@ -895,14 +912,16 @@
       "item3": "Analyseergebnisse (Punktzahlen und Befunde)",
       "item4": "Dateiname, Typ, Größe und Upload-Zeit",
       "item5": "Konto-E-Mail falls Sie angemeldet sind",
-      "item6": "Einweg-Hash abgeleitet von Ihrer IP-Adresse (IP-Adresse selbst wird nicht gespeichert)"
+      "item6": "Einweg-Hash abgeleitet von Ihrer IP-Adresse (IP-Adresse selbst wird nicht gespeichert)",
+      "item7": "Profildaten, die Sie aus CV-Analysen bestätigen (Name, Kontakt, Erfahrung, Bildung, Fähigkeiten, Sprachen)"
     },
     "section3": {
       "title": "3. Verarbeitungszwecke",
       "item1": "Bereitstellung des CV-Analyse-Dienstes (DSGVO Art. 6(1)(b))",
       "item2": "Sicherstellung der Dienstesicherheit und Verhinderung von Missbrauch (DSGVO Art. 6(1)(f))",
       "item3": "Beantwortung Ihrer Anfragen (DSGVO Art. 6(1)(c))",
-      "item4": "Analytik mit Ihrer Einwilligung (DSGVO Art. 6(1)(a))"
+      "item4": "Analytik mit Ihrer Einwilligung (DSGVO Art. 6(1)(a))",
+      "item5": "Profilverwaltung und CV-Builder-Daten (DSGVO Art. 6(1)(b))"
     },
     "section4": {
       "title": "4. Datenempfänger",
@@ -918,7 +937,7 @@
     },
     "section6": {
       "title": "6. Aufbewahrungsfrist",
-      "content": "Ihr CV, extrahierter Text und Analyseergebnisse werden 12 Monate ab dem Upload-Datum gespeichert und dann automatisch von allen Speicherorten gelöscht. Sie können eine frühere Löschung beantragen."
+      "content": "Ihr CV, extrahierter Text und Analyseergebnisse werden 12 Monate ab dem Upload-Datum gespeichert und dann automatisch von allen Speicherorten gelöscht. Ihre Profildaten werden gespeichert, bis Sie Ihr Konto löschen. Sie können eine frühere Löschung beantragen."
     },
     "section7": {
       "title": "7. Automatisierte Entscheidungsfindung",
@@ -938,5 +957,45 @@
     "version": "Einwilligungsversion: {version}",
     "accept": "Analytik akzeptieren",
     "reject": "Ablehnen"
+  },
+  "help": {
+    "scrollTop": "Nach oben scrollen",
+    "bubbleLabel": "Seitenhelfer",
+    "panelTitle": "Häufig gestellte Fragen",
+    "inputLabel": "Frage stellen",
+    "inputPlaceholder": "Frage eingeben",
+    "send": "Senden",
+    "close": "Schliessen",
+    "unknown": "Dazu habe ich keine Antwort. Versuchen Sie einen der Vorschläge oben oder",
+    "contactLink": "kontaktieren Sie uns",
+    "starters": {
+      "upload": "Wird mein CV gespeichert?",
+      "score": "Wie wird die Punktzahl berechnet?",
+      "formats": "Welche Formate werden unterstützt?",
+      "retention": "Wie lange werden meine Daten aufbewahrt?",
+      "free": "Ist der Dienst kostenlos?",
+      "account": "Brauche ich ein Konto?"
+    },
+    "answers": {
+      "free": "Ja. Die Analyse läuft in Ihrem Browser und benötigt kein Konto. Ein Konto wird nur zum Speichern von Freigabelinks benötigt.",
+      "account": "Nein. Die Analyse selbst benötigt kein Konto. Ein Konto wird nur zum Speichern von Freigabelinks benötigt.",
+      "contact": "Sie können uns unter {email} erreichen."
+    }
+  },
+  "profile": {
+    "importHeading": "Zum Profil hinzufügen",
+    "importDescription": "Informationen aus diesem CV extrahieren und in Ihrem Profil speichern.",
+    "importReviewDescription": "Überprüfen Sie die extrahierten Informationen und wählen Sie aus, was gespeichert werden soll.",
+    "extractButton": "Informationen extrahieren",
+    "sectionBasics": "Grundinformationen (Name, Kontakt, Zusammenfassung)",
+    "sectionWork": "Berufserfahrung",
+    "sectionEducation": "Bildung",
+    "sectionSkills": "Fähigkeiten",
+    "sectionLanguages": "Sprachen",
+    "needsReview": "Überprüfung erforderlich",
+    "saveToProfile": "Im Profil speichern",
+    "cancel": "Abbrechen",
+    "savedMessage": "In Ihrem Profil gespeichert",
+    "errorMessage": "Konnte nicht im Profil gespeichert werden"
   }
 }
