@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
+import { logout } from "@/app/[locale]/login/actions";
 import { cx } from "@/lib/ui";
 
 import { LanguageSwitcher } from "../language-switcher";
@@ -19,6 +20,15 @@ const LINKS = [
   { href: "/applications", key: "applications" },
   { href: "/about", key: "about" }
 ] as const;
+
+const PROTECTED_PATHS = new Set(["/analyze", "/builder", "/applications"]);
+
+function truncateEmail(email: string): string {
+  const [local, domain] = email.split("@");
+  if (!local || !domain) return email;
+  if (local.length <= 3) return `${local}@${domain}`;
+  return `${local.slice(0, 3)}...@${domain}`;
+}
 
 /**
  * A floating pill that sticks to the top. It is clear over the hero and takes
@@ -34,7 +44,7 @@ export function NavBar() {
   const brand = useTranslations("brand");
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [signedIn, setSignedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -44,22 +54,31 @@ export function NavBar() {
   }, []);
 
   useEffect(() => {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+    if (!supabaseUrl || !supabaseKey) return;
+
+    const supabase = createBrowserClient(supabaseUrl, supabaseKey);
+
     async function checkSession() {
       try {
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-        if (!supabaseUrl || !supabaseKey) return;
-        const supabase = createBrowserClient(supabaseUrl, supabaseKey);
         const { data } = await supabase.auth.getSession();
-        setSignedIn(data.session !== null);
+        setUserEmail(data.session?.user?.email ?? null);
       } catch {
-        setSignedIn(false);
+        setUserEmail(null);
       }
     }
     void checkSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserEmail(session?.user?.email ?? null);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const onLanding = pathname === "/";
+  const signedIn = userEmail !== null;
 
   return (
     <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-6">
@@ -96,8 +115,10 @@ export function NavBar() {
         >
           {LINKS.map((link) => {
             const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+            const isProtected = PROTECTED_PATHS.has(link.href);
+            const href = !signedIn && isProtected ? `/login?next=${encodeURIComponent(link.href)}` : link.href;
             return (
-              <GhostLink key={link.href} href={link.href} active={active}>
+              <GhostLink key={link.href} href={href} active={active}>
                 {link.key === "applications" ? common("applications") : nav(link.key)}
               </GhostLink>
             );
@@ -107,15 +128,22 @@ export function NavBar() {
         <div className="flex items-center gap-1">
           <LanguageSwitcher />
           {signedIn ? (
-            <form action="/auth/logout" method="POST">
-              <button type="submit" className="btn-quiet">
-                {common("signOut")}
-              </button>
-            </form>
+            <div className="flex items-center gap-2">
+              <span className="text-caption text-ash">{truncateEmail(userEmail!)}</span>
+              <form action={logout}>
+                <button type="submit" className="btn-quiet">
+                  {common("signOut")}
+                </button>
+              </form>
+            </div>
           ) : onLanding ? null : (
             <GhostLink href="/login">{common("signIn")}</GhostLink>
           )}
-          {onLanding ? <PrimaryButton href="/analyze">{nav("cta")}</PrimaryButton> : null}
+          {onLanding ? (
+            <PrimaryButton href={signedIn ? "/analyze" : "/login?next=/analyze"}>
+              {nav("cta")}
+            </PrimaryButton>
+          ) : null}
         </div>
       </div>
     </header>
