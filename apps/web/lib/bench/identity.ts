@@ -17,7 +17,7 @@ import type { Finding } from "@/types/analysis";
  * did with the document that led there.
  */
 
-export type FieldId = "name" | "email" | "phone" | "location" | "profile";
+export type FieldId = "name" | "email" | "phone" | "location" | "profile" | "title" | "employer" | "dateRange" | "school";
 
 export type FieldStatus = "found" | "suspect" | "missing";
 
@@ -52,7 +52,11 @@ const FINDING_ID: Readonly<Record<FieldId, string>> = {
   email: "contact.email",
   phone: "contact.phone",
   location: "contact.location",
-  profile: "contact.profile"
+  profile: "contact.profile",
+  title: "structure.experience",
+  employer: "structure.experience",
+  dateRange: "structure.experience",
+  school: "structure.education"
 };
 
 export const FIELD_ORDER: readonly FieldId[] = [
@@ -60,7 +64,11 @@ export const FIELD_ORDER: readonly FieldId[] = [
   "email",
   "phone",
   "location",
-  "profile"
+  "profile",
+  "title",
+  "employer",
+  "dateRange",
+  "school"
 ];
 
 const EMAIL = /[\p{L}\d._%+-]+@[\p{L}\d.-]+\.[\p{L}]{2,}/u;
@@ -145,6 +153,98 @@ function locateLocation(lines: readonly string[], email: Located | null): Locate
   return null;
 }
 
+/** The most recent job title from the experience section. */
+function locateTitle(lines: readonly string[]): Located | null {
+  let inExperience = false;
+  for (const [index, line] of lines.entries()) {
+    const lower = line.toLowerCase();
+    if (/^(experience|berufserfahrung|i̇ş deneyimi|iş tecrübesi|deneyim)/i.test(lower)) {
+      inExperience = true;
+      continue;
+    }
+    if (inExperience && /^(education|bildung|eğitim|okul)/i.test(lower)) {
+      break;
+    }
+    if (inExperience && line.trim().length > 0 && !/^\d/.test(line)) {
+      // First non-date line in experience section is likely the title
+      if (line.length < 100 && !line.includes("@")) {
+        return { value: line.trim(), line: index };
+      }
+    }
+  }
+  return null;
+}
+
+/** The most recent employer from the experience section. */
+function locateEmployer(lines: readonly string[]): Located | null {
+  let inExperience = false;
+  let foundTitle = false;
+  for (const [index, line] of lines.entries()) {
+    const lower = line.toLowerCase();
+    if (/^(experience|berufserfahrung|i̇ş deneyimi|iş tecrübesi|deneyim)/i.test(lower)) {
+      inExperience = true;
+      continue;
+    }
+    if (inExperience && /^(education|bildung|eğitim|okul)/i.test(lower)) {
+      break;
+    }
+    if (inExperience && line.trim().length > 0) {
+      if (!foundTitle && !/^\d/.test(line) && line.length < 100) {
+        foundTitle = true;
+        continue;
+      }
+      if (foundTitle && !/^\d/.test(line) && line.length < 100 && !line.includes("@")) {
+        return { value: line.trim(), line: index };
+      }
+    }
+  }
+  return null;
+}
+
+/** The most recent date range from the experience section. */
+function locateDateRange(lines: readonly string[]): Located | null {
+  const DATE_RANGE = /\b(19|20)\d{2}\s*[-–—]\s*((19|20)\d{2}|present|heute|halen|devam|heute|bugün|present|current)\b/i;
+  let inExperience = false;
+  for (const [index, line] of lines.entries()) {
+    const lower = line.toLowerCase();
+    if (/^(experience|berufserfahrung|i̇ş deneyimi|iş tecrübesi|deneyim)/i.test(lower)) {
+      inExperience = true;
+      continue;
+    }
+    if (inExperience && /^(education|bildung|eğitim|okul)/i.test(lower)) {
+      break;
+    }
+    if (inExperience) {
+      const match = line.match(DATE_RANGE);
+      if (match) {
+        return { value: match[0].trim(), line: index };
+      }
+    }
+  }
+  return null;
+}
+
+/** The most recent school from the education section. */
+function locateSchool(lines: readonly string[]): Located | null {
+  let inEducation = false;
+  for (const [index, line] of lines.entries()) {
+    const lower = line.toLowerCase();
+    if (/^(education|bildung|eğitim|okul|akademik)/i.test(lower)) {
+      inEducation = true;
+      continue;
+    }
+    if (inEducation && /^(skills|kenntnisse|beceri|yetkinlik)/i.test(lower)) {
+      break;
+    }
+    if (inEducation && line.trim().length > 0 && !/^\d/.test(line)) {
+      if (line.length < 100 && !line.includes("@")) {
+        return { value: line.trim(), line: index };
+      }
+    }
+  }
+  return null;
+}
+
 /** The near-miss that explains a field the engine refused to count. */
 function nearMiss(id: FieldId, lines: readonly string[]): string | null {
   const raw = lines.join("\n");
@@ -168,6 +268,10 @@ function nearMiss(id: FieldId, lines: readonly string[]): string | null {
       });
     return line?.trim() ?? null;
   }
+  // For experience and education fields, no near-miss logic
+  if (id === "title" || id === "employer" || id === "dateRange" || id === "school") {
+    return null;
+  }
   return null;
 }
 
@@ -185,7 +289,11 @@ export function readIdentity(
     email: email ?? locateAcrossLines(lines, EMAIL),
     phone: locatePhone(lines) ?? locateAcrossLines(lines, PHONE),
     profile: locate(lines, PROFILE) ?? locateAcrossLines(lines, PROFILE),
-    location: locateLocation(lines, email)
+    location: locateLocation(lines, email),
+    title: locateTitle(lines),
+    employer: locateEmployer(lines),
+    dateRange: locateDateRange(lines),
+    school: locateSchool(lines)
   };
 
   return FIELD_ORDER.map((id): IdentityField => {

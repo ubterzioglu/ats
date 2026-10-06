@@ -482,7 +482,11 @@
       "email": "E-posta",
       "phone": "Telefon",
       "location": "Konum",
-      "profile": "Profil"
+      "profile": "Profil",
+      "title": "Son unvan",
+      "employer": "İşveren",
+      "dateRange": "Tarih aralığı",
+      "school": "Okul"
     },
     "status": {
       "found": "bulundu",

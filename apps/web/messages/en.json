@@ -482,7 +482,11 @@
       "email": "Email",
       "phone": "Phone",
       "location": "Location",
-      "profile": "Profile"
+      "profile": "Profile",
+      "title": "Latest title",
+      "employer": "Employer",
+      "dateRange": "Date range",
+      "school": "School"
     },
     "status": {
       "found": "found",
