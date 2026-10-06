@@ -87,7 +87,13 @@ const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
     "admin.table.band",
     "admin.table.drive",
     "nav.kvkk",
-    "account.fieldName"
+    "account.fieldName",
+    // Admin column labels German shares with English.
+    "admin.audit.admin",
+    "admin.audit.detail",
+    "admin.requests.status",
+    "admin.detail.subtitle",
+    "admin.detail.metadata"
   ])
 };
 
