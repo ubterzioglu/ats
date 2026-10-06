@@ -969,6 +969,9 @@
     "close": "Close",
     "unknown": "I do not have an answer for that. Try one of the suggestions above, or",
     "contactLink": "contact us",
+    "feedbackHelpful": "That helped",
+    "feedbackNotHelpful": "Did not help",
+    "feedbackThanks": "Thank you for the feedback",
     "starters": {
       "upload": "Is my CV stored?",
       "score": "How is the score calculated?",

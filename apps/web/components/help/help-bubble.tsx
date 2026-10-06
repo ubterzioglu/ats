@@ -15,9 +15,67 @@ interface Turn {
   readonly role: "user" | "assistant";
   readonly content: string;
   readonly href?: string;
+  readonly id?: string;
+}
+
+interface FeedbackState {
+  readonly [turnId: string]: "helpful" | "not-helpful";
 }
 
 const PANEL_ID = "help-panel";
+const STORAGE_KEY = "help-feedback";
+const UNANSWERED_KEY = "help-unanswered";
+const MAX_UNANSWERED = 20;
+
+function safeGetStorage(): Storage | null {
+  try {
+    return window.sessionStorage;
+  } catch {
+    return null;
+  }
+}
+
+function loadFeedback(): FeedbackState {
+  const storage = safeGetStorage();
+  if (!storage) return {};
+  try {
+    const raw = storage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveFeedback(state: FeedbackState): void {
+  const storage = safeGetStorage();
+  if (!storage) return;
+  try {
+    storage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // Storage full or unavailable - silently ignore
+  }
+}
+
+function loadUnanswered(): string[] {
+  const storage = safeGetStorage();
+  if (!storage) return [];
+  try {
+    const raw = storage.getItem(UNANSWERED_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveUnanswered(questions: string[]): void {
+  const storage = safeGetStorage();
+  if (!storage) return;
+  try {
+    storage.setItem(UNANSWERED_KEY, JSON.stringify(questions.slice(-MAX_UNANSWERED)));
+  } catch {
+    // Storage full or unavailable - silently ignore
+  }
+}
 
 export function HelpBubble() {
   const t = useTranslations("help");
@@ -27,9 +85,15 @@ export function HelpBubble() {
   const [turns, setTurns] = useState<readonly Turn[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
+  const [feedback, setFeedback] = useState<FeedbackState>({});
+  const [feedbackThanks, setFeedbackThanks] = useState<string | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const logRef = useRef<HTMLOListElement>(null);
+
+  useEffect(() => {
+    setFeedback(loadFeedback());
+  }, []);
 
   const resolve = useCallback(
     (key: string) => {
@@ -88,23 +152,35 @@ export function HelpBubble() {
     const trimmed = question.trim();
     if (trimmed.length === 0 || busy || !answererRef.current) return;
 
+    const turnId = `turn-${Date.now()}`;
     setInput("");
     setBusy(true);
-    setTurns((current) => [...current, { role: "user", content: trimmed }]);
+    setTurns((current) => [...current, { role: "user", content: trimmed, id: `${turnId}-user` }]);
 
     const answer: HelpAnswer = await answererRef.current.answer(trimmed);
     if (answer.kind === "text") {
       setTurns((current) => [
         ...current,
-        { role: "assistant", content: answer.text, ...(answer.href ? { href: answer.href } : {}) }
+        { role: "assistant", content: answer.text, ...(answer.href ? { href: answer.href } : {}), id: turnId }
       ]);
     } else {
       setTurns((current) => [
         ...current,
-        { role: "assistant", content: t("unknown"), href: "/about" }
+        { role: "assistant", content: t("unknown"), href: "/about", id: turnId }
       ]);
+      const unanswered = loadUnanswered();
+      unanswered.push(trimmed);
+      saveUnanswered(unanswered);
     }
     setBusy(false);
+  }
+
+  function handleFeedback(turnId: string, value: "helpful" | "not-helpful") {
+    const updated = { ...feedback, [turnId]: value };
+    setFeedback(updated);
+    saveFeedback(updated);
+    setFeedbackThanks(turnId);
+    setTimeout(() => setFeedbackThanks(null), 2000);
   }
 
   function handleSubmit(event: React.FormEvent) {
@@ -205,6 +281,32 @@ export function HelpBubble() {
                       </Link>
                     ) : null}
                   </p>
+                  {turn.role === "assistant" && turn.id && (
+                    <div className="mt-2 flex items-center gap-2">
+                      {feedback[turn.id] ? (
+                        <span className="text-xs text-muted">
+                          {feedbackThanks === turn.id ? t("feedbackThanks") : null}
+                        </span>
+                      ) : (
+                        <>
+                          <button
+                            type="button"
+                            className="btn-quiet px-2 py-1 text-xs text-action hover:text-action/80"
+                            onClick={() => handleFeedback(turn.id!, "helpful")}
+                          >
+                            {t("feedbackHelpful")}
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-quiet px-2 py-1 text-xs text-muted hover:text-muted/80"
+                            onClick={() => handleFeedback(turn.id!, "not-helpful")}
+                          >
+                            {t("feedbackNotHelpful")}
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  )}
                 </li>
               ))}
             </ol>

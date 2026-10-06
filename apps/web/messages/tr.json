@@ -969,6 +969,9 @@
     "close": "Kapat",
     "unknown": "Bunun için bir cevabım yok. Yukarıdaki önerilerden birini deneyin veya",
     "contactLink": "bizimle iletişime geçin",
+    "feedbackHelpful": "Yardımcı oldu",
+    "feedbackNotHelpful": "Yardımcı olmadı",
+    "feedbackThanks": "Geri bildirim için teşekkürler",
     "starters": {
       "upload": "CV'm saklanıyor mu?",
       "score": "Puan nasıl hesaplanıyor?",
