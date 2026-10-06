@@ -6,18 +6,48 @@ export type { ExtractionResult, ExtractionSource } from "./types";
 
 const DOCX_TYPE = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
+function htmlToText(html: string): string {
+  let text = html;
+  
+  text = text.replace(/<li[^>]*>/gi, "- ");
+  text = text.replace(/<\/li>/gi, "\n");
+  
+  text = text.replace(/<\/td>/gi, "\t");
+  text = text.replace(/<\/th>/gi, "\t");
+  text = text.replace(/<\/tr>/gi, "\n");
+  
+  text = text.replace(/<br\s*\/?>/gi, "\n");
+  text = text.replace(/<\/p>/gi, "\n\n");
+  text = text.replace(/<\/div>/gi, "\n");
+  text = text.replace(/<\/h[1-6]>/gi, "\n\n");
+  
+  text = text.replace(/<[^>]+>/g, "");
+  
+  text = text.replace(/&nbsp;/g, " ");
+  text = text.replace(/&amp;/g, "&");
+  text = text.replace(/&lt;/g, "<");
+  text = text.replace(/&gt;/g, ">");
+  text = text.replace(/&quot;/g, '"');
+  
+  text = text.split("\n").map(line => line.trim()).join("\n");
+  text = text.replace(/\n{3,}/g, "\n\n");
+  
+  return text.trim();
+}
+
 async function extractDocx(file: File): Promise<ExtractionResult> {
   const mammoth = await import("mammoth");
   const arrayBuffer = await file.arrayBuffer();
-  const { value } = await mammoth.extractRawText({ arrayBuffer });
+  const { value: html } = await mammoth.convertToHtml({ arrayBuffer });
+  const text = htmlToText(html);
 
   return {
-    text: value.trim(),
-    pages: Math.max(1, Math.round(value.length / 2600)),
+    text,
+    pages: Math.max(1, Math.round(text.length / 2600)),
     source: "docx",
     fileName: file.name,
     warning:
-      "DOCX was read directly. Most employers receive a PDF, so export to PDF and check that score too."
+      "DOCX was read directly. Headers and footers are not extracted. Most employers receive a PDF, so export to PDF and check that score too."
   };
 }
 
