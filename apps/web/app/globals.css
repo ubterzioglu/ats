@@ -389,10 +389,22 @@ h3.font-normal {
       animation-range: entry 10% cover 45%;
     }
 
+    .break-head {
+      animation: break-travel linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+
     .break-mark {
       animation: break-stamp linear both;
       animation-timeline: view();
-      animation-range: cover 30% cover 55%;
+      animation-range: cover 42% cover 58%;
+    }
+
+    .break-spark {
+      animation: break-spark linear both;
+      animation-timeline: view();
+      animation-range: cover 42% cover 62%;
     }
 
     .stage > svg {
@@ -482,17 +494,36 @@ h3.font-normal {
   }
 }
 
-@keyframes break-stamp {
+@keyframes break-travel {
   from {
-    scale: 0;
-    rotate: -140deg;
-  }
-  60% {
-    scale: 1.25;
+    left: 0%;
+    rotate: -360deg;
   }
   to {
-    scale: 1;
+    left: 100%;
     rotate: 0deg;
+  }
+}
+
+@keyframes break-stamp {
+  50% {
+    scale: 1.5;
+  }
+}
+
+@keyframes break-spark {
+  from {
+    opacity: 0;
+    scale: 0.4;
+    translate: 0 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 1;
+    translate: var(--dx) var(--dy);
   }
 }
 

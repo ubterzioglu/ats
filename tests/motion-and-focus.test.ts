@@ -49,10 +49,13 @@ describe("the animations that exist", () => {
     // scroll-linked motion, all inside prefers-reduced-motion: no-preference.
     // Section transitions: reveal-out and reveal-out-side hand a block off on
     // exit, drift is the picture's parallax, reveal-pop lands the closing
-    // sticker, break-draw and break-stamp are the rule between sections.
+    // sticker, break-draw, break-travel, break-stamp and break-spark are the
+    // scan between sections: beam, star head, landing pop and sparks.
     expect(names).toEqual([
       "break-draw",
+      "break-spark",
       "break-stamp",
+      "break-travel",
       "drift",
       "float",
       "live-sweep",
@@ -82,7 +85,9 @@ describe("the animations that exist", () => {
       "drift",
       "reveal-pop",
       "break-draw",
-      "break-stamp"
+      "break-travel",
+      "break-stamp",
+      "break-spark"
     ]) {
       expect(rule).toMatch(new RegExp(`animation:[^;]*\\b${name}\\b`));
     }
