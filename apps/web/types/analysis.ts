@@ -167,6 +167,12 @@ export interface DocumentStats {
   readonly experienceMonths: number;
 }
 
+export interface Strength {
+  readonly id: string;
+  readonly dimension: string;
+  readonly params: Readonly<Record<string, number | string | readonly string[]>>;
+}
+
 export interface AnalysisResult {
   readonly total: number;
   readonly band: Band;
@@ -181,6 +187,7 @@ export interface AnalysisResult {
   readonly suitability?: readonly SuitabilityCheck[];
   readonly generatedAt: string;
   readonly engineVersion?: string;
+  readonly strengths?: readonly Strength[];
 }
 
 export interface AnalysisInput {

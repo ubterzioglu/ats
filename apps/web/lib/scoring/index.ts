@@ -10,12 +10,14 @@ import { evaluateSuitability } from "./suitability";
 import { clamp } from "./text";
 import { parseJobAd } from "./job-ad";
 import { ENGINE_VERSION, BAND_THRESHOLDS } from "./config";
+import { deriveStrengths } from "./strengths";
 
 export { buildContext } from "./context";
 export { extractJobKeywords, countOccurrences } from "./keywords";
 export { detectSections } from "./sections";
 export { normalizeDocument } from "./text";
 export { ENGINE_VERSION } from "./config";
+export { deriveStrengths } from "./strengths";
 
 const SEVERITY_ORDER: Readonly<Record<Severity, number>> = {
   critical: 0,
@@ -66,6 +68,8 @@ export function analyzeCv(input: AnalysisInput): AnalysisResult {
 
   const [band, bandLabel] = bandFor(total);
 
+  const strengths = deriveStrengths(context, dimensions, findings, keywords.report);
+
   return {
     total,
     band,
@@ -79,6 +83,7 @@ export function analyzeCv(input: AnalysisInput): AnalysisResult {
     jobAd: parsedJobAd,
     suitability: parsedJobAd ? evaluateSuitability(context, parsedJobAd, keywords.report) : undefined,
     generatedAt: new Date().toISOString(),
-    engineVersion: ENGINE_VERSION
+    engineVersion: ENGINE_VERSION,
+    strengths
   };
 }
