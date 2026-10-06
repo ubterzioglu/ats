@@ -23,13 +23,6 @@ const LINKS = [
 
 const PROTECTED_PATHS = new Set(["/analyze", "/builder", "/applications"]);
 
-function truncateEmail(email: string): string {
-  const [local, domain] = email.split("@");
-  if (!local || !domain) return email;
-  if (local.length <= 3) return `${local}@${domain}`;
-  return `${local.slice(0, 3)}...@${domain}`;
-}
-
 /**
  * A floating pill that sticks to the top. It is clear over the hero and takes
  * a black, blurred fill once the page scrolls, so content passing underneath
@@ -134,7 +127,9 @@ export function NavBar() {
           <LanguageSwitcher />
           {signedIn ? (
             <div className="flex items-center gap-2">
-              <span className="text-caption text-ash">{truncateEmail(userEmail!)}</span>
+              <GhostLink href="/account" active={pathname === "/account"}>
+                {nav("profile")}
+              </GhostLink>
               <form action={logout}>
                 <button type="submit" className="btn-quiet">
                   {common("signOut")}

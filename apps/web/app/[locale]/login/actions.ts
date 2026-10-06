@@ -32,7 +32,7 @@ export async function login(formData: FormData) {
 
   revalidatePath("/", "layout");
   const locale = await getLocale();
-  redirect({ href: safeNext(nextString, locale), locale });
+  redirect({ href: safeNext(nextString), locale });
 }
 
 export async function signup(formData: FormData) {

@@ -1,7 +1,9 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { ParticleField } from "@/components/ui/particle-field";
-import { Link } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
+import { safeNext } from "@/lib/auth/routes";
+import { getApiUser } from "@/lib/auth/require-user";
 
 import { login, signup, signInWithGoogle } from "./actions";
 import { isLoginMessageKey } from "./messages";
@@ -12,6 +14,13 @@ interface LoginPageProps {
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const { message: messageKey, next } = await searchParams;
+
+  // Someone already signed in has nothing to do here. The check is the same one
+  // the gate applies, so it cannot send them round in a loop.
+  if (await getApiUser()) {
+    redirect({ href: safeNext(next), locale: await getLocale() });
+  }
+
   const t = await getTranslations("login");
   const brand = await getTranslations("brand");
 

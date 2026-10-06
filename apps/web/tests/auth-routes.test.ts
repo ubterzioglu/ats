@@ -87,137 +87,55 @@ describe("isProtectedPath", () => {
 
 describe("safeNext", () => {
   it("returns /analyze for null", () => {
-    expect(safeNext(null, "en")).toBe("/analyze");
+    expect(safeNext(null)).toBe("/analyze");
   });
 
   it("returns /analyze for undefined", () => {
-    expect(safeNext(undefined, "en")).toBe("/analyze");
+    expect(safeNext(undefined)).toBe("/analyze");
   });
 
   it("returns /analyze for empty string", () => {
-    expect(safeNext("", "en")).toBe("/analyze");
+    expect(safeNext("")).toBe("/analyze");
   });
 
   it("returns /analyze for //evil.com", () => {
-    expect(safeNext("//evil.com", "en")).toBe("/analyze");
+    expect(safeNext("//evil.com")).toBe("/analyze");
   });
 
   it("returns /analyze for https://x", () => {
-    expect(safeNext("https://x", "en")).toBe("/analyze");
+    expect(safeNext("https://x")).toBe("/analyze");
   });
 
   it("returns /analyze for \\x", () => {
-    expect(safeNext("\\x", "en")).toBe("/analyze");
+    expect(safeNext("\\x")).toBe("/analyze");
   });
 
   it("returns /analyze for path without leading slash", () => {
-    expect(safeNext("analyze", "en")).toBe("/analyze");
+    expect(safeNext("analyze")).toBe("/analyze");
   });
 
   it("returns /analyze for /admin", () => {
-    expect(safeNext("/admin", "en")).toBe("/analyze");
+    expect(safeNext("/admin")).toBe("/analyze");
   });
 
   it("returns /analyze for /tr/admin", () => {
-    expect(safeNext("/tr/admin", "en")).toBe("/analyze");
+    expect(safeNext("/tr/admin")).toBe("/analyze");
   });
 
-  it("returns login path with next for /analyze", () => {
-    expect(safeNext("/analyze", "en")).toBe("/login?next=%2Fanalyze");
+  it("keeps a protected path so a signed-in user lands on it, not back on login", () => {
+    expect(safeNext("/analyze")).toBe("/analyze");
   });
 
-  it("returns login path with next for /tr/analyze", () => {
-    expect(safeNext("/tr/analyze", "tr")).toBe("/tr/login?next=%2Ftr%2Fanalyze");
+  it("strips the locale prefix the redirect will add again", () => {
+    expect(safeNext("/tr/analyze")).toBe("/analyze");
+    expect(safeNext("/de/builder")).toBe("/builder");
   });
 
-  it("returns login path with next for /de/builder", () => {
-    expect(safeNext("/de/builder", "de")).toBe("/de/login?next=%2Fde%2Fbuilder");
+  it("returns a non-protected path unchanged", () => {
+    expect(safeNext("/about")).toBe("/about");
   });
 
-  it("returns original path for non-protected path", () => {
-    expect(safeNext("/about", "en")).toBe("/about");
-  });
-
-  it("returns original path for /tr/about", () => {
-    expect(safeNext("/tr/about", "tr")).toBe("/tr/about");
-  });
-});
-
-describe("withLocale", () => {
-  it("returns path without prefix for en (default locale)", () => {
-    expect(withLocale("/login", "en")).toBe("/login");
-  });
-
-  it("returns path with /tr prefix for tr", () => {
-    expect(withLocale("/login", "tr")).toBe("/tr/login");
-  });
-
-  it("returns path with /de prefix for de", () => {
-    expect(withLocale("/login", "de")).toBe("/de/login");
-  });
-});
-
-describe("decideAccess", () => {
-  it("allows when authConfigured is false", () => {
-    const result = decideAccess({
-      pathname: "/analyze",
-      user: null,
-      authConfigured: false
-    });
-    expect(result.action).toBe("allow");
-  });
-
-  it("allows when path is not protected", () => {
-    const result = decideAccess({
-      pathname: "/",
-      user: null,
-      authConfigured: true
-    });
-    expect(result.action).toBe("allow");
-  });
-
-  it("redirects to login when user is null", () => {
-    const result = decideAccess({
-      pathname: "/analyze",
-      user: null,
-      authConfigured: true
-    });
-    expect(result.action).toBe("redirect");
-    if (result.action === "redirect") {
-      expect(result.to).toBe("/login?next=%2Fanalyze");
-    }
-  });
-
-  it("redirects to login when email is not confirmed", () => {
-    const result = decideAccess({
-      pathname: "/analyze",
-      user: { email_confirmed_at: null },
-      authConfigured: true
-    });
-    expect(result.action).toBe("redirect");
-    if (result.action === "redirect") {
-      expect(result.to).toBe("/login?next=%2Fanalyze");
-    }
-  });
-
-  it("redirects to locale-aware login for /tr/analyze", () => {
-    const result = decideAccess({
-      pathname: "/tr/analyze",
-      user: null,
-      authConfigured: true
-    });
-    expect(result.action).toBe("redirect");
-    if (result.action === "redirect") {
-      expect(result.to).toBe("/tr/login?next=%2Ftr%2Fanalyze");
-    }
-  });
-
-  it("allows when user is confirmed", () => {
-    const result = decideAccess({
-      pathname: "/analyze",
-      user: { email_confirmed_at: "2024-01-01T00:00:00Z" },
-      authConfigured: true
-    });
-    expect(result.action).toBe("allow");
+  it("strips the locale from a non-protected path", () => {
+    expect(safeNext("/tr/about")).toBe("/about");
   });
 });

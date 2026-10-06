@@ -19,7 +19,7 @@ export function isProtectedPath(pathname: string): boolean {
   return PROTECTED_PREFIXES.some((prefix) => stripped === prefix || stripped.startsWith(prefix + "/"));
 }
 
-export function safeNext(value: string | null | undefined, locale: string): string {
+export function safeNext(value: string | null | undefined): string {
   if (!value) return "/analyze";
 
   const trimmed = value.trim();
@@ -34,11 +34,9 @@ export function safeNext(value: string | null | undefined, locale: string): stri
   const stripped = stripLocale(trimmed);
   if (stripped.startsWith("/admin")) return "/analyze";
 
-  if (isProtectedPath(trimmed)) {
-    return withLocale("/login", locale) + `?next=${encodeURIComponent(trimmed)}`;
-  }
-
-  return trimmed;
+  // The locale-aware redirect adds the prefix itself, so a path that already
+  // carries one would come out as /tr/tr/analyze.
+  return stripped;
 }
 
 export function withLocale(path: string, locale: string): string {
