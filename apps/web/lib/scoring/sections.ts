@@ -22,21 +22,21 @@ export const SECTION_DEFINITIONS: readonly SectionDefinition[] = [
     label: "Experience",
     core: true,
     pattern:
-      /^(work\s+|professional\s+|relevant\s+|employment\s+)?(experience|history|employment|career\s+history|berufserfahrung|beruflicher\s+werdegang|werdegang|praxiserfahrung|is\s+deneyimi|iş\s+deneyimi|mesleki\s+deneyim|deneyim|calisma\s+gecmisi|çalışma\s+geçmişi)\b/i
+      /^(work\s+|professional\s+|relevant\s+|employment\s+)?(experience|history|employment|career\s+history|berufserfahrung|beruflicher\s+werdegang|werdegang|praxiserfahrung|is\s+deneyimi|iş\s+deneyimi|mesleki\s+deneyim|deneyim|calisma\s+gecmisi|çalışma\s+geçmişi|tecrübe|iş\s+tecrübesi|deneyimler|berufliche\s+erfahrung)\b/i
   },
   {
     id: "education",
     label: "Education",
     core: true,
     pattern:
-      /^(education|academic\s+background|studies|ausbildung|studium|akademischer\s+werdegang|schulbildung|egitim|eğitim|ogrenim|öğrenim)\b/i
+      /^(education|academic\s+background|studies|ausbildung|studium|akademischer\s+werdegang|schulbildung|egitim|eğitim|ogrenim|öğrenim|bildungsweg|schulische\s+ausbildung|academic\s+qualifications)\b/i
   },
   {
     id: "skills",
     label: "Skills",
     core: true,
     pattern:
-      /^(technical\s+|core\s+|key\s+|it[-\s])?(skills|competencies|expertise|tech\s+stack|technologies|toolbox|kenntnisse|faehigkeiten|fähigkeiten|kompetenzen|technische\s+kenntnisse|personal\s+skills|persönliche\s+fähigkeiten|yetenekler|beceriler|yetkinlikler|kişisel\s+beceriler|mesleki\s+beceriler|teknik\s+beceriler)\b/i
+      /^(technical\s+|core\s+|key\s+|it[-\s])?(skills|competencies|expertise|tech\s+stack|technologies|toolbox|kenntnisse|faehigkeiten|fähigkeiten|kompetenzen|technische\s+kenntnisse|personal\s+skills|persönliche\s+fähigkeiten|yetenekler|beceriler|yetkinlikler|kişisel\s+beceriler|mesleki\s+beceriler|teknik\s+beceriler|bilgisayar\s+bilgisi|edv-kenntnisse|fachkenntnisse|technical\s+proficiencies)\b/i
   },
   {
     id: "certifications",
@@ -62,6 +62,12 @@ export const SECTION_DEFINITIONS: readonly SectionDefinition[] = [
     label: "Publications",
     core: false,
     pattern: /^(publications?|talks?|conferences?|veroffentlichungen|veröffentlichungen|yayinlar|yayınlar)\b/i
+  },
+  {
+    id: "internships",
+    label: "Internships",
+    core: false,
+    pattern: /^(internships?|praktika|staj)\b/i
   }
 ];
 
