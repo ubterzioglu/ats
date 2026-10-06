@@ -77,7 +77,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               {t("submit")}
             </button>
 
-            <button formAction={signInWithGoogle} className="btn-quiet" type="button">
+            <button formAction={signInWithGoogle} formNoValidate className="btn-quiet">
               {t("googleSubmit")}
             </button>
 

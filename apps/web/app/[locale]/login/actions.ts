@@ -1,6 +1,8 @@
 "use server";
 
+import type { Route } from "next";
 import { revalidatePath } from "next/cache";
+import { redirect as redirectExternal } from "next/navigation";
 import { getLocale } from "next-intl/server";
 
 import { redirect } from "@/i18n/navigation";
@@ -66,7 +68,9 @@ export async function signInWithGoogle(formData: FormData) {
     return;
   }
 
-  redirect({ href: data.url, locale: await getLocale() });
+  // data.url is Google's consent page, an external address, so it bypasses the
+  // locale-aware redirect.
+  redirectExternal(data.url as Route);
 }
 
 export async function forgotPassword(formData: FormData) {
