@@ -353,6 +353,13 @@
       "linkExpired": "Bu doğrulama bağlantısı artık geçerli değil. Yenisinin gönderilmesi için giriş yapın."
     }
   },
+  "account": {
+    "heading": "Hesabınız",
+    "lede": "Hesap ayarlarınızı buradan yönetin.",
+    "dangerZone": "Tehlikeli bölge",
+    "deleteWarning": "Hesabınızı silmek tüm gönderilerinizi ve raporlarınızı kaldırır. Bu geri alınamaz.",
+    "deleteAccount": "Hesabımı sil"
+  },
   "notFound": {
     "code": "404",
     "title": "Bu sayfa yok.",

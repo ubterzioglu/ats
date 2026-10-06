@@ -353,6 +353,13 @@
       "linkExpired": "Dieser Bestätigungslink gilt nicht mehr. Melden Sie sich an, damit ein neuer verschickt wird."
     }
   },
+  "account": {
+    "heading": "Ihr Konto",
+    "lede": "Verwalten Sie hier Ihre Kontoeinstellungen.",
+    "dangerZone": "Gefahrenzone",
+    "deleteWarning": "Das Löschen Ihres Kontos entfernt alle Ihre Einreichungen und Berichte. Dies kann nicht rückgängig gemacht werden.",
+    "deleteAccount": "Mein Konto löschen"
+  },
   "notFound": {
     "code": "404",
     "title": "Diese Seite gibt es nicht.",

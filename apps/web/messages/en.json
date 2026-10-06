@@ -353,6 +353,13 @@
       "linkExpired": "That confirmation link is no longer valid. Sign in to have a new one sent."
     }
   },
+  "account": {
+    "heading": "Your account",
+    "lede": "Manage your account settings here.",
+    "dangerZone": "Danger zone",
+    "deleteWarning": "Deleting your account removes all your submissions and reports. This cannot be undone.",
+    "deleteAccount": "Delete my account"
+  },
   "notFound": {
     "code": "404",
     "title": "This page does not exist.",

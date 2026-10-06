@@ -30,6 +30,7 @@ export interface HandleSubmissionInput {
   readonly consent: string;
   readonly consentVersion: string;
   readonly ip: string | null;
+  readonly userId?: string;
 }
 
 export type HandleSubmissionOutcome =
@@ -137,6 +138,7 @@ export async function handleSubmission(
     id: submissionId,
     storagePath,
     clientHash: hash ?? undefined,
+    userId: input.userId,
     fileName,
     fileMime,
     fileSize,

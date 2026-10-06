@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { handleSubmission, getClientIp } from "@/lib/cv-submission/handle";
 import { MAX_CV_BYTES } from "@/lib/cv-submission/limits";
+import { getApiUser } from "@/lib/auth/require-user";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,6 +9,11 @@ export const dynamic = "force-dynamic";
 const MAX_REQUEST_SIZE = MAX_CV_BYTES + 1024 * 1024; // 1 MiB overhead for form data
 
 export async function POST(request: NextRequest) {
+  const user = await getApiUser();
+  if (!user) {
+    return NextResponse.json({ error: "auth-required" }, { status: 401 });
+  }
+
   try {
     // A3: Check content-length before parsing
     const contentLength = request.headers.get("content-length");
@@ -67,7 +73,8 @@ export async function POST(request: NextRequest) {
       result,
       consent,
       consentVersion,
-      ip: await getClientIp()
+      ip: await getClientIp(),
+      userId: user.id
     });
 
     if (!outcome.ok) {

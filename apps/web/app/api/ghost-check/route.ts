@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 
 import { performGhostCheck, validateGhostInput } from "@/lib/ghost-check";
+import { getApiUser } from "@/lib/auth/require-user";
 
 export async function POST(request: Request) {
+  const user = await getApiUser();
+  if (!user) {
+    return NextResponse.json({ error: "auth-required" }, { status: 401 });
+  }
+
   let body: unknown;
   try {
     body = await request.json();

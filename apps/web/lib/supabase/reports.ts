@@ -34,7 +34,7 @@ function stripEvidence(result: AnalysisResult): AnalysisResult {
   };
 }
 
-export async function saveReport(result: AnalysisResult): Promise<SaveReportOutcome> {
+export async function saveReport(result: AnalysisResult, userId?: string): Promise<SaveReportOutcome> {
   const supabase = createServiceClient();
   if (!supabase) return { state: "env-missing" };
 
@@ -44,6 +44,7 @@ export async function saveReport(result: AnalysisResult): Promise<SaveReportOutc
   try {
     const { error } = await supabase.from(TABLE).insert({
       token,
+      user_id: userId,
       total: result.total,
       band: result.band,
       language: result.language,

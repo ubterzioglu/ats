@@ -23,26 +23,22 @@ async function siteOrigin(): Promise<string> {
   return `${protocol}://${host}`;
 }
 
-/**
- * Analysis is open to everyone; writing a report to the server is not. The
- * middleware no longer gates `/analyze`, so the sign-in requirement for sharing
- * is enforced here, at the boundary that actually touches the database.
- */
-async function isSignedIn(): Promise<boolean> {
+async function getUserId(): Promise<string | null> {
   try {
     const supabase = await createClient();
     const { data } = await supabase.auth.getUser();
-    return data.user !== null;
+    return data.user?.id ?? null;
   } catch {
-    return false;
+    return null;
   }
 }
 
 export async function createShareLink(result: unknown): Promise<ShareOutcome> {
   if (!isPlausibleResult(result)) return { state: "error" };
-  if (!(await isSignedIn())) return { state: "auth-required" };
+  const userId = await getUserId();
+  if (!userId) return { state: "auth-required" };
 
-  const outcome = await saveReport(result);
+  const outcome = await saveReport(result as AnalysisResult, userId);
   if (outcome.state !== "saved") return outcome;
 
   return { state: "saved", url: `${await siteOrigin()}/r/${outcome.token}` };
