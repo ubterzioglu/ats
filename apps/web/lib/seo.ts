@@ -6,7 +6,7 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
 ).replace(/\/$/, "");
 
-export const PUBLIC_PATHS = ["/", "/about", "/privacy", "/kvkk", "/data-request"] as const;
+export const PUBLIC_PATHS = ["/", "/about", "/privacy", "/kvkk", "/data-request", "/blog"] as const;
 export type PublicPath = (typeof PUBLIC_PATHS)[number];
 
 export const OPEN_GRAPH_LOCALE: Readonly<Record<AppLocale, string>> = {
@@ -171,5 +171,58 @@ export function buildHowToJsonLd(
       name: s.name,
       text: s.text
     }))
+  };
+}
+
+export function buildBlogPostingJsonLd(
+  locale: AppLocale,
+  slug: string,
+  title: string,
+  description: string,
+  publishedAt: string,
+  authorEmail?: string
+): JsonLdNode {
+  const url = `${SITE_URL}/${locale}/blog/${slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    url,
+    datePublished: publishedAt,
+    inLanguage: locale,
+    publisher: { "@id": ORGANIZATION_ID },
+    ...(authorEmail ? { author: { "@type": "Person", email: authorEmail } } : {})
+  };
+}
+
+export function buildBlogBreadcrumbJsonLd(
+  locale: AppLocale,
+  slug: string,
+  title: string
+): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: absoluteUrl(locale, "/")
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: absoluteUrl(locale, "/blog")
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: title,
+        item: `${SITE_URL}/${locale}/blog/${slug}`
+      }
+    ]
   };
 }
