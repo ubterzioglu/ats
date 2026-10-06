@@ -2,7 +2,7 @@
 
 What is left to do, grouped into batches. Research, prompts and analysis already delivered are left out. The reasoning behind each item lives in the older notes: `engine-strengthening-plan.md`, `research-priority-list.md`, `help-assistant-suggestions.md`. The step-by-step brief for the help bubble is `help-assistant-improvement-brief.md`.
 
-Status: A1, A2, A3, A4, A7, B6, C1, C5 done. D6: `pdfjs-dist` done, `@huggingface/transformers` blocked (see D6). Nothing below has been implemented or approved.
+Status: A1, A2, A3, A4, A7, B6, C1, C5, D2 done. D6: `pdfjs-dist` done, `@huggingface/transformers` blocked (see D6). Nothing below has been implemented or approved.
 
 ## Rules for every batch
 
@@ -130,6 +130,7 @@ All of it keeps the score deterministic.
 
 ### D2. Static skill dictionary (M)
 - Compile ESCO (DE/EN, attribution required, no Turkish) and O*NET (CC BY 4.0) into a static JSON at build time; add a hand-made Turkish list; show the attribution text in the interface.
+- Done. `lib/scoring/data/skills.json` (ESCO v1.2.1 knowledge concepts, O*NET 31.0 technology examples, 469 hand-made Turkish terms; 4,059 entries, 70 KB gzipped), built by hand with `scripts/fetch-esco-skills.mjs` and `scripts/build-skill-dictionary.mjs`. The curated taxonomy still wins. Credits on the about page. Sources, licences and the list of changes: `skill-dictionary-sources.md`. Engine 1.3.0. Job ads do not yet extract lowercase multi-word dictionary phrases, and Turkish dictionary phrases match only their written form, not inflected endings.
 
 ### D3. Offline synonym mining and calibration (M)
 - On a developer machine, cluster ad and CV terms with an embedding model to propose synonyms; a person approves them into the static dictionary. Use an LLM as a judge only to review cost weights, and record the outcome. No model at runtime.
