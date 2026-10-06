@@ -6,7 +6,7 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
 ).replace(/\/$/, "");
 
-export const PUBLIC_PATHS = ["/", "/analyze", "/builder", "/about"] as const;
+export const PUBLIC_PATHS = ["/", "/analyze", "/builder", "/about", "/privacy", "/kvkk", "/data-request"] as const;
 export type PublicPath = (typeof PUBLIC_PATHS)[number];
 
 export const OPEN_GRAPH_LOCALE: Readonly<Record<AppLocale, string>> = {
@@ -49,6 +49,7 @@ export function buildOrganizationJsonLd(description: string): JsonLdNode {
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
     name: SITE_ENTITY.name,
+    alternateName: ["affa", "ats free for all"],
     url: SITE_URL,
     description,
     logo: { "@type": "ImageObject", url: `${SITE_URL}${SITE_ENTITY.logoPath}` },

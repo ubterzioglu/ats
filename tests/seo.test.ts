@@ -101,30 +101,35 @@ describe("robots output", () => {
 });
 
 describe("sitemap output", () => {
-  it("has 12 entries with lastModified, 4 language keys each and includes /about", async () => {
+  it("has 21 entries with lastModified, 4 language keys each and includes legal pages", async () => {
     const { default: sitemap } = await import("@/app/sitemap");
     const entries = sitemap();
-    expect(entries).toHaveLength(12);
+    expect(entries).toHaveLength(21);
     const urls = entries.map((e) => e.url);
     expect(urls).toContain(`${SITE_URL}/about`);
     expect(urls).toContain(`${SITE_URL}/tr/about`);
     expect(urls).toContain(`${SITE_URL}/de/about`);
+    expect(urls).toContain(`${SITE_URL}/privacy`);
+    expect(urls).toContain(`${SITE_URL}/kvkk`);
+    expect(urls).toContain(`${SITE_URL}/data-request`);
     for (const entry of entries) {
       expect(Object.keys(entry.alternates!.languages!)).toHaveLength(4);
       expect(entry.url).not.toContain("/applications");
       expect(entry.url).not.toContain("/login");
       expect(entry.url).not.toContain("/r/");
+      expect(entry.url).not.toContain("/admin");
       expect(entry.lastModified).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     }
   });
 });
 
 describe("buildOrganizationJsonLd", () => {
-  it("has the correct @id, name, logo, contactPoint, description and sameAs", () => {
+  it("has the correct @id, name, alternateName, logo, contactPoint, description and sameAs", () => {
     const org = buildOrganizationJsonLd("A test description");
     expect(org["@id"]).toBe(ORGANIZATION_ID);
     expect(org["@type"]).toBe("Organization");
     expect(org.name).toBe(SITE_ENTITY.name);
+    expect(org.alternateName).toEqual(["affa", "ats free for all"]);
     expect(org.url).toBe(SITE_URL);
     expect(org.description).toBe("A test description");
     const logo = org.logo as { readonly url: string };
@@ -309,5 +314,21 @@ describe("home.how section messages", () => {
     const wordCount = body.split(/\s+/).length;
     expect(wordCount).toBeGreaterThanOrEqual(90);
     expect(wordCount).toBeLessThanOrEqual(160);
+  });
+});
+
+describe("notFound message keys", () => {
+  it("all three locales have the required notFound keys", async () => {
+    const en = (await import("@/messages/en.json")).default;
+    const tr = (await import("@/messages/tr.json")).default;
+    const de = (await import("@/messages/de.json")).default;
+    for (const locale of [en, tr, de]) {
+      const notFound = (locale as { notFound: { code: string; title: string; body: string; home: string; analyze: string } }).notFound;
+      expect(notFound.code).toBe("404");
+      expect(notFound.title.trim().length).toBeGreaterThan(0);
+      expect(notFound.body.trim().length).toBeGreaterThan(0);
+      expect(notFound.home.trim().length).toBeGreaterThan(0);
+      expect(notFound.analyze.trim().length).toBeGreaterThan(0);
+    }
   });
 });

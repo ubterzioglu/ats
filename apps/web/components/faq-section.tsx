@@ -27,7 +27,7 @@ export async function FaqSection({ items }: FaqSectionProps) {
             <summary className="cursor-pointer list-none text-body font-normal text-bone">
               {item.question}
             </summary>
-            <p className="mt-3 max-w-lede text-body font-extralight text-mist">{item.answer}</p>
+            <p className="mt-3 text-body font-extralight text-mist">{item.answer}</p>
           </details>
         ))}
       </div>

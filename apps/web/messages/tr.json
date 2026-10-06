@@ -8,6 +8,9 @@
     "analyze": "CV analizi",
     "builder": "CV oluşturucu",
     "about": "Hakkında",
+    "privacy": "Gizlilik",
+    "kvkk": "KVKK",
+    "dataRequest": "Veri Talebi",
     "cta": "CV'nizi analiz edin"
   },
   "languageSwitcher": {
@@ -16,9 +19,9 @@
   "metadata": {
     "defaultTitle": "ATS readability — CV'nizi ayrıştırıcının gördüğü gibi görün",
     "titleTemplate": "%s · ATS readability",
-    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tamamen tarayıcıda çalışır.",
+    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tarayıcınızda puanlanır, 12 ay saklanır.",
     "openGraphTitle": "ATS readability",
-    "openGraphDescription": "CV'nizi ayrıştırıcının gördüğü gibi görün. Hiçbir şey yüklenmez.",
+    "openGraphDescription": "CV'nizi ayrıştırıcının gördüğü gibi görün.",
     "sharedReportTitle": "Paylaşılan rapor"
   },
   "common": {
@@ -33,7 +36,7 @@
     "headline": "CV'niz bir tasarım olarak değil, metin olarak okunur.",
     "lede": "ATS readability, bir CV'yi aday takip sisteminin okuduğu gibi gösteren ücretsiz bir araçtır: metin olarak. Geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
     "cta": "CV'nizi analiz edin",
-    "privacyTag": "Tarayıcınızda okunur, yüklenmez",
+    "privacyTag": "Tarayıcıda puanlanır. 12 ay saklanır.",
     "analyze": {
       "label": "Analiz ve eşleştirme",
       "title": "Kaybedilen her puanın bir adı var.",
@@ -62,14 +65,14 @@
     },
     "how": {
       "title": "Okuma nasıl çalışır",
-      "body": "Okuyucu PDF, DOCX veya düz metin dosyasından metni çıkarır; satırları glif konumlarından yeniden kurduğu için satır sonları ve sütun boşlukları korunur. Bu işaretler bir bölümün nerede bitip diğerinin nerede başladığını gösterir. Metin sonra 100 puanlık beş boyutta puanlanır: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20 ve iletişim 10. Kaybedilen her puan, geldiği satırı ve yerine ne yazılacağını söyleyen adlandırılmış bir bulguya yazılır; bulgular en pahalıdan başlayarak sıralanır. İş ilanı yoksa anahtar kelime boyutu 25 yerine en fazla 20 puan alır ve rapor bunu belirtir. Hepsi tarayıcınızda çalışır."
+      "body": "Okuyucu PDF, DOCX veya düz metin dosyasından metni çıkarır; satırları glif konumlarından yeniden kurduğu için satır sonları ve sütun boşlukları korunur. Bu işaretler bir bölümün nerede bitip diğerinin nerede başladığını gösterir. Metin sonra 100 puanlık beş boyutta puanlanır: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20 ve iletişim 10. Kaybedilen her puan, geldiği satırı ve yerine ne yazılacağını söyleyen adlandırılmış bir bulguya yazılır; bulgular en pahalıdan başlayarak sıralanır. İş ilanı yoksa anahtar kelime boyutu 25 yerine en fazla 20 puan alır ve rapor bunu belirtir. Okuma ve puanlama tarayıcınızda çalışır; CV ardından 12 ay saklanır, gizlilik bildirimine bakın."
     }
   },
   "about": {
     "title": "Hakkında",
     "whatHeading": "Ne yapar",
     "privacyHeading": "Gizlilik",
-    "privacy": "CV'niz tarayıcınızda okunur. Hiçbir şey yüklenmez ve sunucu belgeyi hiç almaz.",
+    "privacy": "CV'niz tarayıcınızda okunur ve puanlanır. Analiz ettiğinizde dosya, metni ve sonuç ayrıca sunucumuzda 12 ay saklanır ve sonra silinir.",
     "limitsHeading": "Sınırlar",
     "formatsHeading": "Biçimler",
     "formats": "Düzenleyici <link>JSON Resume</link> biçimini içe ve dışa aktarır.",
@@ -80,8 +83,8 @@
     "title": "Sık sorulan sorular",
     "items": {
       "upload": {
-        "q": "CV'm yükleniyor mu?",
-        "a": "Hayır. Dosya tarayıcınızda okunur; sunucu belgeyi hiç almaz."
+        "q": "CV'm saklanıyor mu?",
+        "a": "Evet. CV'niz önce tarayıcınızda okunur ve puanlanır. Analiz ettiğinizde dosya, metni ve sonuç sunucumuza gönderilir, 12 ay saklanır ve sonra silinir. Ayrıntılar için gizlilik bildirimine bakın."
       },
       "score": {
         "q": "Puan nasıl hesaplanıyor?",
@@ -106,8 +109,13 @@
     }
   },
   "analyze": {
-    "heading": "Ayrıştırıcı ne alıyor görün",
-    "lede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıdaki metin, bir aday takip sisteminin çıkaracağı metindir — çıkarım yanlış gittiyse düzeltin, sonra ilana karşı puanlayın."
+    "heading": "Ayrıştırıcının ne gördüğünü görün",
+    "lede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıdaki metin, bir aday takip sisteminin çıkaracağı şeydir — çıkarma yanlış gittiyse düzeltin, sonra ilana göre puanlayın.",
+    "consent": {
+      "label": "<kvkk>KVKK bildirimini</kvkk> ve <privacy>gizlilik politikasını</privacy> okudum. CV'min analiz için yükleneceğini, 12 ay saklanacağını ve yurt dışındaki hizmet sağlayıcılara (Google, Supabase) aktarılacağını kabul ediyorum.",
+      "required": "Devam etmek için lütfen şartları kabul edin"
+    },
+    "storedNotice": "{date} tarihine kadar saklanır. Ayrıntılar <privacy>gizlilik politikasında</privacy>."
   },
   "editor": {
     "title": "CV oluştur",
@@ -268,7 +276,7 @@
   },
   "login": {
     "heading": "Giriş yap",
-    "lede": "CV'niz tarayıcınızda okunur ve puanlanır. Hesap yalnızca paylaşım bağlantılarınızı tutar.",
+    "lede": "CV'niz tarayıcınızda okunur ve puanlanır. Hesap yalnızca paylaşım bağlantılarınızı ve saklanan analizlerinizi tutar.",
     "emailLabel": "E-posta",
     "emailPlaceholder": "siz@ornek.com",
     "passwordLabel": "Parola",
@@ -285,9 +293,10 @@
   },
   "notFound": {
     "code": "404",
-    "heading": "Burada bir şey yok",
-    "body": "Paylaşılan bir rapor 30 gün yaşar, sonra kendini siler. Bu ya süresi dolmuş ya da hiç var olmamış.",
-    "cta": "Bir CV analiz et"
+    "title": "Bu sayfa yok.",
+    "body": "Adres yanlış yazılmış ya da sayfa taşınmış olabilir. Paylaşılan rapor bağlantıları da 30 gün sonra çalışmaz.",
+    "home": "Başa dön",
+    "analyze": "CV analiz et"
   },
   "analyzer": {
     "sections": "Bölümler",
@@ -694,5 +703,171 @@
     "practiceNoMatch": "Yanıtınızla yeterince kelime paylaşan kart bulunamadı.",
     "practiceMatchFound": "En uygun kart",
     "practiceOverlap": "{count, plural, one {# ortak kelime} other {# ortak kelime}}"
+  },
+  "admin": {
+    "title": "Yönetim Paneli",
+    "description": "CV gönderilerini, veri taleplerini ve denetim kayıtlarını yönetin",
+    "nav": {
+      "overview": "Genel Bakış",
+      "requests": "Veri Talepleri",
+      "audit": "Denetim Kaydı"
+    },
+    "stats": {
+      "today": "Bugün",
+      "week": "Bu Hafta",
+      "month": "Bu Ay",
+      "total": "Toplam",
+      "avgScore": "Ort Puan",
+      "driveFailures": "Drive Hataları",
+      "openRequests": "Açık Talepler"
+    },
+    "filters": {
+      "search": "Ara",
+      "searchPlaceholder": "Dosya adı veya CV metnine göre ara...",
+      "band": "Bant",
+      "allBands": "Tüm Bantlar",
+      "language": "Dil",
+      "allLanguages": "Tüm Diller",
+      "driveStatus": "Drive Durumu",
+      "allStatuses": "Tüm Durumlar"
+    },
+    "table": {
+      "created": "Oluşturulma",
+      "file": "Dosya",
+      "language": "Dil",
+      "score": "Puan",
+      "band": "Bant",
+      "drive": "Drive",
+      "expires": "Son Kullanma",
+      "noSubmissions": "Gönderim bulunamadı"
+    }
+  },
+  "dataRequest": {
+    "title": "Veri Talebi",
+    "description": "Kişisel verilerinizle ilgili bir talep gönderin. 30 gün içinde yanıt vereceğiz.",
+    "emailLabel": "E-posta Adresi",
+    "emailPlaceholder": "email.adresiniz@ornek.com",
+    "typeLabel": "Talep Türü",
+    "typeAccess": "Erişim - Hakkımda hangi verileri tuttuğunuzu görmek istiyorum",
+    "typeRectification": "Düzeltme - Yanlış verileri düzeltmek istiyorum",
+    "typeErasure": "Silme - Verilerimin silinmesini istiyorum",
+    "typeOther": "Diğer",
+    "descriptionLabel": "Açıklama",
+    "descriptionPlaceholder": "Lütfen talebinizi detaylı olarak açıklayın...",
+    "submit": "Talebi Gönder",
+    "submitting": "Gönderiliyor...",
+    "submitAnother": "Başka bir talep gönder",
+    "success": "Talebiniz başarıyla gönderildi!",
+    "successDetails": "Talebinizi inceleyecek ve 30 gün içinde yanıt vereceğiz."
+  },
+  "kvkk": {
+    "title": "Kişisel Verilerin Korunması Aydınlatma Metni",
+    "lastUpdated": "Son güncelleme: {date}",
+    "section1": {
+      "title": "1. Veri Sorumlusu",
+      "content": "atsfreeforall.com veri sorumlusu {controllerName}'dır. Adres: {controllerAddress}. İletişim: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. İşlenen Kişisel Veriler",
+      "intro": "Aşağıdaki verileri işliyoruz:",
+      "item1": "Yüklediğiniz veya yapıştırdığınız CV verileri (ad, iletişim bilgileri, eğitim, iş deneyimi, beceriler, varsa fotoğraf)",
+      "item2": "CV'nizden çıkarılan metin ve varsa iş tanımı metni",
+      "item3": "Analiz sonuçları (puanlar ve bulgular)",
+      "item4": "Dosya adı, türü, boyutu ve yükleme zamanı",
+      "item5": "Giriş yapmışsanız hesap e-postası",
+      "item6": "IP adresinizden türetilen tek yönlü özet değer (IP adresinin kendisi saklanmaz)",
+      "item7": "Onay verirseniz analitik ve çerez verileri"
+    },
+    "section3": {
+      "title": "3. İşleme Amaçları",
+      "item1": "CV analiz hizmetinin sunulması",
+      "item2": "Hizmet güvenliğinin sağlanması ve kötüye kullanımın önlenmesi",
+      "item3": "Taleplerinizin yanıtlanması"
+    },
+    "section4": {
+      "title": "4. Hukuki Sebep",
+      "intro": "Verilerinizi aşağıdaki hukuki sebeplere dayanarak işliyoruz:",
+      "item1": "KVKK m.5/2-c: Bir sözleşmenin kurulması veya ifasıyla doğrudan ilgili olması",
+      "item2": "KVKK m.5/2-f: Veri sorumlusunun meşru menfaati",
+      "item3": "KVKK m.5/2-ç: Kanunlara uyum yükümlülüğü"
+    },
+    "section5": {
+      "title": "5. Veri Aktarımı",
+      "content": "Verileriniz şu kurumlara aktarılır: Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion}); Google LLC (Google Drive yedeği, ABD); barındırma sağlayıcısı (konum: {hostingLocation}). Yurt dışına aktarımlar KVKK m.9 kapsamında uygun güvencelerle yapılır."
+    },
+    "section6": {
+      "title": "6. Saklama Süresi",
+      "content": "CV'niz, çıkarılan metin ve analiz sonuçları yükleme tarihinden itibaren 12 ay saklanır ve ardından otomatik olarak silinir. Daha erken silme talebinde bulunabilirsiniz."
+    },
+    "section7": {
+      "title": "7. Haklarınız (Madde 11)",
+      "item1": "Verilerinizin işlenip işlenmediğini öğrenme hakkı",
+      "item2": "İşlenmişse bilgi talep etme hakkı",
+      "item3": "Verilerinizin silinmesini talep etme hakkı",
+      "item4": "İşlemeye itiraz etme hakkı",
+      "item5": "Zarara uğramanız halinde tazminat talep etme hakkı"
+    },
+    "section8": {
+      "title": "8. Haklarınızı Nasıl Kullanırsınız",
+      "content": "Haklarınızı {controllerEmail} adresine başvurarak veya Veri Talebi formunu kullanarak kullanabilirsiniz. 30 gün içinde yanıt vereceğiz."
+    }
+  },
+  "privacy": {
+    "title": "Gizlilik Bildirimi",
+    "lastUpdated": "Son güncelleme: {date}",
+    "section1": {
+      "title": "1. Veri Sorumlusu",
+      "content": "atsfreeforall.com veri sorumlusu {controllerName}'dır. Adres: {controllerAddress}. İletişim: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. İşlediğimiz Veriler",
+      "item1": "Yüklediğiniz veya yapıştırdığınız CV verileri (ad, iletişim bilgileri, eğitim, iş deneyimi, beceriler, varsa fotoğraf)",
+      "item2": "CV'nizden çıkarılan metin ve varsa iş tanımı metni",
+      "item3": "Analiz sonuçları (puanlar ve bulgular)",
+      "item4": "Dosya adı, türü, boyutu ve yükleme zamanı",
+      "item5": "Giriş yapmışsanız hesap e-postası",
+      "item6": "IP adresinizden türetilen tek yönlü özet değer (IP adresinin kendisi saklanmaz)"
+    },
+    "section3": {
+      "title": "3. İşleme Amaçları",
+      "item1": "CV analiz hizmetinin sunulması (GDPR Madde 6(1)(b))",
+      "item2": "Hizmet güvenliğinin sağlanması ve kötüye kullanımın önlenmesi (GDPR Madde 6(1)(f))",
+      "item3": "Taleplerinizin yanıtlanması (GDPR Madde 6(1)(c))",
+      "item4": "Onayınızla analitik (GDPR Madde 6(1)(a))"
+    },
+    "section4": {
+      "title": "4. Veri Alıcıları",
+      "intro": "Verileriniz şu kurumlara aktarılır:",
+      "item1": "Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion})",
+      "item2": "Google LLC (Google Drive yedeği, ABD)",
+      "item3": "Barındırma sağlayıcısı (konum: {hostingLocation})",
+      "item4": "Microsoft Corporation (Clarity analitiği, ABD, sadece onayınızla)"
+    },
+    "section5": {
+      "title": "5. Uluslararası Aktarımlar",
+      "content": "ABD'ye aktarımlar, Standart Sözleşme Maddeleri (GDPR Madde 46) ve uygulanabilir yerlerde AB-ABD Veri Gizliliği Çerçevesi'ne dayanır."
+    },
+    "section6": {
+      "title": "6. Saklama Süresi",
+      "content": "CV'niz, çıkarılan metin ve analiz sonuçları yükleme tarihinden itibaren 12 ay saklanır ve ardından tüm depolama konumlarından otomatik olarak silinir. Daha erken silme talebinde bulunabilirsiniz."
+    },
+    "section7": {
+      "title": "7. Otomatik Karar Alma",
+      "content": "Analiz puanı, CV'nizin aday takip sistemleri için ne kadar okunabilir olduğunu tanımlar. Bu, sizin hakkınızda bir karar değildir ve yasal veya benzer şekilde önemli bir etkisi yoktur."
+    },
+    "section8": {
+      "title": "8. Haklarınız",
+      "content": "GDPR kapsamında, erişim, düzeltme, silme, kısıtlama, veri taşınabilirliği ve itiraz haklarına sahipsiniz. {controllerEmail} adresine başvurun veya Veri Talebi formunu kullanın. 30 gün içinde yanıt vereceğiz."
+    },
+    "section9": {
+      "title": "9. Önemli Uyarı",
+      "content": "Yüklemeden önce CV'nizden özel kategori verileri (sağlık, din, sendika üyeliği vb.) ve üçüncü taraf bilgilerini (referanslar) çıkarın. Analiz için gerekli değildirler."
+    }
+  },
+  "consent": {
+    "message": "Hizmeti iyileştirmek için analitik çerezler kullanıyoruz. Kabul edebilir veya reddedebilirsiniz. CV verileriniz asla analitik için kullanılmaz.",
+    "version": "Onay sürümü: {version}",
+    "accept": "Analitiği kabul et",
+    "reject": "Reddet"
   }
 }

@@ -8,6 +8,9 @@
     "analyze": "Analyze CV",
     "builder": "Builder",
     "about": "About",
+    "privacy": "Privacy",
+    "kvkk": "KVKK",
+    "dataRequest": "Data Request",
     "cta": "Analyze a CV"
   },
   "languageSwitcher": {
@@ -16,9 +19,9 @@
   "metadata": {
     "defaultTitle": "ATS readability — see your CV the way the parser does",
     "titleTemplate": "%s · ATS readability",
-    "description": "Read a CV the way an applicant tracking system reads it: what parses, what is missing, and which terms from the job ad never appear. Runs entirely in the browser.",
+    "description": "Read a CV the way an applicant tracking system reads it: what parses, what is missing, and which terms from the job ad never appear. Scored in your browser, stored for 12 months.",
     "openGraphTitle": "ATS readability",
-    "openGraphDescription": "See your CV the way the parser does. Nothing is uploaded.",
+    "openGraphDescription": "See your CV the way the parser does.",
     "sharedReportTitle": "Shared report"
   },
   "common": {
@@ -33,7 +36,7 @@
     "headline": "Your CV is read as text, not as a design.",
     "lede": "ATS readability is a free tool that shows a CV the way an applicant tracking system reads it: as text. It scores what survived out of 100 and lists the fixes in order of value.",
     "cta": "Analyze a CV",
-    "privacyTag": "Read in your browser, never uploaded",
+    "privacyTag": "Scored in your browser. Stored for 12 months.",
     "analyze": {
       "label": "Analysis and match",
       "title": "Every lost point has a name.",
@@ -62,14 +65,14 @@
     },
     "how": {
       "title": "How the reading works",
-      "body": "The reader extracts text from a PDF, DOCX or plain text file, rebuilding lines from glyph positions so line breaks and column gaps survive. Those signals tell it where one section ends and the next begins. The text is then scored across five dimensions worth 100 points: parseability 25, keyword match 25, structure 20, impact 20 and contact 10. Every lost point is charged to a named finding, with the line it came from and what to write instead, and findings are listed most expensive first. Without a job ad the keyword dimension is capped at 20 of 25 points, and the report says so. All of this runs in your browser."
+      "body": "The reader extracts text from a PDF, DOCX or plain text file, rebuilding lines from glyph positions so line breaks and column gaps survive. Those signals tell it where one section ends and the next begins. The text is then scored across five dimensions worth 100 points: parseability 25, keyword match 25, structure 20, impact 20 and contact 10. Every lost point is charged to a named finding, with the line it came from and what to write instead, and findings are listed most expensive first. Without a job ad the keyword dimension is capped at 20 of 25 points, and the report says so. The reading and scoring run in your browser; the CV is then stored for 12 months, see the privacy notice."
     }
   },
   "about": {
     "title": "About",
     "whatHeading": "What it does",
     "privacyHeading": "Privacy",
-    "privacy": "Your CV is read in your browser. Nothing is uploaded and the server never receives the document.",
+    "privacy": "Your CV is read and scored in your browser. When you analyze it, the file, its text and the result are also stored on our server for 12 months and then deleted.",
     "limitsHeading": "Limits",
     "formatsHeading": "Formats",
     "formats": "The editor imports and exports the <link>JSON Resume</link> format.",
@@ -80,8 +83,8 @@
     "title": "Frequently asked questions",
     "items": {
       "upload": {
-        "q": "Is my CV uploaded?",
-        "a": "No. The file is read in your browser and the server never receives the document."
+        "q": "Is my CV stored?",
+        "a": "Yes. Your CV is read and scored in your browser first. When you analyze it, the file, its text and the result are also sent to our server and kept for 12 months, then deleted. See the privacy notice."
       },
       "score": {
         "q": "How is the score calculated?",
@@ -107,7 +110,12 @@
   },
   "analyze": {
     "heading": "See what the parser gets",
-    "lede": "Upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad."
+    "lede": "Upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad.",
+    "consent": {
+      "label": "I have read the <kvkk>KVKK notice</kvkk> and <privacy>privacy policy</privacy>. I agree that my CV is uploaded for analysis, stored for 12 months and transferred to service providers abroad (Google, Supabase).",
+      "required": "Please accept the terms to continue"
+    },
+    "storedNotice": "Stored until {date}. Details in the <privacy>privacy policy</privacy>."
   },
   "editor": {
     "title": "Build a CV",
@@ -268,7 +276,7 @@
   },
   "login": {
     "heading": "Sign in",
-    "lede": "Your CV is read and scored in your browser. The account only keeps your share links.",
+    "lede": "Your CV is read and scored in your browser. The account only keeps your share links and stored analyses.",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
     "passwordLabel": "Password",
@@ -285,9 +293,10 @@
   },
   "notFound": {
     "code": "404",
-    "heading": "Nothing here",
-    "body": "A shared report lives for 30 days and then deletes itself. This one has either expired or never existed.",
-    "cta": "Analyze a CV"
+    "title": "This page does not exist.",
+    "body": "The address may be misspelled, or the page moved. A shared report link also stops working after 30 days.",
+    "home": "Back to the start",
+    "analyze": "Analyze a CV"
   },
   "analyzer": {
     "sections": "Sections",
@@ -694,5 +703,171 @@
     "practiceNoMatch": "No card shares enough words with your answer to recommend one.",
     "practiceMatchFound": "Best matching card",
     "practiceOverlap": "{count, plural, one {# shared word} other {# shared words}}"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "description": "Manage CV submissions, data requests, and audit logs",
+    "nav": {
+      "overview": "Overview",
+      "requests": "Data Requests",
+      "audit": "Audit Log"
+    },
+    "stats": {
+      "today": "Today",
+      "week": "This Week",
+      "month": "This Month",
+      "total": "Total",
+      "avgScore": "Avg Score",
+      "driveFailures": "Drive Failures",
+      "openRequests": "Open Requests"
+    },
+    "filters": {
+      "search": "Search",
+      "searchPlaceholder": "Search by file name or CV text...",
+      "band": "Band",
+      "allBands": "All Bands",
+      "language": "Language",
+      "allLanguages": "All Languages",
+      "driveStatus": "Drive Status",
+      "allStatuses": "All Statuses"
+    },
+    "table": {
+      "created": "Created",
+      "file": "File",
+      "language": "Language",
+      "score": "Score",
+      "band": "Band",
+      "drive": "Drive",
+      "expires": "Expires",
+      "noSubmissions": "No submissions found"
+    }
+  },
+  "dataRequest": {
+    "title": "Data Request",
+    "description": "Submit a request regarding your personal data. We will respond within 30 days.",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "your.email@example.com",
+    "typeLabel": "Request Type",
+    "typeAccess": "Access - I want to see what data you have about me",
+    "typeRectification": "Rectification - I want to correct inaccurate data",
+    "typeErasure": "Erasure - I want my data deleted",
+    "typeOther": "Other",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Please describe your request in detail...",
+    "submit": "Submit Request",
+    "submitting": "Submitting...",
+    "submitAnother": "Submit another request",
+    "success": "Your request has been submitted successfully!",
+    "successDetails": "We will review your request and respond within 30 days."
+  },
+  "kvkk": {
+    "title": "Personal Data Protection Notice (KVKK)",
+    "lastUpdated": "Last updated: {date}",
+    "section1": {
+      "title": "1. Data Controller",
+      "content": "The data controller for atsfreeforall.com is {controllerName}. Address: {controllerAddress}. Contact: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. Processed Personal Data",
+      "intro": "We process the following data:",
+      "item1": "CV data you upload or paste (name, contact information, education, work experience, skills, photo if included)",
+      "item2": "Text extracted from your CV and job description text if provided",
+      "item3": "Analysis results (scores and findings)",
+      "item4": "File name, type, size, and upload time",
+      "item5": "Account email if you are logged in",
+      "item6": "One-way hash derived from your IP address (IP address itself is not stored) to prevent abuse",
+      "item7": "Analytics and cookie data if you consent"
+    },
+    "section3": {
+      "title": "3. Processing Purposes",
+      "item1": "Providing the CV analysis service",
+      "item2": "Ensuring service security and preventing abuse",
+      "item3": "Responding to your requests"
+    },
+    "section4": {
+      "title": "4. Legal Basis",
+      "intro": "We process your data based on:",
+      "item1": "Article 5/2-c of KVKK: Necessary for the establishment or performance of a contract",
+      "item2": "Article 5/2-f of KVKK: Legitimate interest of the data controller",
+      "item3": "Article 5/2-ç of KVKK: Compliance with a legal obligation"
+    },
+    "section5": {
+      "title": "5. Data Transfer",
+      "content": "Your data is transferred to: Supabase (database and file storage, region: {supabaseRegion}); Google LLC (Google Drive backup, USA); hosting provider (location: {hostingLocation}). International transfers are made with appropriate safeguards under KVKK Article 9."
+    },
+    "section6": {
+      "title": "6. Retention Period",
+      "content": "Your CV, extracted text, and analysis results are stored for 12 months from the upload date and then automatically deleted. You can request earlier deletion."
+    },
+    "section7": {
+      "title": "7. Your Rights (Article 11)",
+      "item1": "Right to learn whether your data is processed",
+      "item2": "Right to request information if processed",
+      "item3": "Right to request deletion of your data",
+      "item4": "Right to object to processing",
+      "item5": "Right to claim compensation for damages"
+    },
+    "section8": {
+      "title": "8. How to Exercise Your Rights",
+      "content": "You can exercise your rights by contacting {controllerEmail} or using the Data Request form. We will respond within 30 days."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Notice",
+    "lastUpdated": "Last updated: {date}",
+    "section1": {
+      "title": "1. Data Controller",
+      "content": "The data controller for atsfreeforall.com is {controllerName}. Address: {controllerAddress}. Contact: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. Data We Process",
+      "item1": "CV data you upload or paste (name, contact information, education, work experience, skills, photo if included)",
+      "item2": "Text extracted from your CV and job description text if provided",
+      "item3": "Analysis results (scores and findings)",
+      "item4": "File name, type, size, and upload time",
+      "item5": "Account email if you are logged in",
+      "item6": "One-way hash derived from your IP address (IP address itself is not stored) to prevent abuse"
+    },
+    "section3": {
+      "title": "3. Processing Purposes",
+      "item1": "Providing the CV analysis service (Art. 6(1)(b) GDPR)",
+      "item2": "Ensuring service security and preventing abuse (Art. 6(1)(f) GDPR)",
+      "item3": "Responding to your requests (Art. 6(1)(c) GDPR)",
+      "item4": "Analytics with your consent (Art. 6(1)(a) GDPR)"
+    },
+    "section4": {
+      "title": "4. Data Recipients",
+      "intro": "Your data is transferred to:",
+      "item1": "Supabase (database and file storage, region: {supabaseRegion})",
+      "item2": "Google LLC (Google Drive backup, USA)",
+      "item3": "Hosting provider (location: {hostingLocation})",
+      "item4": "Microsoft Corporation (Clarity analytics, USA, only with your consent)"
+    },
+    "section5": {
+      "title": "5. International Transfers",
+      "content": "Transfers to the USA are based on Standard Contractual Clauses (Art. 46 GDPR) and the EU-US Data Privacy Framework where applicable."
+    },
+    "section6": {
+      "title": "6. Retention Period",
+      "content": "Your CV, extracted text, and analysis results are stored for 12 months from the upload date and then automatically deleted from all storage locations. You can request earlier deletion."
+    },
+    "section7": {
+      "title": "7. Automated Decision-Making",
+      "content": "The analysis score describes how readable your CV is for applicant tracking systems. It is not a decision about you and has no legal or similarly significant effect."
+    },
+    "section8": {
+      "title": "8. Your Rights",
+      "content": "Under GDPR, you have the right to access, rectification, erasure, restriction, data portability, and objection. Contact {controllerEmail} or use the Data Request form. We will respond within 30 days."
+    },
+    "section9": {
+      "title": "9. Important Notice",
+      "content": "Please remove special category data (health, religion, trade union membership, etc.) and third-party details (referees) from your CV before uploading. They are not needed for the analysis."
+    }
+  },
+  "consent": {
+    "message": "We use cookies for analytics to improve the service. You can accept or reject. Your CV data is never used for analytics.",
+    "version": "Consent version: {version}",
+    "accept": "Accept analytics",
+    "reject": "Reject"
   }
 }

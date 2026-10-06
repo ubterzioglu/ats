@@ -8,6 +8,9 @@
     "analyze": "CV-Analyse",
     "builder": "Editor",
     "about": "Über uns",
+    "privacy": "Datenschutz",
+    "kvkk": "KVKK",
+    "dataRequest": "Datenanfrage",
     "cta": "Lebenslauf analysieren"
   },
   "languageSwitcher": {
@@ -16,9 +19,9 @@
   "metadata": {
     "defaultTitle": "ATS readability — sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest",
     "titleTemplate": "%s · ATS readability",
-    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Läuft vollständig im Browser.",
+    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Im Browser bewertet, 12 Monate gespeichert.",
     "openGraphTitle": "ATS readability",
-    "openGraphDescription": "Sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest. Nichts wird hochgeladen.",
+    "openGraphDescription": "Sehen Sie Ihren Lebenslauf so, wie der Parser ihn sieht.",
     "sharedReportTitle": "Geteilter Bericht"
   },
   "common": {
@@ -33,7 +36,7 @@
     "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Design.",
     "lede": "ATS readability ist ein kostenloses Werkzeug, das einen Lebenslauf so zeigt, wie ein Bewerbermanagementsystem ihn liest: als Text. Es bewertet, was übrig blieb, auf 100 Punkte und listet die Korrekturen nach Wert.",
     "cta": "Lebenslauf analysieren",
-    "privacyTag": "Im Browser gelesen, nie hochgeladen",
+    "privacyTag": "Im Browser bewertet. 12 Monate gespeichert.",
     "analyze": {
       "label": "Analyse und Abgleich",
       "title": "Jeder verlorene Punkt hat einen Namen.",
@@ -62,14 +65,14 @@
     },
     "how": {
       "title": "So funktioniert das Lesen",
-      "body": "Der Reader zieht Text aus PDF, DOCX oder Nur-Text-Dateien und baut Zeilen aus den Glyphenpositionen neu auf, damit Zeilenumbrüche und Spaltenabstände erhalten bleiben. Daran erkennt er, wo ein Abschnitt endet und der nächste beginnt. Der Text wird dann in fünf Dimensionen mit zusammen 100 Punkten bewertet: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20 und Kontakt 10. Jeder verlorene Punkt wird einem benannten Befund zugeordnet, mit der Zeile, aus der er stammt, und dem, was stattdessen zu schreiben ist; die Befunde stehen nach Kosten sortiert. Ohne Stellenanzeige erreicht die Schlüsselwort-Dimension höchstens 20 von 25 Punkten, und der Bericht sagt das. Alles läuft in Ihrem Browser."
+      "body": "Der Reader zieht Text aus PDF, DOCX oder Nur-Text-Dateien und baut Zeilen aus den Glyphenpositionen neu auf, damit Zeilenumbrüche und Spaltenabstände erhalten bleiben. Daran erkennt er, wo ein Abschnitt endet und der nächste beginnt. Der Text wird dann in fünf Dimensionen mit zusammen 100 Punkten bewertet: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20 und Kontakt 10. Jeder verlorene Punkt wird einem benannten Befund zugeordnet, mit der Zeile, aus der er stammt, und dem, was stattdessen zu schreiben ist; die Befunde stehen nach Kosten sortiert. Ohne Stellenanzeige erreicht die Schlüsselwort-Dimension höchstens 20 von 25 Punkten, und der Bericht sagt das. Das Lesen und Bewerten läuft in Ihrem Browser; der Lebenslauf wird dann 12 Monate gespeichert, siehe Datenschutzerklärung."
     }
   },
   "about": {
     "title": "Über uns",
     "whatHeading": "Was es tut",
     "privacyHeading": "Datenschutz",
-    "privacy": "Ihr Lebenslauf wird in Ihrem Browser gelesen. Nichts wird hochgeladen, und der Server erhält das Dokument nie.",
+    "privacy": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Wenn Sie ihn analysieren, werden die Datei, ihr Text und das Ergebnis zusätzlich 12 Monate auf unserem Server gespeichert und danach gelöscht.",
     "limitsHeading": "Grenzen",
     "formatsHeading": "Formate",
     "formats": "Der Editor importiert und exportiert das Format <link>JSON Resume</link>.",
@@ -80,8 +83,8 @@
     "title": "Häufige Fragen",
     "items": {
       "upload": {
-        "q": "Wird mein Lebenslauf hochgeladen?",
-        "a": "Nein. Die Datei wird in Ihrem Browser gelesen; der Server erhält das Dokument nie."
+        "q": "Wird mein Lebenslauf gespeichert?",
+        "a": "Ja. Ihr Lebenslauf wird zuerst in Ihrem Browser gelesen und bewertet. Wenn Sie ihn analysieren, werden die Datei, ihr Text und das Ergebnis zusätzlich an unseren Server gesendet, 12 Monate gespeichert und danach gelöscht. Details stehen in der Datenschutzerklärung."
       },
       "score": {
         "q": "Wie wird die Punktzahl berechnet?",
@@ -107,7 +110,12 @@
   },
   "analyze": {
     "heading": "Sehen Sie, was der Parser bekommt",
-    "lede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber schicken. Der Text unten ist das, was ein Bewerbermanagementsystem extrahieren würde — korrigieren Sie ihn, falls die Extraktion schiefging, und bewerten Sie ihn dann gegen die Anzeige."
+    "lede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber senden. Der folgende Text ist das, was ein Bewerber-Tracking-System extrahieren würde — korrigieren Sie ihn, wenn die Extraktion falsch war, dann bewerten Sie ihn gegen die Anzeige.",
+    "consent": {
+      "label": "Ich habe die <kvkk>KVKK-Hinweise</kvkk> und die <privacy>Datenschutzerklärung</privacy> gelesen. Ich stimme zu, dass mein Lebenslauf zur Analyse hochgeladen, 12 Monate gespeichert und an Dienstleister im Ausland (Google, Supabase) übertragen wird.",
+      "required": "Bitte akzeptieren Sie die Bedingungen, um fortzufahren"
+    },
+    "storedNotice": "Gespeichert bis {date}. Details in der <privacy>Datenschutzerklärung</privacy>."
   },
   "editor": {
     "title": "Lebenslauf erstellen",
@@ -268,7 +276,7 @@
   },
   "login": {
     "heading": "Anmelden",
-    "lede": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Das Konto speichert nur Ihre Freigabelinks.",
+    "lede": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Das Konto speichert nur Ihre Freigabelinks und gespeicherten Analysen.",
     "emailLabel": "E-Mail",
     "emailPlaceholder": "sie@beispiel.de",
     "passwordLabel": "Passwort",
@@ -285,9 +293,10 @@
   },
   "notFound": {
     "code": "404",
-    "heading": "Hier ist nichts",
-    "body": "Ein geteilter Bericht lebt 30 Tage und löscht sich dann selbst. Dieser ist entweder abgelaufen oder hat nie existiert.",
-    "cta": "Lebenslauf analysieren"
+    "title": "Diese Seite gibt es nicht.",
+    "body": "Die Adresse ist möglicherweise falsch geschrieben, oder die Seite wurde verschoben. Auch Links zu geteilten Berichten funktionieren nach 30 Tagen nicht mehr.",
+    "home": "Zur Startseite",
+    "analyze": "Lebenslauf analysieren"
   },
   "analyzer": {
     "sections": "Bereiche",
@@ -694,5 +703,171 @@
     "practiceNoMatch": "Keine Karte teilt genug Wörter mit Ihrer Antwort, um eine zu empfehlen.",
     "practiceMatchFound": "Beste passende Karte",
     "practiceOverlap": "{count, plural, one {# gemeinsames Wort} other {# gemeinsame Wörter}}"
+  },
+  "admin": {
+    "title": "Admin-Panel",
+    "description": "Verwalten Sie CV-Einreichungen, Datenanfragen und Prüfprotokolle",
+    "nav": {
+      "overview": "Übersicht",
+      "requests": "Datenanfragen",
+      "audit": "Prüfprotokoll"
+    },
+    "stats": {
+      "today": "Heute",
+      "week": "Diese Woche",
+      "month": "Dieser Monat",
+      "total": "Gesamt",
+      "avgScore": "Durchschn. Punktzahl",
+      "driveFailures": "Drive-Fehler",
+      "openRequests": "Offene Anfragen"
+    },
+    "filters": {
+      "search": "Suche",
+      "searchPlaceholder": "Nach Dateiname oder CV-Text suchen...",
+      "band": "Band",
+      "allBands": "Alle Bänder",
+      "language": "Sprache",
+      "allLanguages": "Alle Sprachen",
+      "driveStatus": "Drive-Status",
+      "allStatuses": "Alle Status"
+    },
+    "table": {
+      "created": "Erstellt",
+      "file": "Datei",
+      "language": "Sprache",
+      "score": "Punktzahl",
+      "band": "Band",
+      "drive": "Drive",
+      "expires": "Läuft ab",
+      "noSubmissions": "Keine Einreichungen gefunden"
+    }
+  },
+  "dataRequest": {
+    "title": "Datenanfrage",
+    "description": "Reichen Sie eine Anfrage zu Ihren persönlichen Daten ein. Wir werden innerhalb von 30 Tagen antworten.",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "ihre.email@beispiel.com",
+    "typeLabel": "Anfragetyp",
+    "typeAccess": "Auskunft - Ich möchte sehen, welche Daten Sie über mich haben",
+    "typeRectification": "Berichtigung - Ich möchte ungenaue Daten korrigieren",
+    "typeErasure": "Löschung - Ich möchte, dass meine Daten gelöscht werden",
+    "typeOther": "Sonstiges",
+    "descriptionLabel": "Beschreibung",
+    "descriptionPlaceholder": "Bitte beschreiben Sie Ihre Anfrage detailliert...",
+    "submit": "Anfrage einreichen",
+    "submitting": "Wird eingereicht...",
+    "submitAnother": "Weitere Anfrage einreichen",
+    "success": "Ihre Anfrage wurde erfolgreich eingereicht!",
+    "successDetails": "Wir werden Ihre Anfrage prüfen und innerhalb von 30 Tagen antworten."
+  },
+  "kvkk": {
+    "title": "Datenschutzhinweis (KVKK)",
+    "lastUpdated": "Zuletzt aktualisiert: {date}",
+    "section1": {
+      "title": "1. Verantwortlicher",
+      "content": "Der Verantwortliche für atsfreeforall.com ist {controllerName}. Adresse: {controllerAddress}. Kontakt: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. Verarbeitete personenbezogene Daten",
+      "intro": "Wir verarbeiten folgende Daten:",
+      "item1": "CV-Daten, die Sie hochladen oder einfügen (Name, Kontaktinformationen, Bildung, Berufserfahrung, Fähigkeiten, Foto falls enthalten)",
+      "item2": "Aus Ihrem CV extrahierter Text und Stellenbeschreibungstext falls angegeben",
+      "item3": "Analyseergebnisse (Punktzahlen und Befunde)",
+      "item4": "Dateiname, Typ, Größe und Upload-Zeit",
+      "item5": "Konto-E-Mail falls Sie angemeldet sind",
+      "item6": "Einweg-Hash abgeleitet von Ihrer IP-Adresse (IP-Adresse selbst wird nicht gespeichert) zur Missbrauchsprävention",
+      "item7": "Analytik- und Cookie-Daten wenn Sie zustimmen"
+    },
+    "section3": {
+      "title": "3. Verarbeitungszwecke",
+      "item1": "Bereitstellung des CV-Analyse-Dienstes",
+      "item2": "Sicherstellung der Dienstesicherheit und Verhinderung von Missbrauch",
+      "item3": "Beantwortung Ihrer Anfragen"
+    },
+    "section4": {
+      "title": "4. Rechtsgrundlage",
+      "intro": "Wir verarbeiten Ihre Daten basierend auf:",
+      "item1": "Artikel 5/2-c des KVKK: Erforderlich für den Abschluss oder die Erfüllung eines Vertrags",
+      "item2": "Artikel 5/2-f des KVKK: Berechtigtes Interesse des Verantwortlichen",
+      "item3": "Artikel 5/2-ç des KVKK: Erfüllung einer gesetzlichen Verpflichtung"
+    },
+    "section5": {
+      "title": "5. Datenübermittlung",
+      "content": "Ihre Daten werden übermittelt an: Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion}); Google LLC (Google Drive Backup, USA); Hosting-Anbieter (Standort: {hostingLocation}). Internationale Übermittlungen erfolgen mit geeigneten Garantien gemäß KVKK Artikel 9."
+    },
+    "section6": {
+      "title": "6. Aufbewahrungsfrist",
+      "content": "Ihr CV, extrahierter Text und Analyseergebnisse werden 12 Monate ab dem Upload-Datum gespeichert und dann automatisch gelöscht. Sie können eine frühere Löschung beantragen."
+    },
+    "section7": {
+      "title": "7. Ihre Rechte (Artikel 11)",
+      "item1": "Recht zu erfahren, ob Ihre Daten verarbeitet werden",
+      "item2": "Recht auf Auskunft wenn verarbeitet",
+      "item3": "Recht auf Löschung Ihrer Daten",
+      "item4": "Recht auf Widerspruch gegen die Verarbeitung",
+      "item5": "Recht auf Schadensersatz bei Schäden"
+    },
+    "section8": {
+      "title": "8. Wie Sie Ihre Rechte ausüben",
+      "content": "Sie können Ihre Rechte ausüben, indem Sie {controllerEmail} kontaktieren oder das Datenanfrage-Formular verwenden. Wir werden innerhalb von 30 Tagen antworten."
+    }
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "lastUpdated": "Zuletzt aktualisiert: {date}",
+    "section1": {
+      "title": "1. Verantwortlicher",
+      "content": "Der Verantwortliche für atsfreeforall.com ist {controllerName}. Adresse: {controllerAddress}. Kontakt: {controllerEmail}."
+    },
+    "section2": {
+      "title": "2. Daten, die wir verarbeiten",
+      "item1": "CV-Daten, die Sie hochladen oder einfügen (Name, Kontaktinformationen, Bildung, Berufserfahrung, Fähigkeiten, Foto falls enthalten)",
+      "item2": "Aus Ihrem CV extrahierter Text und Stellenbeschreibungstext falls angegeben",
+      "item3": "Analyseergebnisse (Punktzahlen und Befunde)",
+      "item4": "Dateiname, Typ, Größe und Upload-Zeit",
+      "item5": "Konto-E-Mail falls Sie angemeldet sind",
+      "item6": "Einweg-Hash abgeleitet von Ihrer IP-Adresse (IP-Adresse selbst wird nicht gespeichert)"
+    },
+    "section3": {
+      "title": "3. Verarbeitungszwecke",
+      "item1": "Bereitstellung des CV-Analyse-Dienstes (DSGVO Art. 6(1)(b))",
+      "item2": "Sicherstellung der Dienstesicherheit und Verhinderung von Missbrauch (DSGVO Art. 6(1)(f))",
+      "item3": "Beantwortung Ihrer Anfragen (DSGVO Art. 6(1)(c))",
+      "item4": "Analytik mit Ihrer Einwilligung (DSGVO Art. 6(1)(a))"
+    },
+    "section4": {
+      "title": "4. Datenempfänger",
+      "intro": "Ihre Daten werden übermittelt an:",
+      "item1": "Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion})",
+      "item2": "Google LLC (Google Drive Backup, USA)",
+      "item3": "Hosting-Anbieter (Standort: {hostingLocation})",
+      "item4": "Microsoft Corporation (Clarity-Analytik, USA, nur mit Ihrer Einwilligung)"
+    },
+    "section5": {
+      "title": "5. Internationale Übermittlungen",
+      "content": "Übermittlungen in die USA basieren auf Standardvertragsklauseln (DSGVO Art. 46) und dem EU-US-Datenschutzrahmen wo zutreffend."
+    },
+    "section6": {
+      "title": "6. Aufbewahrungsfrist",
+      "content": "Ihr CV, extrahierter Text und Analyseergebnisse werden 12 Monate ab dem Upload-Datum gespeichert und dann automatisch von allen Speicherorten gelöscht. Sie können eine frühere Löschung beantragen."
+    },
+    "section7": {
+      "title": "7. Automatisierte Entscheidungsfindung",
+      "content": "Der Analyse-Score beschreibt, wie lesbar Ihr CV für Bewerber-Tracking-Systeme ist. Es ist keine Entscheidung über Sie und hat keine rechtliche oder ähnlich erhebliche Wirkung."
+    },
+    "section8": {
+      "title": "8. Ihre Rechte",
+      "content": "Gemäß DSGVO haben Sie das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch. Kontaktieren Sie {controllerEmail} oder verwenden Sie das Datenanfrage-Formular. Wir werden innerhalb von 30 Tagen antworten."
+    },
+    "section9": {
+      "title": "9. Wichtiger Hinweis",
+      "content": "Bitte entfernen Sie besondere Kategorien personenbezogener Daten (Gesundheit, Religion, Gewerkschaftszugehörigkeit usw.) und Drittpartei-Details (Referenzen) aus Ihrem CV vor dem Upload. Sie werden für die Analyse nicht benötigt."
+    }
+  },
+  "consent": {
+    "message": "Wir verwenden Cookies für Analytik, um den Dienst zu verbessern. Sie können zustimmen oder ablehnen. Ihre CV-Daten werden niemals für Analytik verwendet.",
+    "version": "Einwilligungsversion: {version}",
+    "accept": "Analytik akzeptieren",
+    "reject": "Ablehnen"
   }
 }
