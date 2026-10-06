@@ -18,7 +18,7 @@ interface StageProps {
 /** The shared canvas: a square on wide screens, a landscape box on narrow ones. */
 function Stage({ children }: StageProps) {
   return (
-    <div aria-hidden="true" className="relative aspect-square w-full sm:aspect-[4/3] lg:aspect-square">
+    <div aria-hidden="true" className="stage relative aspect-square w-full sm:aspect-[4/3] lg:aspect-square">
       {children}
     </div>
   );

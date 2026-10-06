@@ -9,6 +9,7 @@ import { Sparkle, Tick } from "@/components/home/sparkle";
 import { Ticker } from "@/components/home/ticker";
 import { GhostLink } from "@/components/ui/ghost-link";
 import { JsonLd } from "@/components/json-ld";
+import { SiteCredit } from "@/components/site-credit";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { SectionHeadline } from "@/components/ui/section-headline";
 import { Tag } from "@/components/ui/tag";
@@ -43,7 +44,6 @@ export default async function HomePage({ params }: HomePageProps) {
   setRequestLocale(locale);
 
   const t = await getTranslations("home");
-  const common = await getTranslations("common");
   const metadata = await getTranslations("metadata");
   const nav = await getTranslations("nav");
   const faqT = await getTranslations("faq");
@@ -151,9 +151,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <FaqSection items={faqItems} />
 
       <footer className="mx-auto w-full max-w-page px-4 pb-12 pt-section-sm sm:px-6">
-        <p className="max-w-measure text-nav-label font-normal text-ash">
-          {common("disclaimer")}
-        </p>
+        <SiteCredit className="text-nav-label font-normal text-ash" />
         <GhostLink href="/about" className="mt-4 -ml-3">
           {nav("about")}
         </GhostLink>

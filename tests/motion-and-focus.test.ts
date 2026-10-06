@@ -41,11 +41,32 @@ describe("reduced motion", () => {
 });
 
 describe("the animations that exist", () => {
-  it("are the four the system allows, and no more", () => {
+  it("are the ones the system allows, and no more", () => {
     const names = [...CSS.matchAll(/@keyframes\s+([a-z-]+)/g)].map((match) => match[1]).sort();
     // live-sweep: the AI edge. meter-fill: a score bar, once. sticker-pop: the
-    // one entrance on the landing page. marquee: the quiet ticker strip.
-    expect(names).toEqual(["live-sweep", "marquee", "meter-fill", "sticker-pop"]);
+    // landing page entrance. marquee: the quiet ticker strip. float, twinkle,
+    // scroll-spin, reveal-up, reveal-side: the feature sections' idle and
+    // scroll-linked motion, all inside prefers-reduced-motion: no-preference.
+    expect(names).toEqual([
+      "float",
+      "live-sweep",
+      "marquee",
+      "meter-fill",
+      "reveal-side",
+      "reveal-up",
+      "scroll-spin",
+      "sticker-pop",
+      "twinkle"
+    ]);
+  });
+
+  it("keeps the feature-section motion behind no-preference", () => {
+    const start = CSS.indexOf("@media (prefers-reduced-motion: no-preference)");
+    expect(start).toBeGreaterThanOrEqual(0);
+    const rule = CSS.slice(start, CSS.indexOf("\n}\n", start));
+    for (const name of ["float", "twinkle", "scroll-spin", "reveal-up", "reveal-side"]) {
+      expect(rule).toMatch(new RegExp(`animation:[^;]*\\b${name}\\b`));
+    }
   });
 
   it("stops the ticker under reduced motion", () => {
