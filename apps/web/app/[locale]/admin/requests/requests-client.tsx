@@ -59,7 +59,7 @@ export function RequestsClient({ requests, locale }: RequestsClientProps) {
               <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("created")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("email")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("type")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("description")}</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("message")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("status")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("actions")}</th>
             </tr>
