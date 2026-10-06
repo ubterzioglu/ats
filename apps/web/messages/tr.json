@@ -354,6 +354,7 @@
       "invalidCredentials": "Bu e-posta ve parola bir hesapla eşleşmiyor.",
       "signupFailed": "Hesap oluşturulamadı. Adresi kontrol edip yeniden deneyin.",
       "checkYourEmail": "Hesap oluşturuldu. Giriş yapmak için e-posta adresinizi doğrulayın.",
+      "accountExists": "Bu e-posta adresiyle zaten bir hesap var. Google ile giriş yapın ya da şifre belirlemek için “Şifrenizi mi unuttunuz?” bağlantısını kullanın.",
       "linkExpired": "Bu doğrulama bağlantısı artık geçerli değil. Yenisinin gönderilmesi için giriş yapın."
     }
   },

@@ -354,6 +354,7 @@
       "invalidCredentials": "Diese E-Mail und dieses Passwort passen zu keinem Konto.",
       "signupFailed": "Das Konto konnte nicht erstellt werden. Prüfen Sie die Adresse und versuchen Sie es erneut.",
       "checkYourEmail": "Konto erstellt. Bestätigen Sie Ihre E-Mail-Adresse, um sich anzumelden.",
+      "accountExists": "Zu dieser E-Mail-Adresse gibt es bereits ein Konto. Melden Sie sich mit Google an oder legen Sie über „Passwort vergessen?“ ein Passwort fest.",
       "linkExpired": "Dieser Bestätigungslink gilt nicht mehr. Melden Sie sich an, damit ein neuer verschickt wird."
     }
   },

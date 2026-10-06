@@ -354,6 +354,7 @@
       "invalidCredentials": "That email and password do not match an account.",
       "signupFailed": "The account could not be created. Check the address and try again.",
       "checkYourEmail": "Account created. Confirm your email address to sign in.",
+      "accountExists": "This email already has an account. Sign in with Google, or use “Forgot your password?” to set one.",
       "linkExpired": "That confirmation link is no longer valid. Sign in to have a new one sent."
     }
   },

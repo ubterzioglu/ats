@@ -11,12 +11,14 @@ export type LoginMessageKey =
   | "invalidCredentials"
   | "signupFailed"
   | "checkYourEmail"
+  | "accountExists"
   | "linkExpired";
 
 const MESSAGE_KEYS: readonly LoginMessageKey[] = [
   "invalidCredentials",
   "signupFailed",
   "checkYourEmail",
+  "accountExists",
   "linkExpired"
 ];
 

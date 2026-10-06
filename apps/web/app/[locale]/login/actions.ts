@@ -42,13 +42,16 @@ export async function signup(formData: FormData) {
   const nextString = typeof next === "string" ? next : null;
   const nextParam = nextString ? `?next=${encodeURIComponent(nextString)}` : "";
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: String(formData.get("email") ?? ""),
     password: String(formData.get("password") ?? ""),
     options: { emailRedirectTo: `${origin}/auth/confirm${nextParam}` }
   });
 
-  await backToLogin(error ? "signupFailed" : "checkYourEmail", nextString);
+  // For an address that already has an account (a Google sign-in included) Supabase
+  // answers without error, sends no mail and returns no identities.
+  const alreadyRegistered = !error && data.user?.identities?.length === 0;
+  await backToLogin(error ? "signupFailed" : alreadyRegistered ? "accountExists" : "checkYourEmail", nextString);
 }
 
 export async function signInWithGoogle(formData: FormData) {
