@@ -1,15 +1,36 @@
 import createMiddleware from "next-intl/middleware";
-import type { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 import { routing } from "@/i18n/routing";
+import { decideAccess } from "@/lib/auth/routes";
 import { updateSession } from "@/lib/supabase/middleware";
 
 const handleLocale = createMiddleware(routing);
 
-// No route is gated here. Analysis runs for anyone; sign-in is required only
-// where a report is written to the server, which `createShareLink` enforces.
 export async function middleware(request: NextRequest) {
-  return updateSession(request, handleLocale(request));
+  const localeResponse = handleLocale(request);
+  const { response, user } = await updateSession(request, localeResponse);
+
+  const authConfigured = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
+  );
+
+  const decision = decideAccess({
+    pathname: request.nextUrl.pathname,
+    user,
+    authConfigured
+  });
+
+  if (decision.action === "redirect") {
+    const redirectResponse = NextResponse.redirect(new URL(decision.to, request.url));
+    for (const cookie of response.cookies.getAll()) {
+      redirectResponse.cookies.set(cookie.name, cookie.value, cookie);
+    }
+    return redirectResponse;
+  }
+
+  return response;
 }
 
 export const config = {
@@ -19,6 +40,6 @@ export const config = {
      * and the email confirmation handler have no page and no locale, and
      * rewriting them to a locale segment routes them to a 404.
      */
-    "/((?!api/|_next/static|_next/image|favicon.ico|robots\\.txt|sitemap\\.xml|llms\\.txt|feed\\.xml|ai/|\\.well-known/|auth/|vendor/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!api/|_next/static|_next/image|favicon.ico|robots\\.txt|sitemap\\.xml|llms\\.txt|feed\\.xml|manifest\\.json|ai/|\\.well-known/|auth/|vendor/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
