@@ -1020,5 +1020,11 @@
     "cancel": "Abbrechen",
     "savedMessage": "In Ihrem Profil gespeichert",
     "errorMessage": "Konnte nicht im Profil gespeichert werden"
+  },
+  "blog": {
+    "title": "Blog",
+    "lede": "Einblicke in CV-Parsing, ATS-Verhalten und Bewerbungen.",
+    "empty": "Noch keine Beiträge. Schauen Sie bald wieder vorbei.",
+    "backToList": "Zurück zum Blog"
   }
 }

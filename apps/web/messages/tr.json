@@ -1020,5 +1020,11 @@
     "cancel": "İptal",
     "savedMessage": "Profilinize kaydedildi",
     "errorMessage": "Profile kaydedilemedi"
+  },
+  "blog": {
+    "title": "Blog",
+    "lede": "CV ayrıştırma, ATS davranışları ve iş başvuruları hakkında bilgiler.",
+    "empty": "Henüz yazı yok. Yakında tekrar kontrol edin.",
+    "backToList": "Blog'a dön"
   }
 }

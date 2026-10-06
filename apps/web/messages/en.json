@@ -1020,5 +1020,11 @@
     "cancel": "Cancel",
     "savedMessage": "Saved to your profile",
     "errorMessage": "Could not save to profile"
+  },
+  "blog": {
+    "title": "Blog",
+    "lede": "Insights on CV parsing, ATS behaviour and job applications.",
+    "empty": "No posts yet. Check back soon.",
+    "backToList": "Back to blog"
   }
 }
