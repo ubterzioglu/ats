@@ -131,10 +131,27 @@ export function scoreImpact(context: ScoreContext): DimensionOutcome {
     // Fewer than 4 bullets: measure experience section lines instead
     const ranges = sectionRanges(context.sections, lines.length);
     const experienceRange = ranges.find(r => r.id === "experience");
-    
+    const experienceContent = experienceRange
+      ? lines.slice(experienceRange.start + 1, experienceRange.end).filter((line) => line.length > 0)
+      : [];
+
+    // No bullet and no experience line means every check in this dimension
+    // ran on nothing. Without this finding an empty document kept most of
+    // Impact simply because there was no claim to fault. A CV with a few
+    // bullets, or with prose under an experience heading, never reaches it.
+    if (bullets.length === 0 && experienceContent.length === 0) {
+      drafts.push({
+        id: "impact.nothing-to-measure",
+        severity: "high",
+        title: "No work described that could show results",
+        detail: "The document has no bullets and no lines under an experience heading, so there is no achievement to read.",
+        fix: "Add an experience section and describe each role in a few bullets: what you did and what came of it.",
+        cost: 10
+      });
+    }
+
     if (experienceRange) {
-      const experienceLines = lines.slice(experienceRange.start + 1, experienceRange.end);
-      const nonEmptyLines = experienceLines.filter(l => l.length > 0);
+      const nonEmptyLines = experienceContent;
       const quantifiedLines = nonEmptyLines.filter(l => QUANTIFIED_RX.test(l) && !DATE_RANGE_RX.test(l));
       
       if (nonEmptyLines.length > 0 && ratio(quantifiedLines.length, nonEmptyLines.length) < 0.15) {

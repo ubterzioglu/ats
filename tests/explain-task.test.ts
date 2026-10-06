@@ -11,7 +11,7 @@ import { fakeProvider } from "./helpers/fake-provider";
  */
 
 const FINDING: Finding = {
-  id: "keywords.coverage",
+  id: "keywords.required-coverage",
   dimension: "keywords",
   severity: "high",
   title: "38% of the vacancy's key terms appear in the CV",
@@ -42,7 +42,7 @@ describe("explainFinding", () => {
     expect(explanation.why).toContain("Filters");
 
     const seen = (fake.seen[0] ?? []).map((message) => message.content).join("\n");
-    expect(seen).toContain("keywords.coverage");
+    expect(seen).toContain("keywords.required-coverage");
     expect(seen).toContain("playwright");
     expect(fake.calls()).toBe(1);
   });

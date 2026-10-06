@@ -1,3 +1,4 @@
+import { THIN_TEXT_WORDS, TOO_LITTLE_TEXT_WORDS, TOO_SHORT_WORDS } from "./config";
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { detectEuropass } from "./europass";
@@ -164,7 +165,13 @@ export function scoreStructure(context: ScoreContext): DimensionOutcome {
     });
   }
 
-  if (stats.words < 280) {
+  // One fact, one finding: between TOO_LITTLE_TEXT_WORDS and THIN_TEXT_WORDS
+  // `parse.thin-text` already charges for the low word count, so this check
+  // stands aside there. Below that band the parse finding claims a missing
+  // text layer, not a short CV, so the length is still named here.
+  const parseOwnsLength =
+    stats.words >= TOO_LITTLE_TEXT_WORDS && stats.words < THIN_TEXT_WORDS;
+  if (stats.words < TOO_SHORT_WORDS && !parseOwnsLength) {
     drafts.push({
       id: "structure.too-short",
       severity: "medium",

@@ -1,9 +1,16 @@
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { BULLET_GLYPHS, ratio } from "./text";
-import { GARBLED_THRESHOLD, MOJIBAKE_THRESHOLD } from "./config";
+import {
+  GARBLED_THRESHOLD,
+  MOJIBAKE_THRESHOLD,
+  THIN_TEXT_WORDS,
+  TOO_LITTLE_TEXT_WORDS
+} from "./config";
 
 export const PARSEABILITY_MAX = 25;
+
+const TOO_LITTLE_TEXT_BASE_COST = 13;
 
 // Escaped on purpose: written as literal glyphs, an editor once stripped the
 // invisible range ends and left /[-]/, which counted every hyphen as an icon.
@@ -92,16 +99,20 @@ export function scoreParseability(context: ScoreContext): DimensionOutcome {
   const { raw, lines, tokens, stats } = context;
   const drafts: FindingDraft[] = [];
 
-  if (stats.words < 150) {
+  if (stats.words < TOO_LITTLE_TEXT_WORDS) {
+    // Scaled with how little was read: at 149 words some text survived, at zero
+    // the parser has nothing at all, and Parseability says so instead of
+    // keeping half its points for a document that cannot be read.
+    const missingShare = 1 - stats.words / TOO_LITTLE_TEXT_WORDS;
     drafts.push({
       id: "parse.too-little-text",
       severity: "critical",
       title: "Almost no machine-readable text",
       detail: `Only ${stats.words} words could be read. A scanned or image-based PDF looks empty to a parser.`,
       fix: "Export the CV from the original document as a text PDF, or paste the text manually.",
-      cost: 13
+      cost: TOO_LITTLE_TEXT_BASE_COST + Math.round((PARSEABILITY_MAX - TOO_LITTLE_TEXT_BASE_COST) * missingShare)
     });
-  } else if (stats.words < 260) {
+  } else if (stats.words < THIN_TEXT_WORDS) {
     drafts.push({
       id: "parse.thin-text",
       severity: "high",

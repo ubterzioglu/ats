@@ -43,7 +43,7 @@ The text layer either survives extraction or it does not.
 
 | Rule | Why it matters | Cost |
 |---|---|---|
-| `parse.too-little-text` | Under 150 words means a scan or an image export. The parser sees an empty document. | 13 |
+| `parse.too-little-text` | Under 150 words means a scan or an image export. The parser sees an empty document. Scales from 13 at 149 words to 25 at none. | 13-25 |
 | `parse.thin-text` | Under 260 words suggests part of the content sits in images or text boxes. | 6 |
 | `parse.letter-spacing` | Manual tracking or outlined fonts extract one character per token, destroying every word. | 5 |
 | `parse.columns` | Wide intra-line gaps mean side-by-side columns. Parsers read left to right and interleave them. | 5 |

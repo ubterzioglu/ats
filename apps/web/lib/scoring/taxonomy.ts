@@ -51,7 +51,21 @@ export const SKILL_TAXONOMY: readonly string[] = [
   "sap", "salesforce", "erp", "crm", "excel", "vba", "project management", "pmp",
   "prince2", "budgeting", "forecasting", "procurement", "supply chain", "logistics",
   "customer success", "b2b", "b2c", "seo", "sem", "copywriting", "figma", "ux research",
-  "saas", "paas", "iaas", "mvp", "roi"
+  "saas", "paas", "iaas", "mvp", "roi",
+  // finance & accounting
+  "accounting", "bookkeeping", "financial reporting", "financial analysis", "ifrs", "gaap",
+  "hgb", "datev", "accounts payable", "accounts receivable", "audit", "cost accounting",
+  // health care
+  "patient care", "nursing", "ehr", "emr", "hipaa", "first aid", "bls", "acls", "triage",
+  "wound care", "infection control", "medication administration", "phlebotomy", "icd-10",
+  // sales
+  "lead generation", "pipeline management", "quota attainment", "account management",
+  "key account management", "business development", "cold calling", "negotiation",
+  "upselling", "cross-selling", "hubspot",
+  // logistics & operations
+  "warehouse management", "wms", "inventory management", "incoterms", "freight forwarding",
+  "customs clearance", "fleet management", "demand planning", "forklift", "lean management",
+  "six sigma", "kaizen"
 ];
 
 export const SKILL_SET: ReadonlySet<string> = new Set(SKILL_TAXONOMY);
@@ -176,7 +190,11 @@ export const SYNONYMS: Readonly<Record<string, readonly string[]>> = {
   "saas": ["software as a service"],
   "paas": ["platform as a service"],
   "iaas": ["infrastructure as a service"],
-  "crm": ["customer relationship management"],
+  "crm": [
+    "customer relationship management",
+    "kundenbeziehungsmanagement",
+    "müşteri ilişkileri yönetimi"
+  ],
   "erp": ["enterprise resource planning"],
   "mvp": ["minimum viable product"],
   "roi": ["return on investment"],
@@ -187,8 +205,63 @@ export const SYNONYMS: Readonly<Record<string, readonly string[]>> = {
   "salesforce": ["sales force"],
   "excel": ["microsoft excel", "ms excel"],
   "vba": ["visual basic for applications"],
-  "supply chain": ["supply-chain", "tedarik zinciri"],
-  "procurement": ["satın alma"]
+  "supply chain": [
+    "supply-chain",
+    "supply chain management",
+    "tedarik zinciri",
+    "tedarik zinciri yönetimi",
+    "lieferkette",
+    "lieferkettenmanagement"
+  ],
+  "procurement": ["satın alma", "purchasing", "einkauf", "beschaffung"],
+  "budgeting": ["budgetierung", "budgetplanung", "bütçeleme", "bütçe planlama"],
+  "forecasting": ["forecast", "tahminleme"],
+  "logistics": ["logistik", "lojistik"],
+  // finance & accounting
+  "accounting": ["buchhaltung", "rechnungswesen", "finanzbuchhaltung", "muhasebe"],
+  "bookkeeping": ["ön muhasebe"],
+  "financial reporting": ["finanzberichterstattung", "finansal raporlama"],
+  "financial analysis": ["finanzanalyse", "finansal analiz"],
+  "ifrs": ["international financial reporting standards"],
+  "gaap": ["us gaap", "us-gaap", "generally accepted accounting principles"],
+  "accounts payable": ["kreditorenbuchhaltung"],
+  "accounts receivable": ["debitorenbuchhaltung"],
+  "audit": ["auditing", "wirtschaftsprüfung", "denetim"],
+  "cost accounting": ["kostenrechnung", "maliyet muhasebesi"],
+  // health care
+  "patient care": ["patientenversorgung", "patientenbetreuung", "hasta bakımı"],
+  "nursing": ["krankenpflege", "hemşirelik"],
+  "ehr": ["electronic health record", "electronic health records", "elektronische patientenakte"],
+  "emr": ["electronic medical record", "electronic medical records"],
+  "first aid": ["erste hilfe", "ilk yardım"],
+  "bls": ["basic life support"],
+  "acls": ["advanced cardiovascular life support"],
+  "triage": ["triyaj"],
+  "wound care": ["wundversorgung", "yara bakımı"],
+  "infection control": ["infektionsprävention", "enfeksiyon kontrolü"],
+  "medication administration": ["medikamentengabe"],
+  "phlebotomy": ["blutentnahme"],
+  "icd-10": ["icd10", "icd 10"],
+  // sales
+  "lead generation": ["leadgenerierung", "lead-generierung"],
+  "pipeline management": ["pipeline-management"],
+  "quota attainment": ["quota achievement"],
+  "account management": ["accountmanagement"],
+  "key account management": ["key-account-management"],
+  "business development": ["geschäftsentwicklung", "iş geliştirme"],
+  "cold calling": ["kaltakquise", "soğuk arama"],
+  "negotiation": ["verhandlungsführung", "müzakere"],
+  "cross-selling": ["cross selling"],
+  // logistics & operations
+  "warehouse management": ["lagerverwaltung", "lagerwirtschaft", "depo yönetimi"],
+  "wms": ["warehouse management system", "lagerverwaltungssystem", "depo yönetim sistemi"],
+  "inventory management": ["bestandsmanagement", "bestandsführung", "stok yönetimi"],
+  "freight forwarding": ["spedition"],
+  "customs clearance": ["zollabfertigung", "gümrükleme"],
+  "fleet management": ["fuhrparkmanagement", "filo yönetimi"],
+  "demand planning": ["bedarfsplanung", "talep planlaması"],
+  "forklift": ["gabelstapler"],
+  "lean management": ["lean-management"]
 };
 
 /**

@@ -120,7 +120,7 @@ describe("analyzeCv", () => {
 
   it("treats an empty document as unreadable rather than throwing", () => {
     const empty = analyzeCv({ cvText: "" });
-    expect(empty.total).toBeLessThan(35);
+    expect(empty.total).toBeLessThan(15);
     expect(empty.findings.map((finding) => finding.id)).toContain("parse.too-little-text");
   });
 });

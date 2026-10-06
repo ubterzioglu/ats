@@ -8,7 +8,15 @@ import { detectLanguage } from "./language";
 import { countOccurrences, matchTerms } from "./match";
 import { lineSection, sectionRanges } from "./sections";
 import { isJobNoise, isStopword, JOB_POSTING_NOISE } from "./stopwords";
-import { MULTI_WORD_SKILLS, SYNONYMS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill } from "./taxonomy";
+import {
+  MULTI_WORD_SKILLS,
+  SKILL_TAXONOMY,
+  SYNONYMS,
+  canonicalize,
+  hasTechContext,
+  isAmbiguousTerm,
+  isKnownSkill
+} from "./taxonomy";
 import { caseFold, clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
 import { matchKeyTurkish } from "./turkish";
 import { STUFFING_THRESHOLD } from "./config";
@@ -24,6 +32,15 @@ const COVERAGE_TARGET = 0.7;
 const MAX_TERMS = 40;
 const BASELINE_MAX = 20;
 const BASELINE_TARGET_SKILLS = 16;
+const THIN_SKILL_MAX_COST = 10;
+
+/**
+ * The job-ad share of the dimension, split so that a missing must-have and a
+ * missing nice-to-have are priced and reported apart. Together they are
+ * KEYWORDS_MAX.
+ */
+const REQUIRED_SHARE = 15;
+const OTHER_SHARE = KEYWORDS_MAX - REQUIRED_SHARE;
 
 interface Candidate {
   readonly term: string;
@@ -379,10 +396,22 @@ export function extractJobKeywords(jobDescription: string): KeywordTerm[] {
     .slice(0, MAX_TERMS);
 }
 
+/**
+ * Skills the token pass cannot see: multi-word terms, and single-word terms
+ * whose synonym is a phrase ("satın alma" for procurement). Those are looked
+ * up as phrases with every variant instead.
+ */
+const PHRASED_SKILLS: readonly string[] = [
+  ...MULTI_WORD_SKILLS,
+  ...SKILL_TAXONOMY.filter(
+    (term) => !term.includes(" ") && (SYNONYMS[term] ?? []).some((alias) => alias.includes(" "))
+  )
+];
+
 function baselineTerms(context: ScoreContext): KeywordTerm[] {
   const found: KeywordTerm[] = [];
 
-  for (const skill of MULTI_WORD_SKILLS) {
+  for (const skill of PHRASED_SKILLS) {
     const hits = countOccurrences(context.lower, skill, context.language);
     if (hits > 0) found.push({ term: skill, weight: 1, hits });
   }
@@ -401,6 +430,20 @@ function baselineTerms(context: ScoreContext): KeywordTerm[] {
   return found.sort((a, b) => b.hits - a.hits);
 }
 
+function weightedCoverage(
+  matched: readonly KeywordTerm[],
+  missing: readonly KeywordTerm[]
+): number {
+  const found = matched.reduce((sum, term) => sum + term.weight, 0);
+  const total = found + missing.reduce((sum, term) => sum + term.weight, 0);
+  return total > 0 ? found / total : 0;
+}
+
+/** Points of `share` lost at this coverage; full marks from COVERAGE_TARGET up. */
+function shareCost(share: number, coverage: number): number {
+  return share - clamp(Math.round(share * Math.min(1, coverage / COVERAGE_TARGET)), 0, share);
+}
+
 export interface KeywordOutcome extends DimensionOutcome {
   readonly report: KeywordReport;
 }
@@ -409,10 +452,11 @@ function scoreWithoutJobAd(context: ScoreContext): KeywordOutcome {
   const drafts: FindingDraft[] = [];
   const matched = baselineTerms(context);
   const distinct = matched.length;
-  const baselineScore = clamp(
-    Math.round(BASELINE_MAX * Math.min(1, distinct / BASELINE_TARGET_SKILLS)),
-    0,
-    BASELINE_MAX
+  // Capped well below BASELINE_MAX: a taxonomy can never list every trade's
+  // vocabulary, so a CV it does not recognise loses at most half of the
+  // capped dimension to this one check, never all of it.
+  const inventoryCost = Math.round(
+    THIN_SKILL_MAX_COST * (1 - Math.min(1, distinct / BASELINE_TARGET_SKILLS))
   );
 
   drafts.push({
@@ -425,14 +469,14 @@ function scoreWithoutJobAd(context: ScoreContext): KeywordOutcome {
     cost: KEYWORDS_MAX - BASELINE_MAX
   });
 
-  if (baselineScore < BASELINE_MAX) {
+  if (inventoryCost > 0) {
     drafts.push({
       id: "keywords.thin-skill-inventory",
       severity: distinct < 6 ? "high" : "medium",
       title: "Few recognisable skill terms",
       detail: `${distinct} known tools or methods appear in the text. Recruiter searches run on exactly these terms.`,
       fix: "Name concrete tools, frameworks and methods in the skills section and inside the role bullets.",
-      cost: BASELINE_MAX - baselineScore
+      cost: inventoryCost
     });
   }
 
@@ -465,25 +509,60 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
     "normalized"
   );
 
-  const rawScore = clamp(
-    Math.round(KEYWORDS_MAX * Math.min(1, coverage / COVERAGE_TARGET)),
-    0,
-    KEYWORDS_MAX
-  );
+  // Required means listed under a requirements heading. An ad without such a
+  // heading - or one that puts every term under it - cannot be split, so both
+  // shares are scored on the overall coverage: the sum then stays within a
+  // rounding point of one undivided score, and nothing is invented about what
+  // the ad needs.
+  const isRequired = (term: KeywordTerm): boolean => term.tier === "required";
+  const tiered = terms.some(isRequired) && terms.some((term) => !isRequired(term));
+  const requiredMissing = tiered ? missing.filter(isRequired) : missing;
+  const requiredCoverage = tiered
+    ? weightedCoverage(matched.filter(isRequired), requiredMissing)
+    : coverage;
+  const otherMissing = missing.filter((term) => !isRequired(term));
+  const otherCoverage = tiered
+    ? weightedCoverage(matched.filter((term) => !isRequired(term)), otherMissing)
+    : coverage;
 
-  if (rawScore < KEYWORDS_MAX) {
-    const headline = missing.slice(0, 8).map((term) => term.term);
+  const requiredCost = shareCost(REQUIRED_SHARE, requiredCoverage);
+  if (requiredCost > 0) {
+    const headline = requiredMissing.slice(0, 8).map((term) => term.term);
     drafts.push({
-      id: "keywords.coverage",
-      severity: coverage < 0.3 ? "critical" : coverage < 0.5 ? "high" : "medium",
-      title: `${Math.round(coverage * 100)}% of the vacancy's key terms appear in the CV`,
+      id: "keywords.required-coverage",
+      severity: requiredCoverage < 0.3 ? "critical" : requiredCoverage < 0.5 ? "high" : "medium",
+      title: tiered
+        ? `${Math.round(requiredCoverage * 100)}% of the vacancy's required terms appear in the CV`
+        : `${Math.round(requiredCoverage * 100)}% of the vacancy's key terms appear in the CV`,
       detail:
         headline.length > 0
           ? `The highest-weighted terms that are absent: ${headline.join(", ")}.`
           : "Coverage sits below what a keyword filter expects.",
       fix: "Work the missing terms into real sentences about what you actually did. Never paste a keyword list.",
-      cost: KEYWORDS_MAX - rawScore,
+      cost: requiredCost,
       evidence: headline
+    });
+  }
+
+  const otherCost = shareCost(OTHER_SHARE, otherCoverage);
+  if (otherCost > 0) {
+    const headline = tiered ? otherMissing.slice(0, 8).map((term) => term.term) : [];
+    drafts.push({
+      id: "keywords.other-coverage",
+      severity: otherCoverage < 0.3 ? "high" : otherCoverage < 0.5 ? "medium" : "low",
+      title: tiered
+        ? `${Math.round(otherCoverage * 100)}% of the vacancy's other terms appear in the CV`
+        : "The ad does not separate requirements from nice-to-haves",
+      detail: tiered
+        ? headline.length > 0
+          ? `Terms outside the requirements list that are absent: ${headline.join(", ")}.`
+          : "Coverage of the remaining terms sits below what a keyword filter expects."
+        : `With no requirements heading every term counts the same, so this share follows the same ${Math.round(
+            coverage * 100
+          )}% coverage.`,
+      fix: "Close the required terms first; then add the remaining ones where they describe real work.",
+      cost: otherCost,
+      ...(headline.length > 0 ? { evidence: headline } : {})
     });
   }
 

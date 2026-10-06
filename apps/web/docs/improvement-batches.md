@@ -2,7 +2,7 @@
 
 What is left to do, grouped into batches. Research, prompts and analysis already delivered are left out. The reasoning behind each item lives in the older notes: `engine-strengthening-plan.md`, `research-priority-list.md`, `help-assistant-suggestions.md`. The step-by-step brief for the help bubble is `help-assistant-improvement-brief.md`.
 
-Status: A1, A2, A3, A4, B6, C1, C5 done. Nothing below has been implemented or approved.
+Status: A1, A2, A3, A4, A7, B6, C1, C5 done. Nothing below has been implemented or approved.
 
 ## Rules for every batch
 
