@@ -1,6 +1,7 @@
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { after, type NextRequest, NextResponse } from "next/server";
 
+import { requestOrigin } from "@/lib/auth/origin";
 import { notifySignup } from "@/lib/notify/notify-signup";
 import type { NotifiableUser } from "@/lib/notify/signup-mail";
 import { createClient } from "@/lib/supabase/server";
@@ -47,6 +48,7 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get("type");
   const next = safeNext(searchParams.get("next"));
 
+  const origin = requestOrigin(request);
   const supabase = await createClient();
 
   // `next` already carries its locale prefix when it came from the sign-in
@@ -55,17 +57,17 @@ export async function GET(request: NextRequest) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       announceSignup(data.user, type);
-      return NextResponse.redirect(new URL(next, request.url));
+      return NextResponse.redirect(new URL(next, origin));
     }
   } else if (tokenHash && isOtpType(type)) {
     const { data, error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash });
     if (!error) {
       announceSignup(data.user, type);
-      return NextResponse.redirect(new URL(next, request.url));
+      return NextResponse.redirect(new URL(next, origin));
     }
   }
 
   // The login page looks the key up in its own language; the sentence is not
   // carried in the URL.
-  return NextResponse.redirect(new URL("/login?message=linkExpired", request.url));
+  return NextResponse.redirect(new URL("/login?message=linkExpired", origin));
 }

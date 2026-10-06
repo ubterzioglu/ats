@@ -2,6 +2,7 @@ import createMiddleware from "next-intl/middleware";
 import { type NextRequest, NextResponse } from "next/server";
 
 import { routing } from "@/i18n/routing";
+import { requestOrigin } from "@/lib/auth/origin";
 import { decideAccess } from "@/lib/auth/routes";
 import { updateSession } from "@/lib/supabase/middleware";
 
@@ -23,7 +24,7 @@ export async function middleware(request: NextRequest) {
   });
 
   if (decision.action === "redirect") {
-    const redirectResponse = NextResponse.redirect(new URL(decision.to, request.url));
+    const redirectResponse = NextResponse.redirect(new URL(decision.to, requestOrigin(request)));
     for (const cookie of response.cookies.getAll()) {
       redirectResponse.cookies.set(cookie.name, cookie.value, cookie);
     }
