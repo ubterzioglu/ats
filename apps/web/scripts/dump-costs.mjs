@@ -1,0 +1,163 @@
+/**
+ * Writes the cost table in docs/cost-weight-review.md from the engine itself.
+ *
+ *   node scripts/dump-costs.mjs            # rewrites the table between the markers
+ *   node scripts/dump-costs.mjs --stdout   # prints it instead
+ *
+ * Two sources, both read from the code rather than retyped: every finding
+ * draft in lib/scoring (id, severity and cost as written), and the costs the
+ * engine actually charged on the test fixtures. Only the part between the
+ * cost-table markers is replaced, so a recorded review outcome survives a
+ * rerun. Developer machines only; no model and no network.
+ */
+import { readFile, readdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+
+import { REPO_ROOT, WEB_ROOT, importFromRepo, importFromWeb } from "./lib/load-engine.mjs";
+
+const SCORING_DIR = path.join(WEB_ROOT, "lib", "scoring");
+const DOC = path.join(WEB_ROOT, "docs", "cost-weight-review.md");
+const START = "<!-- cost-table:start -->";
+const END = "<!-- cost-table:end -->";
+const DIMENSION_OF_PREFIX = { parse: "parseability" };
+const DRAFT_WINDOW = 14;
+
+/** Finding drafts as written: `id`, then `severity` and `cost` within the same object literal. */
+function scanDrafts(file, source) {
+  const lines = source.split("\n");
+  const drafts = [];
+  lines.forEach((line, index) => {
+    const id = line.match(/^\s*id:\s*(?:"([a-z]+\.[a-z0-9.-]+)"|`([a-z]+\.[a-z0-9.-]*)\$\{[^}]+\}`)/);
+    if (!id) return;
+    const window = lines.slice(index + 1, index + DRAFT_WINDOW);
+    const severity = window.find((item) => /^\s*severity:/.test(item));
+    const cost = window.find((item) => /^\s*cost:/.test(item));
+    if (!severity || !cost) return;
+    drafts.push({
+      id: id[1] ?? `${id[2]}*`,
+      severity: severity.replace(/^\s*severity:\s*/, "").replace(/,\s*$/, "").trim(),
+      cost: cost.replace(/^\s*cost:\s*/, "").replace(/,\s*$/, "").trim(),
+      file: path.relative(WEB_ROOT, file).replace(/\\/g, "/")
+    });
+  });
+  return drafts;
+}
+
+async function allDrafts() {
+  const { SECTION_DEFINITIONS } = await importFromWeb("lib/scoring/sections.ts");
+  const files = (await readdir(SCORING_DIR)).filter((name) => name.endsWith(".ts")).sort();
+  const drafts = [];
+  for (const name of files) {
+    const file = path.join(SCORING_DIR, name);
+    for (const draft of scanDrafts(file, await readFile(file, "utf8"))) {
+      if (!draft.id.endsWith("*")) {
+        drafts.push(draft);
+        continue;
+      }
+      // structure.missing-${definition.id}: one finding per core section.
+      for (const section of SECTION_DEFINITIONS.filter((definition) => definition.core)) {
+        drafts.push({ ...draft, id: `${draft.id.slice(0, -1)}${section.id}` });
+      }
+    }
+  }
+  const seen = new Map();
+  for (const draft of drafts) {
+    const key = `${draft.id}|${draft.severity}|${draft.cost}`;
+    if (!seen.has(key)) seen.set(key, draft);
+  }
+  return [...seen.values()];
+}
+
+/** Costs the engine charged on every fixture CV, alone and against every fixture ad. */
+async function observedCosts() {
+  const { analyzeCv } = await importFromWeb("lib/scoring/index.ts");
+  const fixtures = await importFromRepo("tests/fixtures.ts");
+  const { GOLDEN_JOB_ADS } = await importFromRepo("tests/fixtures/job-ads.ts");
+  const linkedin = await importFromRepo("tests/fixtures/linkedin.ts");
+  const cvs = [
+    fixtures.STRONG_CV,
+    fixtures.WEAK_CV,
+    fixtures.TR_CV,
+    fixtures.DE_CV,
+    linkedin.LINKEDIN_PDF_EN,
+    linkedin.LINKEDIN_PDF_TR,
+    ""
+  ];
+  const ads = [undefined, fixtures.JOB_AD, fixtures.DE_JOB_AD, fixtures.TR_JOB_AD, ...GOLDEN_JOB_ADS.map((ad) => ad.text)];
+  const observed = new Map();
+  const maxByDimension = new Map();
+  let runs = 0;
+  for (const cvText of cvs) {
+    for (const jobDescription of ads) {
+      const result = analyzeCv({ cvText, jobDescription });
+      runs += 1;
+      for (const dimension of result.dimensions) maxByDimension.set(dimension.id, dimension.max);
+      for (const finding of result.findings) {
+        const entry = observed.get(finding.id) ?? { min: Infinity, max: -Infinity, runs: 0, dimension: finding.dimension };
+        entry.min = Math.min(entry.min, finding.cost);
+        entry.max = Math.max(entry.max, finding.cost);
+        entry.runs += 1;
+        observed.set(finding.id, entry);
+      }
+    }
+  }
+  return { observed, maxByDimension, runs };
+}
+
+function dimensionOf(id, observed) {
+  const prefix = id.split(".")[0];
+  return observed.get(id)?.dimension ?? DIMENSION_OF_PREFIX[prefix] ?? prefix;
+}
+
+function cell(text) {
+  return String(text).replace(/\|/g, "\\|");
+}
+
+function render(drafts, { observed, maxByDimension, runs }) {
+  const rows = drafts
+    .map((draft) => ({ ...draft, dimension: dimensionOf(draft.id, observed) }))
+    .sort((a, b) => a.dimension.localeCompare(b.dimension) || a.id.localeCompare(b.id));
+  const lines = [
+    `Generated by \`node scripts/dump-costs.mjs\` from the drafts in \`lib/scoring/\` and ${runs} engine runs over the`,
+    "test fixtures (every fixture CV alone and against every fixture ad). \"Cost as written\" is the source expression;",
+    "\"Charged on fixtures\" is the range the engine actually deducted and in how many runs.",
+    "",
+    "| Dimension | Max | Finding id | Severity | Cost as written | Charged on fixtures |",
+    "| --- | ---: | --- | --- | --- | --- |"
+  ];
+  for (const row of rows) {
+    const seen = observed.get(row.id);
+    const charged = seen ? `${seen.min === seen.max ? seen.min : `${seen.min}-${seen.max}`} (${seen.runs} runs)` : "not triggered";
+    const cost = /^\d+$/.test(row.cost) ? row.cost : `\`${cell(row.cost)}\``;
+    const severity = /^"[a-z]+"$/.test(row.severity) ? row.severity.slice(1, -1) : `\`${cell(row.severity)}\``;
+    lines.push(`| ${row.dimension} | ${maxByDimension.get(row.dimension) ?? "?"} | \`${row.id}\` | ${severity} | ${cost} | ${charged} |`);
+  }
+  const missing = [...observed.keys()].filter((id) => !drafts.some((draft) => draft.id === id)).sort();
+  if (missing.length > 0) {
+    lines.push("", `Charged on fixtures but not found by the source scan: ${missing.map((id) => `\`${id}\``).join(", ")}.`);
+  }
+  lines.push(
+    "",
+    "Dimension maxima: " +
+      [...maxByDimension].map(([id, max]) => `${id} ${max}`).join(", ") +
+      `; total ${[...maxByDimension.values()].reduce((sum, max) => sum + max, 0)}.`
+  );
+  return lines.join("\n");
+}
+
+async function main() {
+  const table = render(await allDrafts(), await observedCosts());
+  if (process.argv.includes("--stdout")) {
+    console.log(table);
+    return;
+  }
+  const doc = await readFile(DOC, "utf8");
+  const start = doc.indexOf(START);
+  const end = doc.indexOf(END);
+  if (start === -1 || end === -1 || end < start) throw new Error(`markers ${START} / ${END} not found in ${DOC}`);
+  const next = `${doc.slice(0, start + START.length)}\n${table}\n${doc.slice(end)}`;
+  await writeFile(DOC, next);
+  console.log(`updated ${path.relative(REPO_ROOT, DOC)}`);
+}
+
+await main();
