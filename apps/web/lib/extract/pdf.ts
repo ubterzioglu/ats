@@ -79,6 +79,8 @@ export async function extractPdf(file: File): Promise<ExtractionResult> {
 
   try {
     const pages: string[] = [];
+    const links: string[] = [];
+    let emptyPages = 0;
 
     for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
@@ -86,21 +88,45 @@ export async function extractPdf(file: File): Promise<ExtractionResult> {
       const items = content.items
         .map(toPositioned)
         .filter((item): item is PositionedItem => item !== null);
-      pages.push(itemsToText(items));
+      
+      const pageText = itemsToText(items);
+      
+      if (pageText.trim().length === 0) {
+        emptyPages++;
+      }
+      
+      pages.push(pageText);
+      
+      // Extract annotations (links)
+      try {
+        const annotations = await page.getAnnotations();
+        for (const annotation of annotations) {
+          if (annotation.url && typeof annotation.url === "string") {
+            links.push(annotation.url);
+          }
+        }
+      } catch {
+        // Annotations may not be available
+      }
+      
       page.cleanup();
     }
 
     const text = pages.join("\n\n").trim();
+
+    let warning: string | undefined;
+    if (text.length < 200) {
+      warning = "Hardly any text layer in this PDF. It is probably a scan or an exported image, which is also what an ATS would see.";
+    } else if (emptyPages > 0) {
+      warning = `${emptyPages} page(s) had no text layer. Those pages are invisible to parsers.`;
+    }
 
     return {
       text,
       pages: document.numPages,
       source: "pdf",
       fileName: file.name,
-      warning:
-        text.length < 200
-          ? "Hardly any text layer in this PDF. It is probably a scan or an exported image, which is also what an ATS would see."
-          : undefined
+      warning
     };
   } finally {
     await document.destroy();
