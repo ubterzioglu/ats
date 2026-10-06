@@ -120,8 +120,8 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     }
   }, [t]);
 
-  // Scoring runs here, in the browser. Sending the text to a server would break
-  // the promise printed on the front page and in the privacy contract.
+  // Scoring runs here, in the browser, so the score never depends on the server.
+  // Storing the submission afterwards is a separate step (see AGENTS.md, privacy contract).
   const runAnalysis = useCallback(
     (force = false) => {
       if (cvText.trim().length < MIN_CV_CHARS) {

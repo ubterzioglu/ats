@@ -20,7 +20,7 @@
   "metadata": {
     "defaultTitle": "ATS readability — sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest",
     "titleTemplate": "%s · ATS readability",
-    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Im Browser bewertet. Kostenlos nutzbar.",
+    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Kostenlos, mit Anmeldung. Im Browser bewertet, 12 Monate gespeichert.",
     "openGraphTitle": "ATS readability",
     "openGraphDescription": "Sehen Sie Ihren Lebenslauf so, wie der Parser ihn sieht.",
     "sharedReportTitle": "Geteilter Bericht"
@@ -37,7 +37,7 @@
     "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Design.",
     "lede": "ATS readability ist ein kostenloses Werkzeug, das einen Lebenslauf so zeigt, wie ein Bewerbermanagementsystem ihn liest: als Text. Es bewertet, was übrig blieb, auf 100 Punkte und listet die Korrekturen nach Wert.",
     "cta": "Lebenslauf analysieren",
-    "privacyTag": "Im Browser bewertet",
+    "privacyTag": "Im Browser gelesen, 12 Monate gespeichert",
     "demo": {
       "label": "Beispielbericht, nicht Ihr Lebenslauf",
       "parse": "Lesbarkeit",
@@ -91,7 +91,7 @@
     "report": {
       "label": "Berichte",
       "title": "Ein Bericht zum Weitergeben.",
-      "body": "Exportieren Sie Ihre Ergebnisse oder teilen Sie einen Link. Ein geteilter Bericht enthält nur Punkte und Hinweise; Zeilen aus Ihrem Lebenslauf werden nie gespeichert, und der Link läuft nach 30 Tagen ab."
+      "body": "Exportieren Sie Ihre Ergebnisse oder teilen Sie einen Link. Ein geteilter Bericht enthält nur Punkte und Hinweise, keine Zeilen aus Ihrem Lebenslauf, und der Link läuft nach 30 Tagen ab."
     },
     "closing": {
       "title": "Lesen Sie Ihren Lebenslauf so, wie der Parser ihn liest.",
@@ -99,7 +99,7 @@
     },
     "how": {
       "title": "So funktioniert das Lesen",
-      "body": "Der Reader zieht Text aus PDF, DOCX oder Nur-Text-Dateien und baut Zeilen aus den Glyphenpositionen neu auf, damit Zeilenumbrüche und Spaltenabstände erhalten bleiben. Daran erkennt er, wo ein Abschnitt endet und der nächste beginnt. Der Text wird dann in fünf Dimensionen mit zusammen 100 Punkten bewertet: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20 und Kontakt 10. Jeder verlorene Punkt wird einem benannten Befund zugeordnet, mit der Zeile, aus der er stammt, und dem, was stattdessen zu schreiben ist; die Befunde stehen nach Kosten sortiert. Ohne Stellenanzeige erreicht die Schlüsselwort-Dimension höchstens 20 von 25 Punkten, und der Bericht sagt das. Das Lesen und Bewerten läuft in Ihrem Browser."
+      "body": "Der Reader zieht Text aus PDF, DOCX oder Nur-Text-Dateien und baut Zeilen aus den Glyphenpositionen neu auf, damit Zeilenumbrüche und Spaltenabstände erhalten bleiben. Daran erkennt er, wo ein Abschnitt endet und der nächste beginnt. Der Text wird dann in fünf Dimensionen mit zusammen 100 Punkten bewertet: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20 und Kontakt 10. Jeder verlorene Punkt wird einem benannten Befund zugeordnet, mit der Zeile, aus der er stammt, und dem, was stattdessen zu schreiben ist; die Befunde stehen nach Kosten sortiert. Ohne Stellenanzeige erreicht die Schlüsselwort-Dimension höchstens 20 von 25 Punkten, und der Bericht sagt das. Das Lesen und Bewerten läuft in Ihrem Browser. Für eine Analyse melden Sie sich an; die Datei, ihr Text und das Ergebnis werden dann 12 Monate auf unserem Server gespeichert."
     }
   },
   "about": {
@@ -134,7 +134,7 @@
       },
       "shared": {
         "q": "Was speichert ein geteilter Bericht?",
-        "a": "Nur Punktzahlen und Hinweise. Zeilen aus Ihrem Lebenslauf werden nie gespeichert; der Link läuft nach 30 Tagen ab."
+        "a": "Nur Punktzahlen und Hinweise. Der Link enthält keine Zeilen aus Ihrem Lebenslauf und läuft nach 30 Tagen ab."
       },
       "guarantee": {
         "q": "Heißt eine hohe Punktzahl, dass ich eingeladen werde?",
@@ -330,7 +330,7 @@
   },
   "login": {
     "heading": "Anmelden",
-    "lede": "Kostenlos nutzbar. Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Das Konto speichert nur Ihre Freigabelinks und gespeicherten Analysen.",
+    "lede": "Für die Analyse eines Lebenslaufs brauchen Sie ein Konto, und es ist kostenlos. Der Lebenslauf wird in Ihrem Browser gelesen und bewertet; die Datei, ihr Text und das Ergebnis werden danach 12 Monate mit Ihrem Konto auf unserem Server gespeichert.",
     "emailLabel": "E-Mail",
     "emailPlaceholder": "sie@beispiel.de",
     "passwordLabel": "Passwort",
@@ -396,7 +396,7 @@
     "cvHeading": "Der Lebenslauf",
     "cvLede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber schicken. Was unten herauskommt, ist das, was ein Parser bekommt.",
     "extractedLabel": "Extrahierter Text — korrigieren Sie ihn, wenn etwas nicht stimmt",
-    "extractedPlaceholder": "Fügen Sie den Text des Lebenslaufs hier ein, wenn Sie lieber keine Datei hochladen.",
+    "extractedPlaceholder": "Oder fügen Sie den Text des Lebenslaufs hier ein, statt eine Datei zu wählen. Eingefügter Text wird genauso gespeichert.",
     "adHeading": "Die Stellenanzeige",
     "adLede": "Optional und die größte einzelne Änderung am Ergebnis. Mit einer Anzeige wird die Begriffsabdeckung gegen diese Stelle gemessen statt gegen eine allgemeine Liste.",
     "adPlaceholder": "Fügen Sie die vollständige Ausschreibung ein, einschließlich der Anforderungsliste.",
@@ -415,7 +415,7 @@
     "compareAds": "Anzeigen vergleichen",
     "prepareInterview": "Auf das Interview vorbereiten",
     "backToReport": "Zurück zum Bericht",
-    "shareNote": "30 Tage teilbar, nur Punktzahlen — es wird kein Text des Lebenslaufs gespeichert:",
+    "shareNote": "30 Tage teilbar, nur Punktzahlen — der Link enthält keinen Text aus dem Lebenslauf:",
     "parserCaption": "{words} Wörter · {lines} Zeilen · {language}",
     "ruleBasedDisclaimer": "Diese Punktzahl ist eine regelbasierte Schätzung der Lesbarkeit, keine Vorhersage des Verhaltens eines bestimmten Parsers.",
     "errors": {
@@ -423,7 +423,7 @@
       "tooShort": "Fügen Sie zuerst den Text des Lebenslaufs ein — für eine Beurteilung braucht es mindestens ein paar Zeilen.",
       "analysisFailed": "Die Analyse konnte nicht abgeschlossen werden.",
       "clipboard": "Die Zwischenablage ist hier nicht verfügbar. Laden Sie stattdessen den Bericht herunter.",
-      "shareAuthRequired": "Melden Sie sich an, um einen Freigabelink zu erstellen. Die Analyse selbst braucht kein Konto.",
+      "shareAuthRequired": "Melden Sie sich an, um einen Freigabelink zu erstellen.",
       "shareEnvMissing": "Für die Freigabe werden Supabase-Zugangsdaten gebraucht. Alles andere funktioniert ohne sie.",
       "shareFailed": "Der Link konnte nicht erstellt werden. Der Bericht gehört weiterhin Ihnen und lässt sich herunterladen."
     }
@@ -431,7 +431,7 @@
   "dataControls": {
     "heading": "Auf diesem Gerät gespeichert",
     "counting": "Es wird gezählt, was hier gespeichert ist…",
-    "holds": "Dieser Browser hält {what}. Ihr Lebenslauf ist nicht darunter: Hier wird weder das Dokument noch eine Zeile daraus aufbewahrt.",
+    "holds": "Dieser Browser hält {what}. Ihr Lebenslauf ist nicht darunter: Hier wird weder das Dokument noch eine Zeile daraus aufbewahrt. Die Kopie, die bei einer Analyse gesendet wird, liegt 12 Monate auf unserem Server.",
     "nothing": "nichts",
     "history": "gespeicherte Punktzahlen",
     "meta": "Einstellungen",
@@ -620,7 +620,7 @@
     "ready": "Semantisches Modell bereit.",
     "readyDetail": "Die Hinweise unten laufen lokal gegen den ausgelesenen Text; die Punktzahlen bleiben unberührt.",
     "heading": "Semantische Hinweise (optional)",
-    "lede": "Ein kleines Sprachmodell kann Beinahe-Treffer zeigen, die der wörtliche Abgleich nicht sieht - etwa wenn der Lebenslauf „Postgres“ sagt und die Anzeige „PostgreSQL“. Es läuft vollständig in Ihrem Browser ({model}, etwa {sizeMb} MB, einmal heruntergeladen und zwischengespeichert). Ihr Text wird nirgendwohin geschickt, und die Punktzahlen ändern sich nie - Hinweise sind Rat, keine Messung.",
+    "lede": "Ein kleines Sprachmodell kann Beinahe-Treffer zeigen, die der wörtliche Abgleich nicht sieht - etwa wenn der Lebenslauf „Postgres“ sagt und die Anzeige „PostgreSQL“. Es läuft vollständig in Ihrem Browser ({model}, etwa {sizeMb} MB, einmal heruntergeladen und zwischengespeichert). Das Modell schickt keinen Text aus Ihrem Lebenslauf irgendwohin, und die Punktzahlen ändern sich nie - Hinweise sind Rat, keine Messung.",
     "progressLabel": "Fortschritt des Modell-Downloads",
     "cancel": "Abbrechen",
     "tryAgain": "Erneut versuchen",
@@ -662,7 +662,7 @@
   },
   "sharedReport": {
     "eyebrow": "geteilter Bericht · {date}",
-    "lede": "Nur Punktzahlen und Hinweise. Der Lebenslauf selbst wurde nie gespeichert.",
+    "lede": "Nur Punktzahlen und Hinweise. Dieser Link enthält keine Zeilen aus dem Lebenslauf.",
     "cta": "Den eigenen Lebenslauf kostenlos durchlaufen lassen"
   },
   "coverLetter": {
@@ -747,7 +747,7 @@
   },
   "adCompare": {
     "heading": "Anzeigenvergleich",
-    "lede": "Ihr Lebenslauf wurde gegen jede gespeicherte Anzeige bewertet. Die beste Übereinstimmung steht oben. Nichts wird an einen Server gesendet.",
+    "lede": "Ihr Lebenslauf wurde gegen jede gespeicherte Anzeige bewertet. Die beste Übereinstimmung steht oben. Der Vergleich läuft in Ihrem Browser.",
     "empty": "Keine gespeicherten Anzeigen zum Vergleichen. Speichern Sie eine Stellenanzeige aus dem Analyzer, um zu vergleichen.",
     "matchScore": "Passung: {score}",
     "coverage": "Schlüsselbegriffe: {percent}%",
@@ -999,8 +999,8 @@
       "account": "Brauche ich ein Konto?"
     },
     "answers": {
-      "free": "Ja. Die Analyse läuft in Ihrem Browser und benötigt kein Konto. Ein Konto wird nur zum Speichern von Freigabelinks benötigt.",
-      "account": "Nein. Die Analyse selbst benötigt kein Konto. Ein Konto wird nur zum Speichern von Freigabelinks benötigt.",
+      "free": "Ja, die Analyse ist kostenlos. Dafür müssen Sie sich anmelden. Die Datei, ihr Text und das Ergebnis werden 12 Monate auf unserem Server gespeichert.",
+      "account": "Ja. Für die Analyse eines Lebenslaufs müssen Sie sich anmelden. Die Datei, ihr Text und das Ergebnis werden 12 Monate mit Ihrem Konto gespeichert. Eine frühere Löschung können Sie über das Formular für Datenanfragen beantragen.",
       "contact": "Sie können uns unter {email} erreichen."
     },
     "findings": {

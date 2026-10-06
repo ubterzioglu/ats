@@ -1,6 +1,7 @@
 # ATS Free For All — Masterplan
 
-**Version:** 1.0 · 2026-10-02
+**Version:** 1.0 · 2026-10-02 · privacy statements revised 2026-10-07 to match `AGENTS.md` and
+`apps/web/docs/adr-0001-cv-storage.md`. Where this file and `AGENTS.md` disagree, `AGENTS.md` wins.
 **Scope:** the single plan of record for atsfreeforall.com. Product intent, design decisions and the
 full batch catalogue.
 
@@ -71,8 +72,11 @@ decisions already taken that constrain the batches still to come.
 
 ### What the product does today
 
-The CV is read and scored in the browser; the file is never uploaded. The text an applicant tracking
-system would extract is shown back to the user. A deterministic score out of 100 across five
+The CV is read and scored in the browser. Running an analysis needs sign-in. When a CV is analysed,
+the file, extracted text and result are sent to the server, stored in Supabase (database and private
+bucket), backed up to a Google Drive folder, kept 12 months, then purged; see `AGENTS.md` (privacy
+contract) and `apps/web/docs/adr-0001-cv-storage.md`. The text an applicant tracking system would
+extract is shown back to the user. A deterministic score out of 100 across five
 dimensions:
 
 | Dimension | Points | What it measures |
@@ -84,7 +88,8 @@ dimensions:
 | Contact | 10 | Name, email, phone, location, profile link |
 
 Each dimension starts at its full weight and loses points only to a named finding. Fixes are ordered
-by the points they would recover. An account stores share links only.
+by the points they would recover. Submissions, reports, share links and an optional profile are
+bound to the account.
 
 ### What exists in the code
 
@@ -98,15 +103,16 @@ Verified in the repository, so no batch re-does it:
 - **`lib/extract/`** — browser-side PDF and DOCX extraction.
 - **`lib/ai/`** — worker-based embeddings, WebLLM and Ollama providers, rewrite / explain / ask /
   tailor tasks, grounding checks.
-- **`lib/supabase/`** — server-only, share links with `evidence` stripped.
+- **`lib/supabase/`** — server-only, share links with `evidence` stripped, reports and profiles.
+- **`lib/cv-submission/`** — server-only CV storage, validation and Drive backup (ADR-0001).
 - **`components/score-rail.tsx`** — already renders a `previous` result, so before/after is partly done.
 
 ### Problems this plan fixes
 
 | # | Problem | Impact | Owned by |
 |---|---|---|---|
-| ~~S1~~ fixed | `/analyze` sat behind a login gate ([`middleware.ts`](apps/web/middleware.ts)) | A product called "free for all" demands an account to run an analysis. Loss at the very top of the funnel. | **P0.1** |
-| ~~S2~~ fixed | A partially-built server architecture (FastAPI, Postgres, Redis, Ollama) contradicts the live browser-based product | Direction confusion; server-side CV processing breaks the privacy promise | **P0.2**, **P0.3** |
+| ~~S1~~ fixed | `/analyze` sat behind a login gate ([`middleware.ts`](apps/web/middleware.ts)) | A product called "free for all" demands an account to run an analysis. Loss at the very top of the funnel. Later reversed: `/analyze` is behind sign-in again (`apps/web/lib/auth/routes.ts`) because submissions are bound to the account (ADR-0001). | **P0.1** |
+| ~~S2~~ fixed | A partially-built server architecture (FastAPI, Postgres, Redis, Ollama) contradicts the live browser-based product | Direction confusion; server-side scoring would split the engine in two | **P0.2**, **P0.3** |
 | ~~S3~~ fixed | The interface was English-only | A barrier for the Turkish and German-speaking target audience | **P0.5**–**P0.7**, **J.1**–**J.7** |
 | ~~S4~~ fixed | The report view stacked eight equal-weight panels | The user has one question and the interface answers in ten equal voices | **V.5**–**V.8** |
 
@@ -114,7 +120,8 @@ Verified in the repository, so no batch re-does it:
 
 ## 2. Vision
 
-Run the candidate's whole job-search loop in one place, without their data leaving the browser.
+Run the candidate's whole job-search loop in one place, with the score computed in the browser and
+every piece of stored data named, with its retention.
 
 ```
  Build a CV ──► Test it against a parser ──► Tailor it to an ad ──► Apply and track ──► Prepare to interview
@@ -123,7 +130,7 @@ Run the candidate's whole job-search loop in one place, without their data leavi
 ```
 
 Today the product covers one step of that loop. The goal is to close the rest with the deterministic
-engine at the centre, with no installation and no loss of privacy.
+engine at the centre and no installation.
 
 ---
 
@@ -132,8 +139,11 @@ engine at the centre, with no installation and no loss of privacy.
 Every batch is judged against these. A batch that violates one is redesigned or dropped.
 
 1. **Only the deterministic engine produces the score.** AI explains it; it never changes it.
-2. **The CV does not leave the browser by default.** Any feature that sends data out is opt-in and
-   states where it goes, on every request.
+2. **The CV is scored in the browser, and storage is stated, never hidden.** When a CV is analysed,
+   the file, extracted text and result go to our server under the privacy contract in `AGENTS.md`
+   (consent, 12-month retention, deletion on request). Any other feature that sends CV data out, such
+   as BYOK, is opt-in and states where it goes, on every request. (Revised 2026-10-07; the earlier
+   wording, "the CV does not leave the browser", was superseded by ADR-0001.)
 3. **No invention.** No skill, experience or number the candidate does not have may be written into
    a CV. "You may need to learn AWS" is allowed; "I added your AWS experience" is not.
 4. **Every lost point is explainable.** Each finding carries its source line and a concrete fix.
@@ -154,9 +164,9 @@ Every batch is judged against these. A batch that violates one is redesigned or 
 ├───────────────────────────────────────────────────────────┤
 │ Layer 2 — the user's local Ollama (localhost)             │  CV stays on the user's machine
 ├───────────────────────────────────────────────────────────┤
-│ Layer 1 — in-browser model (embeddings)                   │  CV stays in the browser
+│ Layer 1 — in-browser model (embeddings)                   │  Runs in the browser
 ├───────────────────────────────────────────────────────────┤
-│ Layer 0 — deterministic engine (exists today)             │  CV stays in the browser
+│ Layer 0 — deterministic engine (exists today)             │  Scores in the browser
 └───────────────────────────────────────────────────────────┘
 ```
 
@@ -170,12 +180,15 @@ Every batch is judged against these. A batch that violates one is redesigned or 
 ### Boundaries
 
 - **`lib/scoring/` is pure.** No DOM, no network, no React, no I/O. One file per dimension.
-- **`lib/extract/` is browser-only.** The server never receives a CV.
+- **`lib/extract/` is browser-only.** The CV is parsed and scored in the browser; when a CV is
+  analysed, the file, extracted text and result are then sent to the server for storage.
 - **`lib/ai/` is browser-only and advisory.** Nothing here may feed `lib/scoring/`. Model weights
   download only after explicit consent, with size, progress and cancel shown.
 - **`lib/supabase/` is server-only.** Every file starts with `import "server-only"`.
 - **`lib/store/` is browser-only.** IndexedDB behind one versioned layer (**ST.1**).
-- **The server holds accounts and share links only.** No CV is stored server-side.
+- **`lib/cv-submission/` is server-only.** CV storage, validation and Drive backup (ADR-0001).
+- **The server holds accounts, share links, reports, profiles and CV submissions** (file, extracted
+  text and result, kept 12 months, then purged). It never computes the score.
 
 ### Layer 2 and 3 notes
 
@@ -233,8 +246,9 @@ would break both the architecture and the product's strongest claim. Generic AI 
 | Motion | None (meters animate once, on first render) | Streaming, live edge, working pulse |
 
 The memorable moment is real rather than decorative: **the model runs on the user's own machine and
-the CV never leaves the browser.** That is already true of the architecture, so the one bold element
-is not a lie.
+the score is computed in the browser.** Both are true of the architecture, so the one bold element
+is not a lie. The CV itself is stored on the server after an analysis; the interface says so plainly
+and never claims that the CV stays in the browser.
 
 ### Colour
 
@@ -484,7 +498,7 @@ Opens the funnel and lays the ground the rest needs. No new product surface. Not
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| ~~**P0.1**~~ ✅ | **Remove the login gate.** Drop the `/analyze` protection block in [`middleware.ts`](apps/web/middleware.ts), keeping `updateSession`. Sign-in becomes required only for saving and sharing. Align the landing copy. | S | — | `/analyze` reachable signed out and a full analysis runs; sharing still asks for sign-in |
+| ~~**P0.1**~~ ✅ | **Remove the login gate.** Drop the `/analyze` protection block in [`middleware.ts`](apps/web/middleware.ts), keeping `updateSession`. Sign-in becomes required only for saving and sharing. Align the landing copy. | S | — | `/analyze` reachable signed out and a full analysis runs; sharing still asks for sign-in. Later reversed: `/analyze` is behind sign-in again (ADR-0001) |
 | ~~**P0.2**~~ ✅ | **Delete the dead analyze proxy.** Remove `app/api/analyze/route.ts`. Nothing references it, but it is a live endpoint that forwards a request body to a server backend, contradicting principle 2. | S | — | Route gone; no reference to `API_URL` remains in `apps/web` |
 | ~~**P0.3**~~ ✅ | **Retire the rejected server tree.** Delete `apps/api/`, `services/`, `packages/`, and the empty `infra/` and `data/`. Reduce `docker-compose.yml` to the `web` service, dropping `api`, `db`, `redis`, their volumes, and the `depends_on`/`API_URL` wiring on `web`. The deployment does currently build `api`, but the site has no users yet, so no staged rollout is needed. | M | P0.2 | `docker compose up` builds and serves the web app alone; the repository holds one architecture |
 | ~~**P0.4**~~ ✅ | **Before/after score across visits.** Complete the partly-built comparison: `score-rail.tsx` already renders a `previous` result; wire it to stored history. | S | ST.2 | A second visit shows the previous score |
@@ -641,7 +655,7 @@ The reason candidates come back; the module that closes the loop. Local-only in 
 
 | ID | Batch | Size | Depends on | Acceptance |
 |---|---|---|---|---|
-| ~~**G.1**~~ OK | **Kanban.** Saved → Applied → Interview → Offer/Rejected. | L | ST.1 | Fully usable without an account |
+| ~~**G.1**~~ OK | **Kanban.** Saved → Applied → Interview → Offer/Rejected. | L | ST.1 | Fully usable without an account (since moved behind sign-in; the board itself stays in IndexedDB) |
 | ~~**G.2**~~ ✅ | **Card links.** The ad, the CV variant used, the score at the time of applying, notes, contacts. | M | G.1, D.1 | Each card resolves its linked records |
 | ~~**G.3**~~ ✅ | **Follow-up reminders.** e.g. "no reply for 7 days". | M | G.1 | Reminders computed locally |
 | ~~**G.4**~~ ✅ | **CSV and JSON export.** | S | G.1 | Round-trips |
@@ -676,7 +690,7 @@ The reason candidates come back; the module that closes the loop. Local-only in 
 |---|---|---|---|
 | **0 — Groundwork** | 2–3 weeks | P0.1–P0.7, ST.1–ST.3 | Opens the funnel and lays the ground the rest needs. The store belongs here: five modules depend on it, and `P0.4` already does |
 | **1 — Deepen the engine** | 5–7 weeks | V.1–V.10, C.2–C.3, A.1–A.4, J.1–J.7 | Multiplies the existing strength and needs no AI. Contains the visual language merged with Module C |
-| **2 — Semantic layer** | 2–3 weeks | B.1–B.3, F.1–F.5 | Stays in the browser; separates the product from alternatives |
+| **2 — Semantic layer** | 2–3 weeks | B.1–B.3, F.1–F.5 | Semantic matching runs in the browser; separates the product from alternatives |
 | **3 — Builder** | 4–6 weeks | E.1–E.10 | The largest user value and the reason to return |
 | **4 — AI layers** | 3–4 weeks | L.1–L.4, D.1–D.7 | Added safely once the deterministic base is in place |
 | **5 — Close the loop** | 4–5 weeks | G.1–G.5, H.1–H.4, I.1–I.2, F.6 | Builds a lasting habit |
@@ -727,8 +741,9 @@ A.2 ─► I.1 ─► I.2
 A server architecture was designed and partially built: FastAPI, PostgreSQL with pgvector, Redis
 workers, server-side Ollama with `gpt-oss-20b`, and a nine-component score. It is rejected.
 
-**Why.** Processing a CV on a server breaks principle 2 and the promise printed on the front page.
-The browser-first architecture is the product's main differentiator, not an implementation detail.
+**Why.** Scoring belongs in the browser: the deterministic engine stays testable, fast and identical
+for every user. Storing a submission after the analysis (ADR-0001) is a separate decision and does not
+move scoring to the server.
 
 **What exists of it.** `apps/api/`, `services/` and `packages/` total 707 lines across 21 source
 files; the PDF and DOCX extractors are 13 and 11 lines. `infra/` and `data/` are empty. The real
@@ -739,8 +754,9 @@ engine is the TypeScript one in `lib/scoring/`, with 25 test files. The one live
 (principle 1), explainability (principle 4), the agent guardrails (principle 3), versioning
 (principle 7), and the provider abstraction (`LLMProvider`, **L.1**).
 
-**Where the server remains legitimate.** Accounts, share links, encrypted sync (deferred), and work
-that contains no CV — the job-board proxy in **F.6**.
+**Where the server remains legitimate.** Accounts, share links, CV submission storage under the
+privacy contract (ADR-0001), profiles, encrypted sync (deferred), and work that contains no CV — the
+job-board proxy in **F.6**.
 
 An enterprise or self-hosted variant can revisit the server design later; it would need its own spec.
 
@@ -752,7 +768,7 @@ An enterprise or self-hosted variant can revisit the server design later; it wou
 |---|---|---|
 | AI influencing the score | Loss of trust. LLM scorers are known to give the same CV widely different marks | The score comes only from the deterministic engine; AI output cannot be an input (architecture rule plus test) |
 | Invented content | Pushing a candidate to apply with skills they do not have; reputational damage | The "I have this skill" gate, placeholders, input-versus-output validation (**D.3**, **D.4**) |
-| Erosion of the privacy promise | Loss of the product's main differentiator | A "where does this data go?" check on every new feature; no feature sends a CV to a server |
+| Copy drifting from the privacy contract | Loss of trust | A "where does this data go?" check on every new feature; interface text states storage, retention and sign-in plainly and never says the CV stays in the browser |
 | In-browser model performance | Slow on low-end hardware | Layer 1 is optional, the model is cached, work runs in a Web Worker |
 | `live` cyan leaking out of AI surfaces | The role split stops teaching anything and the one bold element is spent | Verified in **V.10**; worth a standing review check |
 | Dark theme drifting to near-black plus one accent | Lands in a recognised generic cluster | The four-step graphite ladder must survive implementation; verified in **V.10** |
@@ -765,7 +781,7 @@ An enterprise or self-hosted variant can revisit the server design later; it wou
 
 ## 12. Success metrics
 
-Privacy comes first, so **content is never tracked**. Only anonymous event counts (for example
+**Content is never tracked.** Only anonymous event counts (for example
 "analysis completed", "fix accepted"). No CV text, ad text or personal data enters an analytics event.
 
 | Metric | Definition | Target |

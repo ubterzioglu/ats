@@ -19,9 +19,10 @@ type Phase =
   | { readonly kind: "unavailable"; readonly message: string };
 
 /**
- * Everything this product keeps about a user sits in their own browser, so the
- * delete control belongs there too. It states the count first: a wipe that does
- * not say what it took is indistinguishable from one that failed.
+ * Deletes what this browser holds (history, settings, score readings). Server-side
+ * submissions are erased through the data request form instead. It states the
+ * count first: a wipe that does not say what it took is indistinguishable from
+ * one that failed.
  */
 export function DataControls() {
   const t = useTranslations("dataControls");

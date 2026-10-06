@@ -20,7 +20,7 @@
   "metadata": {
     "defaultTitle": "ATS readability — see your CV the way the parser does",
     "titleTemplate": "%s · ATS readability",
-    "description": "Read a CV the way an applicant tracking system reads it: what parses, what is missing, and which terms from the job ad never appear. Scored in your browser. Free to use.",
+    "description": "Read a CV the way an applicant tracking system reads it: what parses, what is missing, and which terms from the job ad never appear. Free, with sign-in. Scored in your browser, stored for 12 months.",
     "openGraphTitle": "ATS readability",
     "openGraphDescription": "See your CV the way the parser does.",
     "sharedReportTitle": "Shared report"
@@ -37,7 +37,7 @@
     "headline": "That fancy CV template? The ATS can't see it. It only reads the text.",
     "lede": "ATS readability is a free tool that shows a CV the way an applicant tracking system reads it: as text. It scores what survived out of 100 and lists the fixes in order of value.",
     "cta": "Analyze a CV",
-    "privacyTag": "Scored in your browser",
+    "privacyTag": "Read in your browser, stored for 12 months",
     "demo": {
       "label": "Example report, not your CV",
       "parse": "Parseability",
@@ -91,7 +91,7 @@
     "report": {
       "label": "Reports",
       "title": "A report you can hand over.",
-      "body": "Export your findings, or share a link. A shared report holds scores and advice only; the lines taken from your CV are never stored, and the link expires after 30 days."
+      "body": "Export your findings, or share a link. A shared report holds scores and advice only; it carries no lines from your CV, and the link expires after 30 days."
     },
     "closing": {
       "title": "Read your CV the way the parser does.",
@@ -99,7 +99,7 @@
     },
     "how": {
       "title": "How the reading works",
-      "body": "The reader extracts text from a PDF, DOCX or plain text file, rebuilding lines from glyph positions so line breaks and column gaps survive. Those signals tell it where one section ends and the next begins. The text is then scored across five dimensions worth 100 points: parseability 25, keyword match 25, structure 20, impact 20 and contact 10. Every lost point is charged to a named finding, with the line it came from and what to write instead, and findings are listed most expensive first. Without a job ad the keyword dimension is capped at 20 of 25 points, and the report says so. The reading and scoring run in your browser."
+      "body": "The reader extracts text from a PDF, DOCX or plain text file, rebuilding lines from glyph positions so line breaks and column gaps survive. Those signals tell it where one section ends and the next begins. The text is then scored across five dimensions worth 100 points: parseability 25, keyword match 25, structure 20, impact 20 and contact 10. Every lost point is charged to a named finding, with the line it came from and what to write instead, and findings are listed most expensive first. Without a job ad the keyword dimension is capped at 20 of 25 points, and the report says so. The reading and scoring run in your browser. To run an analysis you sign in, and the file, its text and the result are then stored on our server for 12 months."
     }
   },
   "about": {
@@ -134,7 +134,7 @@
       },
       "shared": {
         "q": "What does a shared report store?",
-        "a": "Scores and advice only. Lines taken from your CV are never stored, and the link expires after 30 days."
+        "a": "Scores and advice only. The link carries no lines from your CV, and it expires after 30 days."
       },
       "guarantee": {
         "q": "Does a high score mean I will be invited?",
@@ -330,7 +330,7 @@
   },
   "login": {
     "heading": "Sign in",
-    "lede": "Free to use. Your CV is read and scored in your browser. The account only keeps your share links and stored analyses.",
+    "lede": "You need an account to analyze a CV, and it is free. The CV is read and scored in your browser; the file, its text and the result are then stored on our server with your account for 12 months.",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
     "passwordLabel": "Password",
@@ -396,7 +396,7 @@
     "cvHeading": "The CV",
     "cvLede": "Upload the exact file you send to employers. Whatever comes out below is what a parser gets.",
     "extractedLabel": "Extracted text — edit it if something is off",
-    "extractedPlaceholder": "Paste the CV text here if you would rather not upload a file.",
+    "extractedPlaceholder": "Or paste the CV text here instead of choosing a file. Pasted text is stored the same way.",
     "adHeading": "The job ad",
     "adLede": "Optional, and the single biggest change to the result. With an ad the keyword score is measured against that vacancy instead of a generic skill list.",
     "adPlaceholder": "Paste the full posting, including the requirements list.",
@@ -415,7 +415,7 @@
     "compareAds": "Compare ads",
     "prepareInterview": "Prepare for the interview",
     "backToReport": "Back to the report",
-    "shareNote": "Shareable for 30 days, scores only — no CV text is stored:",
+    "shareNote": "Shareable for 30 days, scores only — the link carries no CV text:",
     "parserCaption": "{words} words · {lines} lines · {language}",
     "ruleBasedDisclaimer": "This score is a rule-based readability estimate, not a prediction of any specific parser's behaviour.",
     "errors": {
@@ -423,7 +423,7 @@
       "tooShort": "Add the CV text first — at least a few lines are needed to judge anything.",
       "analysisFailed": "The analysis could not be completed.",
       "clipboard": "The clipboard is not available here. Download the report instead.",
-      "shareAuthRequired": "Sign in to create a share link. The analysis itself needs no account.",
+      "shareAuthRequired": "Sign in to create a share link.",
       "shareEnvMissing": "Sharing needs Supabase credentials. Everything else works without them.",
       "shareFailed": "The link could not be created. The report is still yours to download."
     }
@@ -431,7 +431,7 @@
   "dataControls": {
     "heading": "Stored on this device",
     "counting": "Counting what is stored here…",
-    "holds": "This browser holds {what}. Your CV is not among it: nothing here keeps the document or any line from it.",
+    "holds": "This browser holds {what}. Your CV is not among it: nothing here keeps the document or any line from it. The copy sent when you analyze is stored on our server for 12 months.",
     "nothing": "nothing",
     "history": "saved scores",
     "meta": "settings",
@@ -620,7 +620,7 @@
     "ready": "Semantic model ready.",
     "readyDetail": "Hints below run locally against the parsed text; scores are unaffected.",
     "heading": "Semantic hints (optional)",
-    "lede": "A small language model can point out near-misses the literal matcher cannot see - like a CV saying “Postgres” where the ad says “PostgreSQL”. It runs entirely in your browser ({model}, about {sizeMb} MB, downloaded once and cached). Your CV text is never sent anywhere, and scores never change - hints are advice, not measurement.",
+    "lede": "A small language model can point out near-misses the literal matcher cannot see - like a CV saying “Postgres” where the ad says “PostgreSQL”. It runs entirely in your browser ({model}, about {sizeMb} MB, downloaded once and cached). The model sends none of your CV text anywhere, and scores never change - hints are advice, not measurement.",
     "progressLabel": "Model download progress",
     "cancel": "Cancel",
     "tryAgain": "Try again",
@@ -662,7 +662,7 @@
   },
   "sharedReport": {
     "eyebrow": "shared report · {date}",
-    "lede": "Scores and advice only. The CV itself was never stored.",
+    "lede": "Scores and advice only. This link carries no lines from the CV.",
     "cta": "Run your own CV through it, free"
   },
   "coverLetter": {
@@ -747,7 +747,7 @@
   },
   "adCompare": {
     "heading": "Ad comparison",
-    "lede": "Your CV scored against every stored ad. The best fit is on top. Nothing is sent to a server.",
+    "lede": "Your CV scored against every stored ad. The best fit is on top. The comparison runs in your browser.",
     "empty": "No saved ads to compare. Save a job ad from the analyzer to start comparing.",
     "matchScore": "Match: {score}",
     "coverage": "Keywords: {percent}%",
@@ -999,8 +999,8 @@
       "account": "Do I need an account?"
     },
     "answers": {
-      "free": "Yes. The analysis runs in your browser and needs no account. An account is only needed to save share links.",
-      "account": "No. The analysis itself needs no account. An account is only needed to save share links.",
+      "free": "Yes, the analysis is free. You need to sign in to run it. The file, its text and the result are stored on our server for 12 months.",
+      "account": "Yes. You need to sign in to analyze a CV. The file, its text and the result are stored with your account for 12 months. You can ask for earlier deletion through the data request form.",
       "contact": "You can reach us at {email}."
     },
     "findings": {

@@ -20,7 +20,7 @@
   "metadata": {
     "defaultTitle": "ATS readability — CV'nizi ayrıştırıcının gördüğü gibi görün",
     "titleTemplate": "%s · ATS readability",
-    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tarayıcınızda puanlanır. Kullanımı ücretsiz.",
+    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Ücretsiz, giriş gerekir. Tarayıcınızda puanlanır, 12 ay saklanır.",
     "openGraphTitle": "ATS readability",
     "openGraphDescription": "CV'nizi ayrıştırıcının gördüğü gibi görün.",
     "sharedReportTitle": "Paylaşılan rapor"
@@ -37,7 +37,7 @@
     "headline": "O şık CV şablonunu ATS görmez. Sadece metne bakar.",
     "lede": "ATS readability, bir CV'yi aday takip sisteminin okuduğu gibi gösteren ücretsiz bir araçtır: metin olarak. Geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
     "cta": "CV'nizi analiz edin",
-    "privacyTag": "Tarayıcınızda puanlanır",
+    "privacyTag": "Tarayıcınızda okunur, 12 ay saklanır",
     "demo": {
       "label": "Örnek rapor, sizin CV'niz değil",
       "parse": "Okunabilirlik",
@@ -91,7 +91,7 @@
     "report": {
       "label": "Raporlar",
       "title": "Elden verebileceğiniz bir rapor.",
-      "body": "Bulgularınızı dışa aktarın ya da bir bağlantı paylaşın. Paylaşılan rapor yalnızca puan ve önerileri içerir; CV'nizden alınan satırlar asla saklanmaz ve bağlantı 30 gün sonra sona erer."
+      "body": "Bulgularınızı dışa aktarın ya da bir bağlantı paylaşın. Paylaşılan rapor yalnızca puan ve önerileri içerir, CV'nizden hiçbir satır taşımaz ve bağlantı 30 gün sonra sona erer."
     },
     "closing": {
       "title": "CV'nizi ayrıştırıcının gördüğü gibi okuyun.",
@@ -99,7 +99,7 @@
     },
     "how": {
       "title": "Okuma nasıl çalışır",
-      "body": "Okuyucu PDF, DOCX veya düz metin dosyasından metni çıkarır; satırları glif konumlarından yeniden kurduğu için satır sonları ve sütun boşlukları korunur. Bu işaretler bir bölümün nerede bitip diğerinin nerede başladığını gösterir. Metin sonra 100 puanlık beş boyutta puanlanır: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20 ve iletişim 10. Kaybedilen her puan, geldiği satırı ve yerine ne yazılacağını söyleyen adlandırılmış bir bulguya yazılır; bulgular en pahalıdan başlayarak sıralanır. İş ilanı yoksa anahtar kelime boyutu 25 yerine en fazla 20 puan alır ve rapor bunu belirtir. Okuma ve puanlama tarayıcınızda çalışır."
+      "body": "Okuyucu PDF, DOCX veya düz metin dosyasından metni çıkarır; satırları glif konumlarından yeniden kurduğu için satır sonları ve sütun boşlukları korunur. Bu işaretler bir bölümün nerede bitip diğerinin nerede başladığını gösterir. Metin sonra 100 puanlık beş boyutta puanlanır: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20 ve iletişim 10. Kaybedilen her puan, geldiği satırı ve yerine ne yazılacağını söyleyen adlandırılmış bir bulguya yazılır; bulgular en pahalıdan başlayarak sıralanır. İş ilanı yoksa anahtar kelime boyutu 25 yerine en fazla 20 puan alır ve rapor bunu belirtir. Okuma ve puanlama tarayıcınızda çalışır. Analiz için giriş yaparsınız; dosya, metni ve sonuç ardından sunucumuzda 12 ay saklanır."
     }
   },
   "about": {
@@ -134,7 +134,7 @@
       },
       "shared": {
         "q": "Paylaşılan rapor neyi saklar?",
-        "a": "Yalnızca puanları ve önerileri. CV'nizden alınan satırlar saklanmaz; bağlantı 30 gün sonra geçersiz olur."
+        "a": "Yalnızca puanları ve önerileri. Bağlantı CV'nizden hiçbir satır içermez ve 30 gün sonra geçersiz olur."
       },
       "guarantee": {
         "q": "Yüksek puan görüşmeye çağrılacağım anlamına gelir mi?",
@@ -330,7 +330,7 @@
   },
   "login": {
     "heading": "Giriş yap",
-    "lede": "Kullanımı ücretsiz. CV'niz tarayıcınızda okunur ve puanlanır. Hesap yalnızca paylaşım bağlantılarınızı ve saklanan analizlerinizi tutar.",
+    "lede": "CV analizi için bir hesap gerekir ve hesap ücretsizdir. CV'niz tarayıcınızda okunur ve puanlanır; ardından dosya, metni ve sonuç hesabınıza bağlı olarak sunucumuzda 12 ay saklanır.",
     "emailLabel": "E-posta",
     "emailPlaceholder": "siz@ornek.com",
     "passwordLabel": "Parola",
@@ -396,7 +396,7 @@
     "cvHeading": "CV",
     "cvLede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıda ne çıkıyorsa ayrıştırıcının aldığı odur.",
     "extractedLabel": "Çıkarılan metin — bir şey yanlışsa düzeltin",
-    "extractedPlaceholder": "Dosya yüklemek istemiyorsanız CV metnini buraya yapıştırın.",
+    "extractedPlaceholder": "Ya da dosya seçmek yerine CV metnini buraya yapıştırın. Yapıştırılan metin de aynı şekilde saklanır.",
     "adHeading": "İş ilanı",
     "adLede": "İsteğe bağlı ve sonucu en çok değiştiren şey. İlan verildiğinde anahtar kelime puanı genel bir beceri listesine değil, o ilana karşı ölçülür.",
     "adPlaceholder": "İlanın tamamını, gereksinimler listesi dahil, yapıştırın.",
@@ -415,7 +415,7 @@
     "compareAds": "İlanları karşılaştır",
     "prepareInterview": "Mülakata hazırlan",
     "backToReport": "Rapora dön",
-    "shareNote": "30 gün paylaşılabilir, yalnızca puanlar — hiçbir CV metni saklanmaz:",
+    "shareNote": "30 gün paylaşılabilir, yalnızca puanlar — bağlantı CV metni içermez:",
     "parserCaption": "{words} kelime · {lines} satır · {language}",
     "ruleBasedDisclaimer": "Bu puan kural tabanlı bir okunabilirlik tahminidir, belirli bir ayrıştırıcının davranışının tahmini değildir.",
     "errors": {
@@ -423,7 +423,7 @@
       "tooShort": "Önce CV metnini ekleyin — bir şey değerlendirmek için en az birkaç satır gerekir.",
       "analysisFailed": "Analiz tamamlanamadı.",
       "clipboard": "Pano burada kullanılamıyor. Onun yerine raporu indirin.",
-      "shareAuthRequired": "Paylaşım bağlantısı oluşturmak için giriş yapın. Analizin kendisi hesap gerektirmez.",
+      "shareAuthRequired": "Paylaşım bağlantısı oluşturmak için giriş yapın.",
       "shareEnvMissing": "Paylaşım için Supabase kimlik bilgileri gerekir. Geri kalan her şey onlarsız çalışır.",
       "shareFailed": "Bağlantı oluşturulamadı. Rapor yine de sizin, indirebilirsiniz."
     }
@@ -431,7 +431,7 @@
   "dataControls": {
     "heading": "Bu cihazda saklananlar",
     "counting": "Burada ne saklandığı sayılıyor…",
-    "holds": "Bu tarayıcı {what} tutuyor. CV'niz bunların arasında değil: burada ne belge ne de ondan bir satır saklanır.",
+    "holds": "Bu tarayıcı {what} tutuyor. CV'niz bunların arasında değil: burada ne belge ne de ondan bir satır saklanır. Analiz ettiğinizde gönderilen kopya sunucumuzda 12 ay saklanır.",
     "nothing": "hiçbir şey",
     "history": "kayıtlı puan",
     "meta": "ayar",
@@ -620,7 +620,7 @@
     "ready": "Anlamsal model hazır.",
     "readyDetail": "Aşağıdaki ipuçları ayrıştırılmış metne karşı yerelde çalışır; puanlar etkilenmez.",
     "heading": "Anlamsal ipuçları (isteğe bağlı)",
-    "lede": "Küçük bir dil modeli, birebir eşleştiricinin göremediği yakın kaçırmaları gösterebilir - ilan “PostgreSQL” derken CV'nin “Postgres” demesi gibi. Tamamen tarayıcınızda çalışır ({model}, yaklaşık {sizeMb} MB, bir kez indirilir ve önbelleğe alınır). CV metniniz hiçbir yere gönderilmez ve puanlar hiç değişmez - ipuçları tavsiyedir, ölçüm değil.",
+    "lede": "Küçük bir dil modeli, birebir eşleştiricinin göremediği yakın kaçırmaları gösterebilir - ilan “PostgreSQL” derken CV'nin “Postgres” demesi gibi. Tamamen tarayıcınızda çalışır ({model}, yaklaşık {sizeMb} MB, bir kez indirilir ve önbelleğe alınır). Model CV metninizi hiçbir yere göndermez ve puanlar hiç değişmez - ipuçları tavsiyedir, ölçüm değil.",
     "progressLabel": "Model indirme ilerlemesi",
     "cancel": "İptal",
     "tryAgain": "Yeniden dene",
@@ -662,7 +662,7 @@
   },
   "sharedReport": {
     "eyebrow": "paylaşılan rapor · {date}",
-    "lede": "Yalnızca puanlar ve tavsiyeler. CV'nin kendisi hiçbir zaman saklanmadı.",
+    "lede": "Yalnızca puanlar ve tavsiyeler. Bu bağlantı CV'den hiçbir satır içermez.",
     "cta": "Kendi CV'nizi de ücretsiz geçirin"
   },
   "coverLetter": {
@@ -747,7 +747,7 @@
   },
   "adCompare": {
     "heading": "İlan karşılaştırması",
-    "lede": "CV'niz kayıtlı her ilana karşı puanlandı. En iyi uyum üstte. Sunucuya hiçbir şey gönderilmez.",
+    "lede": "CV'niz kayıtlı her ilana karşı puanlandı. En iyi uyum üstte. Karşılaştırma tarayıcınızda yapılır.",
     "empty": "Karşılaştırılacak kayıtlı ilan yok. Karşılaştırmaya başlamak için analizden bir ilan kaydedin.",
     "matchScore": "Uyum: {score}",
     "coverage": "Anahtar kelimeler: %{percent}",
@@ -999,8 +999,8 @@
       "account": "Hesap gerekli mi?"
     },
     "answers": {
-      "free": "Evet. Analiz tarayıcınızda çalışır ve hesap gerektirmez. Hesap yalnızca paylaşım bağlantılarını kaydetmek için gereklidir.",
-      "account": "Hayır. Analizin kendisi hesap gerektirmez. Hesap yalnızca paylaşım bağlantılarını kaydetmek için gereklidir.",
+      "free": "Evet, analiz ücretsizdir. Analiz için giriş yapmanız gerekir. Dosya, metni ve sonuç sunucumuzda 12 ay saklanır.",
+      "account": "Evet. CV analizi için giriş yapmanız gerekir. Dosya, metni ve sonuç hesabınıza bağlı olarak 12 ay saklanır. Daha erken silinmesini veri talep formundan isteyebilirsiniz.",
       "contact": "Bize {email} adresinden ulaşabilirsiniz."
     },
     "findings": {

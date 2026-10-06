@@ -22,15 +22,15 @@ const MOCK_MESSAGES: Record<string, string> = {
   "faq.items.upload.a": "Yes. Your CV is read and scored in your browser first.",
   "faq.items.score.a": "Five dimensions add up to 100 points.",
   "faq.items.languages.a": "Section headings, action verbs and stopwords are recognised in English, German and Turkish.",
-  "faq.items.shared.a": "Scores and advice only. Lines taken from your CV are never stored.",
+  "faq.items.shared.a": "Scores and advice only. The link carries no lines from your CV.",
   "faq.items.guarantee.a": "No. The checks are heuristics built from how mainstream parsers behave.",
   "faq.items.noAd.a": "The keyword dimension is capped at 20 of 25 points.",
   "faq.items.formats.a": "PDF, DOCX and plain text files up to 10 MB.",
   "faq.items.retention.a": "Twelve months from the upload date.",
   "faq.items.delete.a": "Use the data request form to ask for erasure.",
   "faq.items.accuracy.a": "The checks are built from how mainstream parsers behave.",
-  "help.answers.free": "Yes. The analysis runs in your browser and needs no account.",
-  "help.answers.account": "No. The analysis itself needs no account."
+  "help.answers.free": "Yes, the analysis is free. You need to sign in to run it.",
+  "help.answers.account": "Yes. You need to sign in to analyze a CV."
 };
 
 function resolve(key: string): string {
@@ -85,7 +85,7 @@ describe("createKeywordAnswerer", () => {
     const answer = await answerer.answer("Is this service free?");
     expect(answer.kind).toBe("text");
     if (answer.kind === "text") {
-      expect(answer.text).toBe("Yes. The analysis runs in your browser and needs no account.");
+      expect(answer.text).toBe("Yes, the analysis is free. You need to sign in to run it.");
     }
   });
 
@@ -93,7 +93,7 @@ describe("createKeywordAnswerer", () => {
     const answer = await answerer.answer("Do I need an account?");
     expect(answer.kind).toBe("text");
     if (answer.kind === "text") {
-      expect(answer.text).toBe("No. The analysis itself needs no account.");
+      expect(answer.text).toBe("Yes. You need to sign in to analyze a CV.");
     }
   });
 
@@ -109,7 +109,7 @@ describe("createKeywordAnswerer", () => {
     const answer = await german.answer("Brauche ich ein Konto?");
     expect(answer.kind).toBe("text");
     if (answer.kind === "text") {
-      expect(answer.text).toBe("No. The analysis itself needs no account.");
+      expect(answer.text).toBe("Yes. You need to sign in to analyze a CV.");
     }
   });
 
@@ -117,6 +117,28 @@ describe("createKeywordAnswerer", () => {
     const catalog: unknown = JSON.parse(readFileSync(join(MESSAGES, `${locale}.json`), "utf8"));
     for (const entry of HELP_ENTRIES) {
       expect(lookup(catalog, entry.answerKey), entry.answerKey).toEqual(expect.any(String));
+    }
+  });
+
+  // /analyze sits behind sign-in (lib/auth/routes.ts), so the catalog answers
+  // must say so rather than promise an analysis without an account.
+  const SIGN_IN: Readonly<Record<(typeof LOCALES)[number], RegExp>> = {
+    en: /sign in/i,
+    de: /anmelden|melden Sie sich an/i,
+    tr: /giriş yap/i
+  };
+  const NO_ACCOUNT: Readonly<Record<(typeof LOCALES)[number], RegExp>> = {
+    en: /no account/i,
+    de: /kein Konto/i,
+    tr: /hesap gerektirmez/i
+  };
+
+  it.each(LOCALES)("the %s account, free and share answers say sign-in is required", (locale) => {
+    const catalog: unknown = JSON.parse(readFileSync(join(MESSAGES, `${locale}.json`), "utf8"));
+    for (const key of ["help.answers.account", "help.answers.free", "analyzer.errors.shareAuthRequired"]) {
+      const text = lookup(catalog, key);
+      expect(text, key).toEqual(expect.stringMatching(SIGN_IN[locale]));
+      expect(text, key).not.toEqual(expect.stringMatching(NO_ACCOUNT[locale]));
     }
   });
 
