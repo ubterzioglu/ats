@@ -122,7 +122,7 @@ function AdCompareRow({ result, job, rank, onDelete }: AdCompareRowProps) {
             })}
           </span>
         </div>
-        {result.ad.redFlags.length > 0 ? (
+        {result.ad && result.ad.redFlags.length > 0 ? (
           <p className="mt-1 text-xs text-caution">
             {t("redFlagsCount", { count: result.ad.redFlags.length })}
           </p>

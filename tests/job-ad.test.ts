@@ -9,6 +9,15 @@ import {
   parseJobAd
 } from "../apps/web/lib/scoring/job-ad";
 
+// parseJobAd ignores ads under 120 characters, so fixtures carry a neutral
+// paragraph that adds length without adding any requirement signal.
+const FILLER =
+  "You will work with a small product team on our customer platform, review pull requests, write tests and help plan each release with design and support colleagues.";
+
+function ad(core: string): string {
+  return `${core}\n${FILLER}`;
+}
+
 describe("job ad parsing", () => {
   it("extracts seniority from standard titles", () => {
     const lines = ["Senior Software Engineer", "We are looking for a senior dev"];
@@ -37,34 +46,40 @@ describe("job ad parsing", () => {
   });
 
   it("splits required and preferred terms in parseJobAd", () => {
-    const result = parseJobAd("Senior Engineer", [
+    const result = parseJobAd(ad("Senior Engineer"), [
       { term: "React", weight: 1, hits: 0, tier: "required" },
       { term: "Vue", weight: 0.8, hits: 0, tier: "preferred" },
       { term: "Node", weight: 1.5, hits: 0, tier: undefined }
     ]);
-    expect(result.terms.required.map(t => t.term)).toEqual(["React", "Node"]);
-    expect(result.terms.preferred.map(t => t.term)).toEqual(["Vue"]);
-    expect(result.seniority).toMatchObject({ level: "senior" });
+    expect(result).not.toBeNull();
+    expect(result!.terms.required.map(t => t.term)).toEqual(["React", "Node"]);
+    expect(result!.terms.preferred.map(t => t.term)).toEqual(["Vue"]);
+    expect(result!.seniority).toMatchObject({ level: "senior" });
+  });
+
+  it("ignores ads under 120 characters", () => {
+    expect(parseJobAd("Developer needed.", [])).toBeNull();
+    expect(parseJobAd(ad("Developer needed."), [])).not.toBeNull();
   });
 
   describe("red flags", () => {
     it("flags an unusually long list of required skills", () => {
       const terms = Array.from({ length: 16 }, (_, i) => ({ term: `Skill${i}`, weight: 1, hits: 0, tier: "required" as const }));
-      const result = parseJobAd("We need everything.", terms);
-      const flag = result.redFlags.find(f => f.id === "laundry-list");
+      const result = parseJobAd(ad("We need everything."), terms);
+      const flag = result!.redFlags.find(f => f.id === "laundry-list");
       expect(flag).toBeDefined();
     });
 
     it("flags a seniority mismatch (e.g. junior needing 5 years)", () => {
-      const result = parseJobAd("Junior Developer\nMust have 5+ years of experience.", []);
-      const flag = result.redFlags.find(f => f.id === "seniority-mismatch");
+      const result = parseJobAd(ad("Junior Developer\nMust have 5+ years of experience."), []);
+      const flag = result!.redFlags.find(f => f.id === "seniority-mismatch");
       expect(flag).toBeDefined();
       expect(flag?.evidence).toContain("5+ years");
     });
 
     it("flags an extremely short/vague job description", () => {
-      const result = parseJobAd("Developer needed.", []);
-      const flag = result.redFlags.find(f => f.id === "vague-role");
+      const result = parseJobAd(ad("Developer needed."), []);
+      const flag = result!.redFlags.find(f => f.id === "vague-role");
       expect(flag).toBeDefined();
     });
   });

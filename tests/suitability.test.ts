@@ -3,7 +3,18 @@ import { describe, expect, it } from "vitest";
 import { evaluateSuitability } from "../apps/web/lib/scoring/suitability";
 import { buildContext } from "../apps/web/lib/scoring/context";
 import { parseJobAd } from "../apps/web/lib/scoring/job-ad";
-import type { KeywordReport } from "../apps/web/types/analysis";
+import type { JobAdRequirements, KeywordReport } from "../apps/web/types/analysis";
+
+// parseJobAd ignores ads under 120 characters, so fixtures carry a neutral
+// paragraph that adds length without adding any requirement signal.
+const FILLER =
+  "You will work with a small product team on our customer platform, review pull requests, write tests and help plan each release with design and support colleagues.";
+
+function readAd(core: string, terms: Parameters<typeof parseJobAd>[1] = []): JobAdRequirements {
+  const parsed = parseJobAd(`${core}\n${FILLER}`, terms);
+  if (!parsed) throw new Error("fixture ad was ignored as too short");
+  return parsed;
+}
 
 describe("suitability checklist", () => {
   const context = buildContext(`
@@ -27,7 +38,7 @@ describe("suitability checklist", () => {
   };
 
   it("evaluates experience requirement", () => {
-    const jobAd = parseJobAd("We need 5 years of experience", []);
+    const jobAd = readAd("We need 5 years of experience");
     const checks = evaluateSuitability(context, jobAd, emptyKeywords);
     
     const expCheck = checks.find(c => c.id === "experience");
@@ -36,7 +47,7 @@ describe("suitability checklist", () => {
   });
 
   it("fails experience if not enough years", () => {
-    const jobAd = parseJobAd("We need 10 years of experience", []);
+    const jobAd = readAd("We need 10 years of experience");
     const checks = evaluateSuitability(context, jobAd, emptyKeywords);
     
     const expCheck = checks.find(c => c.id === "experience");
@@ -44,7 +55,7 @@ describe("suitability checklist", () => {
   });
 
   it("evaluates location", () => {
-    const jobAd = parseJobAd("Location: Berlin", []);
+    const jobAd = readAd("Location: Berlin");
     const checks = evaluateSuitability(context, jobAd, emptyKeywords);
     
     const locCheck = checks.find(c => c.id === "location");
@@ -52,7 +63,7 @@ describe("suitability checklist", () => {
   });
 
   it("marks location as unknown if missing", () => {
-    const jobAd = parseJobAd("Location: Munich", []);
+    const jobAd = readAd("Location: Munich");
     const checks = evaluateSuitability(context, jobAd, emptyKeywords);
     
     const locCheck = checks.find(c => c.id === "location");
@@ -60,7 +71,7 @@ describe("suitability checklist", () => {
   });
 
   it("evaluates language requirements", () => {
-    const jobAd = parseJobAd("Must speak fluent German", []);
+    const jobAd = readAd("Must speak fluent German");
     const checks = evaluateSuitability(context, jobAd, emptyKeywords);
     
     const langCheck = checks.find(c => c.id === "language");
@@ -68,7 +79,7 @@ describe("suitability checklist", () => {
   });
 
   it("evaluates required skills", () => {
-    const jobAd = parseJobAd("Required: React, TypeScript", [
+    const jobAd = readAd("Required: React, TypeScript", [
       { term: "React", weight: 1, hits: 1, tier: "required" },
       { term: "TypeScript", weight: 1, hits: 0, tier: "required" }
     ]);

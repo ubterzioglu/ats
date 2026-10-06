@@ -53,7 +53,12 @@ Must have 5+ years of experience.
 The role is for a junior team member.
 `;
 
+// Under 120 characters: parseJobAd ignores it, so it carries no requirements.
 const SHORT_AD = `QA role. Apply now.`;
+
+// Long enough to read, but well under 80 words, so it reads as vague.
+const VAGUE_AD = `QA Engineer
+We are a growing team and want someone who cares about quality. Join us and help ship better software every week, together with friendly colleagues.`;
 
 const AD_WITH_TERMS = `QA Engineer at Acme Corp
 Requirements: Playwright, TypeScript, Kubernetes, Docker, CI/CD
@@ -68,11 +73,16 @@ Berlin location preferred.`;
 
 describe("F.2 + F.3 surface: red flags and suitability reach the panel", () => {
   it("surfaces red flags from the engine on the analysis result", () => {
-    const result = analyzeCv({ cvText: CV, jobDescription: SHORT_AD });
+    const result = analyzeCv({ cvText: CV, jobDescription: VAGUE_AD });
     expect(result.jobAd).toBeDefined();
     expect(result.jobAd!.redFlags.length).toBeGreaterThan(0);
     const ids = result.jobAd!.redFlags.map((f) => f.id);
     expect(ids).toContain("vague-role");
+  });
+
+  it("reads no requirements from an ad under 120 characters", () => {
+    const result = analyzeCv({ cvText: CV, jobDescription: SHORT_AD });
+    expect(result.jobAd).toBeUndefined();
   });
 
   it("surfaces suitability checks with passed/failed/unknown statuses", () => {
@@ -207,11 +217,19 @@ describe("F.4 surface: multi-ad comparison ranks by fit", () => {
     expect(results[1]!.matchScore).toBeGreaterThanOrEqual(results[2]!.matchScore);
   });
 
+  it("ranks an unreadable ad on keyword coverage alone", () => {
+    const context = buildContext(CV);
+    const [result] = compareAds(context, [SHORT_AD]);
+    expect(result!.ad).toBeNull();
+    expect(result!.suitability).toEqual([]);
+    expect(result!.matchScore).toBe(Math.round(result!.keywordCoverage * 50));
+  });
+
   it("carries suitability and red flags per ad", () => {
     const context = buildContext(CV);
     const results = compareAds(context, [AD_WITH_TERMS]);
     expect(results[0]!.suitability.length).toBeGreaterThan(0);
-    expect(results[0]!.ad.redFlags).toBeDefined();
+    expect(results[0]!.ad?.redFlags).toBeDefined();
   });
 });
 

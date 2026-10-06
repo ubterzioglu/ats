@@ -5,7 +5,8 @@ import { evaluateSuitability } from "./suitability";
 import { parseJobAd } from "./job-ad";
 
 export interface AdComparisonResult {
-  readonly ad: JobAdRequirements;
+  /** Null when the ad is too short to read requirements from (see parseJobAd). */
+  readonly ad: JobAdRequirements | null;
   readonly suitability: readonly SuitabilityCheck[];
   readonly keywordCoverage: number;
   /** A synthetic score from 0 to 100 representing how well the CV fits the ad. */
@@ -24,9 +25,11 @@ export function compareAds(
   const results = jobAds.map(adText => {
     const keywordOutcome = scoreKeywords(context, adText);
     const ad = parseJobAd(adText, [...keywordOutcome.report.matched, ...keywordOutcome.report.missing]);
-    const suitability = evaluateSuitability(context, ad, keywordOutcome.report);
+    const suitability = ad ? evaluateSuitability(context, ad, keywordOutcome.report) : [];
 
-    let suitabilityScore = 1; // Default to full marks if no hard requirements
+    // An unreadable ad earns no suitability credit: nothing was verified, so it
+    // ranks on keyword coverage alone instead of getting free full marks.
+    let suitabilityScore = ad ? 1 : 0;
     if (suitability.length > 0) {
       const passed = suitability.filter(s => s.status === "passed").length;
       const failed = suitability.filter(s => s.status === "failed").length;
