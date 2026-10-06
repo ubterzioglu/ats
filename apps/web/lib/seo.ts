@@ -6,7 +6,7 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
 ).replace(/\/$/, "");
 
-export const PUBLIC_PATHS = ["/", "/analyze", "/builder", "/about", "/privacy", "/kvkk", "/data-request"] as const;
+export const PUBLIC_PATHS = ["/", "/about", "/privacy", "/kvkk", "/data-request"] as const;
 export type PublicPath = (typeof PUBLIC_PATHS)[number];
 
 export const OPEN_GRAPH_LOCALE: Readonly<Record<AppLocale, string>> = {

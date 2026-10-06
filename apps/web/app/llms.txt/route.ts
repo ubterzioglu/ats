@@ -9,19 +9,15 @@ export async function GET(): Promise<Response> {
   const metadata = await getTranslations({ locale: "en", namespace: "metadata" });
   const home = await getTranslations({ locale: "en", namespace: "home" });
   const common = await getTranslations({ locale: "en", namespace: "common" });
-  const nav = await getTranslations({ locale: "en", namespace: "nav" });
   const faq = await getTranslations({ locale: "en", namespace: "faq" });
 
   const pageLinks = [
-    `- [${nav("home")}](${SITE_URL}/)`,
+    `- [Home](${SITE_URL}/)`,
     ...PUBLIC_PATHS.filter((p) => p !== "/").map((path) => {
-      const key = path === "/analyze" ? "analyze" : path === "/builder" ? "builder" : path === "/about" ? "about" : path;
-      return `- [${nav(key)}](${SITE_URL}${path})`;
+      const key = path === "/about" ? "about" : path === "/privacy" ? "privacy" : path === "/kvkk" ? "kvkk" : "dataRequest";
+      return `- [${key}](${SITE_URL}${path})`;
     }),
-    `- [${faq("title")}](${SITE_URL}/#faq)`,
-    `- [Privacy Notice](${SITE_URL}/privacy)`,
-    `- [KVKK Notice](${SITE_URL}/kvkk)`,
-    `- [Data Request](${SITE_URL}/data-request)`
+    `- [FAQ](${SITE_URL}/#faq)`
   ].join("\n");
 
   const body = `# ATS readability
