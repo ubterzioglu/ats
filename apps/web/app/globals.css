@@ -389,6 +389,18 @@ h3.font-normal {
       animation-range: entry 10% cover 45%;
     }
 
+    .nav-sheen::after {
+      content: "";
+      position: absolute;
+      inset: auto 1.5rem -2px 1.5rem;
+      height: 2px;
+      border-radius: 9999px;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgb(var(--lime)), rgb(var(--flame) / 0.8), transparent) no-repeat;
+      background-size: 40% 100%;
+      animation: sheen 5s linear infinite;
+    }
+
     .break-head {
       animation: break-travel linear both;
       animation-timeline: view();
@@ -491,6 +503,15 @@ h3.font-normal {
   }
   to {
     transform: scaleX(1);
+  }
+}
+
+@keyframes sheen {
+  from {
+    background-position: -50% 0;
+  }
+  to {
+    background-position: 150% 0;
   }
 }
 

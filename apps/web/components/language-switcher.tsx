@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useTransition } from "react";
+import { Fragment, useTransition } from "react";
 
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { LOCALE_NAMES, routing, type AppLocale } from "@/i18n/routing";
@@ -28,23 +28,25 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <nav aria-label={t("label")} className="flex items-center gap-1">
-      {routing.locales.map((locale) => (
-        <button
-          key={locale}
-          type="button"
-          lang={locale}
-          disabled={pending}
-          aria-current={locale === active ? "true" : undefined}
-          onClick={() => switchTo(locale)}
-          aria-label={LOCALE_NAMES[locale]}
-          className={cx(
-            "inline-flex min-h-11 items-center px-2 text-nav-label font-normal uppercase transition-colors disabled:opacity-50",
-            locale === active ? "text-ink" : "text-muted hover:text-ink"
-          )}
-        >
-          {locale}
-        </button>
+    <nav aria-label={t("label")} className="flex items-center">
+      {routing.locales.map((locale, index) => (
+        <Fragment key={locale}>
+          {index > 0 ? <span aria-hidden="true" className="h-4 w-px shrink-0 bg-bone/20" /> : null}
+          <button
+            type="button"
+            lang={locale}
+            disabled={pending}
+            aria-current={locale === active ? "true" : undefined}
+            onClick={() => switchTo(locale)}
+            aria-label={LOCALE_NAMES[locale]}
+            className={cx(
+              "inline-flex min-h-11 items-center px-2 text-nav-label font-normal uppercase transition-colors disabled:opacity-50",
+              locale === active ? "text-ink" : "text-muted hover:text-ink"
+            )}
+          >
+            {locale}
+          </button>
+        </Fragment>
       ))}
     </nav>
   );

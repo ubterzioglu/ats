@@ -3,7 +3,7 @@
 import { createBrowserClient } from "@supabase/ssr";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { logout } from "@/app/[locale]/login/actions";
@@ -84,8 +84,10 @@ export function NavBar() {
     <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-6">
       <div
         className={cx(
-          "mx-auto flex w-full max-w-page flex-wrap items-center justify-between gap-x-4 rounded-[1.75rem] border-2 px-3 py-1.5 transition-colors sm:px-4",
-          scrolled ? "border-bone/20 bg-void/95 backdrop-blur-md" : "border-transparent bg-transparent"
+          "relative mx-auto flex w-full max-w-page flex-wrap items-center justify-between gap-x-4 rounded-[1.75rem] border-2 px-3 py-1.5 transition-[background-color,border-color,box-shadow] duration-300 sm:px-4",
+          scrolled
+            ? "nav-sheen border-lime/30 bg-void/95 shadow-[0_0_32px_-8px_rgb(var(--lime)/0.45)] backdrop-blur-md"
+            : "border-transparent bg-transparent"
         )}
       >
         <Link href="/" className="flex items-center py-1">
@@ -113,14 +115,17 @@ export function NavBar() {
           aria-label={nav("label")}
           className="order-3 -ml-3 flex w-full items-center overflow-x-auto whitespace-nowrap md:order-none md:ml-0 md:w-auto md:flex-1 md:justify-center md:overflow-visible"
         >
-          {LINKS.map((link) => {
+          {LINKS.map((link, index) => {
             const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
             const isProtected = PROTECTED_PATHS.has(link.href);
             const href = !signedIn && isProtected ? `/login?next=${encodeURIComponent(link.href)}` : link.href;
             return (
-              <GhostLink key={link.href} href={href} active={active}>
-                {link.key === "applications" ? common("applications") : nav(link.key)}
-              </GhostLink>
+              <Fragment key={link.href}>
+                {index > 0 ? <span aria-hidden="true" className="h-4 w-px shrink-0 bg-bone/20" /> : null}
+                <GhostLink href={href} active={active}>
+                  {link.key === "applications" ? common("applications") : nav(link.key)}
+                </GhostLink>
+              </Fragment>
             );
           })}
         </nav>

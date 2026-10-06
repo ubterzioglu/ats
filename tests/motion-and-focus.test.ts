@@ -50,7 +50,8 @@ describe("the animations that exist", () => {
     // Section transitions: reveal-out and reveal-out-side hand a block off on
     // exit, drift is the picture's parallax, reveal-pop lands the closing
     // sticker, break-draw, break-travel, break-stamp and break-spark are the
-    // scan between sections: beam, star head, landing pop and sparks.
+    // scan between sections: beam, star head, landing pop and sparks. sheen is
+    // the light that slides along the scrolled header's lower edge.
     expect(names).toEqual([
       "break-draw",
       "break-spark",
@@ -67,6 +68,7 @@ describe("the animations that exist", () => {
       "reveal-side",
       "reveal-up",
       "scroll-spin",
+      "sheen",
       "sticker-pop",
       "twinkle"
     ]);
