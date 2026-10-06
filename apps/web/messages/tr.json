@@ -19,7 +19,7 @@
   "metadata": {
     "defaultTitle": "ATS readability — CV'nizi ayrıştırıcının gördüğü gibi görün",
     "titleTemplate": "%s · ATS readability",
-    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tarayıcınızda puanlanır.",
+    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tarayıcınızda puanlanır. Kullanımı ücretsiz.",
     "openGraphTitle": "ATS readability",
     "openGraphDescription": "CV'nizi ayrıştırıcının gördüğü gibi görün.",
     "sharedReportTitle": "Paylaşılan rapor"
@@ -159,7 +159,7 @@
   },
   "analyze": {
     "heading": "Ayrıştırıcının ne gördüğünü görün",
-    "lede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıdaki metin, bir aday takip sisteminin çıkaracağı şeydir — çıkarma yanlış gittiyse düzeltin, sonra ilana göre puanlayın.",
+    "lede": "Kullanımı ücretsiz: işverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıdaki metin, bir aday takip sisteminin çıkaracağı şeydir — çıkarma yanlış gittiyse düzeltin, sonra ilana göre puanlayın.",
     "consent": {
       "label": "<kvkk>KVKK bildirimini</kvkk> ve <privacy>gizlilik politikasını</privacy> okudum. CV'min analiz için yükleneceğini, saklanacağını ve yurt dışındaki hizmet sağlayıcılara (Google, Supabase) aktarılacağını kabul ediyorum.",
       "required": "Devam etmek için lütfen şartları kabul edin"
@@ -325,16 +325,15 @@
   },
   "login": {
     "heading": "Giriş yap",
-    "lede": "CV'niz tarayıcınızda okunur ve puanlanır. Hesap yalnızca paylaşım bağlantılarınızı ve saklanan analizlerinizi tutar.",
+    "lede": "Kullanımı ücretsiz. CV'niz tarayıcınızda okunur ve puanlanır. Hesap yalnızca paylaşım bağlantılarınızı ve saklanan analizlerinizi tutar.",
     "emailLabel": "E-posta",
     "emailPlaceholder": "siz@ornek.com",
     "passwordLabel": "Parola",
     "passwordPlaceholder": "••••••••",
     "submit": "Giriş yap",
     "googleSubmit": "Google ile devam et",
-    "createAccount": "Hesap oluştur",
+    "createAccount": "Ücretsiz hesap oluştur",
     "forgotPasswordLink": "Şifrenizi mi unuttunuz?",
-    "whatThisChecks": "Bu neyi kontrol ediyor",
     "forgotPassword": {
       "heading": "Şifrenizi sıfırlayın",
       "lede": "E-postanızı girin, size şifre sıfırlama bağlantısı gönderelim.",
@@ -639,7 +638,7 @@
   "sharedReport": {
     "eyebrow": "paylaşılan rapor · {date}",
     "lede": "Yalnızca puanlar ve tavsiyeler. CV'nin kendisi hiçbir zaman saklanmadı.",
-    "cta": "Kendi CV'nizi de geçirin"
+    "cta": "Kendi CV'nizi de ücretsiz geçirin"
   },
   "coverLetter": {
     "heading": "Ön yazı",

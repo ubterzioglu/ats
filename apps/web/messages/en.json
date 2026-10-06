@@ -19,7 +19,7 @@
   "metadata": {
     "defaultTitle": "ATS readability — see your CV the way the parser does",
     "titleTemplate": "%s · ATS readability",
-    "description": "Read a CV the way an applicant tracking system reads it: what parses, what is missing, and which terms from the job ad never appear. Scored in your browser.",
+    "description": "Read a CV the way an applicant tracking system reads it: what parses, what is missing, and which terms from the job ad never appear. Scored in your browser. Free to use.",
     "openGraphTitle": "ATS readability",
     "openGraphDescription": "See your CV the way the parser does.",
     "sharedReportTitle": "Shared report"
@@ -159,7 +159,7 @@
   },
   "analyze": {
     "heading": "See what the parser gets",
-    "lede": "Upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad.",
+    "lede": "Free to use: upload the exact file you send to employers. The text below is what an applicant tracking system would extract — correct it if the extraction went wrong, then score it against the ad.",
     "consent": {
       "label": "I have read the <kvkk>KVKK notice</kvkk> and <privacy>privacy policy</privacy>. I agree that my CV is uploaded for analysis, stored and transferred to service providers abroad (Google, Supabase).",
       "required": "Please accept the terms to continue"
@@ -325,16 +325,15 @@
   },
   "login": {
     "heading": "Sign in",
-    "lede": "Your CV is read and scored in your browser. The account only keeps your share links and stored analyses.",
+    "lede": "Free to use. Your CV is read and scored in your browser. The account only keeps your share links and stored analyses.",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
     "passwordLabel": "Password",
     "passwordPlaceholder": "••••••••",
     "submit": "Sign in",
     "googleSubmit": "Continue with Google",
-    "createAccount": "Create an account",
+    "createAccount": "Create a free account",
     "forgotPasswordLink": "Forgot your password?",
-    "whatThisChecks": "What this checks",
     "forgotPassword": {
       "heading": "Reset your password",
       "lede": "Enter your email and we will send you a link to reset your password.",
@@ -639,7 +638,7 @@
   "sharedReport": {
     "eyebrow": "shared report · {date}",
     "lede": "Scores and advice only. The CV itself was never stored.",
-    "cta": "Run your own CV through it"
+    "cta": "Run your own CV through it, free"
   },
   "coverLetter": {
     "heading": "Cover letter",

@@ -19,7 +19,7 @@
   "metadata": {
     "defaultTitle": "ATS readability — sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest",
     "titleTemplate": "%s · ATS readability",
-    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Im Browser bewertet.",
+    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Im Browser bewertet. Kostenlos nutzbar.",
     "openGraphTitle": "ATS readability",
     "openGraphDescription": "Sehen Sie Ihren Lebenslauf so, wie der Parser ihn sieht.",
     "sharedReportTitle": "Geteilter Bericht"
@@ -159,7 +159,7 @@
   },
   "analyze": {
     "heading": "Sehen Sie, was der Parser bekommt",
-    "lede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber senden. Der folgende Text ist das, was ein Bewerber-Tracking-System extrahieren würde — korrigieren Sie ihn, wenn die Extraktion falsch war, dann bewerten Sie ihn gegen die Anzeige.",
+    "lede": "Kostenlos nutzbar: Laden Sie genau die Datei hoch, die Sie an Arbeitgeber senden. Der folgende Text ist das, was ein Bewerber-Tracking-System extrahieren würde — korrigieren Sie ihn, wenn die Extraktion falsch war, dann bewerten Sie ihn gegen die Anzeige.",
     "consent": {
       "label": "Ich habe die <kvkk>KVKK-Hinweise</kvkk> und die <privacy>Datenschutzerklärung</privacy> gelesen. Ich stimme zu, dass mein Lebenslauf zur Analyse hochgeladen, gespeichert und an Dienstleister im Ausland (Google, Supabase) übertragen wird.",
       "required": "Bitte akzeptieren Sie die Bedingungen, um fortzufahren"
@@ -325,16 +325,15 @@
   },
   "login": {
     "heading": "Anmelden",
-    "lede": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Das Konto speichert nur Ihre Freigabelinks und gespeicherten Analysen.",
+    "lede": "Kostenlos nutzbar. Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Das Konto speichert nur Ihre Freigabelinks und gespeicherten Analysen.",
     "emailLabel": "E-Mail",
     "emailPlaceholder": "sie@beispiel.de",
     "passwordLabel": "Passwort",
     "passwordPlaceholder": "••••••••",
     "submit": "Anmelden",
     "googleSubmit": "Mit Google fortfahren",
-    "createAccount": "Konto erstellen",
+    "createAccount": "Kostenloses Konto erstellen",
     "forgotPasswordLink": "Passwort vergessen?",
-    "whatThisChecks": "Was hier geprüft wird",
     "forgotPassword": {
       "heading": "Passwort zurücksetzen",
       "lede": "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.",
@@ -639,7 +638,7 @@
   "sharedReport": {
     "eyebrow": "geteilter Bericht · {date}",
     "lede": "Nur Punktzahlen und Hinweise. Der Lebenslauf selbst wurde nie gespeichert.",
-    "cta": "Den eigenen Lebenslauf durchlaufen lassen"
+    "cta": "Den eigenen Lebenslauf kostenlos durchlaufen lassen"
   },
   "coverLetter": {
     "heading": "Anschreiben",

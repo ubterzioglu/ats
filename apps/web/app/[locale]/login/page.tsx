@@ -73,31 +73,23 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           ) : null}
 
           <div className="mt-2 flex flex-col gap-4">
-            <button formAction={login} className="btn">
+            <button formAction={login} className="btn w-full">
               {t("submit")}
             </button>
 
-            <button formAction={signInWithGoogle} formNoValidate className="btn-quiet">
+            <button formAction={signInWithGoogle} formNoValidate className="btn-dark w-full">
               {t("googleSubmit")}
             </button>
 
-            <button formAction={signup} className="btn-quiet">
+            <button formAction={signup} className="btn-dark w-full">
               {t("createAccount")}
             </button>
+
+            <Link href="/forgot-password" className="btn-dark w-full">
+              {t("forgotPasswordLink")}
+            </Link>
           </div>
         </form>
-
-        <p className="mt-6">
-          <Link href="/forgot-password" className="text-sm text-saffron underline underline-offset-4">
-            {t("forgotPasswordLink")}
-          </Link>
-        </p>
-
-        <p className="mt-10">
-          <Link href="/" className="text-sm text-saffron underline underline-offset-4">
-            {t("whatThisChecks")}
-          </Link>
-        </p>
       </div>
     </div>
   );
