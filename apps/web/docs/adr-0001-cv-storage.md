@@ -25,6 +25,7 @@ We will store CV submissions on the server with the following constraints:
    - Google Drive (backup folder) for disaster recovery
 4. **Fail-open:** If storage fails, the analysis still completes in the browser, but the data is not persisted.
 5. **Admin access:** Only designated administrators can access stored CVs, with all access logged in an audit table.
+   Administrators can also list registered accounts at `/admin/users` (email, sign-in method, registration date, last sign-in, email confirmed; no CV content, tokens or other metadata). The list is read-only and every view is logged as `user_list` in the same audit table (added 2026-10-07, O5).
 6. **Data subject rights:** Users can request access, correction, or deletion of their data via a public form.
 
 ## Consequences

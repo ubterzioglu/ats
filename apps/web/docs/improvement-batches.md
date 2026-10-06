@@ -2,7 +2,7 @@
 
 What is left to do, grouped into batches. Research, prompts and analysis already delivered are left out. The reasoning behind each item lives in the older notes: `engine-strengthening-plan.md`, `research-priority-list.md`, `help-assistant-suggestions.md`. The step-by-step brief for the help bubble is `help-assistant-improvement-brief.md`.
 
-Status: A1, A2, A3, A4, A7, B6, C1, C5, D2 done. D3: pipeline and approval gate done, no synonym approved yet, cost review not yet run (see D3). D6: `pdfjs-dist` done, `@huggingface/transformers` blocked (see D6). O1 decided: not added. O2 decided: `AGENTS.md` wins, copy aligned (see Decisions). Nothing below has been implemented or approved.
+Status: A1, A2, A3, A4, A7, B6, C1, C5, D2 done. D3: pipeline and approval gate done, no synonym approved yet, cost review not yet run (see D3). D6: `pdfjs-dist` done, `@huggingface/transformers` blocked (see D6). O1 decided: not added. O2 decided: `AGENTS.md` wins, copy aligned (see Decisions). O5 done: audited admin user directory (see Decisions). Nothing below has been implemented or approved.
 
 ## Rules for every batch
 
@@ -17,6 +17,7 @@ Status: A1, A2, A3, A4, A7, B6, C1, C5, D2 done. D3: pipeline and approval gate 
 
 - **O1 (decided 2026-10-07): not added.** No founder `Person` JSON-LD and no LinkedIn `sameAs`. The personal GitHub profile was removed from `SITE_ENTITY.sameAs`; only the repository URL remains.
 - **O2 (decided 2026-10-07): `AGENTS.md` wins.** The CV is read and scored in the browser; when a CV is analysed, the file, extracted text and result are sent to the server, stored in Supabase and backed up to Google Drive for 12 months, bound to the account. `/analyze` needs sign-in. `MASTERPLAN.md` and the interface text in en/de/tr were aligned; no interface text says "privacy first", "no account needed" or that the file is never uploaded.
+- **O5 (decided 2026-10-07): done.** `/admin/users` lists registered accounts from Supabase Auth through the service-role admin API: email, sign-in method, registration date, last sign-in, email confirmed, plus totals (accounts, confirmed, email, Google). Admin only via `requireAdmin`, read-only, 50 per page, newest first. Every view writes a `user_list` row to `admin_audit_log`. No CV content, tokens, phone or other metadata is shown. Recorded in `adr-0001-cv-storage.md`.
 
 ---
 

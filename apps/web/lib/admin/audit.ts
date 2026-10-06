@@ -2,7 +2,18 @@ import "server-only";
 
 import { createServiceClient } from "@/lib/supabase/client";
 
-export type AdminAction = "list" | "view" | "download" | "delete" | "export" | "request_update";
+export type AdminAction =
+  | "list"
+  | "view"
+  | "download"
+  | "delete"
+  | "export"
+  | "request_update"
+  | "blog_create"
+  | "blog_update"
+  | "blog_publish"
+  | "blog_delete"
+  | "user_list";
 
 export async function logAdminAction(
   email: string,

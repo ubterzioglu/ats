@@ -810,7 +810,8 @@
     "nav": {
       "overview": "Overview",
       "requests": "Data Requests",
-      "audit": "Audit Log"
+      "audit": "Audit Log",
+      "users": "Users"
     },
     "stats": {
       "today": "Today",
@@ -840,6 +841,35 @@
       "drive": "Drive",
       "expires": "Expires",
       "noSubmissions": "No submissions found"
+    },
+    "blog": {
+      "title": "Blog Management",
+      "newPost": "New Post",
+      "empty": "No posts yet.",
+      "edit": "Edit"
+    },
+    "users": {
+      "title": "Users",
+      "description": "Registered accounts from Supabase Auth: email, sign-in method, registration and last sign-in. No CV content is shown here.",
+      "auditNote": "Viewing this list is recorded in the audit log.",
+      "countTotal": "Total accounts",
+      "countConfirmed": "Email confirmed",
+      "countEmail": "Email sign-in",
+      "countGoogle": "Google sign-in",
+      "email": "Email",
+      "providers": "Sign-in method",
+      "created": "Registered",
+      "lastSignIn": "Last sign-in",
+      "confirmed": "Email confirmed",
+      "yes": "Yes",
+      "no": "No",
+      "never": "Never",
+      "empty": "No accounts to show. Either none are registered yet or the user list could not be read.",
+      "truncated": "Only the first 20,000 accounts were read. Counts and pages cover those accounts only.",
+      "pagination": "User list pages",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {pages}"
     }
   },
   "dataRequest": {
@@ -1034,13 +1064,5 @@
     "lede": "Insights on CV parsing, ATS behaviour and job applications.",
     "empty": "No posts yet. Check back soon.",
     "backToList": "Back to blog"
-  },
-  "admin": {
-    "blog": {
-      "title": "Blog Management",
-      "newPost": "New Post",
-      "empty": "No posts yet.",
-      "edit": "Edit"
-    }
   }
 }

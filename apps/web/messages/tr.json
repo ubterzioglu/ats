@@ -810,7 +810,8 @@
     "nav": {
       "overview": "Genel Bakış",
       "requests": "Veri Talepleri",
-      "audit": "Denetim Kaydı"
+      "audit": "Denetim Kaydı",
+      "users": "Kullanıcılar"
     },
     "stats": {
       "today": "Bugün",
@@ -840,6 +841,35 @@
       "drive": "Drive",
       "expires": "Son Kullanma",
       "noSubmissions": "Gönderim bulunamadı"
+    },
+    "blog": {
+      "title": "Blog Yönetimi",
+      "newPost": "Yeni Yazı",
+      "empty": "Henüz yazı yok.",
+      "edit": "Düzenle"
+    },
+    "users": {
+      "title": "Kullanıcılar",
+      "description": "Supabase Auth'taki kayıtlı hesaplar: e-posta, giriş yöntemi, kayıt ve son giriş. Burada CV içeriği gösterilmez.",
+      "auditNote": "Bu listenin görüntülenmesi denetim kaydına yazılır.",
+      "countTotal": "Toplam hesap",
+      "countConfirmed": "E-postası doğrulanmış",
+      "countEmail": "E-posta ile giriş",
+      "countGoogle": "Google ile giriş",
+      "email": "E-posta",
+      "providers": "Giriş yöntemi",
+      "created": "Kayıt tarihi",
+      "lastSignIn": "Son giriş",
+      "confirmed": "E-posta doğrulandı",
+      "yes": "Evet",
+      "no": "Hayır",
+      "never": "Hiç",
+      "empty": "Gösterilecek hesap yok. Ya henüz kayıtlı hesap yok ya da kullanıcı listesi okunamadı.",
+      "truncated": "Yalnızca ilk 20.000 hesap okundu. Sayılar ve sayfalar yalnızca bu hesapları kapsar.",
+      "pagination": "Kullanıcı listesi sayfaları",
+      "previous": "Önceki",
+      "next": "Sonraki",
+      "pageOf": "Sayfa {page} / {pages}"
     }
   },
   "dataRequest": {
@@ -1034,13 +1064,5 @@
     "lede": "CV ayrıştırma, ATS davranışları ve iş başvuruları hakkında bilgiler.",
     "empty": "Henüz yazı yok. Yakında tekrar kontrol edin.",
     "backToList": "Blog'a dön"
-  },
-  "admin": {
-    "blog": {
-      "title": "Blog Yönetimi",
-      "newPost": "Yeni Yazı",
-      "empty": "Henüz yazı yok.",
-      "edit": "Düzenle"
-    }
   }
 }

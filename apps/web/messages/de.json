@@ -810,7 +810,8 @@
     "nav": {
       "overview": "Übersicht",
       "requests": "Datenanfragen",
-      "audit": "Prüfprotokoll"
+      "audit": "Prüfprotokoll",
+      "users": "Nutzer"
     },
     "stats": {
       "today": "Heute",
@@ -840,6 +841,35 @@
       "drive": "Drive",
       "expires": "Läuft ab",
       "noSubmissions": "Keine Einreichungen gefunden"
+    },
+    "blog": {
+      "title": "Blog-Verwaltung",
+      "newPost": "Neuer Beitrag",
+      "empty": "Noch keine Beiträge.",
+      "edit": "Bearbeiten"
+    },
+    "users": {
+      "title": "Nutzer",
+      "description": "Registrierte Konten aus Supabase Auth: E-Mail, Anmeldeart, Registrierung und letzte Anmeldung. Hier werden keine CV-Inhalte angezeigt.",
+      "auditNote": "Das Aufrufen dieser Liste wird im Prüfprotokoll erfasst.",
+      "countTotal": "Konten gesamt",
+      "countConfirmed": "E-Mail bestätigt",
+      "countEmail": "Anmeldung per E-Mail",
+      "countGoogle": "Anmeldung per Google",
+      "email": "E-Mail",
+      "providers": "Anmeldeart",
+      "created": "Registriert",
+      "lastSignIn": "Letzte Anmeldung",
+      "confirmed": "E-Mail bestätigt",
+      "yes": "Ja",
+      "no": "Nein",
+      "never": "Nie",
+      "empty": "Keine Konten anzuzeigen. Entweder ist noch keines registriert oder die Nutzerliste konnte nicht gelesen werden.",
+      "truncated": "Nur die ersten 20.000 Konten wurden gelesen. Zahlen und Seiten beziehen sich nur auf diese Konten.",
+      "pagination": "Seiten der Nutzerliste",
+      "previous": "Zurück",
+      "next": "Weiter",
+      "pageOf": "Seite {page} von {pages}"
     }
   },
   "dataRequest": {
@@ -1034,13 +1064,5 @@
     "lede": "Einblicke in CV-Parsing, ATS-Verhalten und Bewerbungen.",
     "empty": "Noch keine Beiträge. Schauen Sie bald wieder vorbei.",
     "backToList": "Zurück zum Blog"
-  },
-  "admin": {
-    "blog": {
-      "title": "Blog-Verwaltung",
-      "newPost": "Neuer Beitrag",
-      "empty": "Noch keine Beiträge.",
-      "edit": "Bearbeiten"
-    }
   }
 }
