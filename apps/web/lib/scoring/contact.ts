@@ -9,6 +9,7 @@ export const CONTACT_MAX = 10;
 
 const EMAIL = /[\p{L}\d._%+-]+@[\p{L}\d.-]+\.[\p{L}]{2,}/u;
 const PHONE = /(\+\d{1,3}[\s./-]?)?(\(?\d{2,5}\)?[\s./-]?){2,4}\d{2,4}/;
+const DATE_RANGE = /^\d{2,4}[\s./-]+\d{2,4}$/;
 const PROFILE = /(linkedin\.com|xing\.com|github\.com|gitlab\.com|behance\.net|dribbble\.com|stackoverflow\.com)/i;
 const PLACE =
   /(?<![\p{L}\p{N}])(\d{4,5}\s+[\p{Lu}][\p{L}]+|remote|hybrid|germany|deutschland|austria|osterreich|österreich|switzerland|schweiz|turkey|turkiye|türkiye|netherlands|berlin|munich|munchen|münchen|hamburg|frankfurt|koln|köln|stuttgart|dusseldorf|düsseldorf|istanbul|ankara|izmir|vienna|wien|zurich|zürich|london|amsterdam)(?![\p{L}\p{N}])/iu;
@@ -17,7 +18,7 @@ function looksLikeName(line: string): boolean {
   if (/[@\d]/.test(line)) return false;
   const words = line.split(/\s+/).filter(Boolean);
   if (words.length < 2 || words.length > 4) return false;
-  return words.every((word) => /^[\p{Lu}][\p{L}'.-]*$/u.test(word));
+  return words.every((word) => /^[\p{Lu}][\p{L}'.-]*$/u.test(word) || /^(?:van|von|der|den|de|la|le)$/i.test(word));
 }
 
 /** Contact data is the one thing an ATS must lift out of the document. */
@@ -37,7 +38,9 @@ export function scoreContact(context: ScoreContext, market?: TargetMarket): Dime
   }
 
   const phoneCandidate = raw.match(PHONE);
-  if (!phoneCandidate || phoneCandidate[0].replace(/\D/g, "").length < 8) {
+  const phoneDigits = phoneCandidate ? phoneCandidate[0].replace(/\D/g, "") : "";
+  const isDateRange = phoneCandidate ? DATE_RANGE.test(phoneCandidate[0].trim()) : false;
+  if (!phoneCandidate || phoneDigits.length < 8 || isDateRange) {
     drafts.push({
       id: "contact.phone",
       severity: "high",

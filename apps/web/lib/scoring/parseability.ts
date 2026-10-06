@@ -67,7 +67,8 @@ function repeatedLines(lines: readonly string[]): string[] {
   const tally = new Map<string, number>();
   for (const line of lines) {
     if (line.length < 8 || line.length > 90) continue;
-    tally.set(line, (tally.get(line) ?? 0) + 1);
+    const normalized = line.replace(/\d/g, "#");
+    tally.set(normalized, (tally.get(normalized) ?? 0) + 1);
   }
   return [...tally.entries()]
     .filter(([, count]) => count >= 3)
