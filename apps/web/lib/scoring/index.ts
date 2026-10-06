@@ -9,11 +9,13 @@ import { scoreStructure } from "./structure";
 import { evaluateSuitability } from "./suitability";
 import { clamp } from "./text";
 import { parseJobAd } from "./job-ad";
+import { ENGINE_VERSION, BAND_THRESHOLDS } from "./config";
 
 export { buildContext } from "./context";
 export { extractJobKeywords, countOccurrences } from "./keywords";
 export { detectSections } from "./sections";
 export { normalizeDocument } from "./text";
+export { ENGINE_VERSION } from "./config";
 
 const SEVERITY_ORDER: Readonly<Record<Severity, number>> = {
   critical: 0,
@@ -22,12 +24,7 @@ const SEVERITY_ORDER: Readonly<Record<Severity, number>> = {
   low: 3
 };
 
-const BANDS: ReadonlyArray<readonly [number, Band, string]> = [
-  [85, "excellent", "Parses cleanly and matches the target role"],
-  [70, "good", "Gets through the filter with minor losses"],
-  [55, "fair", "Survives parsing but loses relevance"],
-  [0, "risky", "Likely to be dropped or misread"]
-];
+const BANDS: ReadonlyArray<readonly [number, Band, string]> = BAND_THRESHOLDS;
 
 function bandFor(total: number): readonly [Band, string] {
   const entry = BANDS.find(([threshold]) => total >= threshold) ?? BANDS[BANDS.length - 1];
@@ -81,6 +78,7 @@ export function analyzeCv(input: AnalysisInput): AnalysisResult {
     stats: context.stats,
     jobAd: parsedJobAd,
     suitability: parsedJobAd ? evaluateSuitability(context, parsedJobAd, keywords.report) : undefined,
-    generatedAt: new Date().toISOString()
+    generatedAt: new Date().toISOString(),
+    engineVersion: ENGINE_VERSION
   };
 }

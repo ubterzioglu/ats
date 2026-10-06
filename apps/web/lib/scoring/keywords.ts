@@ -11,6 +11,7 @@ import { isJobNoise, isStopword, JOB_POSTING_NOISE } from "./stopwords";
 import { MULTI_WORD_SKILLS, SYNONYMS, canonicalize, hasTechContext, isAmbiguousTerm, isKnownSkill } from "./taxonomy";
 import { caseFold, clamp, isBulletLine, normalizeDocument, round, tokenize } from "./text";
 import { matchKeyTurkish } from "./turkish";
+import { STUFFING_THRESHOLD } from "./config";
 
 // The counting primitives moved to `./match`, where the three modes share them.
 // Re-exported because they are this module's long-standing public surface.
@@ -23,7 +24,6 @@ const COVERAGE_TARGET = 0.7;
 const MAX_TERMS = 40;
 const BASELINE_MAX = 20;
 const BASELINE_TARGET_SKILLS = 16;
-const STUFFING_THRESHOLD = 12;
 
 interface Candidate {
   readonly term: string;

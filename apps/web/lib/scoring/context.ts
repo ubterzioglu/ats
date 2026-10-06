@@ -5,6 +5,7 @@ import { detectLanguage } from "./language";
 import { detectSections } from "./sections";
 import { caseFold, countWords, isBulletLine, normalizeDocument, round, stripBulletMarker, toLines, tokenize } from "./text";
 import { trLowercase } from "./turkish";
+import { WORDS_PER_PAGE } from "./config";
 
 export interface ScoreContext {
   readonly raw: string;
@@ -18,8 +19,6 @@ export interface ScoreContext {
   readonly stats: DocumentStats;
   readonly experience: ExperienceReport;
 }
-
-const WORDS_PER_PAGE = 520;
 
 export function buildContext(cvText: string): ScoreContext {
   const raw = normalizeDocument(cvText);

@@ -1,17 +1,17 @@
 import type { ScoreContext } from "./context";
 import { buildOutcome, type DimensionOutcome, type FindingDraft } from "./dimension";
 import { BULLET_GLYPHS, ratio } from "./text";
+import { GARBLED_THRESHOLD, MOJIBAKE_THRESHOLD } from "./config";
 
 export const PARSEABILITY_MAX = 25;
 
-const PRIVATE_USE = /[-]/g;
+const PRIVATE_USE = /[-]/g;
 const EMOJI = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu;
 
 /** Basic Latin letters, Latin-1 Supplement letters and Latin Extended-A. */
 const LATIN_LETTER =
   /[\u0041-\u005A\u0061-\u007A\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F]/;
 const ANY_LETTER = /\p{L}/u;
-const GARBLED_THRESHOLD = 0.3;
 const MIN_LETTERS_FOR_GARBLED_CHECK = 50;
 
 /**
@@ -46,7 +46,6 @@ const MOJIBAKE = new RegExp(
   MOJIBAKE_PAIRS.map(([lead, trail]) => String.fromCharCode(lead, trail)).join("|"),
   "g"
 );
-const MOJIBAKE_THRESHOLD = 2;
 
 function garbledLetters(raw: string): { readonly outside: number; readonly letters: number } {
   let letters = 0;

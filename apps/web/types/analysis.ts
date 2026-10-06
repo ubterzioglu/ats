@@ -180,6 +180,7 @@ export interface AnalysisResult {
   readonly jobAd?: JobAdRequirements;
   readonly suitability?: readonly SuitabilityCheck[];
   readonly generatedAt: string;
+  readonly engineVersion?: string;
 }
 
 export interface AnalysisInput {

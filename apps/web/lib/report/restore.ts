@@ -160,6 +160,7 @@ export function restoreSharedReport(payload: unknown): AnalysisResult | null {
       years: array(stats.years).filter((year): year is number => typeof year === "number"),
       experienceMonths: num(stats.experienceMonths)
     },
-    generatedAt: str(payload.generatedAt)
+    generatedAt: str(payload.generatedAt),
+    ...(typeof payload.engineVersion === "string" ? { engineVersion: payload.engineVersion } : {})
   };
 }
