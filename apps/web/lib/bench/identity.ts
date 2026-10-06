@@ -46,17 +46,21 @@ export interface IdentityField {
   readonly candidate?: string;
 }
 
-/** The finding each field goes missing with. */
-const FINDING_ID: Readonly<Record<FieldId, string>> = {
+/**
+ * The finding each field goes missing with. Must name ids the engine really
+ * emits (see lib/scoring/structure.ts), or the table shows a value the score
+ * beside it calls missing.
+ */
+export const FINDING_ID: Readonly<Record<FieldId, string>> = {
   name: "contact.name",
   email: "contact.email",
   phone: "contact.phone",
   location: "contact.location",
   profile: "contact.profile",
-  title: "structure.experience",
-  employer: "structure.experience",
-  dateRange: "structure.experience",
-  school: "structure.education"
+  title: "structure.missing-experience",
+  employer: "structure.missing-experience",
+  dateRange: "structure.missing-experience",
+  school: "structure.missing-education"
 };
 
 export const FIELD_ORDER: readonly FieldId[] = [

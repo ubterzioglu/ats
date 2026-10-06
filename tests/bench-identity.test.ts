@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { FIELD_ORDER, readIdentity } from "@/lib/bench/identity";
+import { FIELD_ORDER, FINDING_ID, readIdentity } from "@/lib/bench/identity";
 import { analyzeCv } from "@/lib/scoring";
 import type { Finding } from "@/types/analysis";
 
@@ -53,9 +53,18 @@ describe("readIdentity", () => {
 
   it("never shows a value for a field the engine calls missing", () => {
     // The table sitting beside the score must not contradict it.
-    const fields = readIdentity(COMPLETE, missing(...FIELD_ORDER.map((id) => `contact.${id}`)));
+    const fields = readIdentity(COMPLETE, missing(...FIELD_ORDER.map((id) => FINDING_ID[id])));
     expect(fields.every((field) => field.value === undefined)).toBe(true);
     expect(fields.every((field) => field.status === "missing")).toBe(true);
+  });
+
+  it("maps every field to a finding id the engine actually emits", () => {
+    // A CV with no headings at all draws every structure.missing-* finding.
+    const result = analyzeCv({ cvText: "Ayse Yilmaz\nayse@example.com\n+90 555 000 00 00\nIstanbul" });
+    const emitted = new Set(result.findings.map((finding) => finding.id));
+    for (const id of ["title", "employer", "dateRange", "school"] as const) {
+      expect(emitted.has(FINDING_ID[id]), `${id} -> ${FINDING_ID[id]}`).toBe(true);
+    }
   });
 
   it("gives every field that is not found a reason", () => {
