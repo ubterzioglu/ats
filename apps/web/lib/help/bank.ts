@@ -103,9 +103,9 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
   {
     id: "account",
     keywords: {
-      en: ["account", "sign", "login", "register", "needed", "required"],
+      en: ["account", "sign", "login", "register", "need", "needed", "required"],
       tr: ["hesap", "giris", "giriş", "kayit", "kayıt", "gerekli", "lazim"],
-      de: ["konto", "anmelden", "login", "registrieren", "notwendig", "erforderlich"]
+      de: ["konto", "anmelden", "login", "registrieren", "brauche", "brauchen", "notwendig", "erforderlich"]
     },
     answerKey: "help.answers.account"
   },

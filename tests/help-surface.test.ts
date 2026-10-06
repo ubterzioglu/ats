@@ -19,13 +19,27 @@ describe("help surfaces", () => {
     }
   });
 
-  it("contain no fetch, localStorage, sessionStorage or console calls", () => {
+  it("contain no fetch, localStorage or console calls", () => {
     for (const file of HELP_FILES) {
       const contents = readFileSync(join(WEB, file), "utf8");
       expect(contents).not.toMatch(/\bfetch\s*\(/);
       expect(contents).not.toMatch(/\blocalStorage\b/);
-      expect(contents).not.toMatch(/\bsessionStorage\b/);
       expect(contents).not.toMatch(/\bconsole\.\w+\(/);
+    }
+  });
+
+  // C5: feedback counts and unanswered questions live in sessionStorage only,
+  // in the bubble only, and every access sits behind one guarded accessor.
+  it("touch sessionStorage only from the bubble, through a try/catch accessor", () => {
+    for (const file of HELP_FILES) {
+      const contents = readFileSync(join(WEB, file), "utf8");
+      const uses = contents.match(/\bsessionStorage\b/g) ?? [];
+      if (file !== "components/help/help-bubble.tsx") {
+        expect(uses).toEqual([]);
+        continue;
+      }
+      expect(uses).toHaveLength(1);
+      expect(contents).toMatch(/try\s*\{\s*return window\.sessionStorage;\s*\}\s*catch/);
     }
   });
 

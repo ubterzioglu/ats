@@ -1,7 +1,22 @@
+import { readFileSync } from "node:fs";
+import { join, resolve as resolvePath } from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import { HELP_ENTRIES } from "@/lib/help/bank";
 import { createKeywordAnswerer } from "@/lib/help/keyword-answerer";
+
+const MESSAGES = resolvePath(__dirname, "../apps/web/messages");
+const LOCALES = ["en", "de", "tr"] as const;
+
+function lookup(catalog: unknown, key: string): unknown {
+  let node = catalog;
+  for (const part of key.split(".")) {
+    if (typeof node !== "object" || node === null) return undefined;
+    node = (node as Record<string, unknown>)[part];
+  }
+  return node;
+}
 
 const MOCK_MESSAGES: Record<string, string> = {
   "faq.items.upload.a": "Yes. Your CV is read and scored in your browser first.",
@@ -55,8 +70,11 @@ describe("createKeywordAnswerer", () => {
     }
   });
 
+  // The answerer follows the site locale (not the question), so German
+  // keywords are only consulted on the German site.
   it("matches German questions with ß/ü folding", async () => {
-    const answer = await answerer.answer("Wie lange werden meine Daten aufbewahrt?");
+    const german = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve, locale: "de" });
+    const answer = await german.answer("Wie lange werden meine Daten aufbewahrt?");
     expect(answer.kind).toBe("text");
     if (answer.kind === "text") {
       expect(answer.text).toBe("Twelve months from the upload date.");
@@ -86,10 +104,19 @@ describe("createKeywordAnswerer", () => {
     expect(a).toEqual(b);
   });
 
-  it("every answerKey resolves to a message that exists", async () => {
+  it("matches the account question on the German site", async () => {
+    const german = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve, locale: "de" });
+    const answer = await german.answer("Brauche ich ein Konto?");
+    expect(answer.kind).toBe("text");
+    if (answer.kind === "text") {
+      expect(answer.text).toBe("No. The analysis itself needs no account.");
+    }
+  });
+
+  it.each(LOCALES)("every answerKey resolves to a message in the %s catalog", (locale) => {
+    const catalog: unknown = JSON.parse(readFileSync(join(MESSAGES, `${locale}.json`), "utf8"));
     for (const entry of HELP_ENTRIES) {
-      const text = resolve(entry.answerKey);
-      expect(text).not.toContain("[missing:");
+      expect(lookup(catalog, entry.answerKey), entry.answerKey).toEqual(expect.any(String));
     }
   });
 
