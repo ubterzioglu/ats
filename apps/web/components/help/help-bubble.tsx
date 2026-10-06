@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Link } from "@/i18n/navigation";
@@ -9,6 +9,7 @@ import { createKeywordAnswerer } from "@/lib/help/keyword-answerer";
 import { STARTER_IDS } from "@/lib/help/starters";
 import type { HelpAnswer } from "@/lib/help/types";
 import { cx } from "@/lib/ui";
+import type { DocumentLanguage } from "@/types/analysis";
 
 interface Turn {
   readonly role: "user" | "assistant";
@@ -21,6 +22,7 @@ const PANEL_ID = "help-panel";
 export function HelpBubble() {
   const t = useTranslations("help");
   const faq = useTranslations("faq.items");
+  const locale = useLocale() as DocumentLanguage;
   const [open, setOpen] = useState(false);
   const [turns, setTurns] = useState<readonly Turn[]>([]);
   const [input, setInput] = useState("");
@@ -54,7 +56,7 @@ export function HelpBubble() {
 
   const answererRef = useRef<ReturnType<typeof createKeywordAnswerer> | null>(null);
   if (!answererRef.current) {
-    answererRef.current = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve });
+    answererRef.current = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve, locale });
   }
 
   useEffect(() => {

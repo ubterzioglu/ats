@@ -23,7 +23,7 @@ function resolve(key: string): string {
 }
 
 describe("createKeywordAnswerer", () => {
-  const answerer = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve });
+  const answerer = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve, locale: "en" });
 
   it("matches a question built from an entry's own keywords", async () => {
     const answer = await answerer.answer("Is my CV stored?");
@@ -80,7 +80,7 @@ describe("createKeywordAnswerer", () => {
   });
 
   it("picks deterministically when two entries score equally", async () => {
-    const answerer2 = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve });
+    const answerer2 = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve, locale: "en" });
     const a = await answerer2.answer("data");
     const b = await answerer2.answer("data");
     expect(a).toEqual(b);

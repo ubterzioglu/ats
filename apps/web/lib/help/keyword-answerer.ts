@@ -33,17 +33,19 @@ function scoreEntry(entry: HelpEntry, questionTokens: readonly string[], languag
 
 export function createKeywordAnswerer({
   entries,
-  resolve
+  resolve,
+  locale
 }: {
   readonly entries: readonly HelpEntry[];
   readonly resolve: HelpResolver;
+  readonly locale: DocumentLanguage;
 }): HelpAnswerer {
   return {
     async answer(question: string, _signal?: AbortSignal): Promise<HelpAnswer> {
       const trimmed = question.trim();
       if (trimmed.length === 0) return { kind: "none" };
 
-      const language = detectLanguage(trimmed);
+      const language = locale ?? detectLanguage(trimmed);
       const normalised = normalizeQuestion(trimmed, language);
       if (normalised.length === 0) return { kind: "none" };
 
