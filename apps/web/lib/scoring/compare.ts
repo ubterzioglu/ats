@@ -5,6 +5,8 @@ import { evaluateSuitability } from "./suitability";
 import { parseJobAd } from "./job-ad";
 
 export interface AdComparisonResult {
+  /** Position of the ad in the input array; the results are re-ordered by rank. */
+  readonly index: number;
   /** Null when the ad is too short to read requirements from (see parseJobAd). */
   readonly ad: JobAdRequirements | null;
   readonly suitability: readonly SuitabilityCheck[];
@@ -22,7 +24,7 @@ export function compareAds(
   context: ScoreContext,
   jobAds: readonly string[]
 ): AdComparisonResult[] {
-  const results = jobAds.map(adText => {
+  const results = jobAds.map((adText, index) => {
     const keywordOutcome = scoreKeywords(context, adText);
     const ad = parseJobAd(adText, [...keywordOutcome.report.matched, ...keywordOutcome.report.missing]);
     const suitability = ad ? evaluateSuitability(context, ad, keywordOutcome.report) : [];
@@ -47,6 +49,7 @@ export function compareAds(
     const matchScore = Math.round((suitabilityScore * 50) + (coverageScore * 50));
 
     return {
+      index,
       ad,
       suitability,
       keywordCoverage: keywordOutcome.report.coverage,

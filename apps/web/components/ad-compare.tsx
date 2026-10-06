@@ -76,9 +76,9 @@ export function AdCompareView({ cvText }: AdCompareViewProps) {
       <div className="divide-y divide-line">
         {results.map((r, i) => (
           <AdCompareRow
-            key={jobs[i]?.id ?? i}
+            key={jobs[r.index]?.id ?? r.index}
             result={r}
-            job={jobs[i]}
+            job={jobs[r.index]}
             rank={i + 1}
             onDelete={handleDelete}
           />

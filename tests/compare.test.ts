@@ -37,4 +37,17 @@ describe("F.4 Multi-ad comparison", () => {
     expect(results[0]!.matchScore).toBeGreaterThan(results[1]!.matchScore);
     expect(results[1]!.matchScore).toBeGreaterThan(results[2]!.matchScore);
   });
+
+  it("keeps each ad's input index through the ranking", () => {
+    const perfectAd = "We are seeking a highly motivated Backend engineer in New York to join our fast-paced startup environment and build scalable microservices. You must have a strong work ethic.\n\nRequirements:\n- Node.js\n- TypeScript\n- 3 years experience";
+    const poorAd = "We are looking for a Senior Python engineer to lead our data engineering efforts. You will architect robust data pipelines and mentor junior developers in best practices.\n\nRequirements:\n- Django\n- PostgreSQL\n- Python\n- 8 years experience";
+    const ads = [poorAd, perfectAd];
+
+    const results = compareAds(context, ads);
+
+    expect(results.map((r) => r.index)).toEqual([1, 0]);
+    for (const r of results) {
+      expect(compareAds(context, [ads[r.index]!])[0]?.matchScore).toBe(r.matchScore);
+    }
+  });
 });
