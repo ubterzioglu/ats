@@ -1026,5 +1026,13 @@
     "lede": "Insights on CV parsing, ATS behaviour and job applications.",
     "empty": "No posts yet. Check back soon.",
     "backToList": "Back to blog"
+  },
+  "admin": {
+    "blog": {
+      "title": "Blog Management",
+      "newPost": "New Post",
+      "empty": "No posts yet.",
+      "edit": "Edit"
+    }
   }
 }

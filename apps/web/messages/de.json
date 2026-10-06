@@ -1026,5 +1026,13 @@
     "lede": "Einblicke in CV-Parsing, ATS-Verhalten und Bewerbungen.",
     "empty": "Noch keine Beiträge. Schauen Sie bald wieder vorbei.",
     "backToList": "Zurück zum Blog"
+  },
+  "admin": {
+    "blog": {
+      "title": "Blog-Verwaltung",
+      "newPost": "Neuer Beitrag",
+      "empty": "Noch keine Beiträge.",
+      "edit": "Bearbeiten"
+    }
   }
 }

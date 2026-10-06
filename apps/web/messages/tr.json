@@ -1026,5 +1026,13 @@
     "lede": "CV ayrıştırma, ATS davranışları ve iş başvuruları hakkında bilgiler.",
     "empty": "Henüz yazı yok. Yakında tekrar kontrol edin.",
     "backToList": "Blog'a dön"
+  },
+  "admin": {
+    "blog": {
+      "title": "Blog Yönetimi",
+      "newPost": "Yeni Yazı",
+      "empty": "Henüz yazı yok.",
+      "edit": "Düzenle"
+    }
   }
 }
