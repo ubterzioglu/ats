@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { type AppLocale } from "@/i18n/routing";
 import { ResumeEditor } from "@/components/editor/resume-editor";
 import { JsonLd } from "@/components/json-ld";
+import { SiteCredit } from "@/components/site-credit";
 import { buildBreadcrumbJsonLd, pageAlternates } from "@/lib/seo";
 
 interface BuildPageProps {
@@ -25,7 +26,6 @@ export default async function BuildPage({ params }: BuildPageProps) {
   setRequestLocale(locale);
 
   const t = await getTranslations("editor");
-  const common = await getTranslations("common");
   const brand = await getTranslations("brand");
   const nav = await getTranslations("nav");
 
@@ -49,7 +49,7 @@ export default async function BuildPage({ params }: BuildPageProps) {
       </main>
 
       <footer className="border-t border-line py-8">
-        <p className="max-w-measure text-sm leading-relaxed text-muted">{common("disclaimer")}</p>
+        <SiteCredit />
       </footer>
     </div>
   );

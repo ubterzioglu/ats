@@ -18,6 +18,12 @@ npm test            # vitest run
 
 **Run `npm run lint`, `npm run typecheck` and `npm test` after any change.** All three must pass clean.
 
+## Git workflow
+
+After every change, once lint, typecheck and tests pass, commit and push straight to `main` without asking.
+Stage only the files that belong to the change; leave unrelated working-tree changes alone. Use conventional
+commit messages.
+
 ## Architecture rules
 
 - **`lib/scoring/` is pure.** No DOM, no network, no React, no I/O. One file per dimension. Everything there is

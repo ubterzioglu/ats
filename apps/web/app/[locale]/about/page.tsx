@@ -7,6 +7,7 @@ import { buildAboutPageJsonLd, buildBreadcrumbJsonLd, pageAlternates } from "@/l
 import { SITE_ENTITY } from "@/lib/site-entity";
 
 import { JsonLd } from "@/components/json-ld";
+import { SiteCredit } from "@/components/site-credit";
 import { SectionHeadline } from "@/components/ui/section-headline";
 
 interface AboutPageProps {
@@ -103,7 +104,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       </main>
 
       <footer className="border-t border-line py-8">
-        <p className="max-w-measure text-sm leading-relaxed text-muted">{common("disclaimer")}</p>
+        <SiteCredit />
       </footer>
     </div>
   );

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import { Analyzer } from "@/components/analyzer";
 import { JsonLd } from "@/components/json-ld";
+import { SiteCredit } from "@/components/site-credit";
 import { type AppLocale } from "@/i18n/routing";
 import { buildBreadcrumbJsonLd, pageAlternates } from "@/lib/seo";
 import { isPersistenceConfigured } from "@/lib/supabase/client";
@@ -31,7 +32,6 @@ export default async function AnalyzePage({ params }: AnalyzePageProps) {
   setRequestLocale(locale);
 
   const t = await getTranslations("analyze");
-  const common = await getTranslations("common");
   const brand = await getTranslations("brand");
   const nav = await getTranslations("nav");
 
@@ -55,7 +55,7 @@ export default async function AnalyzePage({ params }: AnalyzePageProps) {
       </main>
 
       <footer className="border-t border-line py-8">
-        <p className="max-w-measure text-sm leading-relaxed text-muted">{common("disclaimer")}</p>
+        <SiteCredit />
       </footer>
     </div>
   );
