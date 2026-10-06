@@ -52,11 +52,13 @@ describe("the animations that exist", () => {
     // sticker, break-draw, break-travel, break-stamp and break-spark are the
     // scan between sections: beam, star head, landing pop and sparks. sheen is
     // the light that slides along the scrolled header's lower edge.
+    // credit-sweep: the colour that runs through the footer credit line.
     expect(names).toEqual([
       "break-draw",
       "break-spark",
       "break-stamp",
       "break-travel",
+      "credit-sweep",
       "drift",
       "float",
       "live-sweep",
@@ -89,7 +91,8 @@ describe("the animations that exist", () => {
       "break-draw",
       "break-travel",
       "break-stamp",
-      "break-spark"
+      "break-spark",
+      "credit-sweep"
     ]) {
       expect(rule).toMatch(new RegExp(`animation:[^;]*\\b${name}\\b`));
     }

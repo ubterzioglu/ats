@@ -236,6 +236,25 @@ h3.font-normal {
     @apply text-sm font-medium text-ink;
   }
 
+  /* Footer credit: a lime-to-flame sweep clipped to the text. At rest it is a
+     static gradient, so reduced motion still reads as lit. */
+  .credit-glow {
+    background: linear-gradient(
+      100deg,
+      rgb(var(--ash)) 0%,
+      rgb(var(--lime)) 25%,
+      rgb(var(--flame)) 50%,
+      rgb(var(--lime)) 75%,
+      rgb(var(--ash)) 100%
+    );
+    background-size: 250% 100%;
+    background-position: 50% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 10px rgb(var(--lime) / 0.35));
+  }
+
   /* Small type that belongs to the machine rather than the interface: counts,
      file names, extracted terms, point values. */
   .readout {
@@ -328,6 +347,10 @@ h3.font-normal {
    the content simply shows at rest. `translate`, `rotate` and `scale` are used
    instead of `transform` so these never fight the sticker tilt and hover. */
 @media (prefers-reduced-motion: no-preference) {
+  .credit-glow {
+    animation: credit-sweep 6s linear infinite;
+  }
+
   .stage .sticker,
   .stage .chip {
     animation: float 6s ease-in-out infinite;
@@ -503,6 +526,15 @@ h3.font-normal {
   }
   to {
     transform: scaleX(1);
+  }
+}
+
+@keyframes credit-sweep {
+  from {
+    background-position: 0% 0;
+  }
+  to {
+    background-position: 250% 0;
   }
 }
 

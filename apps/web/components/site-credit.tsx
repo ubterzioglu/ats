@@ -6,13 +6,13 @@ interface SiteCreditProps {
 
 export function SiteCredit({ className }: SiteCreditProps) {
   return (
-    <p className={cx("text-sm text-muted", className)}>
-      &copy; 2026{" "}
+    <p className={cx("credit-glow inline-block text-sm", className)}>
+      Ats free for all ! AFFA &copy; 2026{" "}
       <a
         href="https://ubterzioglu.de"
         target="_blank"
         rel="noopener"
-        className="underline underline-offset-4 hover:text-ink"
+        className="underline underline-offset-4"
       >
         designed by UBT
       </a>

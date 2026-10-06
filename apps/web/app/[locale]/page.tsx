@@ -46,7 +46,6 @@ export default async function HomePage({ params }: HomePageProps) {
 
   const t = await getTranslations("home");
   const metadata = await getTranslations("metadata");
-  const nav = await getTranslations("nav");
   const faqT = await getTranslations("faq");
 
   const faqItems = FAQ_IDS.map((id) => ({
@@ -160,10 +159,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <FaqSection items={faqItems} />
 
       <footer className="mx-auto w-full max-w-page px-4 pb-12 pt-section-sm sm:px-6">
-        <SiteCredit className="text-nav-label font-normal text-ash" />
-        <GhostLink href="/about" className="mt-4 -ml-3">
-          {nav("about")}
-        </GhostLink>
+        <SiteCredit className="text-nav-label" />
       </footer>
     </main>
   );
