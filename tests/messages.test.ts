@@ -46,7 +46,9 @@ const EVERY_LOCALE: readonly string[] = [
   "measureRail.outOf",
   "workItem.worth",
   "aiStatus.size",
-  "fixDrafts.quantifyToken"
+  "fixDrafts.quantifyToken",
+  // "Blog" is the standard word in German and Turkish as well.
+  "blog.title"
 ];
 
 const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
