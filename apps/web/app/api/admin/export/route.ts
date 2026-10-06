@@ -1,3 +1,4 @@
+import { unstable_rethrow } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin/guard";
 import { getSubmissionsForExport, submissionsToCsv } from "@/lib/supabase/admin-export";
@@ -33,6 +34,8 @@ export async function GET(request: NextRequest) {
       }
     });
   } catch (error) {
+    // requireAdmin signals denial with a redirect or notFound; those must reach Next, not become a 500.
+    unstable_rethrow(error);
     console.error("[api/admin/export] error", error);
     return NextResponse.json({ error: "export-failed" }, { status: 500 });
   }
