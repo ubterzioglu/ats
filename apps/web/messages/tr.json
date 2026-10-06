@@ -19,7 +19,7 @@
   "metadata": {
     "defaultTitle": "ATS readability — CV'nizi ayrıştırıcının gördüğü gibi görün",
     "titleTemplate": "%s · ATS readability",
-    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tarayıcınızda puanlanır, 12 ay saklanır.",
+    "description": "Bir CV'yi aday takip sisteminin okuduğu gibi okuyun: ne ayrışıyor, ne eksik, ilandaki hangi terimler hiç geçmiyor. Tarayıcınızda puanlanır.",
     "openGraphTitle": "ATS readability",
     "openGraphDescription": "CV'nizi ayrıştırıcının gördüğü gibi görün.",
     "sharedReportTitle": "Paylaşılan rapor"
@@ -36,7 +36,7 @@
     "headline": "CV'niz bir tasarım olarak değil, metin olarak okunur.",
     "lede": "ATS readability, bir CV'yi aday takip sisteminin okuduğu gibi gösteren ücretsiz bir araçtır: metin olarak. Geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
     "cta": "CV'nizi analiz edin",
-    "privacyTag": "Tarayıcıda puanlanır. 12 ay saklanır.",
+    "privacyTag": "Tarayıcınızda puanlanır",
     "demo": {
       "label": "Örnek rapor, sizin CV'niz değil",
       "parse": "Okunabilirlik",
@@ -47,6 +47,28 @@
       "chipMissing": "2 anahtar kelime eksik",
       "chipColumns": "Sütun bulunamadı",
       "chipFix": "Önce düzelt: tarih ekle"
+    },
+    "visuals": {
+      "example": "Örnek",
+      "findingsTitle": "Bulgular, en pahalıdan başlayarak",
+      "f1": "İki sütun okuma sırasını bozuyor",
+      "f2": "İki işte tarih yok",
+      "f3": "Telefon numarası yok",
+      "stage": {
+        "saved": "Kaydedildi",
+        "applied": "Başvuruldu",
+        "interview": "Mülakat",
+        "offer": "Teklif",
+        "rejected": "Reddedildi"
+      },
+      "quiet": "Sessizleşti: takip et",
+      "questionLabel": "Soru",
+      "questionText": "Bir projeyi yönettiğin bir zamanı anlat.",
+      "storyLabel": "Hikaye kartı",
+      "storyTitle": "Faturalama geçişi",
+      "reportTitle": "Paylaşılan rapor",
+      "expires": "Bağlantı 30 günde sona erer",
+      "noLines": "CV'nizden satır yok"
     },
     "analyze": {
       "label": "Analiz ve eşleştirme",
@@ -76,14 +98,14 @@
     },
     "how": {
       "title": "Okuma nasıl çalışır",
-      "body": "Okuyucu PDF, DOCX veya düz metin dosyasından metni çıkarır; satırları glif konumlarından yeniden kurduğu için satır sonları ve sütun boşlukları korunur. Bu işaretler bir bölümün nerede bitip diğerinin nerede başladığını gösterir. Metin sonra 100 puanlık beş boyutta puanlanır: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20 ve iletişim 10. Kaybedilen her puan, geldiği satırı ve yerine ne yazılacağını söyleyen adlandırılmış bir bulguya yazılır; bulgular en pahalıdan başlayarak sıralanır. İş ilanı yoksa anahtar kelime boyutu 25 yerine en fazla 20 puan alır ve rapor bunu belirtir. Okuma ve puanlama tarayıcınızda çalışır; CV ardından 12 ay saklanır, gizlilik bildirimine bakın."
+      "body": "Okuyucu PDF, DOCX veya düz metin dosyasından metni çıkarır; satırları glif konumlarından yeniden kurduğu için satır sonları ve sütun boşlukları korunur. Bu işaretler bir bölümün nerede bitip diğerinin nerede başladığını gösterir. Metin sonra 100 puanlık beş boyutta puanlanır: okunabilirlik 25, anahtar kelime eşleşmesi 25, yapı 20, etki 20 ve iletişim 10. Kaybedilen her puan, geldiği satırı ve yerine ne yazılacağını söyleyen adlandırılmış bir bulguya yazılır; bulgular en pahalıdan başlayarak sıralanır. İş ilanı yoksa anahtar kelime boyutu 25 yerine en fazla 20 puan alır ve rapor bunu belirtir. Okuma ve puanlama tarayıcınızda çalışır."
     }
   },
   "about": {
     "title": "Hakkında",
     "whatHeading": "Ne yapar",
     "privacyHeading": "Gizlilik",
-    "privacy": "CV'niz tarayıcınızda okunur ve puanlanır. Analiz ettiğinizde dosya, metni ve sonuç ayrıca sunucumuzda 12 ay saklanır ve sonra silinir.",
+    "privacy": "CV'niz tarayıcınızda okunur ve puanlanır. Analiz ettiğinizde dosya, metni ve sonuç ayrıca sunucumuzda saklanır. Ayrıntılar gizlilik bildiriminde.",
     "limitsHeading": "Sınırlar",
     "formatsHeading": "Biçimler",
     "formats": "Düzenleyici <link>JSON Resume</link> biçimini içe ve dışa aktarır.",
@@ -95,7 +117,7 @@
     "items": {
       "upload": {
         "q": "CV'm saklanıyor mu?",
-        "a": "Evet. CV'niz önce tarayıcınızda okunur ve puanlanır. Analiz ettiğinizde dosya, metni ve sonuç sunucumuza gönderilir, 12 ay saklanır ve sonra silinir. Ayrıntılar için gizlilik bildirimine bakın."
+        "a": "Evet. CV'niz önce tarayıcınızda okunur ve puanlanır. Analiz ettiğinizde dosya, metni ve sonuç sunucumuza gönderilir ve orada saklanır. Ayrıntılar gizlilik bildiriminde."
       },
       "score": {
         "q": "Puan nasıl hesaplanıyor?",
@@ -123,7 +145,7 @@
     "heading": "Ayrıştırıcının ne gördüğünü görün",
     "lede": "İşverenlere gönderdiğiniz dosyanın aynısını yükleyin. Aşağıdaki metin, bir aday takip sisteminin çıkaracağı şeydir — çıkarma yanlış gittiyse düzeltin, sonra ilana göre puanlayın.",
     "consent": {
-      "label": "<kvkk>KVKK bildirimini</kvkk> ve <privacy>gizlilik politikasını</privacy> okudum. CV'min analiz için yükleneceğini, 12 ay saklanacağını ve yurt dışındaki hizmet sağlayıcılara (Google, Supabase) aktarılacağını kabul ediyorum.",
+      "label": "<kvkk>KVKK bildirimini</kvkk> ve <privacy>gizlilik politikasını</privacy> okudum. CV'min analiz için yükleneceğini, saklanacağını ve yurt dışındaki hizmet sağlayıcılara (Google, Supabase) aktarılacağını kabul ediyorum.",
       "required": "Devam etmek için lütfen şartları kabul edin"
     },
     "storedNotice": "{date} tarihine kadar saklanır. Ayrıntılar <privacy>gizlilik politikasında</privacy>."
@@ -573,7 +595,7 @@
   "documentIntake": {
     "pagesRead": "{source} · {pages, plural, one {# sayfa} other {# sayfa}} okundu",
     "drop": "Bir CV'yi buraya bırakın",
-    "formats": "PDF, DOCX veya düz metin, en fazla 10 MB. Önce bu tarayıcıda okunur, sonra 12 ay saklanır.",
+    "formats": "PDF, DOCX veya düz metin, en fazla 10 MB. Önce bu tarayıcıda okunur, sonra sunucumuzda saklanır.",
     "reading": "Okunuyor…",
     "chooseAnother": "Başka bir dosya seç",
     "choose": "Dosya seç"

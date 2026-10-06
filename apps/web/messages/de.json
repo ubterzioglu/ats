@@ -19,7 +19,7 @@
   "metadata": {
     "defaultTitle": "ATS readability — sehen Sie Ihren Lebenslauf so, wie der Parser ihn liest",
     "titleTemplate": "%s · ATS readability",
-    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Im Browser bewertet, 12 Monate gespeichert.",
+    "description": "Lesen Sie einen Lebenslauf so, wie ein Bewerbermanagementsystem ihn liest: was sich auslesen lässt, was fehlt und welche Begriffe aus der Stellenanzeige gar nicht vorkommen. Im Browser bewertet.",
     "openGraphTitle": "ATS readability",
     "openGraphDescription": "Sehen Sie Ihren Lebenslauf so, wie der Parser ihn sieht.",
     "sharedReportTitle": "Geteilter Bericht"
@@ -36,7 +36,7 @@
     "headline": "Ihr Lebenslauf wird als Text gelesen, nicht als Design.",
     "lede": "ATS readability ist ein kostenloses Werkzeug, das einen Lebenslauf so zeigt, wie ein Bewerbermanagementsystem ihn liest: als Text. Es bewertet, was übrig blieb, auf 100 Punkte und listet die Korrekturen nach Wert.",
     "cta": "Lebenslauf analysieren",
-    "privacyTag": "Im Browser bewertet. 12 Monate gespeichert.",
+    "privacyTag": "Im Browser bewertet",
     "demo": {
       "label": "Beispielbericht, nicht Ihr Lebenslauf",
       "parse": "Lesbarkeit",
@@ -47,6 +47,28 @@
       "chipMissing": "2 Schlüsselwörter fehlen",
       "chipColumns": "Keine Spalten gefunden",
       "chipFix": "Zuerst beheben: Daten ergänzen"
+    },
+    "visuals": {
+      "example": "Beispiel",
+      "findingsTitle": "Befunde, teuerste zuerst",
+      "f1": "Zwei Spalten stören die Lesereihenfolge",
+      "f2": "Keine Daten bei zwei Stellen",
+      "f3": "Keine Telefonnummer",
+      "stage": {
+        "saved": "Gespeichert",
+        "applied": "Beworben",
+        "interview": "Gespräch",
+        "offer": "Angebot",
+        "rejected": "Abgelehnt"
+      },
+      "quiet": "Wird still: nachfassen",
+      "questionLabel": "Frage",
+      "questionText": "Erzählen Sie von einem Projekt, das Sie geleitet haben.",
+      "storyLabel": "Story-Karte",
+      "storyTitle": "Abrechnungsmigration",
+      "reportTitle": "Geteilter Bericht",
+      "expires": "Link läuft in 30 Tagen ab",
+      "noLines": "Keine Zeilen aus Ihrem Lebenslauf"
     },
     "analyze": {
       "label": "Analyse und Abgleich",
@@ -76,14 +98,14 @@
     },
     "how": {
       "title": "So funktioniert das Lesen",
-      "body": "Der Reader zieht Text aus PDF, DOCX oder Nur-Text-Dateien und baut Zeilen aus den Glyphenpositionen neu auf, damit Zeilenumbrüche und Spaltenabstände erhalten bleiben. Daran erkennt er, wo ein Abschnitt endet und der nächste beginnt. Der Text wird dann in fünf Dimensionen mit zusammen 100 Punkten bewertet: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20 und Kontakt 10. Jeder verlorene Punkt wird einem benannten Befund zugeordnet, mit der Zeile, aus der er stammt, und dem, was stattdessen zu schreiben ist; die Befunde stehen nach Kosten sortiert. Ohne Stellenanzeige erreicht die Schlüsselwort-Dimension höchstens 20 von 25 Punkten, und der Bericht sagt das. Das Lesen und Bewerten läuft in Ihrem Browser; der Lebenslauf wird dann 12 Monate gespeichert, siehe Datenschutzerklärung."
+      "body": "Der Reader zieht Text aus PDF, DOCX oder Nur-Text-Dateien und baut Zeilen aus den Glyphenpositionen neu auf, damit Zeilenumbrüche und Spaltenabstände erhalten bleiben. Daran erkennt er, wo ein Abschnitt endet und der nächste beginnt. Der Text wird dann in fünf Dimensionen mit zusammen 100 Punkten bewertet: Lesbarkeit 25, Schlüsselwörter 25, Struktur 20, Wirkung 20 und Kontakt 10. Jeder verlorene Punkt wird einem benannten Befund zugeordnet, mit der Zeile, aus der er stammt, und dem, was stattdessen zu schreiben ist; die Befunde stehen nach Kosten sortiert. Ohne Stellenanzeige erreicht die Schlüsselwort-Dimension höchstens 20 von 25 Punkten, und der Bericht sagt das. Das Lesen und Bewerten läuft in Ihrem Browser."
     }
   },
   "about": {
     "title": "Über uns",
     "whatHeading": "Was es tut",
     "privacyHeading": "Datenschutz",
-    "privacy": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Wenn Sie ihn analysieren, werden die Datei, ihr Text und das Ergebnis zusätzlich 12 Monate auf unserem Server gespeichert und danach gelöscht.",
+    "privacy": "Ihr Lebenslauf wird in Ihrem Browser gelesen und bewertet. Wenn Sie ihn analysieren, werden die Datei, ihr Text und das Ergebnis zusätzlich auf unserem Server gespeichert. Details stehen in der Datenschutzerklärung.",
     "limitsHeading": "Grenzen",
     "formatsHeading": "Formate",
     "formats": "Der Editor importiert und exportiert das Format <link>JSON Resume</link>.",
@@ -95,7 +117,7 @@
     "items": {
       "upload": {
         "q": "Wird mein Lebenslauf gespeichert?",
-        "a": "Ja. Ihr Lebenslauf wird zuerst in Ihrem Browser gelesen und bewertet. Wenn Sie ihn analysieren, werden die Datei, ihr Text und das Ergebnis zusätzlich an unseren Server gesendet, 12 Monate gespeichert und danach gelöscht. Details stehen in der Datenschutzerklärung."
+        "a": "Ja. Ihr Lebenslauf wird zuerst in Ihrem Browser gelesen und bewertet. Wenn Sie ihn analysieren, werden die Datei, ihr Text und das Ergebnis zusätzlich an unseren Server gesendet und dort gespeichert. Details stehen in der Datenschutzerklärung."
       },
       "score": {
         "q": "Wie wird die Punktzahl berechnet?",
@@ -123,7 +145,7 @@
     "heading": "Sehen Sie, was der Parser bekommt",
     "lede": "Laden Sie genau die Datei hoch, die Sie an Arbeitgeber senden. Der folgende Text ist das, was ein Bewerber-Tracking-System extrahieren würde — korrigieren Sie ihn, wenn die Extraktion falsch war, dann bewerten Sie ihn gegen die Anzeige.",
     "consent": {
-      "label": "Ich habe die <kvkk>KVKK-Hinweise</kvkk> und die <privacy>Datenschutzerklärung</privacy> gelesen. Ich stimme zu, dass mein Lebenslauf zur Analyse hochgeladen, 12 Monate gespeichert und an Dienstleister im Ausland (Google, Supabase) übertragen wird.",
+      "label": "Ich habe die <kvkk>KVKK-Hinweise</kvkk> und die <privacy>Datenschutzerklärung</privacy> gelesen. Ich stimme zu, dass mein Lebenslauf zur Analyse hochgeladen, gespeichert und an Dienstleister im Ausland (Google, Supabase) übertragen wird.",
       "required": "Bitte akzeptieren Sie die Bedingungen, um fortzufahren"
     },
     "storedNotice": "Gespeichert bis {date}. Details in der <privacy>Datenschutzerklärung</privacy>."
@@ -573,7 +595,7 @@
   "documentIntake": {
     "pagesRead": "{source} · {pages, plural, one {# Seite} other {# Seiten}} gelesen",
     "drop": "Lebenslauf hier ablegen",
-    "formats": "PDF, DOCX oder reiner Text, bis 10 MB. Die Datei wird zuerst in diesem Browser gelesen und dann 12 Monate gespeichert.",
+    "formats": "PDF, DOCX oder reiner Text, bis 10 MB. Die Datei wird zuerst in diesem Browser gelesen und dann auf unserem Server gespeichert.",
     "reading": "Wird gelesen…",
     "chooseAnother": "Andere Datei wählen",
     "choose": "Datei wählen"

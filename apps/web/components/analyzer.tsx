@@ -58,6 +58,7 @@ const MIN_CV_CHARS = 120;
 
 export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const t = useTranslations("analyzer");
+  const tConsent = useTranslations("analyze");
   const [cvText, setCvText] = useState("");
   const [jobAd, setJobAd] = useState("");
   const [extraction, setExtraction] = useState<ExtractionResult | null>(null);
@@ -81,7 +82,6 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [sharing, startSharing] = useTransition();
   const [consentChecked, setConsentChecked] = useState(false);
   const [sourceFile, setSourceFile] = useState<File | null>(null);
-  const [storedNotice, setStoredNotice] = useState<string | null>(null);
 
   // Read once, before this visit writes anything, so the comparison is against
   // the last visit rather than against the analysis just run.
@@ -163,11 +163,6 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             cvText,
             jobDescription: jobAd.trim() ? jobAd : undefined,
             result: next
-          }).then((outcome) => {
-            if (outcome.ok) {
-              const date = new Date(outcome.expiresAt).toLocaleDateString();
-              setStoredNotice(date);
-            }
           });
         }
       } catch (cause) {
@@ -370,7 +365,6 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setError(null);
     setView("input");
     setSourceFile(null);
-    setStoredNotice(null);
   }
 
   return (
@@ -499,7 +493,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           <div className="space-y-3">
             <CvConsent checked={consentChecked} onChange={setConsentChecked} />
             {!consentChecked && (
-              <p className="text-sm text-caution">{t("consent.required")}</p>
+              <p className="text-sm text-caution">{tConsent("consent.required")}</p>
             )}
           </div>
 
@@ -521,11 +515,6 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             ) : null}
           </div>
 
-          {storedNotice && (
-            <p className="text-sm text-muted">
-              {t("storedNotice", { date: storedNotice })}
-            </p>
-          )}
         </div>
       ) : null}
 

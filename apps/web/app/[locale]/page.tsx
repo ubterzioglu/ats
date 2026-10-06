@@ -3,33 +3,30 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 
 import { FaqSection } from "@/components/faq-section";
+import { FeatureVisual, type FeatureVisualKey } from "@/components/home/feature-visuals";
 import { HeroStickers } from "@/components/home/hero-stickers";
 import { Sparkle, Tick } from "@/components/home/sparkle";
 import { Ticker } from "@/components/home/ticker";
 import { GhostLink } from "@/components/ui/ghost-link";
 import { JsonLd } from "@/components/json-ld";
-import { ParticleField } from "@/components/ui/particle-field";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { SectionHeadline } from "@/components/ui/section-headline";
 import { Tag } from "@/components/ui/tag";
 import { Link } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { buildFaqJsonLd, buildHomeJsonLd, FAQ_IDS, pageAlternates } from "@/lib/seo";
-import type { ShapeName } from "@/lib/particles/shapes";
 import { cx } from "@/lib/ui";
 
 interface Feature {
-  readonly key: "analyze" | "tracker" | "interview" | "report";
-  readonly shape: ShapeName;
-  readonly seed: number;
+  readonly key: FeatureVisualKey;
   readonly href?: "/analyze" | "/applications";
 }
 
 const FEATURES: readonly Feature[] = [
-  { key: "analyze", shape: "match", seed: 11, href: "/analyze" },
-  { key: "tracker", shape: "pipeline", seed: 23, href: "/applications" },
-  { key: "interview", shape: "orbit", seed: 37 },
-  { key: "report", shape: "report", seed: 41 }
+  { key: "analyze", href: "/analyze" },
+  { key: "tracker", href: "/applications" },
+  { key: "interview" },
+  { key: "report" }
 ];
 
 interface HomePageProps {
@@ -107,19 +104,8 @@ export default async function HomePage({ params }: HomePageProps) {
               ) : null}
             </div>
 
-            <div
-              aria-hidden="true"
-              className={cx(
-                "sticker overflow-hidden",
-                flip ? "lg:order-1" : "lg:order-2 sticker-shadow-lime"
-              )}
-              style={{ "--tilt": flip ? "-2deg" : "2deg" } as CSSProperties}
-            >
-              <ParticleField
-                shape={feature.shape}
-                seed={feature.seed}
-                className="relative aspect-[4/3] w-full lg:aspect-square"
-              />
+            <div className={cx("mx-auto w-full max-w-[34rem]", flip ? "lg:order-1" : "lg:order-2")}>
+              <FeatureVisual name={feature.key} />
             </div>
           </section>
         );
