@@ -78,7 +78,7 @@ export async function SubmissionsTable({ filters }: SubmissionsTableProps) {
               href={`/admin?page=${p}`}
               className={`px-3 py-1 rounded text-sm ${
                 p === page
-                  ? "bg-iris text-white"
+                  ? "bg-lime text-void"
                   : "bg-bed border border-line text-ink hover:bg-iris/10"
               }`}
             >

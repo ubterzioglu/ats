@@ -3,7 +3,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const input = resolve(__dirname, "../../../../ats/logo/affa-icon-square-rounded.png");
+const input = resolve(__dirname, "../../../logo/icons/affa-icon-square-tight.png");
 const output = resolve(__dirname, "../app/apple-icon.png");
 
 await sharp(input)

@@ -1,13 +1,18 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 
 import { FaqSection } from "@/components/faq-section";
+import { HeroStickers } from "@/components/home/hero-stickers";
+import { Sparkle, Tick } from "@/components/home/sparkle";
+import { Ticker } from "@/components/home/ticker";
 import { GhostLink } from "@/components/ui/ghost-link";
 import { JsonLd } from "@/components/json-ld";
 import { ParticleField } from "@/components/ui/particle-field";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { SectionHeadline } from "@/components/ui/section-headline";
 import { Tag } from "@/components/ui/tag";
+import { Link } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { buildFaqJsonLd, buildHomeJsonLd, FAQ_IDS, pageAlternates } from "@/lib/seo";
 import type { ShapeName } from "@/lib/particles/shapes";
@@ -60,7 +65,7 @@ export default async function HomePage({ params }: HomePageProps) {
   return (
     <main>
       <JsonLd data={jsonLd} />
-      <section className="mx-auto grid w-full max-w-page items-center gap-12 px-4 py-section-sm sm:px-6 lg:min-h-[calc(100dvh-4rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16 lg:py-0">
+      <section className="mx-auto grid w-full max-w-page items-center gap-12 overflow-x-clip px-4 py-section-sm sm:px-6 lg:min-h-[calc(100dvh-5rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-10 lg:py-0">
         <div>
           <SectionHeadline as="h1" scale="lg" label={t("eyebrow")} title={t("headline")}>
             <p>{t("lede")}</p>
@@ -71,16 +76,14 @@ export default async function HomePage({ params }: HomePageProps) {
           </div>
         </div>
 
-        <ParticleField
-          shape="brain"
-          seed={7}
-          className="relative aspect-[5/4] w-full lg:aspect-auto lg:h-[min(72vh,680px)]"
-        />
+        <HeroStickers />
       </section>
 
+      <Ticker />
+
       {FEATURES.map((feature, index) => {
-        const number = String(index + 1).padStart(2, "0");
         const headingId = `feature-${feature.key}`;
+        const flip = index % 2 === 0;
         return (
           <section
             key={feature.key}
@@ -89,10 +92,10 @@ export default async function HomePage({ params }: HomePageProps) {
           >
             {/* Zigzag: the picture alternates sides. The picture is decorative,
                 so reading order stays text-first on every screen. */}
-            <div className={cx(index % 2 === 0 ? "lg:order-2" : "lg:order-1")}>
+            <div className={cx(flip ? "lg:order-2" : "lg:order-1")}>
               <SectionHeadline
                 id={headingId}
-                label={`${number} - ${t(`${feature.key}.label`)}`}
+                label={t(`${feature.key}.label`)}
                 title={t(`${feature.key}.title`)}
               >
                 <p>{t(`${feature.key}.body`)}</p>
@@ -104,31 +107,47 @@ export default async function HomePage({ params }: HomePageProps) {
               ) : null}
             </div>
 
-            <ParticleField
-              shape={feature.shape}
-              seed={feature.seed}
+            <div
+              aria-hidden="true"
               className={cx(
-                "relative aspect-[4/3] w-full lg:aspect-square",
-                index % 2 === 0 ? "lg:order-1" : "lg:order-2"
+                "sticker overflow-hidden",
+                flip ? "lg:order-1" : "lg:order-2 sticker-shadow-lime"
               )}
-            />
+              style={{ "--tilt": flip ? "-2deg" : "2deg" } as CSSProperties}
+            >
+              <ParticleField
+                shape={feature.shape}
+                seed={feature.seed}
+                className="relative aspect-[4/3] w-full lg:aspect-square"
+              />
+            </div>
           </section>
         );
       })}
 
       <section className="mx-auto w-full max-w-page px-4 py-section-sm sm:px-6 lg:py-section">
-        <SectionHeadline title={t("how.title")}>
-          <p>{t("how.body")}</p>
-        </SectionHeadline>
+        <div className="bench p-6 sm:p-10 lg:p-14">
+          <SectionHeadline title={t("how.title")}>
+            <p>{t("how.body")}</p>
+          </SectionHeadline>
+        </div>
       </section>
 
-      <section className="relative overflow-hidden py-section-sm lg:py-section">
-        <ParticleField shape="ambient" seed={3} className="absolute inset-0" />
-        <div className="relative mx-auto w-full max-w-page px-4 sm:px-6">
-          <h2 className="max-w-[16ch] text-display font-normal text-bone">{t("closing.title")}</h2>
-          <div className="mt-12">
-            <PrimaryButton href="/analyze">{t("closing.cta")}</PrimaryButton>
+      <section className="mx-auto w-full max-w-page overflow-x-clip px-4 py-section-sm sm:px-6 lg:py-section">
+        <div
+          className="sticker sticker-lime relative p-8 sm:p-12 lg:p-16"
+          style={{ "--tilt": "-1.5deg" } as CSSProperties}
+        >
+          <h2 className="max-w-[14ch] text-display font-extrabold leading-[0.95] text-void">
+            {t("closing.title")}
+          </h2>
+          <div className="mt-10">
+            <Link href="/analyze" className="btn-dark">
+              {t("closing.cta")}
+            </Link>
           </div>
+          <Sparkle className="absolute -right-4 -top-8 h-20 w-20 sm:-right-6 sm:-top-10 sm:h-28 sm:w-28" />
+          <Tick className="absolute bottom-6 right-6 hidden h-24 w-24 sm:block lg:h-36 lg:w-36" />
         </div>
       </section>
 

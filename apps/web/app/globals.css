@@ -2,38 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-/* One flat stage: pure black, white type, a single violet that means "press
-   this", and amber for emphasis. There is no light theme and no elevation.
-   The first seven tokens are the Dala palette; every role below them resolves
-   to one of those seven so a page can only be painted from the palette.
+/* Sticker on black. The palette is read off the logo: pure black, a lime tile
+   with a white outline, an orange block offset behind it, near-black ink for
+   the glyph. Every colour in the product comes from those five values.
+
+   Contrast rules that follow from them: text on lime is `void` (black), never
+   white; orange is a shape, a hard shadow or large text, and white text never
+   sits on it. The legacy names (iris, saffron, verdant) still exist so older
+   views re-skin without edits: iris and verdant resolve to lime, saffron to
+   orange.
 
    `live` still means AI-produced output and nothing else, which is why it has
    its own role even though it shares a value with `good`. */
 :root {
   --void: 0 0 0;
   --bone: 255 255 255;
-  --ash: 154 154 154;
-  --mist: 189 189 189;
-  --iris: 128 82 255;
-  --saffron: 255 184 41;
-  --verdant: 21 132 110;
+  --ash: 161 161 170;
+  --mist: 212 212 216;
+  --night: 17 17 17;
+  --lime: 163 230 53;
+  --flame: 255 122 26;
+
+  --iris: 163 230 53;
+  --saffron: 255 122 26;
+  --verdant: 163 230 53;
 
   --bed: 0 0 0;
-  --bench: 0 0 0;
-  --bench-sunk: 0 0 0;
-  --bench-raised: 0 0 0;
+  --bench: 12 12 12;
+  --bench-sunk: 8 8 8;
+  --bench-raised: 22 22 22;
   --ink: 255 255 255;
-  --muted: 154 154 154;
+  --muted: 161 161 170;
   /* Always drawn at 8% (see tailwind.config.ts); the one hairline allowed. */
   --line: 255 255 255;
   /* The visible boundary of a control owes 3:1, which `line` does not give. */
-  --edge: 154 154 154;
-  --action: 128 82 255;
-  --live: 21 132 110;
-  --live-ink: 21 132 110;
-  --good: 21 132 110;
-  --caution: 255 184 41;
-  --mark: 255 184 41;
+  --edge: 113 113 122;
+  --action: 163 230 53;
+  --live: 163 230 53;
+  --live-ink: 163 230 53;
+  --good: 163 230 53;
+  --caution: 255 122 26;
+  --mark: 255 122 26;
 }
 
 @layer base {
@@ -46,29 +55,29 @@
     background-color: rgb(var(--void));
     color: rgb(var(--bone));
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-feature-settings: "ss01" on;
-    font-size: 1.125rem;
-    font-weight: 200;
-    line-height: 1.5;
+    font-size: 1.0625rem;
+    font-weight: 400;
+    line-height: 1.55;
     min-height: 100dvh;
   }
 
-  /* Hierarchy is scale, not weight. */
+  /* Headlines are the voice: heavy, tight, set in the wordmark's family. */
   h1,
   h2,
   h3 {
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.03em;
   }
 
   ::selection {
-    background-color: rgb(var(--iris) / 0.4);
+    background-color: rgb(var(--lime) / 0.35);
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--action));
+    outline: 3px solid rgb(var(--action));
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 6px;
   }
 
   textarea,
@@ -79,25 +88,104 @@
   }
 }
 
+/* Components that spell out `font-normal` on a heading would otherwise win on
+   specificity and flatten the headline back to a hairline. */
+h1.font-normal,
+h2.font-normal,
+h3.font-normal {
+  font-weight: 700;
+}
+
 @layer components {
-  /* The filled violet pill: the only saturated button in the system. */
+  /* The one loud button: lime fill, white outline, orange block behind it,
+     like the tile in the logo. It presses down onto its shadow. */
   .btn {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-pill bg-iris px-4 py-[14.4px]
-      text-nav-label font-semibold uppercase text-bone transition-colors hover:bg-iris/85
-      disabled:cursor-not-allowed disabled:bg-ash/40;
+    @apply relative inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border-2 border-bone bg-lime px-6 py-3
+      font-display text-[0.9375rem] font-bold leading-none text-void
+      shadow-[4px_4px_0_0_rgb(var(--flame))] transition-[transform,box-shadow] duration-150
+      hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_rgb(var(--flame))]
+      active:translate-x-1 active:translate-y-1 active:shadow-none
+      disabled:translate-x-0 disabled:translate-y-0 disabled:cursor-not-allowed disabled:border-edge/40
+      disabled:bg-bench-raised disabled:text-ash disabled:shadow-none;
   }
 
-  /* A ghost link: no fill, no border. Colour is the only state. */
+  /* The same button inverted, for use on a lime surface where a lime button
+     would disappear: black fill, white outline, lime block behind it. */
+  .btn-dark {
+    @apply relative inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border-2 border-bone bg-night px-6 py-3
+      font-display text-[0.9375rem] font-bold leading-none text-bone
+      shadow-[4px_4px_0_0_rgb(var(--bone))] transition-[transform,box-shadow] duration-150
+      hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_rgb(var(--bone))]
+      active:translate-x-1 active:translate-y-1 active:shadow-none;
+  }
+
+  /* A ghost link: no fill, no border. Colour is the state. */
   .btn-quiet {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 px-3 text-nav-label font-semibold uppercase
-      text-ash transition-colors hover:text-bone disabled:cursor-not-allowed disabled:opacity-40;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-3 font-display text-[0.9375rem]
+      font-semibold text-ash transition-colors hover:bg-bone/5 hover:text-bone
+      disabled:cursor-not-allowed disabled:opacity-40;
   }
 
-  /* Surfaces carry no fill, border, radius or shadow: whitespace separates.
-     Both names stay because inner pages still use them. */
+  /* Work surfaces: a near-black card with a thick faint outline. Both names
+     stay because inner pages still use them. */
   .bench,
   .bench-sunk {
-    @apply bg-bench;
+    @apply rounded-surface border-2 border-bone/10 bg-bench;
+  }
+
+  /* The signature object. A thick white outline and a hard offset block, the
+     same construction as the logo tile. Tilt is set per use with --tilt. */
+  .sticker {
+    --sticker-shadow: var(--flame);
+    --tilt: 0deg;
+    background-color: rgb(var(--night));
+    border: 3px solid rgb(var(--bone));
+    border-radius: 1.75rem;
+    box-shadow: 8px 8px 0 0 rgb(var(--sticker-shadow));
+    transform: rotate(var(--tilt));
+    transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .sticker-lime {
+    background-color: rgb(var(--lime));
+    color: rgb(var(--void));
+    --sticker-shadow: var(--flame);
+  }
+
+  .sticker-shadow-lime {
+    --sticker-shadow: var(--lime);
+  }
+
+  .sticker:hover {
+    transform: rotate(calc(var(--tilt) + 1.5deg)) scale(1.02);
+  }
+
+  /* A small pill-shaped sticker for chips and tags. */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border-2 border-bone bg-night px-3.5 py-1.5
+      font-display text-sm font-semibold text-bone;
+    transform: rotate(var(--tilt, 0deg));
+  }
+
+  /* The only entrance motion on the page: stickers land with a small
+     overshoot. `backwards` keeps the resting transform free for hover. */
+  .sticker-pop {
+    animation: sticker-pop 620ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  .marquee {
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 32s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
   }
 
   /* The one bold element and the system's only glow: an animated edge shown
@@ -128,15 +216,14 @@
     pointer-events: none;
   }
 
-  /* Inputs sit on a bottom line; focus turns it violet. The keyboard ring
+  /* Boxed inputs with a thick outline; focus turns it lime. The keyboard ring
      still draws on top of it. */
   .field {
-    @apply w-full resize-y rounded-none border-0 border-b border-edge bg-transparent px-0 py-3 text-sm
-      leading-relaxed transition-colors placeholder:text-muted/70 focus:border-action focus:outline-none;
+    @apply w-full resize-y rounded-xl border-2 border-edge/50 bg-bench px-4 py-3 text-sm leading-relaxed
+      transition-colors placeholder:text-muted/70 focus:border-lime focus:outline-none;
   }
 
-  /* Body copy is 18px at weight 200. Anything smaller is interface text and
-     goes to 400, because a 200 hairline at 14px does not hold up on black. */
+  /* Interface text is set at 400 and up; nothing hangs at a hairline weight. */
   .text-sm,
   .text-xs,
   .text-micro,
@@ -189,14 +276,41 @@
   }
 }
 
-/* Reduced motion removes the live edge animation and the meter fill. The edge
-   itself stays visible, because it is what says which part of the screen the
-   model wrote - that is meaning, not decoration. The particle field is drawn
-   in script and checks the same media query itself. */
+@keyframes sticker-pop {
+  from {
+    opacity: 0;
+    transform: translateY(28px) rotate(calc(var(--tilt) - 14deg)) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--tilt)) scale(1);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Reduced motion removes the live edge animation, the meter fill, the ticker
+   and the sticker entrance. The edge itself stays visible, because it is what
+   says which part of the screen the model wrote - that is meaning, not
+   decoration. The particle field is drawn in script and checks the same media
+   query itself. */
 @media (prefers-reduced-motion: reduce) {
   .live-edge::after {
     animation: none;
     background: linear-gradient(110deg, rgb(var(--live) / 0.5), rgb(var(--live) / 0.9));
+  }
+
+  .marquee-track {
+    animation: none;
+  }
+
+  .sticker,
+  .sticker:hover {
+    transition: none;
   }
 
   *,
@@ -207,4 +321,3 @@
     transition-duration: 0.01ms !important;
   }
 }
-

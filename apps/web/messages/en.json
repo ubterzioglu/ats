@@ -37,6 +37,17 @@
     "lede": "ATS readability is a free tool that shows a CV the way an applicant tracking system reads it: as text. It scores what survived out of 100 and lists the fixes in order of value.",
     "cta": "Analyze a CV",
     "privacyTag": "Scored in your browser. Stored for 12 months.",
+    "demo": {
+      "label": "Example report, not your CV",
+      "parse": "Parseability",
+      "keywords": "Keyword match",
+      "structure": "Structure",
+      "impact": "Impact",
+      "contact": "Contact",
+      "chipMissing": "2 keywords missing",
+      "chipColumns": "No columns found",
+      "chipFix": "Fix first: add dates"
+    },
     "analyze": {
       "label": "Analysis and match",
       "title": "Every lost point has a name.",
@@ -562,7 +573,7 @@
   "documentIntake": {
     "pagesRead": "{source} · {pages, plural, one {# page} other {# pages}} read",
     "drop": "Drop a CV here",
-    "formats": "PDF, DOCX or plain text, up to 10 MB. It is read in this browser and never sent anywhere.",
+    "formats": "PDF, DOCX or plain text, up to 10 MB. It is read in this browser first, then stored for 12 months.",
     "reading": "Reading…",
     "chooseAnother": "Choose another file",
     "choose": "Choose a file"

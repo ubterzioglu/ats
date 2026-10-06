@@ -5,14 +5,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // The Dala palette. Everything below it is a semantic role that
-        // resolves to one of these seven values in globals.css.
+        // The logo palette: black, white, lime, orange and a near-black ink.
+        // Everything below it is a semantic role that resolves to one of
+        // these values in globals.css. Text on lime is `void`; white text
+        // never sits on orange.
         void: "rgb(var(--void) / <alpha-value>)",
         bone: "rgb(var(--bone) / <alpha-value>)",
         ash: "rgb(var(--ash) / <alpha-value>)",
         mist: "rgb(var(--mist) / <alpha-value>)",
-        // Filled buttons and the keyboard focus ring. Never text, never a
-        // background block.
+        night: "rgb(var(--night) / <alpha-value>)",
+        lime: "rgb(var(--lime) / <alpha-value>)",
+        flame: "rgb(var(--flame) / <alpha-value>)",
+        // Legacy names: iris and verdant resolve to lime, saffron to flame.
         iris: "rgb(var(--iris) / <alpha-value>)",
         saffron: "rgb(var(--saffron) / <alpha-value>)",
         verdant: "rgb(var(--verdant) / <alpha-value>)",
@@ -43,21 +47,29 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        // One typeface for everything. Machine output keeps its tabular
-        // figures through `tabular-nums`, not through a second family.
+        // Headlines, buttons and chips use the wordmark's family; body copy
+        // stays in the sans. Machine output keeps its tabular figures through
+        // `tabular-nums`, not through a third family.
+        display: ["var(--font-display)", "var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-sans)", "system-ui", "sans-serif"]
       },
-      // Radius encodes scale rather than being one value everywhere: the work
-      // surface, the controls on it, and the terms inside those are different
-      // sizes of thing.
-      borderRadius: {
-        surface: "10px",
-        control: "6px",
-        chip: "3px",
-        pill: "22.5px"
+      // Older views ask for hairline weights; nothing in this system is
+      // lighter than regular, so those utilities resolve to 400.
+      fontWeight: {
+        extralight: "400",
+        light: "400"
       },
-      // Hierarchy comes from scale, never from weight: every size here is set
-      // at 400 or 200. Anything from 42px up carries -0.04em tracking.
+      // Radius encodes scale: sticker cards are the roundest, controls and
+      // terms step down, and the pill is a true pill.
+      borderRadius: {
+        sticker: "28px",
+        surface: "20px",
+        control: "12px",
+        chip: "8px",
+        pill: "9999px"
+      },
+      // Headlines carry their weight from the display family; every size
+      // from 42px up carries -0.04em tracking.
       fontSize: {
         caption: ["0.75rem", { lineHeight: "1.5" }],
         "nav-label": ["0.875rem", { lineHeight: "1.2", letterSpacing: "0.025em" }],

@@ -12,7 +12,7 @@ export default async function Image() {
 
   let logoDataUrl: string;
   try {
-    const logoPath = join(process.cwd(), "public", "brand", "affa-dark-tight.png");
+    const logoPath = join(process.cwd(), "public", "brand", "affa-logo-black.png");
     const logoBuffer = await readFile(logoPath);
     logoDataUrl = `data:image/png;base64,${logoBuffer.toString("base64")}`;
   } catch {
@@ -29,7 +29,7 @@ export default async function Image() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          background: "#121212",
+          background: "#000",
           color: "rgb(255, 255, 255)"
         }}
       >
@@ -47,8 +47,8 @@ export default async function Image() {
         ) : null}
         <h1
           style={{
-            fontSize: "48px",
-            fontWeight: 400,
+            fontSize: "52px",
+            fontWeight: 700,
             lineHeight: 1.1,
             margin: 0,
             maxWidth: "900px",

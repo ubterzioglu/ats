@@ -12,7 +12,7 @@ import { generateParticles, type Particle, type ShapeName } from "@/lib/particle
  * blue), and magenta and blue exist nowhere else. Order matches HUE_COUNT in
  * lib/particles/shapes.ts.
  */
-const PALETTE = ["#8052ff", "#ffb829", "#15846e", "#e2449c", "#3d7bff"] as const;
+const PALETTE = ["#a3e635", "#ff7a1a", "#ffffff", "#d9f99d", "#ffb37a"] as const;
 
 const ALPHA_STEPS = [0.35, 0.65, 1] as const;
 

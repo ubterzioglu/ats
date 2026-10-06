@@ -38,7 +38,7 @@ function ruleBody(selector: string): string {
   return CSS.slice(open, close);
 }
 
-/** Dala is one pure-black theme; there is no light or system variant to measure. */
+/** One pure-black theme painted from the logo palette; there is no light or system variant to measure. */
 const THEME = tokensIn(ruleBody(":root {"));
 
 function channel(value: number): number {
@@ -84,12 +84,20 @@ const PAIRS: readonly Pair[] = [
   { fg: "mark", bg: "bench-sunk", min: TEXT, what: "a loss on a recessed surface" },
   { fg: "live-ink", bg: "bench", min: TEXT, what: "AI text" },
   { fg: "live-ink", bg: "bench-sunk", min: TEXT, what: "AI text on a recessed surface" },
-  { fg: "ink", bg: "action", min: TEXT, what: "the white label on the violet primary button" },
+  // The primary button and the lime sticker carry black text, never white:
+  // white on lime is 1.5:1.
+  { fg: "void", bg: "action", min: TEXT, what: "the black label on the lime primary button" },
+  { fg: "void", bg: "lime", min: TEXT, what: "black text on a lime sticker" },
+  { fg: "bone", bg: "night", min: TEXT, what: "the white label on the inverted button" },
+  { fg: "lime", bg: "night", min: TEXT, what: "lime text on a night-black sticker" },
+  { fg: "flame", bg: "night", min: TEXT, what: "orange text on a night-black chip" },
   { fg: "bench", bg: "ink", min: TEXT, what: "the label on an active tab" },
-  { fg: "saffron", bg: "void", min: TEXT, what: "amber labels and links on the void" },
+  { fg: "saffron", bg: "void", min: TEXT, what: "orange labels and links on the void" },
+  { fg: "flame", bg: "void", min: TEXT, what: "orange text on the void" },
+  { fg: "lime", bg: "void", min: TEXT, what: "lime text on the void" },
   { fg: "mist", bg: "void", min: TEXT, what: "tertiary body text on the void" },
   { fg: "ash", bg: "void", min: TEXT, what: "ghost links and muted nav on the void" },
-  { fg: "verdant", bg: "void", min: TEXT, what: "teal text on the void" },
+  { fg: "verdant", bg: "void", min: TEXT, what: "lime text on the void (legacy name)" },
   // WCAG 1.4.11 covers the boundary of a control, not a divider between
   // sections. `line` draws dividers and card edges and is deliberately quiet;
   // `edge` draws the outline of an input or button and is held to 3:1.
@@ -107,7 +115,7 @@ function colour(theme: Record<string, Rgb>, name: string): Rgb {
 
 describe("theme contrast", () => {
   it("defines every token the system names", () => {
-    for (const token of ["void", "bone", "ash", "mist", "iris", "saffron", "verdant", "bed", "bench", "bench-sunk", "bench-raised", "ink", "muted", "line", "edge", "action", "live", "live-ink", "good", "caution", "mark"]) {
+    for (const token of ["void", "bone", "ash", "mist", "night", "lime", "flame", "iris", "saffron", "verdant", "bed", "bench", "bench-sunk", "bench-raised", "ink", "muted", "line", "edge", "action", "live", "live-ink", "good", "caution", "mark"]) {
       expect(colour(THEME, token)).toHaveLength(3);
     }
   });

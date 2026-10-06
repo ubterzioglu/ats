@@ -5,7 +5,7 @@ import { cx } from "@/lib/ui";
 
 type GhostLinkProps = Omit<ComponentProps<typeof Link>, "className"> & {
   readonly className?: string;
-  /** Active reads white; everything else is ash. */
+  /** Active reads white with a lime underline; everything else is grey. */
   readonly active?: boolean;
 };
 
@@ -14,7 +14,11 @@ export function GhostLink({ className, active = false, ...props }: GhostLinkProp
     <Link
       {...props}
       aria-current={active ? "page" : undefined}
-      className={cx("btn-quiet", active && "text-bone", className)}
+      className={cx(
+        "btn-quiet",
+        active && "text-bone underline decoration-lime decoration-[3px] underline-offset-[10px]",
+        className
+      )}
     />
   );
 }

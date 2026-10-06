@@ -1,7 +1,7 @@
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -14,12 +14,20 @@ import { NavBar } from "@/components/ui/nav-bar";
 
 import "../globals.css";
 
-// Everything the interface says. PPNeueMontreal is not licensed here, so Inter
-// stands in with the same convention: 200 for body copy, 400 for headings, 600
-// for labels. No `weight` list, so the variable file serves every weight.
+// Body copy and interface text. No `weight` list, so the variable file serves
+// every weight.
 const sans = Inter({
   subsets: ["latin", "latin-ext"],
   variable: "--font-sans",
+  display: "swap"
+});
+
+// The wordmark in the logo is set in a heavy geometric sans of this kind;
+// headlines, buttons and chips use it so the type matches the mark.
+const display = Poppins({
+  subsets: ["latin", "latin-ext"],
+  weight: ["600", "700", "800"],
+  variable: "--font-display",
   display: "swap"
 });
 
@@ -75,7 +83,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={sans.variable} suppressHydrationWarning>
+    <html lang={locale} className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
           <NavBar />

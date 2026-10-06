@@ -39,11 +39,11 @@ export function SectionHeadline({
   return (
     <div className={className}>
       {label ? <Label>{label}</Label> : null}
-      <Heading id={id} className={cx(label && "mt-6", SCALE[scale], "font-normal text-bone")}>
+      <Heading id={id} className={cx(label && "mt-5", SCALE[scale], "font-bold text-bone")}>
         {title}
       </Heading>
       {children ? (
-        <div className="mt-6 max-w-lede text-body font-extralight text-mist">{children}</div>
+        <div className="mt-6 max-w-[34rem] text-body text-mist">{children}</div>
       ) : null}
     </div>
   );

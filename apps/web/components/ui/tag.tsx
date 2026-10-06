@@ -7,24 +7,24 @@ type TagTone = "quiet" | "accent" | "good";
 interface TagProps {
   readonly children: ReactNode;
   readonly tone?: TagTone;
-  /** A 1px outline in the tag's own colour. Without it the tag is coloured text only. */
+  /** A 2px outline in the tag's own colour. Without it the tag is coloured text only. */
   readonly outlined?: boolean;
   readonly className?: string;
 }
 
 const TONE: Readonly<Record<TagTone, string>> = {
   quiet: "text-ash",
-  accent: "text-saffron",
-  good: "text-verdant"
+  accent: "text-flame",
+  good: "text-lime"
 };
 
-/** A status marker. Colour comes from the palette and never from the violet. */
+/** A status marker. Colour comes from the logo palette. */
 export function Tag({ children, tone = "quiet", outlined = true, className }: TagProps) {
   return (
     <span
       className={cx(
-        "inline-flex items-center rounded-full text-caption font-semibold uppercase tracking-[0.025em]",
-        outlined ? "border border-current px-3 py-1" : "py-1",
+        "inline-flex items-center rounded-full font-display text-sm font-semibold",
+        outlined ? "border-2 border-current px-3.5 py-1" : "py-1",
         TONE[tone],
         className
       )}

@@ -37,6 +37,17 @@
     "lede": "ATS readability ist ein kostenloses Werkzeug, das einen Lebenslauf so zeigt, wie ein Bewerbermanagementsystem ihn liest: als Text. Es bewertet, was übrig blieb, auf 100 Punkte und listet die Korrekturen nach Wert.",
     "cta": "Lebenslauf analysieren",
     "privacyTag": "Im Browser bewertet. 12 Monate gespeichert.",
+    "demo": {
+      "label": "Beispielbericht, nicht Ihr Lebenslauf",
+      "parse": "Lesbarkeit",
+      "keywords": "Schlüsselwörter",
+      "structure": "Struktur",
+      "impact": "Wirkung",
+      "contact": "Kontakt",
+      "chipMissing": "2 Schlüsselwörter fehlen",
+      "chipColumns": "Keine Spalten gefunden",
+      "chipFix": "Zuerst beheben: Daten ergänzen"
+    },
     "analyze": {
       "label": "Analyse und Abgleich",
       "title": "Jeder verlorene Punkt hat einen Namen.",
@@ -562,7 +573,7 @@
   "documentIntake": {
     "pagesRead": "{source} · {pages, plural, one {# Seite} other {# Seiten}} gelesen",
     "drop": "Lebenslauf hier ablegen",
-    "formats": "PDF, DOCX oder reiner Text, bis 10 MB. Die Datei wird in diesem Browser gelesen und nirgendwohin geschickt.",
+    "formats": "PDF, DOCX oder reiner Text, bis 10 MB. Die Datei wird zuerst in diesem Browser gelesen und dann 12 Monate gespeichert.",
     "reading": "Wird gelesen…",
     "chooseAnother": "Andere Datei wählen",
     "choose": "Datei wählen"

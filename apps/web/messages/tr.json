@@ -37,6 +37,17 @@
     "lede": "ATS readability, bir CV'yi aday takip sisteminin okuduğu gibi gösteren ücretsiz bir araçtır: metin olarak. Geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
     "cta": "CV'nizi analiz edin",
     "privacyTag": "Tarayıcıda puanlanır. 12 ay saklanır.",
+    "demo": {
+      "label": "Örnek rapor, sizin CV'niz değil",
+      "parse": "Okunabilirlik",
+      "keywords": "Anahtar kelime",
+      "structure": "Yapı",
+      "impact": "Etki",
+      "contact": "İletişim",
+      "chipMissing": "2 anahtar kelime eksik",
+      "chipColumns": "Sütun bulunamadı",
+      "chipFix": "Önce düzelt: tarih ekle"
+    },
     "analyze": {
       "label": "Analiz ve eşleştirme",
       "title": "Kaybedilen her puanın bir adı var.",
@@ -562,7 +573,7 @@
   "documentIntake": {
     "pagesRead": "{source} · {pages, plural, one {# sayfa} other {# sayfa}} okundu",
     "drop": "Bir CV'yi buraya bırakın",
-    "formats": "PDF, DOCX veya düz metin, en fazla 10 MB. Bu tarayıcıda okunur ve hiçbir yere gönderilmez.",
+    "formats": "PDF, DOCX veya düz metin, en fazla 10 MB. Önce bu tarayıcıda okunur, sonra 12 ay saklanır.",
     "reading": "Okunuyor…",
     "chooseAnother": "Başka bir dosya seç",
     "choose": "Dosya seç"

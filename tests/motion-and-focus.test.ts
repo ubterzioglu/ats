@@ -41,9 +41,17 @@ describe("reduced motion", () => {
 });
 
 describe("the animations that exist", () => {
-  it("are the two the system allows, and no more", () => {
+  it("are the four the system allows, and no more", () => {
     const names = [...CSS.matchAll(/@keyframes\s+([a-z-]+)/g)].map((match) => match[1]).sort();
-    expect(names).toEqual(["live-sweep", "meter-fill"]);
+    // live-sweep: the AI edge. meter-fill: a score bar, once. sticker-pop: the
+    // one entrance on the landing page. marquee: the quiet ticker strip.
+    expect(names).toEqual(["live-sweep", "marquee", "meter-fill", "sticker-pop"]);
+  });
+
+  it("stops the ticker under reduced motion", () => {
+    expect(block("@media (prefers-reduced-motion: reduce)")).toMatch(
+      /\.marquee-track\s*\{\s*animation:\s*none/
+    );
   });
 
   it("fills a meter exactly once", () => {
@@ -55,7 +63,7 @@ describe("keyboard focus", () => {
   const rule = block(":focus-visible {");
 
   it("draws a visible ring rather than removing the outline", () => {
-    expect(rule).toMatch(/outline:\s*2px solid/);
+    expect(rule).toMatch(/outline:\s*3px solid/);
     expect(rule).toMatch(/outline-offset/);
   });
 
