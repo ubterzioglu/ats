@@ -12,14 +12,27 @@ export function evaluateSuitability(
   if (jobAd.experience) {
     const requiredMonths = jobAd.experience.years * 12;
     const cvMonths = context.stats.experienceMonths;
-    const isPassing = cvMonths >= requiredMonths;
+    const hasDates = context.stats.years.length > 0;
+    
+    let status: SuitabilityStatus;
+    let detail: string;
+    
+    if (!hasDates && cvMonths === 0) {
+      status = "unknown";
+      detail = `Requires ${jobAd.experience.years} years but no dates were parsed.`;
+    } else {
+      const isPassing = cvMonths >= requiredMonths;
+      status = isPassing ? "passed" : "failed";
+      detail = isPassing
+        ? `Meets the ${jobAd.experience.years} year requirement.`
+        : `Requires ${jobAd.experience.years} years but parsed ${Math.floor(cvMonths / 12)} years.`;
+    }
+    
     checks.push({
       id: "experience",
-      status: isPassing ? "passed" : "failed",
+      status,
       title: "Experience",
-      detail: isPassing
-        ? `Meets the ${jobAd.experience.years} year requirement.`
-        : `Requires ${jobAd.experience.years} years but parsed ${Math.floor(cvMonths / 12)} years.`
+      detail
     });
   }
 

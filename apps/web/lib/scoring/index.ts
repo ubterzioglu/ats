@@ -56,7 +56,7 @@ export function analyzeCv(input: AnalysisInput): AnalysisResult {
   const outcomes = [parseability, contact, structure, keywords, impact];
   const dimensions = outcomes.map((outcome) => outcome.dimension);
   const findings = rankFindings(outcomes.flatMap((outcome) => outcome.findings));
-  const parsedJobAd = jobDescription ? parseJobAd(jobDescription, [...keywords.report.matched, ...keywords.report.missing]) : undefined;
+  const parsedJobAd = jobDescription ? parseJobAd(jobDescription, [...keywords.report.matched, ...keywords.report.missing]) ?? undefined : undefined;
 
   const total = clamp(
     dimensions.reduce((sum, dimension) => sum + dimension.score, 0),

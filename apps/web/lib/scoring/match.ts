@@ -18,7 +18,7 @@ import type { DocumentLanguage, KeywordTerm, MatchMode, MatchOutcome } from "@/t
 
 import { germanVariants } from "./german";
 import { hasTechContext, isAmbiguousTerm, variantsOf } from "./taxonomy";
-import { tokenize } from "./text";
+import { caseFold, tokenize } from "./text";
 import { hasTurkishCharacters, matchKeyTurkish } from "./turkish";
 
 /**
@@ -62,9 +62,11 @@ function countByTurkishKey(haystack: string, term: string): number {
  */
 export function countLiteral(haystack: string, term: string): number {
   let hits = 0;
-  for (const line of haystack.split("\n")) {
+  const foldedHaystack = caseFold(haystack);
+  const foldedTerm = caseFold(term);
+  for (const line of foldedHaystack.split("\n")) {
     if (isAmbiguousTerm(term) && !hasTechContext(line)) continue;
-    hits += line.match(termPattern(term))?.length ?? 0;
+    hits += line.match(termPattern(foldedTerm))?.length ?? 0;
   }
   return hits;
 }
@@ -76,6 +78,10 @@ export function countLiteral(haystack: string, term: string): number {
  * as well. German compounds: the ad says "Testautomatisierung", the CV says
  * "Test-Automatisierung", so each term also carries its split and joined
  * surface forms. Stem hits top up the canonical variant.
+ *
+ * Case-folded matching runs as a second path so Latin abbreviations ("AI",
+ * "CI/CD") survive Turkish lowercasing, where a plain toLowerCase turns "I"
+ * into "ı" and splits the token.
  */
 export function countOccurrencesByVariant(
   haystack: string,
@@ -84,10 +90,12 @@ export function countOccurrencesByVariant(
 ): VariantCount[] {
   const variants = [...new Set([...variantsOf(term), ...germanVariants(term)])];
   const totals = new Map<string, number>();
-  for (const line of haystack.split("\n")) {
+  const foldedHaystack = caseFold(haystack);
+  for (const line of foldedHaystack.split("\n")) {
     for (const variant of variants) {
+      const foldedVariant = caseFold(variant);
       if (isAmbiguousTerm(variant) && !hasTechContext(line)) continue;
-      const matches = line.match(termPattern(variant));
+      const matches = line.match(termPattern(foldedVariant));
       if (matches) totals.set(variant, (totals.get(variant) ?? 0) + matches.length);
     }
   }
