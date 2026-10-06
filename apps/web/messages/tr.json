@@ -991,6 +991,14 @@
       "free": "Evet. Analiz tarayıcınızda çalışır ve hesap gerektirmez. Hesap yalnızca paylaşım bağlantılarını kaydetmek için gereklidir.",
       "account": "Hayır. Analizin kendisi hesap gerektirmez. Hesap yalnızca paylaşım bağlantılarını kaydetmek için gereklidir.",
       "contact": "Bize {email} adresinden ulaşabilirsiniz."
+    },
+    "findings": {
+      "columns": "Çok sütunlu düzenler ayrıştırıcıyı bozar. Ayrıştırıcılar soldan sağa okur, bu yüzden iki sütun birbirine karışır. Bunun yerine tek sütunlu düzen kullanın.",
+      "encoding": "Özel karakterler (Türkçe, Almanca) bozuk görünüyor. Bu, PDF metin katmanı yanlış kodlama kullandığında olur. PDF'yi kaynak belgeden gömülü fontlarla yeniden dışa aktarın.",
+      "quantify": "Maddelerinize sayılar ekleyin. 'Satışlardan sorumlu' yerine 'Ç3'te satışları %23 artırdı' yazın. Sayılar başarılarınızı somutlaştırır.",
+      "verbs": "Her maddeye eylem fiiliyle başlayın: kurdum, taşıdım, otomatikleştirdim, azalttım. 'Sorumlu' veya 'Çalıştım' kullanmaktan kaçının - bunlar rolü tanımlar, katkınızı değil.",
+      "contact": "E-posta, telefon ve LinkedIn veya GitHub bağlantınızı üst kısma ekleyin. Bunlar ayrıştırıcının aradığı ilk alanlardır.",
+      "sections": "Standart bölüm başlıkları kullanın: Deneyim, Eğitim, Beceriler. Ayrıştırıcılar bunları alanlara eşler. 'Yolculuğum' gibi alışılmadık başlıklar tanınmaz."
     }
   },
   "profile": {

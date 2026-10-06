@@ -108,5 +108,59 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
       de: ["konto", "anmelden", "login", "registrieren", "notwendig", "erforderlich"]
     },
     answerKey: "help.answers.account"
+  },
+  {
+    id: "columns",
+    keywords: {
+      en: ["column", "table", "layout", "two column", "parse", "break"],
+      tr: ["sütun", "tablo", "düzen", "iki sütun", "ayrıştırma", "bozul"],
+      de: ["spalte", "tabelle", "layout", "zwei spalten", "parsen", "brechen"]
+    },
+    answerKey: "help.findings.columns"
+  },
+  {
+    id: "encoding",
+    keywords: {
+      en: ["encoding", "garbled", "mojibake", "character", "broken", "special"],
+      tr: ["kodlama", "bozuk", "karakter", "özel", "harf", "türkçe"],
+      de: ["kodierung", "zeichen", "sonderzeichen", "kaputt", "falsch"]
+    },
+    answerKey: "help.findings.encoding"
+  },
+  {
+    id: "quantify",
+    keywords: {
+      en: ["number", "quantify", "measure", "metric", "percent", "result"],
+      tr: ["sayı", "ölç", "metrik", "yüzde", "sonuç", "sayısallaştır"],
+      de: ["zahl", "quantifizieren", "messen", "metrik", "prozent", "ergebnis"]
+    },
+    answerKey: "help.findings.quantify"
+  },
+  {
+    id: "verbs",
+    keywords: {
+      en: ["verb", "action", "start", "begin", "weak", "passive"],
+      tr: ["fiil", "eylem", "başla", "zayıf", "edilgen"],
+      de: ["verb", "aktion", "beginnen", "schwach", "passiv"]
+    },
+    answerKey: "help.findings.verbs"
+  },
+  {
+    id: "contact",
+    keywords: {
+      en: ["email", "phone", "contact", "missing", "link", "linkedin"],
+      tr: ["eposta", "telefon", "iletişim", "eksik", "bağlantı", "linkedin"],
+      de: ["email", "telefon", "kontakt", "fehlend", "link", "linkedin"]
+    },
+    answerKey: "help.findings.contact"
+  },
+  {
+    id: "sections",
+    keywords: {
+      en: ["section", "heading", "experience", "education", "skills", "missing"],
+      tr: ["bölüm", "başlık", "deneyim", "eğitim", "beceri", "eksik"],
+      de: ["abschnitt", "überschrift", "erfahrung", "bildung", "fähigkeiten", "fehlend"]
+    },
+    answerKey: "help.findings.sections"
   }
 ] as const;

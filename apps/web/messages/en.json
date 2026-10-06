@@ -991,6 +991,14 @@
       "free": "Yes. The analysis runs in your browser and needs no account. An account is only needed to save share links.",
       "account": "No. The analysis itself needs no account. An account is only needed to save share links.",
       "contact": "You can reach us at {email}."
+    },
+    "findings": {
+      "columns": "Multi-column layouts break the parser. Parsers read left to right, so two columns get mixed together. Use a single-column layout instead.",
+      "encoding": "Special characters (Turkish, German) appear broken. This happens when the PDF text layer uses the wrong encoding. Re-export the PDF with embedded fonts from the source document.",
+      "quantify": "Add numbers to your bullets. Instead of 'Responsible for sales', write 'Increased sales by 23% in Q3'. Numbers make your achievements concrete.",
+      "verbs": "Start each bullet with an action verb: built, migrated, automated, reduced. Avoid 'Responsible for' or 'Worked on' - they describe a role, not your contribution.",
+      "contact": "Add your email, phone and a LinkedIn or GitHub link near the top. These are the first fields a parser looks for.",
+      "sections": "Use standard section headings: Experience, Education, Skills. Parsers map these to fields. Unusual headings like 'My Journey' are not recognised."
     }
   },
   "profile": {

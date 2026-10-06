@@ -991,6 +991,14 @@
       "free": "Ja. Die Analyse läuft in Ihrem Browser und benötigt kein Konto. Ein Konto wird nur zum Speichern von Freigabelinks benötigt.",
       "account": "Nein. Die Analyse selbst benötigt kein Konto. Ein Konto wird nur zum Speichern von Freigabelinks benötigt.",
       "contact": "Sie können uns unter {email} erreichen."
+    },
+    "findings": {
+      "columns": "Mehrspaltige Layouts brechen den Parser. Parser lesen von links nach rechts, daher werden zwei Spalten vermischt. Verwenden Sie stattdessen einspaltige Layouts.",
+      "encoding": "Sonderzeichen (Türkisch, Deutsch) erscheinen fehlerhaft. Dies passiert, wenn die PDF-Textschicht die falsche Kodierung verwendet. Exportieren Sie die PDF mit eingebetteten Schriftarten aus dem Quelldokument neu.",
+      "quantify": "Fügen Sie Ihren Aufzählungspunkten Zahlen hinzu. Statt 'Verantwortlich für Verkauf' schreiben Sie 'Umsatz in Q3 um 23% gesteigert'. Zahlen machen Ihre Leistungen konkret.",
+      "verbs": "Beginnen Sie jeden Aufzählungspunkt mit einem Aktionsverb: aufgebaut, migriert, automatisiert, reduziert. Vermeiden Sie 'Verantwortlich für' oder 'Gearbeitet an' - sie beschreiben eine Rolle, nicht Ihren Beitrag.",
+      "contact": "Fügen Sie Ihre E-Mail, Telefon und einen LinkedIn- oder GitHub-Link oben hinzu. Dies sind die ersten Felder, nach denen ein Parser sucht.",
+      "sections": "Verwenden Sie Standard-Abschnittsnamen: Erfahrung, Bildung, Fähigkeiten. Parser bilden diese auf Felder ab. Ungewöhnliche Überschriften wie 'Meine Reise' werden nicht erkannt."
     }
   },
   "profile": {
