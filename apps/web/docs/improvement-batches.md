@@ -2,7 +2,7 @@
 
 What is left to do, grouped into batches. Research, prompts and analysis already delivered are left out. The reasoning behind each item lives in the older notes: `engine-strengthening-plan.md`, `research-priority-list.md`, `help-assistant-suggestions.md`. The step-by-step brief for the help bubble is `help-assistant-improvement-brief.md`.
 
-Status: A1, A2, A3, A4, A7, B6, C1, C5, D2 done. D6: `pdfjs-dist` done, `@huggingface/transformers` blocked (see D6). Nothing below has been implemented or approved.
+Status: A1, A2, A3, A4, A7, B6, C1, C5, D2 done. D3: pipeline and approval gate done, no synonym approved yet, cost review not yet run (see D3). D6: `pdfjs-dist` done, `@huggingface/transformers` blocked (see D6). Nothing below has been implemented or approved.
 
 ## Rules for every batch
 
@@ -134,6 +134,8 @@ All of it keeps the score deterministic.
 
 ### D3. Offline synonym mining and calibration (M)
 - On a developer machine, cluster ad and CV terms with an embedding model to propose synonyms; a person approves them into the static dictionary. Use an LLM as a judge only to review cost weights, and record the outcome. No model at runtime.
+- Pipeline done, approvals pending. `scripts/mine-synonyms.mjs` embeds the taxonomy, the dictionary and fixture terms with multilingual-e5-small in Node and writes unreviewed cross-language proposals (first run: 327 at the default 0.93 threshold, git-ignored). `scripts/approve-synonyms.mjs <id> --confirm` moves one into `lib/scoring/data/approved-synonyms.json` as `approvedBy: "human"`; the engine reads only those, below curated and dictionary entries. The file ships empty. How to run and the exclusion rules: `synonym-mining.md`.
+- Cost review prepared, not run. `cost-weight-review.md` holds the generated cost table (`scripts/dump-costs.mjs`), a judge prompt and an empty outcome section; the repository calls no LLM. A person runs the review and records the outcome there.
 
 ### D4. Optional OCR (M)
 - tesseract.js (Apache-2.0), language data downloaded only after consent with size and progress. Report "no text layer, read with OCR" as its own finding.
