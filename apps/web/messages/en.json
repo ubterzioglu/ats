@@ -34,7 +34,7 @@
   },
   "home": {
     "eyebrow": "CV readability check",
-    "headline": "Your CV is read as text, not as a design.",
+    "headline": "That fancy CV template? The ATS can't see it. It only reads the text.",
     "lede": "ATS readability is a free tool that shows a CV the way an applicant tracking system reads it: as text. It scores what survived out of 100 and lists the fixes in order of value.",
     "cta": "Analyze a CV",
     "privacyTag": "Scored in your browser",
@@ -938,5 +938,29 @@
     "version": "Consent version: {version}",
     "accept": "Accept analytics",
     "reject": "Reject"
+  },
+  "help": {
+    "scrollTop": "Scroll to top",
+    "bubbleLabel": "Site helper",
+    "panelTitle": "Frequently asked questions",
+    "inputLabel": "Ask a question",
+    "inputPlaceholder": "Type your question",
+    "send": "Send",
+    "close": "Close",
+    "unknown": "I do not have an answer for that. Try one of the suggestions above, or",
+    "contactLink": "contact us",
+    "starters": {
+      "upload": "Is my CV stored?",
+      "score": "How is the score calculated?",
+      "formats": "Which formats are supported?",
+      "retention": "How long is my data kept?",
+      "free": "Is the service free?",
+      "account": "Do I need an account?"
+    },
+    "answers": {
+      "free": "Yes. The analysis runs in your browser and needs no account. An account is only needed to save share links.",
+      "account": "No. The analysis itself needs no account. An account is only needed to save share links.",
+      "contact": "You can reach us at {email}."
+    }
   }
 }

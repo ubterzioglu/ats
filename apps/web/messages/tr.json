@@ -34,7 +34,7 @@
   },
   "home": {
     "eyebrow": "CV okunabilirlik kontrolü",
-    "headline": "CV'niz bir tasarım olarak değil, metin olarak okunur.",
+    "headline": "O şık CV şablonunu ATS görmez. Sadece metne bakar.",
     "lede": "ATS readability, bir CV'yi aday takip sisteminin okuduğu gibi gösteren ücretsiz bir araçtır: metin olarak. Geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
     "cta": "CV'nizi analiz edin",
     "privacyTag": "Tarayıcınızda puanlanır",
@@ -938,5 +938,29 @@
     "version": "Onay sürümü: {version}",
     "accept": "Analitiği kabul et",
     "reject": "Reddet"
+  },
+  "help": {
+    "scrollTop": "Yukarı çık",
+    "bubbleLabel": "Site yardımcısı",
+    "panelTitle": "Sıkça sorulan sorular",
+    "inputLabel": "Soru sorun",
+    "inputPlaceholder": "Sorunuzu yazın",
+    "send": "Gönder",
+    "close": "Kapat",
+    "unknown": "Bunun için bir cevabım yok. Yukarıdaki önerilerden birini deneyin veya",
+    "contactLink": "bizimle iletişime geçin",
+    "starters": {
+      "upload": "CV'm saklanıyor mu?",
+      "score": "Puan nasıl hesaplanıyor?",
+      "formats": "Hangi formatlar destekleniyor?",
+      "retention": "Verilerim ne kadar süre saklanıyor?",
+      "free": "Hizmet ücretsiz mi?",
+      "account": "Hesap gerekli mi?"
+    },
+    "answers": {
+      "free": "Evet. Analiz tarayıcınızda çalışır ve hesap gerektirmez. Hesap yalnızca paylaşım bağlantılarını kaydetmek için gereklidir.",
+      "account": "Hayır. Analizin kendisi hesap gerektirmez. Hesap yalnızca paylaşım bağlantılarını kaydetmek için gereklidir.",
+      "contact": "Bize {email} adresinden ulaşabilirsiniz."
+    }
   }
 }
