@@ -35,7 +35,7 @@ export default async function SharedReportPage({ params }: SharedReportPageProps
   const brand = await getTranslations("brand");
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
+    <main className="mx-auto w-full max-w-page px-4 py-8 sm:px-6 sm:py-12">
       <header className="mb-8 border-b border-line pb-6">
         <p className="condensed text-micro text-muted">
           {t("eyebrow", { date: report.generatedAt.slice(0, 10) })}

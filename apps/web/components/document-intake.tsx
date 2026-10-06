@@ -64,7 +64,7 @@ export function DocumentIntake({ extraction, busy, onFile }: DocumentIntakeProps
       ) : (
         <>
           <p className="text-sm font-normal">{t("drop")}</p>
-          <p className="max-w-[34ch] text-micro leading-relaxed text-muted">
+          <p className="text-micro leading-relaxed text-muted">
             {t("formats")}
           </p>
         </>

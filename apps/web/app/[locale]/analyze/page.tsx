@@ -43,7 +43,7 @@ export default async function AnalyzePage({ params }: AnalyzePageProps) {
   );
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+    <div className="mx-auto w-full max-w-page px-4 sm:px-6">
       <JsonLd data={breadcrumbJsonLd} />
       <main className="py-8 sm:py-10">
         <div className="mb-8 max-w-measure">

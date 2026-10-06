@@ -43,7 +43,7 @@ export function SectionHeadline({
         {title}
       </Heading>
       {children ? (
-        <div className="mt-6 max-w-[34rem] text-body text-mist">{children}</div>
+        <div className="mt-6 text-body text-mist">{children}</div>
       ) : null}
     </div>
   );

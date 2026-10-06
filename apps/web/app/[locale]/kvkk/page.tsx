@@ -5,7 +5,7 @@ export default async function KvkkPage() {
   const t = await getTranslations("kvkk");
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-3xl">
+    <div className="mx-auto w-full max-w-page px-4 py-12 sm:px-6">
       <h1 className="text-3xl font-bold text-ink mb-2">{t("title")}</h1>
       <p className="text-muted text-sm mb-8">{t("lastUpdated", { date: LEGAL_VERSION_DATE })}</p>
 

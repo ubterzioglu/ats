@@ -102,10 +102,14 @@ const config: Config = {
         "section-sm": "3.75rem",
         section: "7.5rem"
       },
+      // Running text fills its container: a paragraph runs to the edge of its
+      // column instead of wrapping early, which also saves height in every
+      // language. `measure` and `lede` stay as names so existing views keep
+      // working; only `page` still caps anything.
       maxWidth: {
-        measure: "68ch",
+        measure: "100%",
         page: "1280px",
-        lede: "30rem"
+        lede: "100%"
       }
     }
   },
