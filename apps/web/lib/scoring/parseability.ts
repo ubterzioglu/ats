@@ -261,6 +261,17 @@ export function scoreParseability(context: ScoreContext): DimensionOutcome {
     });
   }
 
+  if (context.ligatures > 4) {
+    drafts.push({
+      id: "parse.ligatures",
+      severity: "medium",
+      title: "Unexpanded typographic ligatures in the text layer",
+      detail: `${context.ligatures} typographic ligature glyphs (such as fi, fl, ff) were detected in the document. Basic ATS parsers fail to unpack them and misread keywords like 'proficient' or 'definition'.`,
+      fix: "Turn off standard ligatures in your word processor or PDF export settings before saving.",
+      cost: 3
+    });
+  }
+
   // Image-only pages: the extraction step counted pages with no text layer.
   // A PDF where some pages have text and others do not is a mixed document —
   // part readable, part invisible. This only fires when extraction data is
