@@ -95,13 +95,13 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-TBMY1B1T9Q" strategy="afterInteractive" />
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-3VW13JR9ZD" strategy="afterInteractive" />
       <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-TBMY1B1T9Q');
+          gtag('config', 'G-3VW13JR9ZD');
         `}
       </Script>
       <body>
