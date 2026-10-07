@@ -1,4 +1,5 @@
 import type { 
+  AtsTargetInfo,
   ExperienceRequirement,
   JobAdRedFlag,
   JobAdRequirements,
@@ -11,6 +12,7 @@ import type {
   WorkMode
 } from "@/types/analysis";
 
+import { detectAts } from "./ats-detect";
 import { caseFold } from "./text";
 
 const YEARS_RX = /(\d{1,2})\s*\+?\s*(?:years?|yrs?|jahre?n?|yıl|yil|sene)\b/giu;
@@ -215,7 +217,7 @@ export function extractSalary(lines: readonly string[]): SalaryRequirement | nul
 
 
 
-export function parseJobAd(jobDescription: string, terms: readonly KeywordTerm[]): JobAdRequirements | null {
+export function parseJobAd(jobDescription: string, terms: readonly KeywordTerm[], jobUrl?: string): JobAdRequirements | null {
   if (jobDescription.trim().length < MIN_AD_LENGTH) return null;
 
   const lines = jobDescription.split("\n").map(l => l.trim()).filter(l => l.length > 0);
@@ -232,6 +234,7 @@ export function parseJobAd(jobDescription: string, terms: readonly KeywordTerm[]
 
   const experience = extractExperienceRequirement(jobDescription);
   const seniority = extractSeniority(lines);
+  const targetAts = detectAts(jobUrl ?? "") ?? detectAts(jobDescription);
 
   return {
     experience,
@@ -240,7 +243,8 @@ export function parseJobAd(jobDescription: string, terms: readonly KeywordTerm[]
     location: extractLocation(lines),
     salary: extractSalary(lines),
     terms: { required, preferred },
-    redFlags: extractRedFlags(jobDescription, experience, seniority, required)
+    redFlags: extractRedFlags(jobDescription, experience, seniority, required),
+    targetAts
   };
 }
 

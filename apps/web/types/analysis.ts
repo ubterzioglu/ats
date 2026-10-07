@@ -40,6 +40,13 @@ export interface SalaryRequirement {
   readonly source: string;
 }
 
+export interface AtsTargetInfo {
+  readonly id: string;
+  readonly name: string;
+  readonly notes: string;
+  readonly formatAdvice: string;
+}
+
 export interface JobAdRequirements {
   readonly experience: ExperienceRequirement | null;
   readonly seniority: SeniorityRequirement | null;
@@ -51,6 +58,7 @@ export interface JobAdRequirements {
     readonly preferred: readonly KeywordTerm[];
   };
   readonly redFlags: readonly JobAdRedFlag[];
+  readonly targetAts?: AtsTargetInfo | null;
 }
 
 export type SuitabilityStatus = "passed" | "failed" | "unknown";
