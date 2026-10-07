@@ -70,6 +70,9 @@ export default async function HomePage({ params }: HomePageProps) {
   return (
     <main>
       <JsonLd data={jsonLd} />
+      <div className="bg-caution py-2 text-center font-display text-sm font-semibold text-void">
+        We are live in Beta
+      </div>
       <section className="mx-auto grid w-full max-w-page items-center gap-12 overflow-x-clip px-4 py-section-sm sm:px-6 lg:min-h-[calc(100dvh-5rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-10 lg:py-0">
         <div>
           <SectionHeadline as="h1" scale="lg" label={t("eyebrow")} title={t("headline")}>
