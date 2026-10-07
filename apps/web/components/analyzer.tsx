@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 
 import { createShareLink } from "@/app/actions";
@@ -23,7 +23,7 @@ import { readPreviousRecord, recordAnalysis } from "@/lib/store/history";
 import type { HistoryRecord, TrailPoint } from "@/lib/store/schema";
 import { appendTrailPoint, readTrail, startNewSession } from "@/lib/store/trail";
 import { cx } from "@/lib/ui";
-import type { AnalysisResult, Finding } from "@/types/analysis";
+import type { AnalysisResult, Finding, TargetMarket } from "@/types/analysis";
 
 import { AdAnalysisPanel } from "./bench/ad-analysis-panel";
 import { AiConsent } from "./ai-consent";
@@ -35,17 +35,20 @@ import { ChangeNote } from "./bench/change-note";
 import { EntriesTable } from "./bench/entries-table";
 import { IdentityTable } from "./bench/identity-table";
 import { ScoreTrail } from "./bench/score-trail";
+import { StrengthsPanel } from "./bench/strengths-panel";
 import { WorkList } from "./bench/work-list";
 import { AdCompareView } from "./ad-compare";
 import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
 import { KeywordPanel } from "./keyword-panel";
 import { LearningList } from "./learning-list";
+import { OcrConsent } from "./ocr-consent";
 import { ParserView } from "./parser-view";
 import { InterviewMode } from "./interview/interview-mode";
 import { TailorMode } from "./tailor/tailor-mode";
 import { VariantComparison } from "./tailor/variant-comparison";
 import { submitCv } from "@/lib/submit-cv";
+import { setResult as setHelpResult } from "@/lib/help/result-holder";
 
 
 type View = "input" | "report" | "tailor" | "compare" | "interview";
@@ -59,6 +62,7 @@ const MIN_CV_CHARS = 120;
 export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const t = useTranslations("analyzer");
   const tConsent = useTranslations("analyze");
+  const locale = useLocale();
   const [cvText, setCvText] = useState("");
   const [jobAd, setJobAd] = useState("");
   const [extraction, setExtraction] = useState<ExtractionResult | null>(null);
@@ -82,6 +86,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
   const [sharing, startSharing] = useTransition();
   const [consentChecked, setConsentChecked] = useState(false);
   const [sourceFile, setSourceFile] = useState<File | null>(null);
+  const [market, setMarket] = useState<TargetMarket | undefined>(undefined);
 
   // Read once, before this visit writes anything, so the comparison is against
   // the last visit rather than against the analysis just run.
@@ -99,6 +104,11 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       cancelled = true;
     };
   }, []);
+
+  // Keep the help bubble's result holder in sync with the latest analysis.
+  useEffect(() => {
+    setHelpResult(result);
+  }, [result]);
 
   const handleFile = useCallback(async (file: File) => {
     setReading(true);
@@ -141,7 +151,15 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
       setMarkedIndex(null);
 
       try {
-        const next = analyzeCv({ cvText, jobDescription: jobAd });
+        const extractionMeta = extraction
+          ? {
+              source: extraction.source,
+              pages: extraction.pages,
+              emptyPages: extraction.emptyPages ?? 0,
+              links: extraction.links ?? []
+            }
+          : undefined;
+        const next = analyzeCv({ cvText, jobDescription: jobAd, market, extraction: extractionMeta });
         setPrevious(result);
         setResult(next);
         setHints([]);
@@ -169,7 +187,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
         setError(cause instanceof Error ? cause.message : t("errors.analysisFailed"));
       }
     },
-    [cvText, jobAd, result, t, consentChecked, sourceFile]
+    [cvText, jobAd, result, t, consentChecked, sourceFile, market, extraction]
   );
 
   const highlights = useMemo(
@@ -365,6 +383,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setError(null);
     setView("input");
     setSourceFile(null);
+    setMarket(undefined);
   }
 
   return (
@@ -458,6 +477,21 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
 
               <DocumentIntake extraction={extraction} busy={reading} onFile={handleFile} />
 
+              {extraction &&
+              extraction.source === "pdf" &&
+              extraction.pageTexts &&
+              (extraction.emptyPages ?? 0) > 0 ? (
+                <OcrConsent
+                  file={sourceFile!}
+                  pageTexts={extraction.pageTexts}
+                  siteLocale={locale}
+                  onResult={(text) => {
+                    setCvText(text);
+                    setExtraction({ ...extraction, text });
+                  }}
+                />
+              ) : null}
+
               <label className="block">
                 <span className="condensed text-micro font-normal text-muted">
                   {t("extractedLabel")}
@@ -495,6 +529,23 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
             {!consentChecked && (
               <p className="text-sm text-caution">{tConsent("consent.required")}</p>
             )}
+          </div>
+
+          {/* Market selector */}
+          <div className="flex flex-wrap items-center gap-3">
+            <label className="flex items-center gap-2 text-sm">
+              <span className="text-muted">{t("marketLabel")}</span>
+              <select
+                className="field py-1.5 text-sm"
+                value={market ?? ""}
+                onChange={(e) => setMarket(e.target.value ? (e.target.value as TargetMarket) : undefined)}
+              >
+                <option value="">{t("marketAuto")}</option>
+                <option value="en">{t("marketEn")}</option>
+                <option value="de">{t("marketDe")}</option>
+                <option value="tr">{t("marketTr")}</option>
+              </select>
+            </label>
           </div>
 
           {/* The action belongs to both surfaces above it, so it sits under
@@ -563,6 +614,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
             <div className="space-y-5">
               {change ? <ChangeNote change={change} onDismiss={() => setChange(null)} /> : null}
+              <StrengthsPanel strengths={result.strengths ?? []} findings={result.findings} />
               <WorkList
                 findings={result.findings}
                 cvText={cvText}

@@ -36,3 +36,33 @@ export async function getPublishedPost(
   if (error || !data) return null;
   return data as BlogPost;
 }
+
+export async function listAllPublishedPosts(): Promise<readonly BlogPost[]> {
+  const supabase = createServiceClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("status", "published")
+    .order("published_at", { ascending: false, nullsFirst: false });
+
+  if (error || !data) return [];
+  return data as BlogPost[];
+}
+
+export async function getPublishedPostBySlug(
+  slug: string
+): Promise<readonly BlogPost[]> {
+  const supabase = createServiceClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("slug", slug)
+    .eq("status", "published");
+
+  if (error || !data) return [];
+  return data as BlogPost[];
+}

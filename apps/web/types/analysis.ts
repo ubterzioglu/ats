@@ -188,10 +188,33 @@ export interface AnalysisResult {
   readonly generatedAt: string;
   readonly engineVersion?: string;
   readonly strengths?: readonly Strength[];
+  readonly experience?: {
+    readonly months: number;
+    readonly overlapping: boolean;
+    readonly periodCount: number;
+  };
 }
 
 export interface AnalysisInput {
   readonly cvText: string;
   readonly jobDescription?: string;
   readonly market?: TargetMarket;
+  readonly extraction?: ExtractionMetadata;
+}
+
+export interface ExtractionFacts {
+  readonly pages: number;
+  readonly ocrPages: number;
+}
+
+/**
+ * Metadata from the file extraction step, passed through to the scorer so it
+ * can issue findings that depend on the file format (e.g. image-only pages,
+ * hidden links). Absent when the CV was pasted as text rather than uploaded.
+ */
+export interface ExtractionMetadata {
+  readonly source: "pdf" | "docx" | "text";
+  readonly pages: number;
+  readonly emptyPages: number;
+  readonly links: readonly string[];
 }

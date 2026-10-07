@@ -419,6 +419,11 @@
     "shareNote": "30 Tage teilbar, nur Punktzahlen — der Link enthält keinen Text aus dem Lebenslauf:",
     "parserCaption": "{words} Wörter · {lines} Zeilen · {language}",
     "ruleBasedDisclaimer": "Diese Punktzahl ist eine regelbasierte Schätzung der Lesbarkeit, keine Vorhersage des Verhaltens eines bestimmten Parsers.",
+    "marketLabel": "Zielmarkt:",
+    "marketAuto": "Automatisch erkennen",
+    "marketEn": "Englisch (US/UK)",
+    "marketDe": "Deutsch (DACH)",
+    "marketTr": "Türkisch",
     "errors": {
       "fileUnreadable": "Diese Datei konnte nicht gelesen werden.",
       "tooShort": "Fügen Sie zuerst den Text des Lebenslaufs ein — für eine Beurteilung braucht es mindestens ein paar Zeilen.",
@@ -479,8 +484,8 @@
     }
   },
   "identityTable": {
-    "heading": "Was der Parser als Ihre Daten gelesen hat",
-    "lede": "Die Identitätsfelder, die jedes Bewerbermanagementsystem speichert. Jedes wird so gezeigt, wie der Parser es ausgelesen hat.",
+    "heading": "Was das ATS sah",
+    "lede": "Was ein Profil enthalten würde: Name, E-Mail, Telefon, letzte Position, Arbeitgeber, Zeitraum, Schule. Jedes Feld ist als extrahiert oder nicht markiert, mit der Quellzeile.",
     "showLine": "Diese Zeile im ausgelesenen Text zeigen",
     "fields": {
       "name": "Name",
@@ -527,7 +532,9 @@
     "modeSummaryNoSemantic": "{strict} exakte Treffer, {normalized} normalisiert. Der Unterschied sind diese {count} Begriffe:",
     "modeAliasOnly": "nur durch Synonymtabelle oder Stammform erkannt",
     "modeSemanticOnly": "nur durch semantisches Modell erkannt",
-    "enableSemantic": "Aktivieren Sie das KI-Modell unten, um semantische Treffer zu sehen."
+    "enableSemantic": "Aktivieren Sie das KI-Modell unten, um semantische Treffer zu sehen.",
+    "overused": "Übermäßig verwendete Begriffe",
+    "overusedTitle": "kommt {hits} Mal vor - erwägen Sie, die Sprache zu variieren"
   },
   "askDock": {
     "heading": "Zu diesem Bericht nachfragen",
@@ -621,12 +628,35 @@
     "ready": "Semantisches Modell bereit.",
     "readyDetail": "Die Hinweise unten laufen lokal gegen den ausgelesenen Text; die Punktzahlen bleiben unberührt.",
     "heading": "Semantische Hinweise (optional)",
-    "lede": "Ein kleines Sprachmodell kann Beinahe-Treffer zeigen, die der wörtliche Abgleich nicht sieht - etwa wenn der Lebenslauf „Postgres“ sagt und die Anzeige „PostgreSQL“. Es läuft vollständig in Ihrem Browser ({model}, etwa {sizeMb} MB, einmal heruntergeladen und zwischengespeichert). Das Modell schickt keinen Text aus Ihrem Lebenslauf irgendwohin, und die Punktzahlen ändern sich nie - Hinweise sind Rat, keine Messung.",
+    "lede": "Ein kleines Sprachmodell kann Beinahe-Treffer zeigen, die der wörtliche Abgleich nicht sieht - etwa wenn der Lebenslauf 'Postgres' sagt und die Anzeige 'PostgreSQL'. Es läuft vollständig in Ihrem Browser ({model}, etwa {sizeMb} MB, einmal heruntergeladen und zwischengespeichert). Das Modell schickt keinen Text aus Ihrem Lebenslauf irgendwohin, und die Punktzahlen ändern sich nie - Hinweise sind Rat, keine Messung.",
     "progressLabel": "Fortschritt des Modell-Downloads",
     "cancel": "Abbrechen",
     "tryAgain": "Erneut versuchen",
     "download": "Modell herunterladen",
     "downloadFailed": "Das Modell konnte nicht heruntergeladen werden."
+  },
+  "ocrConsent": {
+    "heading": "Mit OCR lesen",
+    "lede": "Diese PDF hat {emptyPages, plural, one {# Seite} other {# Seiten}} ohne Textebene. Ein ATS würde diese Seiten als leer sehen. OCR kann sie lokal in Ihrem Browser lesen ({sizeMb} MB, einmal heruntergeladen). Nichts wird an einen Server gesendet.",
+    "progressLabel": "Fortschritt des OCR-Downloads",
+    "recognising": "Seite {page} von {pages} wird gelesen…",
+    "cancel": "Abbrechen",
+    "tryAgain": "Erneut versuchen",
+    "start": "Mit OCR lesen",
+    "downloadFailed": "Die OCR-Dateien konnten nicht heruntergeladen werden.",
+    "recognitionFailed": "OCR konnte die Seiten nicht lesen.",
+    "unsupported": "Ihr Browser unterstützt kein OCR.",
+    "done": "OCR abgeschlossen.",
+    "doneDetail": "{found, plural, one {# Seite wurde gelesen.} other {# Seiten wurden gelesen.}}"
+  },
+  "strengths": {
+    "heading": "Was funktioniert",
+    "contact.complete": "Kontaktdaten sind vollständig ({score}/{max}).",
+    "parse.clean": "Textebene ist sauber und lesbar ({score}/{max}).",
+    "structure.core-sections": "Kernabschnitte vorhanden: {sections}.",
+    "impact.quantified": "{quantified} von {total} Bullets tragen ein messbares Ergebnis.",
+    "keywords.matched": "{matched} Schlüsselwörter bei {coverage}% Abdeckung übereinstimmend.",
+    "experience.solid": "{months} Monate Erfahrung aus Datumsbereichen ausgelesen."
   },
   "parserView": {
     "heading": "Was der Parser gelesen hat",
@@ -846,7 +876,27 @@
       "title": "Blog-Verwaltung",
       "newPost": "Neuer Beitrag",
       "empty": "Noch keine Beiträge.",
-      "edit": "Bearbeiten"
+      "edit": "Bearbeiten",
+      "editor": {
+        "backToList": "Zurück zur Liste",
+        "newPost": "Neuer Blog-Beitrag",
+        "editPost": "Blog-Beitrag bearbeiten",
+        "locale": "Sprache",
+        "title": "Titel",
+        "slug": "Slug",
+        "slugHint": "Nur Kleinbuchstaben, Zahlen und Bindestriche",
+        "description": "Beschreibung",
+        "body": "Inhalt (Markdown)",
+        "status": "Status",
+        "draft": "Entwurf",
+        "published": "Veröffentlicht",
+        "publishedAt": "Veröffentlicht am",
+        "authorEmail": "Autor-E-Mail",
+        "create": "Erstellen",
+        "save": "Speichern",
+        "delete": "Löschen",
+        "confirmDelete": "Sind Sie sicher, dass Sie diesen Beitrag löschen möchten?"
+      }
     },
     "users": {
       "title": "Nutzer",
@@ -1090,7 +1140,33 @@
       "quantify": "Fügen Sie Ihren Aufzählungspunkten Zahlen hinzu. Statt 'Verantwortlich für Verkauf' schreiben Sie 'Umsatz in Q3 um 23% gesteigert'. Zahlen machen Ihre Leistungen konkret.",
       "verbs": "Beginnen Sie jeden Aufzählungspunkt mit einem Aktionsverb: aufgebaut, migriert, automatisiert, reduziert. Vermeiden Sie 'Verantwortlich für' oder 'Gearbeitet an' - sie beschreiben eine Rolle, nicht Ihren Beitrag.",
       "contact": "Fügen Sie Ihre E-Mail, Telefon und einen LinkedIn- oder GitHub-Link oben hinzu. Dies sind die ersten Felder, nach denen ein Parser sucht.",
-      "sections": "Verwenden Sie Standard-Abschnittsnamen: Erfahrung, Bildung, Fähigkeiten. Parser bilden diese auf Felder ab. Ungewöhnliche Überschriften wie 'Meine Reise' werden nicht erkannt."
+      "sections": "Verwenden Sie Standard-Abschnittsnamen: Erfahrung, Bildung, Fähigkeiten. Parser bilden diese auf Felder ab. Ungewöhnliche Überschriften wie 'Meine Reise' werden nicht erkannt.",
+      "parseColumns": "Spalten können die Lesereihenfolge durcheinanderbringen. Parser lesen Text in linearer Reihenfolge, daher können zweispaltige Layouts Inhalte vermischen. Verwenden Sie ein einspaltiges Layout, um die Lesereihenfolge intakt zu halten.",
+      "parseEncoding": "Zeichen erscheinen fehlerhaft, wenn die PDF-Kodierung falsch ist. Dies betrifft türkische und deutsche Sonderzeichen. Exportieren Sie die PDF mit eingebetteten Schriftarten aus dem Quelldokument neu.",
+      "parseImageOnly": "Text muss auswählbar sein. Nur-Bild oder gescannte PDFs können von Parsern nicht gelesen werden. Wenn Ihre PDF ein Scan ist, verwenden Sie zuerst OCR, um eine Textschicht hinzuzufügen.",
+      "contactMissing": "Kontaktfelder fehlen. Fügen Sie E-Mail, Telefon und einen Profil-Link (LinkedIn oder GitHub) oben hinzu. Dies sind die ersten Felder, die ein Parser extrahiert.",
+      "impactWeak": "Wirkung ist schwach ohne Zahlen und Aktionsverben. Beginnen Sie Aufzählungspunkte mit dem, was Sie getan haben (aufgebaut, migriert, reduziert) und fügen Sie wo möglich Metriken hinzu.",
+      "keywordsMissing": "Keywords aus der Stellenanzeige fehlen. Fügen Sie die erforderlichen Fähigkeiten und Technologien zu Ihrem CV hinzu. Je mehr Begriffe übereinstimmen, desto höher die Keyword-Punktzahl."
+    },
+    "result": {
+      "scoreDrop": "Ihre Punktzahl ist gesunken, weil neue Erkenntnisse erkannt wurden. Überprüfen Sie die Erkenntnisliste - jede zeigt, was sich geändert hat und wie es behoben werden kann. Die kostspieligsten Erkenntnisse stehen oben.",
+      "fixFirst": "Beginnen Sie mit den kostspieligsten Erkenntnissen oben in der Liste. Jede Erkenntnis zeigt die Punkte, die sie kostet, und was zu beheben ist. Arbeiten Sie die Liste ab, bis sich die Punktzahl verbessert.",
+      "whyScoreLow": "Ihre Punktzahl ist {score} von {totalMax}. Sie haben {totalLost} Punkte verloren. Die Hauptprobleme sind: {topFindings}. Jedes kostet {costs} Punkte.",
+      "noJobAd": "Fügen Sie eine Stellenbeschreibung hinzu, um zu sehen, welche Keywords fehlen. Ohne eine Anzeige ist die Keyword-Dimension auf 20 von 25 Punkten begrenzt.",
+      "missingKeywords": "Ihnen fehlen {missing} aus der Stellenanzeige. Sie haben {matched} von {total} Keywords übereinstimmend ({coverage}% Abdeckung).",
+      "noStrengths": "Keine herausragenden Stärken erkannt. Konzentrieren Sie sich darauf, die Erkenntnisse zu beheben, um Ihre Punktzahl zu verbessern.",
+      "whatIsGood": "Ihr CV hat {count} Stärken: {strengths}. Behalten Sie diese bei."
+    },
+    "features": {
+      "tailor": "Passen Sie Ihren CV an eine Stellenanzeige an, indem Sie den Anzeigentext einfügen. Das Tool zeigt, welche Keywords übereinstimmen und welche fehlen, damit Sie die richtigen Begriffe hinzufügen können.",
+      "compare": "Vergleichen Sie mehrere Stellenanzeigen nebeneinander. Sehen Sie, welche Keywords jede Anzeige erfordert und wie gut Ihr CV zu jeder passt.",
+      "interview": "Bereiten Sie sich auf Vorstellungsgespräche mit Story-Cards aus Ihrem CV vor. Das Tool extrahiert Leistungen und bildet sie auf häufige Interviewfragen mit der STAR-Methode ab.",
+      "coverLetter": "Generieren Sie einen Anschreiben-Entwurf basierend auf Ihrem CV und der Stellenanzeige. Der Entwurf verwendet Ihre tatsächlichen Leistungen und entspricht den Anforderungen der Anzeige.",
+      "editor": "Erstellen Sie einen CV von Grund auf mit dem Editor. Füllen Sie Ihre Details aus, dann exportieren Sie als PDF oder DOCX. Der Editor folgt ATS-freundlicher Formatierung."
+    },
+    "facts": {
+      "ats": "ATS-Parser extrahieren Text und füllen Profilfelder wie Name, Kontakt, Jobtitel, Arbeitgeber, Daten und Schulen. Das genaue Verhalten unterscheidet sich je nach Anbieter und ist nicht öffentlich im Detail dokumentiert. Die Punktzahl hier ist eine regelbasierte Schätzung der Lesbarkeit. Sie sagt keine Einstellungsergebnisse voraus.",
+      "personalData": "Foto, Geburtsdatum und Familienstand hängen von Land und Arbeitgeber ab. Einige Märkte erwarten sie, andere nicht. Überprüfen Sie die Marktberatung in Ihrem Bericht für Hinweise."
     }
   },
   "profile": {
@@ -1113,6 +1189,8 @@
     "title": "Blog",
     "lede": "Einblicke in CV-Parsing, ATS-Verhalten und Bewerbungen.",
     "empty": "Noch keine Beiträge. Schauen Sie bald wieder vorbei.",
-    "backToList": "Zurück zum Blog"
+    "backToList": "Zurück zum Blog",
+    "filterLabel": "Nach Sprache filtern",
+    "availableIn": "Auch verfügbar auf:"
   }
 }

@@ -1,6 +1,7 @@
+import { THIN_DOCUMENT_CHARS } from "./ocr/plan";
 import type { ExtractionResult } from "./types";
 
-const WORKER_SRC = "/vendor/pdf.worker.min.mjs";
+export const WORKER_SRC = "/vendor/pdf.worker.min.mjs";
 
 /** Horizontal gap, in PDF units, above which a run of spaces is emitted. */
 const COLUMN_GAP = 12;
@@ -116,7 +117,7 @@ export async function extractPdf(file: File): Promise<ExtractionResult> {
     const text = pages.join("\n\n").trim();
 
     let warning: string | undefined;
-    if (text.length < 200) {
+    if (text.length < THIN_DOCUMENT_CHARS) {
       warning = "Hardly any text layer in this PDF. It is probably a scan or an exported image, which is also what an ATS would see.";
     } else if (emptyPages > 0) {
       warning = `${emptyPages} page(s) had no text layer. Those pages are invisible to parsers.`;
@@ -127,7 +128,10 @@ export async function extractPdf(file: File): Promise<ExtractionResult> {
       pages: document.numPages,
       source: "pdf",
       fileName: file.name,
-      warning
+      warning,
+      pageTexts: pages,
+      emptyPages,
+      links
     };
   } finally {
     // pdfjs 6 removed PDFDocumentProxy.destroy; the loading task owns teardown.

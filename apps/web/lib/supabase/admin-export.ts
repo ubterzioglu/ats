@@ -93,3 +93,37 @@ export function submissionsToCsv(rows: SubmissionRow[]): string {
 
   return lines.join("\n");
 }
+
+export interface ProfileExportRow {
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  resume: string;
+  extras: string;
+}
+
+export async function getProfileForExport(userId: string): Promise<ProfileExportRow | null> {
+  const supabase = createServiceClient();
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("user_id, created_at, updated_at, resume, extras")
+    .eq("user_id", userId)
+    .single();
+
+  if (error || !data) {
+    if (error?.code !== "PGRST116") {
+      console.error("[admin] getProfileForExport error", error);
+    }
+    return null;
+  }
+
+  return {
+    user_id: data.user_id,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
+    resume: JSON.stringify(data.resume),
+    extras: JSON.stringify(data.extras)
+  };
+}

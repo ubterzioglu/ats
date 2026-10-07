@@ -162,5 +162,140 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
       de: ["abschnitt", "überschrift", "erfahrung", "bildung", "fähigkeiten", "fehlend"]
     },
     answerKey: "help.findings.sections"
+  },
+  {
+    id: "parseColumns",
+    keywords: {
+      en: ["column", "table", "layout", "two column", "reading order", "mix"],
+      tr: ["sütun", "tablo", "düzen", "iki sütun", "okuma sırası", "karış"],
+      de: ["spalte", "tabelle", "layout", "zwei spalten", "lesereihenfolge", "mischen"]
+    },
+    answerKey: "help.findings.parseColumns"
+  },
+  {
+    id: "parseEncoding",
+    keywords: {
+      en: ["encoding", "garbled", "mojibake", "character", "broken", "special", "turkish", "german"],
+      tr: ["kodlama", "bozuk", "karakter", "özel", "harf", "türkçe", "almanca"],
+      de: ["kodierung", "zeichen", "sonderzeichen", "kaputt", "falsch", "türkisch", "deutsch"]
+    },
+    answerKey: "help.findings.parseEncoding"
+  },
+  {
+    id: "parseImageOnly",
+    keywords: {
+      en: ["image", "scan", "scanned", "ocr", "selectable", "text layer", "pdf"],
+      tr: ["görüntü", "tarama", "taranmış", "ocr", "seçilebilir", "metin katmanı", "pdf"],
+      de: ["bild", "scan", "gescannt", "ocr", "auswählbar", "textebene", "pdf"]
+    },
+    answerKey: "help.findings.parseImageOnly"
+  },
+  {
+    id: "contactMissing",
+    keywords: {
+      en: ["contact", "email", "phone", "missing", "profile", "linkedin"],
+      tr: ["iletişim", "eposta", "telefon", "eksik", "profil", "linkedin"],
+      de: ["kontakt", "email", "telefon", "fehlend", "profil", "linkedin"]
+    },
+    answerKey: "help.findings.contactMissing"
+  },
+  {
+    id: "impactWeak",
+    keywords: {
+      en: ["impact", "weak", "verb", "action", "quantify", "number", "metric", "result"],
+      tr: ["etki", "zayıf", "fiil", "eylem", "sayısallaştır", "sayı", "metrik", "sonuç"],
+      de: ["wirkung", "schwach", "verb", "aktion", "quantifizieren", "zahl", "metrik", "ergebnis"]
+    },
+    answerKey: "help.findings.impactWeak"
+  },
+  {
+    id: "keywordsMissing",
+    keywords: {
+      en: ["keyword", "missing", "match", "ad", "job description", "coverage"],
+      tr: ["anahtar kelime", "eksik", "eşleşme", "ilan", "iş tanımı", "kapsam"],
+      de: ["keyword", "fehlend", "übereinstimmung", "anzeige", "stellenbeschreibung", "abdeckung"]
+    },
+    answerKey: "help.findings.keywordsMissing"
+  },
+  {
+    id: "scoreDrop",
+    keywords: {
+      en: ["score", "drop", "decrease", "lower", "went down", "why"],
+      tr: ["puan", "düştü", "azaldı", "düşük", "neden"],
+      de: ["punktzahl", "sinken", "verringert", "niedriger", "warum", "gesunken"]
+    },
+    answerKey: "help.result.scoreDrop"
+  },
+  {
+    id: "fixFirst",
+    keywords: {
+      en: ["fix", "first", "priority", "improve", "start", "where"],
+      tr: ["düzelt", "önce", "öncelik", "iyileştir", "başla", "nereden"],
+      de: ["beheben", "zuerst", "priorität", "verbessern", "beginnen", "wo"]
+    },
+    answerKey: "help.result.fixFirst"
+  },
+  {
+    id: "tailor",
+    keywords: {
+      en: ["tailor", "customize", "job ad", "match", "keywords", "adapt"],
+      tr: ["uyarla", "özelleştir", "iş ilanı", "eşleştir", "anahtar kelime", "uyum"],
+      de: ["anpassen", "zuschneiden", "stellenanzeige", "übereinstimmung", "keywords", "adaptieren"]
+    },
+    answerKey: "help.features.tailor"
+  },
+  {
+    id: "compare",
+    keywords: {
+      en: ["compare", "variants", "multiple", "ads", "versions", "differences"],
+      tr: ["karşılaştır", "varyantlar", "çoklu", "ilanlar", "versiyonlar", "farklar"],
+      de: ["vergleichen", "varianten", "mehrere", "anzeigen", "versionen", "unterschiede"]
+    },
+    answerKey: "help.features.compare"
+  },
+  {
+    id: "interview",
+    keywords: {
+      en: ["interview", "prepare", "questions", "practice", "story", "star"],
+      tr: ["mülakat", "hazırlan", "sorular", "pratik", "hikaye", "star"],
+      de: ["vorstellungsgespräch", "vorbereiten", "fragen", "üben", "geschichte", "star"]
+    },
+    answerKey: "help.features.interview"
+  },
+  {
+    id: "coverLetter",
+    keywords: {
+      en: ["cover letter", "motivation", "write", "draft", "generate"],
+      tr: ["ön yazı", "motivasyon", "yaz", "taslak", "oluştur"],
+      de: ["anschreiben", "motivation", "schreiben", "entwurf", "erstellen"]
+    },
+    answerKey: "help.features.coverLetter"
+  },
+  {
+    id: "editor",
+    keywords: {
+      en: ["editor", "build", "create", "resume", "export", "pdf", "docx"],
+      tr: ["editör", "oluştur", "yarat", "özgeçmiş", "dışa aktar", "pdf", "docx"],
+      de: ["editor", "erstellen", "bauen", "lebenslauf", "exportieren", "pdf", "docx"]
+    },
+    answerKey: "help.features.editor"
+  },
+  {
+    id: "atsFacts",
+    keywords: {
+      en: ["ats", "applicant tracking", "parser", "how works", "read", "extract"],
+      tr: ["ats", "aday takip", "ayrıştırıcı", "nasıl çalışır", "okuma", "çıkarma"],
+      de: ["ats", "bewerber tracking", "parser", "wie funktioniert", "lesen", "extrahieren"]
+    },
+    answerKey: "help.facts.ats"
+  },
+  {
+    id: "personalData",
+    keywords: {
+      en: ["photo", "date of birth", "dob", "marital status", "personal", "required"],
+      tr: ["fotoğraf", "doğum tarihi", "medenı durum", "kışisel", "gerekli"],
+      de: ["foto", "geburtsdatum", "familienstand", "persönlich", "erforderlich"]
+    },
+    answerKey: "help.facts.personalData"
   }
 ] as const;

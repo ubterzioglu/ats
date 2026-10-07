@@ -261,6 +261,25 @@ export function scoreParseability(context: ScoreContext): DimensionOutcome {
     });
   }
 
+  // Image-only pages: the extraction step counted pages with no text layer.
+  // A PDF where some pages have text and others do not is a mixed document —
+  // part readable, part invisible. This only fires when extraction data is
+  // available (file upload, not pasted text).
+  if (context.extraction && context.extraction.source === "pdf") {
+    const totalPages = context.extraction.pages;
+    const emptyPages = context.extraction.emptyPages;
+    if (emptyPages > 0 && totalPages > emptyPages) {
+      drafts.push({
+        id: "parse.image-page",
+        severity: "high",
+        title: "Some pages are image-only with no text layer",
+        detail: `${emptyPages} of ${totalPages} pages have no extractable text. Those pages are invisible to a parser.`,
+        fix: "Re-export the PDF from the source document with embedded fonts, or use OCR to add a text layer to the image pages.",
+        cost: 4
+      });
+    }
+  }
+
   return buildOutcome("parseability", "Parseability", PARSEABILITY_MAX, drafts, (score) =>
     score >= 22
       ? "The text layer is clean and machine-readable."

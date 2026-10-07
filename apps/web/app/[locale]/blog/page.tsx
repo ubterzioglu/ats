@@ -1,45 +1,75 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { ParticleField } from "@/components/ui/particle-field";
-import { Link } from "@/i18n/navigation";
-import { listPublishedPosts } from "@/lib/blog/queries";
+import { listAllPublishedPosts } from "@/lib/blog/queries";
+import { BlogList } from "@/components/blog/blog-list";
+import { SITE_URL, OPEN_GRAPH_LOCALE, WEBSITE_ID } from "@/lib/seo";
+import type { AppLocale } from "@/i18n/routing";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "blog" });
+  const appLocale = locale as AppLocale;
+
+  return {
+    title: t("title"),
+    description: t("lede"),
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/blog`,
+      languages: {
+        en: `${SITE_URL}/blog`,
+        tr: `${SITE_URL}/tr/blog`,
+        de: `${SITE_URL}/de/blog`,
+        "x-default": `${SITE_URL}/blog`,
+      },
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("lede"),
+      locale: OPEN_GRAPH_LOCALE[appLocale],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("lede"),
+    },
+  };
+}
 
 export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations("blog");
-  const posts = await listPublishedPosts(locale as "en" | "tr" | "de");
+  const posts = await listAllPublishedPosts();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: t("title"),
+    description: t("lede"),
+    url: `${SITE_URL}/${locale}/blog`,
+    inLanguage: locale,
+    isPartOf: { "@id": WEBSITE_ID },
+  };
 
   return (
     <div className="relative overflow-hidden">
       <ParticleField shape="ambient" seed={7} className="absolute inset-0" />
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <div className="relative mx-auto w-full max-w-3xl px-4 py-12 sm:px-6">
         <h1 className="text-heading-lg font-normal text-bone">{t("title")}</h1>
         <p className="mt-4 max-w-measure text-body font-extralight text-mist">{t("lede")}</p>
 
-        {posts.length === 0 ? (
-          <p className="mt-12 text-center text-body text-mist">{t("empty")}</p>
-        ) : (
-          <ul className="mt-12 space-y-8">
-            {posts.map((post) => (
-              <li key={post.id} className="group">
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="block rounded-2xl border-2 border-bone/10 bg-void/40 p-6 transition-colors hover:border-bone/30"
-                >
-                  <h2 className="text-h3 font-normal text-bone group-hover:text-action">
-                    {post.title}
-                  </h2>
-                  {post.description && (
-                    <p className="mt-2 text-body text-mist">{post.description}</p>
-                  )}
-                  <p className="mt-4 text-caption text-ash">
-                    {new Date(post.published_at ?? post.created_at).toLocaleDateString(locale)}
-                  </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+        <BlogList posts={posts} />
       </div>
     </div>
   );

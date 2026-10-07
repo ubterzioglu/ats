@@ -84,6 +84,25 @@ export function scoreContact(context: ScoreContext, market?: TargetMarket): Dime
     });
   }
 
+  // Hidden links: the PDF carries a link annotation for a profile URL, but the
+  // visible text never shows it. A parser that does not follow annotations sees
+  // no profile at all. Only fires when extraction data is available (file
+  // upload, not pasted text), and only when contact.profile would otherwise
+  // fire — the hidden link is a substitute that failed, not an extra penalty.
+  if (context.extraction && context.extraction.links.length > 0) {
+    const profileLinks = context.extraction.links.filter((link) => PROFILE.test(link));
+    if (profileLinks.length > 0 && !PROFILE.test(raw)) {
+      drafts.push({
+        id: "contact.hidden-link",
+        severity: "medium",
+        title: "Profile link exists only as a hidden hyperlink",
+        detail: "A LinkedIn or GitHub URL is embedded as a clickable link, but the text itself does not contain the address. A parser that does not follow annotations sees no profile.",
+        fix: "Write the full URL as plain text in the contact block, even if it is also a clickable link.",
+        cost: 2
+      });
+    }
+  }
+
   // Market norms judge the personal-data block; without an explicit choice
   // the document's own language stands in for its market.
   drafts.push(...marketFindings(context, market ?? context.language));

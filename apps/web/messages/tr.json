@@ -419,6 +419,11 @@
     "shareNote": "30 gün paylaşılabilir, yalnızca puanlar — bağlantı CV metni içermez:",
     "parserCaption": "{words} kelime · {lines} satır · {language}",
     "ruleBasedDisclaimer": "Bu puan kural tabanlı bir okunabilirlik tahminidir, belirli bir ayrıştırıcının davranışının tahmini değildir.",
+    "marketLabel": "Hedef pazar:",
+    "marketAuto": "Otomatik algıla",
+    "marketEn": "İngilizce (AB/İngiltere)",
+    "marketDe": "Almanca (DACH)",
+    "marketTr": "Türkçe",
     "errors": {
       "fileUnreadable": "Bu dosya okunamadı.",
       "tooShort": "Önce CV metnini ekleyin — bir şey değerlendirmek için en az birkaç satır gerekir.",
@@ -479,8 +484,8 @@
     }
   },
   "identityTable": {
-    "heading": "Ayrıştırıcının bilgileriniz olarak okuduğu",
-    "lede": "Her aday takip sisteminin sakladığı kimlik alanları. Her biri ayrıştırıcının çıkardığı hâliyle gösteriliyor.",
+    "heading": "ATS'nin gördüğü",
+    "lede": "Bir profilin içereceği şeyler: ad, e-posta, telefon, son unvan, işveren, tarih aralığı, okul. Her alan çıkarıldı veya çıkarılmadı olarak işaretlenmiş, kaynak satırıyla birlikte.",
     "showLine": "Bu satırı ayrıştırılmış metinde göster",
     "fields": {
       "name": "Ad",
@@ -527,7 +532,9 @@
     "modeSummaryNoSemantic": "{strict} katı eşleşme, {normalized} normalize edilmiş. Farkı şu {count} terim yaratıyor:",
     "modeAliasOnly": "yalnızca eşanlamlı tablosu veya kök bulucu ile eşleşti",
     "modeSemanticOnly": "yalnızca anlamsal model ile eşleşti",
-    "enableSemantic": "Anlamsal eşleşmeleri görmek için alttaki AI modelini indirin."
+    "enableSemantic": "Anlamsal eşleşmeleri görmek için alttaki AI modelini indirin.",
+    "overused": "Aşırı kullanılan terimler",
+    "overusedTitle": "{hits} kez geçiyor - dili çeşitlendirmeyi düşünün"
   },
   "askDock": {
     "heading": "Bu rapor hakkında sorun",
@@ -621,12 +628,35 @@
     "ready": "Anlamsal model hazır.",
     "readyDetail": "Aşağıdaki ipuçları ayrıştırılmış metne karşı yerelde çalışır; puanlar etkilenmez.",
     "heading": "Anlamsal ipuçları (isteğe bağlı)",
-    "lede": "Küçük bir dil modeli, birebir eşleştiricinin göremediği yakın kaçırmaları gösterebilir - ilan “PostgreSQL” derken CV'nin “Postgres” demesi gibi. Tamamen tarayıcınızda çalışır ({model}, yaklaşık {sizeMb} MB, bir kez indirilir ve önbelleğe alınır). Model CV metninizi hiçbir yere göndermez ve puanlar hiç değişmez - ipuçları tavsiyedir, ölçüm değil.",
+    "lede": "Küçük bir dil modeli, birebir eşleştiricinin göremediği yakın kaçırmaları gösterebilir - ilan 'PostgreSQL' derken CV'nin 'Postgres' demesi gibi. Tamamen tarayıcınızda çalışır ({model}, yaklaşık {sizeMb} MB, bir kez indirilir ve önbelleğe alınır). Model CV metninizi hiçbir yere göndermez ve puanlar hiç değişmez - ipuçları tavsiyedir, ölçüm değil.",
     "progressLabel": "Model indirme ilerlemesi",
     "cancel": "İptal",
     "tryAgain": "Yeniden dene",
     "download": "Modeli indir",
     "downloadFailed": "Model indirilemedi."
+  },
+  "ocrConsent": {
+    "heading": "OCR ile oku",
+    "lede": "Bu PDF'te metin katmanı olmayan {emptyPages, plural, one {# sayfa} other {# sayfa}} var. Bir ATS bu sayfaları boş olarak görür. OCR bunları tarayıcınızda yerel olarak okuyabilir ({sizeMb} MB, bir kez indirilir). Sunucuya hiçbir şey gönderilmez.",
+    "progressLabel": "OCR indirme ilerlemesi",
+    "recognising": "{pages} sayfadan {page}. okunuyor…",
+    "cancel": "İptal",
+    "tryAgain": "Yeniden dene",
+    "start": "OCR ile oku",
+    "downloadFailed": "OCR dosyaları indirilemedi.",
+    "recognitionFailed": "OCR sayfaları okuyamadı.",
+    "unsupported": "Tarayıcınız OCR desteklemiyor.",
+    "done": "OCR tamamlandı.",
+    "doneDetail": "{found, plural, one {# sayfa okundu.} other {# sayfa okundu.}}"
+  },
+  "strengths": {
+    "heading": "Ne işe yarıyor",
+    "contact.complete": "İletişim bilgileri eksiksiz ({score}/{max}).",
+    "parse.clean": "Metin katmanı temiz ve okunabilir ({score}/{max}).",
+    "structure.core-sections": "Temel bölümler mevcut: {sections}.",
+    "impact.quantified": "{total} maddeden {quantified} tanesi ölçülebilir bir sonuç içeriyor.",
+    "keywords.matched": "{matched} anahtar kelime %{coverage} kapsama oranıyla eşleşti.",
+    "experience.solid": "Tarih aralıklarından {months} ay deneyim ayrıştırıldı."
   },
   "parserView": {
     "heading": "Ayrıştırıcının okuduğu",
@@ -846,7 +876,27 @@
       "title": "Blog Yönetimi",
       "newPost": "Yeni Yazı",
       "empty": "Henüz yazı yok.",
-      "edit": "Düzenle"
+      "edit": "Düzenle",
+      "editor": {
+        "backToList": "Listeye dön",
+        "newPost": "Yeni Blog Yazısı",
+        "editPost": "Blog Yazısını Düzenle",
+        "locale": "Dil",
+        "title": "Başlık",
+        "slug": "Slug",
+        "slugHint": "Sadece küçük harfler, sayılar ve tire",
+        "description": "Açıklama",
+        "body": "İçerik (Markdown)",
+        "status": "Durum",
+        "draft": "Taslak",
+        "published": "Yayınlandı",
+        "publishedAt": "Yayınlanma tarihi",
+        "authorEmail": "Yazar e-postası",
+        "create": "Oluştur",
+        "save": "Kaydet",
+        "delete": "Sil",
+        "confirmDelete": "Bu yazıyı silmek istediğinizden emin misiniz?"
+      }
     },
     "users": {
       "title": "Kullanıcılar",
@@ -1090,7 +1140,33 @@
       "quantify": "Maddelerinize sayılar ekleyin. 'Satışlardan sorumlu' yerine 'Ç3'te satışları %23 artırdı' yazın. Sayılar başarılarınızı somutlaştırır.",
       "verbs": "Her maddeye eylem fiiliyle başlayın: kurdum, taşıdım, otomatikleştirdim, azalttım. 'Sorumlu' veya 'Çalıştım' kullanmaktan kaçının - bunlar rolü tanımlar, katkınızı değil.",
       "contact": "E-posta, telefon ve LinkedIn veya GitHub bağlantınızı üst kısma ekleyin. Bunlar ayrıştırıcının aradığı ilk alanlardır.",
-      "sections": "Standart bölüm başlıkları kullanın: Deneyim, Eğitim, Beceriler. Ayrıştırıcılar bunları alanlara eşler. 'Yolculuğum' gibi alışılmadık başlıklar tanınmaz."
+      "sections": "Standart bölüm başlıkları kullanın: Deneyim, Eğitim, Beceriler. Ayrıştırıcılar bunları alanlara eşler. 'Yolculuğum' gibi alışılmadık başlıklar tanınmaz.",
+      "parseColumns": "Sütunlar okuma sırasını karıştırabilir. Ayrıştırıcılar metni doğrusal sırada okur, bu yüzden iki sütunlu düzenler içerikleri birbirine karıştırabilir. Okuma sırasını korumak için tek sütunlu düzen kullanın.",
+      "parseEncoding": "PDF kodlaması yanlış olduğunda karakterler bozuk görünür. Bu Türkçe ve Almanca özel karakterleri etkiler. PDF'yi kaynak belgeden gömülü fontlarla yeniden dışa aktarın.",
+      "parseImageOnly": "Metin seçilebilir olmalıdır. Sadece görüntü veya taranmış PDF'ler ayrıştırıcılar tarafından okunamaz. PDF'niz bir taramaysa, önce metin katmanı eklemek için OCR kullanın.",
+      "contactMissing": "İletişim alanları eksik. E-posta, telefon ve profil bağlantısı (LinkedIn veya GitHub) ekleyin. Bunlar ayrıştırıcının çıkardığı ilk alanlardır.",
+      "impactWeak": "Etki, sayılar ve eylem fiilleri olmadan zayıftır. Maddelere yaptığınız şeyle başlayın (kurdum, taşıdım, azalttım) ve mümkün olduğunda metrikler ekleyin.",
+      "keywordsMissing": "İş ilanındaki anahtar kelimeler eksik. Gerekli becerileri ve teknolojileri CV'nize ekleyin. Ne kadar çok terim eşleşirse, anahtar kelime puanı o kadar yüksek olur."
+    },
+    "result": {
+      "scoreDrop": "Yeni bulgular tespit edildiği için puanınız düştü. Bulgular listesini kontrol edin - her biri neyin değiştiğini ve nasıl düzeltileceğini gösterir. En maliyetli bulgular üsttedir.",
+      "fixFirst": "Listenin üstündeki en maliyetli bulgulardan başlayın. Her bulgu maliyetini ve neyin düzeltileceğini gösterir. Puan iyileşene kadar listeyi çalışın.",
+      "whyScoreLow": "Puanınız {totalMax} üzerinden {score}. {totalLost} puan kaybettiniz. Ana sorunlar: {topFindings}. Her biri {costs} puan maliyetlidir.",
+      "noJobAd": "Hangi anahtar kelimelerin eksik olduğunu görmek için bir iş tanımı ekleyin. İlan olmadan, anahtar kelime boyutu 25 üzerinden 20 puanla sınırlıdır.",
+      "missingKeywords": "İş ilanından {missing} eksik. {total} anahtar kelimeden {matched} tanesini eşleştirdiniz (%{coverage} kapsam).",
+      "noStrengths": "Öne çıkan bir güç tespit edilmedi. Puanınızı iyileştirmek için bulguları düzeltmeye odaklanın.",
+      "whatIsGood": "CV'nizin {count} gücü var: {strengths}. Bunları koruyun."
+    },
+    "features": {
+      "tailor": "İlan metnini yapıştırarak CV'nizi bir iş ilanına uyarlayın. Araç hangi anahtar kelimelerin eşleştiğini ve hangilerinin eksik olduğunu gösterir, böylece doğru terimleri ekleyebilirsiniz.",
+      "compare": "Birden fazla iş ilanını yan yana karşılaştırın. Her ilanın hangi anahtar kelimeleri gerektirdiğini ve CV'nizin her birine ne kadar iyi uyduğunu görün.",
+      "interview": "CV'nizden hikaye kartlarıyla mülakatlara hazırlanın. Araç başarıları çıkarır ve STAR yöntemiyle yaygın mülakat sorularına eşler.",
+      "coverLetter": "CV'niz ve iş ilanına dayalı bir ön yazı taslağı oluşturun. Taslak gerçek başarılarınızı kullanır ve ilan gereksinimleriyle eşleşir.",
+      "editor": "Editörü kullanarak sıfırdan bir CV oluşturun. Detaylarınızı doldurun, sonra PDF veya DOCX olarak dışa aktarın. Editör ATS dostu formatlamayı takip eder."
+    },
+    "facts": {
+      "ats": "ATS ayrıştırıcıları metni çıkarır ve ad, iletişim, iş unvanları, işverenler, tarihler ve okullar gibi profil alanlarını doldurur. Kesin davranış satıcıya göre değişir ve ayrıntılı olarak kamuya açık şekilde belgelenmemiştir. Buradaki puan okunabilirliğin kural tabanlı bir tahminidir. İşe alım sonuçlarını tahmin etmez.",
+      "personalData": "Fotoğraf, doğum tarihi ve medeni durum ülkeye ve işverene bağlıdır. Bazı pazarlar bunları bekler, diğerleri beklemez. Rehberlik için raporunuzdaki pazar tavsiyesini kontrol edin."
     }
   },
   "profile": {
@@ -1113,6 +1189,8 @@
     "title": "Blog",
     "lede": "CV ayrıştırma, ATS davranışları ve iş başvuruları hakkında bilgiler.",
     "empty": "Henüz yazı yok. Yakında tekrar kontrol edin.",
-    "backToList": "Blog'a dön"
+    "backToList": "Blog'a dön",
+    "filterLabel": "Dile göre filtrele",
+    "availableIn": "Şu dillerde de mevcut:"
   }
 }

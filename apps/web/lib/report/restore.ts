@@ -7,7 +7,8 @@ import type {
   Finding,
   KeywordReport,
   KeywordTerm,
-  Severity
+  Severity,
+  Strength
 } from "@/types/analysis";
 
 /**
@@ -128,6 +129,29 @@ function restoreKeywords(value: unknown): KeywordReport {
   };
 }
 
+function restoreStrength(value: unknown): Strength | null {
+  if (!isRecord(value)) return null;
+  const id = str(value.id);
+  if (id.length === 0) return null;
+
+  const params: Record<string, number | string | readonly string[]> = {};
+  if (isRecord(value.params)) {
+    for (const [key, val] of Object.entries(value.params)) {
+      if (typeof val === "number" || typeof val === "string") {
+        params[key] = val;
+      } else if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
+        params[key] = val as readonly string[];
+      }
+    }
+  }
+
+  return {
+    id,
+    dimension: str(value.dimension, "parseability"),
+    params
+  };
+}
+
 /** Returns null only when the row carries no usable score at all. */
 export function restoreSharedReport(payload: unknown): AnalysisResult | null {
   if (!isRecord(payload)) return null;
@@ -161,6 +185,18 @@ export function restoreSharedReport(payload: unknown): AnalysisResult | null {
       experienceMonths: num(stats.experienceMonths)
     },
     generatedAt: str(payload.generatedAt),
-    ...(typeof payload.engineVersion === "string" ? { engineVersion: payload.engineVersion } : {})
+    ...(typeof payload.engineVersion === "string" ? { engineVersion: payload.engineVersion } : {}),
+    strengths: array(payload.strengths)
+      .map(restoreStrength)
+      .filter((strength): strength is Strength => strength !== null),
+    ...(isRecord(payload.experience)
+      ? {
+          experience: {
+            months: num(payload.experience.months),
+            overlapping: Boolean(payload.experience.overlapping),
+            periodCount: num(payload.experience.periodCount)
+          }
+        }
+      : {})
   };
 }

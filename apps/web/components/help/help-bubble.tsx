@@ -8,6 +8,8 @@ import { HELP_ENTRIES } from "@/lib/help/bank";
 import { createKeywordAnswerer } from "@/lib/help/keyword-answerer";
 import { STARTER_IDS } from "@/lib/help/starters";
 import type { HelpAnswer } from "@/lib/help/types";
+import { getResult } from "@/lib/help/result-holder";
+import { detectIntent, answerFromResult } from "@/lib/help/result-answers";
 import { cx } from "@/lib/ui";
 import type { DocumentLanguage } from "@/types/analysis";
 
@@ -74,6 +76,30 @@ function saveUnanswered(questions: string[]): void {
     storage.setItem(UNANSWERED_KEY, JSON.stringify(questions.slice(-MAX_UNANSWERED)));
   } catch {
     // Storage full or unavailable - silently ignore
+  }
+}
+
+function formatResultAnswer(
+  templateKey: string,
+  params: Record<string, string | number | readonly string[]>,
+  t: (key: string) => string
+): string {
+  try {
+    const template = t(templateKey);
+    let result = template;
+
+    for (const [key, value] of Object.entries(params)) {
+      const placeholder = `{${key}}`;
+      if (Array.isArray(value)) {
+        result = result.replace(placeholder, value.join(", "));
+      } else {
+        result = result.replace(placeholder, String(value));
+      }
+    }
+
+    return result;
+  } catch {
+    return templateKey;
   }
 }
 
@@ -157,6 +183,26 @@ export function HelpBubble() {
     setBusy(true);
     setTurns((current) => [...current, { role: "user", content: trimmed, id: `${turnId}-user` }]);
 
+    // First, try to answer from the user's own result
+    const result = getResult();
+    if (result) {
+      const intent = detectIntent(trimmed);
+      if (intent) {
+        const resultAnswer = answerFromResult(result, intent);
+        if (resultAnswer) {
+          // Format the answer with params
+          const formattedText = formatResultAnswer(resultAnswer.text, resultAnswer.params, t);
+          setTurns((current) => [
+            ...current,
+            { role: "assistant", content: formattedText, id: turnId }
+          ]);
+          setBusy(false);
+          return;
+        }
+      }
+    }
+
+    // Fall back to keyword answerer
     const answer: HelpAnswer = await answererRef.current.answer(trimmed);
     if (answer.kind === "text") {
       setTurns((current) => [

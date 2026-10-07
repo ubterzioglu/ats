@@ -1,4 +1,4 @@
-import type { DetectedSection, DocumentLanguage, DocumentStats } from "@/types/analysis";
+import type { DetectedSection, DocumentLanguage, DocumentStats, ExtractionMetadata } from "@/types/analysis";
 
 import { buildExperience, type ExperienceReport } from "./experience";
 import { detectLanguage } from "./language";
@@ -18,9 +18,14 @@ export interface ScoreContext {
   readonly language: DocumentLanguage;
   readonly stats: DocumentStats;
   readonly experience: ExperienceReport;
+  readonly extraction?: ExtractionMetadata;
 }
 
-export function buildContext(cvText: string): ScoreContext {
+export interface BuildContextOptions {
+  readonly extraction?: ExtractionMetadata;
+}
+
+export function buildContext(cvText: string, options?: BuildContextOptions): ScoreContext {
   const raw = normalizeDocument(cvText);
   const lines = toLines(raw);
   const tokens = tokenize(raw);
@@ -56,6 +61,7 @@ export function buildContext(cvText: string): ScoreContext {
     sections: detectSections(lines),
     language,
     stats,
-    experience
+    experience,
+    ...(options?.extraction ? { extraction: options.extraction } : {})
   };
 }

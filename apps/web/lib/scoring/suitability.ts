@@ -1,5 +1,6 @@
 import type { JobAdRequirements, KeywordReport, SuitabilityCheck, SuitabilityStatus } from "@/types/analysis";
 import type { ScoreContext } from "./context";
+import { caseFold } from "./text";
 
 export function evaluateSuitability(
   context: ScoreContext,
@@ -42,7 +43,7 @@ export function evaluateSuitability(
     let passedLangs = 0;
     
     for (const req of jobAd.languages) {
-      const lower = req.language.toLowerCase();
+      const lower = caseFold(req.language);
       const isDocLang = 
         (lower.includes("english") && context.language === "en") ||
         (lower.includes("german") && context.language === "de") ||
@@ -70,7 +71,7 @@ export function evaluateSuitability(
   // Location
   if (jobAd.location) {
     let status: SuitabilityStatus = "unknown";
-    if (jobAd.location.city && context.lower.includes(jobAd.location.city.toLowerCase())) {
+    if (jobAd.location.city && context.lower.includes(caseFold(jobAd.location.city))) {
       status = "passed";
     }
     

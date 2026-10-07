@@ -419,6 +419,11 @@
     "shareNote": "Shareable for 30 days, scores only — the link carries no CV text:",
     "parserCaption": "{words} words · {lines} lines · {language}",
     "ruleBasedDisclaimer": "This score is a rule-based readability estimate, not a prediction of any specific parser's behaviour.",
+    "marketLabel": "Target market:",
+    "marketAuto": "Auto-detect",
+    "marketEn": "English (US/UK)",
+    "marketDe": "German (DACH)",
+    "marketTr": "Turkish",
     "errors": {
       "fileUnreadable": "That file could not be read.",
       "tooShort": "Add the CV text first — at least a few lines are needed to judge anything.",
@@ -479,8 +484,8 @@
     }
   },
   "identityTable": {
-    "heading": "What the parser read as your details",
-    "lede": "The identity fields every applicant tracking system stores. Each one is shown as the parser extracted it.",
+    "heading": "What the ATS saw",
+    "lede": "What a profile would contain: name, email, phone, latest title, employer, date range, school. Each field is marked as extracted or not, with the source line.",
     "showLine": "Show this line in the parsed text",
     "fields": {
       "name": "Name",
@@ -527,7 +532,9 @@
     "modeSummaryNoSemantic": "{strict} strict matches, {normalized} normalized. The difference is these {count} terms:",
     "modeAliasOnly": "matched only via synonym table or stemming",
     "modeSemanticOnly": "matched only semantically",
-    "enableSemantic": "Enable the semantic model below to see meaning-based matches."
+    "enableSemantic": "Enable the semantic model below to see meaning-based matches.",
+    "overused": "Overused terms",
+    "overusedTitle": "appears {hits} times - consider varying the language"
   },
   "askDock": {
     "heading": "Ask about this report",
@@ -621,12 +628,35 @@
     "ready": "Semantic model ready.",
     "readyDetail": "Hints below run locally against the parsed text; scores are unaffected.",
     "heading": "Semantic hints (optional)",
-    "lede": "A small language model can point out near-misses the literal matcher cannot see - like a CV saying “Postgres” where the ad says “PostgreSQL”. It runs entirely in your browser ({model}, about {sizeMb} MB, downloaded once and cached). The model sends none of your CV text anywhere, and scores never change - hints are advice, not measurement.",
+    "lede": "A small language model can point out near-misses the literal matcher cannot see - like a CV saying 'Postgres' where the ad says 'PostgreSQL'. It runs entirely in your browser ({model}, about {sizeMb} MB, downloaded once and cached). The model sends none of your CV text anywhere, and scores never change - hints are advice, not measurement.",
     "progressLabel": "Model download progress",
     "cancel": "Cancel",
     "tryAgain": "Try again",
     "download": "Download model",
     "downloadFailed": "The model could not be downloaded."
+  },
+  "ocrConsent": {
+    "heading": "Read with OCR",
+    "lede": "This PDF has {emptyPages, plural, one {# page} other {# pages}} with no text layer. An ATS would see those pages as blank. OCR can read them locally in your browser ({sizeMb} MB, downloaded once). Nothing is sent to a server.",
+    "progressLabel": "OCR download progress",
+    "recognising": "Reading page {page} of {pages}…",
+    "cancel": "Cancel",
+    "tryAgain": "Try again",
+    "start": "Read with OCR",
+    "downloadFailed": "The OCR files could not be downloaded.",
+    "recognitionFailed": "OCR could not read the pages.",
+    "unsupported": "Your browser does not support OCR.",
+    "done": "OCR complete.",
+    "doneDetail": "{found, plural, one {# page was read.} other {# pages were read.}}"
+  },
+  "strengths": {
+    "heading": "What works",
+    "contact.complete": "Contact details are complete ({score}/{max}).",
+    "parse.clean": "Text layer is clean and readable ({score}/{max}).",
+    "structure.core-sections": "Core sections present: {sections}.",
+    "impact.quantified": "{quantified} of {total} bullets carry a measurable result.",
+    "keywords.matched": "{matched} keywords matched at {coverage}% coverage.",
+    "experience.solid": "{months} months of experience parsed from date ranges."
   },
   "parserView": {
     "heading": "What the parser read",
@@ -846,7 +876,27 @@
       "title": "Blog Management",
       "newPost": "New Post",
       "empty": "No posts yet.",
-      "edit": "Edit"
+      "edit": "Edit",
+      "editor": {
+        "backToList": "Back to list",
+        "newPost": "New Blog Post",
+        "editPost": "Edit Blog Post",
+        "locale": "Language",
+        "title": "Title",
+        "slug": "Slug",
+        "slugHint": "Lowercase letters, numbers, and hyphens only",
+        "description": "Description",
+        "body": "Body (Markdown)",
+        "status": "Status",
+        "draft": "Draft",
+        "published": "Published",
+        "publishedAt": "Published at",
+        "authorEmail": "Author email",
+        "create": "Create",
+        "save": "Save",
+        "delete": "Delete",
+        "confirmDelete": "Are you sure you want to delete this post?"
+      }
     },
     "users": {
       "title": "Users",
@@ -1090,7 +1140,33 @@
       "quantify": "Add numbers to your bullets. Instead of 'Responsible for sales', write 'Increased sales by 23% in Q3'. Numbers make your achievements concrete.",
       "verbs": "Start each bullet with an action verb: built, migrated, automated, reduced. Avoid 'Responsible for' or 'Worked on' - they describe a role, not your contribution.",
       "contact": "Add your email, phone and a LinkedIn or GitHub link near the top. These are the first fields a parser looks for.",
-      "sections": "Use standard section headings: Experience, Education, Skills. Parsers map these to fields. Unusual headings like 'My Journey' are not recognised."
+      "sections": "Use standard section headings: Experience, Education, Skills. Parsers map these to fields. Unusual headings like 'My Journey' are not recognised.",
+      "parseColumns": "Columns can mix up reading order. Parsers read text in a linear order, so two-column layouts may interleave content. Use a single-column layout to keep the reading order intact.",
+      "parseEncoding": "Characters appear broken when the PDF encoding is wrong. This affects Turkish and German special characters. Re-export the PDF with embedded fonts from the source document.",
+      "parseImageOnly": "Text must be selectable. Image-only or scanned PDFs cannot be read by parsers. If your PDF is a scan, use OCR to add a text layer first.",
+      "contactMissing": "Contact fields are missing. Add email, phone and a profile link (LinkedIn or GitHub) near the top. These are the first fields a parser extracts.",
+      "impactWeak": "Impact is weak without numbers and action verbs. Start bullets with what you did (built, migrated, reduced) and add metrics where possible.",
+      "keywordsMissing": "Keywords from the job ad are missing. Add the required skills and technologies to your CV. The more terms that match, the higher the keyword score."
+    },
+    "result": {
+      "scoreDrop": "Your score dropped because new findings were detected. Check the findings list - each one shows what changed and how to fix it. The most costly findings are at the top.",
+      "fixFirst": "Start with the most costly findings at the top of the list. Each finding shows the points it costs and what to fix. Work down the list until the score improves.",
+      "whyScoreLow": "Your score is {score} out of {totalMax}. You lost {totalLost} points. The main issues are: {topFindings}. Each costs {costs} points.",
+      "noJobAd": "Add a job description to see which keywords are missing. Without an ad, the keyword dimension is capped at 20 of 25 points.",
+      "missingKeywords": "You are missing {missing} from the job ad. You matched {matched} out of {total} keywords ({coverage}% coverage).",
+      "noStrengths": "No standout strengths detected. Focus on fixing the findings to improve your score.",
+      "whatIsGood": "Your CV has {count} strengths: {strengths}. Keep these as they are."
+    },
+    "features": {
+      "tailor": "Tailor your CV to a job ad by pasting the ad text. The tool shows which keywords match and which are missing, so you can add the right terms.",
+      "compare": "Compare multiple job ads side by side. See which keywords each ad requires and how well your CV matches each one.",
+      "interview": "Prepare for interviews with story cards from your CV. The tool extracts achievements and maps them to common interview questions using the STAR method.",
+      "coverLetter": "Generate a cover letter draft based on your CV and the job ad. The draft uses your actual achievements and matches the ad's requirements.",
+      "editor": "Build a CV from scratch using the editor. Fill in your details, then export as PDF or DOCX. The editor follows ATS-friendly formatting."
+    },
+    "facts": {
+      "ats": "ATS parsers extract text and fill profile fields like name, contact, job titles, employers, dates and schools. The exact behaviour differs by vendor and is not publicly documented in detail. The score here is a rule-based estimate of readability. It does not predict hiring outcomes.",
+      "personalData": "Photo, date of birth and marital status depend on country and employer. Some markets expect them, others do not. Check the market advice in your report for guidance."
     }
   },
   "profile": {
@@ -1113,6 +1189,8 @@
     "title": "Blog",
     "lede": "Insights on CV parsing, ATS behaviour and job applications.",
     "empty": "No posts yet. Check back soon.",
-    "backToList": "Back to blog"
+    "backToList": "Back to blog",
+    "filterLabel": "Filter by language",
+    "availableIn": "Available in:"
   }
 }

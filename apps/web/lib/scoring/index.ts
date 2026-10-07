@@ -46,7 +46,7 @@ function rankFindings(findings: readonly Finding[]): Finding[] {
  * lost point is attributable to a named finding.
  */
 export function analyzeCv(input: AnalysisInput): AnalysisResult {
-  const context = buildContext(input.cvText);
+  const context = buildContext(input.cvText, input.extraction ? { extraction: input.extraction } : undefined);
   const jobDescription = input.jobDescription ?? "";
 
   const parseability = scoreParseability(context);
@@ -84,6 +84,11 @@ export function analyzeCv(input: AnalysisInput): AnalysisResult {
     suitability: parsedJobAd ? evaluateSuitability(context, parsedJobAd, keywords.report) : undefined,
     generatedAt: new Date().toISOString(),
     engineVersion: ENGINE_VERSION,
-    strengths
+    strengths,
+    experience: {
+      months: context.experience.months,
+      overlapping: context.experience.overlapping,
+      periodCount: context.experience.periods.length
+    }
   };
 }

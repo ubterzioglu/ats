@@ -33,6 +33,21 @@ describe("job ad parsing", () => {
     expect(reqs[1]).toEqual({ language: "German", level: "B2", source: "You should have B2 German" });
   });
 
+  it("maps German 'Englisch' to English, not German", () => {
+    const lines = ["Fließend Englisch erforderlich"];
+    const reqs = extractLanguages(lines);
+    expect(reqs).toHaveLength(1);
+    expect(reqs[0]).toEqual({ language: "English", level: "Fließend", source: "Fließend Englisch erforderlich" });
+  });
+
+  it("maps Turkish language names correctly", () => {
+    const lines = ["ingilizce: fluent", "almanca: b2"];
+    const reqs = extractLanguages(lines);
+    expect(reqs).toHaveLength(2);
+    expect(reqs[0]?.language).toBe("English");
+    expect(reqs[1]?.language).toBe("German");
+  });
+
   it("extracts location and work mode", () => {
     const lines = ["Location: Berlin", "We offer a hybrid work environment"];
     const req = extractLocation(lines);

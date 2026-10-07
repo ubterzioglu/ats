@@ -88,7 +88,7 @@ const LANGUAGE_NAMES: Readonly<Record<string, string>> = {
   english: "English",
   german: "German",
   turkish: "Turkish",
-  englisch: "German",
+  englisch: "English",
   deutsch: "German",
   türkisch: "Turkish",
   ingilizce: "English",
@@ -185,7 +185,7 @@ export function extractSalary(lines: readonly string[]): SalaryRequirement | nul
     while ((match = numRx.exec(line)) !== null) {
       let s = match[0].replace(/,/g, '');
       let multiplier = 1;
-      if (s.toLowerCase().endsWith('k')) {
+      if (caseFold(s).endsWith('k')) {
         multiplier = 1000;
         s = s.slice(0, -1);
       }

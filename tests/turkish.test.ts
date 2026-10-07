@@ -118,4 +118,22 @@ describe("Turkish keyword matching", () => {
     const result = analyzeCv({ cvText: TR_CV, jobDescription: TR_JOB_AD });
     expect(result.findings.map((finding) => finding.id)).not.toContain("impact.weak-verbs");
   });
+
+  it("preserves Latin abbreviations like AI and CI/CD through case folding", () => {
+    const cvWithAbbrev = `Özgeçmiş
+
+İş Deneyimi
+Yazılım Mühendisi, ABC Şirketi, 2020-2023
+- AI ve machine learning projeleri geliştirdim
+- CI/CD pipeline'ları kurdum
+
+Eğitim
+Bilgisayar Mühendisliği, İstanbul Üniversitesi`;
+
+    const result = analyzeCv({ cvText: cvWithAbbrev });
+    expect(result.language).toBe("tr");
+    const terms = extractJobKeywords(cvWithAbbrev).map((t) => t.term);
+    expect(terms).toContain("ai");
+    expect(terms).toContain("ci/cd");
+  });
 });

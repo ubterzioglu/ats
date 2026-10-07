@@ -103,7 +103,7 @@ describe("robots output", () => {
 describe("sitemap output", () => {
   it("has 18 entries with lastModified, 4 language keys each and includes legal and blog pages", async () => {
     const { default: sitemap } = await import("@/app/sitemap");
-    const entries = sitemap();
+    const entries = await sitemap();
     // Six public paths in three locales.
     expect(entries).toHaveLength(18);
     const urls = entries.map((e) => e.url);

@@ -27,6 +27,18 @@ export function buildMarkdownReport(result: AnalysisResult): string {
   }
   lines.push("");
 
+  if (result.strengths && result.strengths.length > 0) {
+    lines.push("## Strengths");
+    lines.push("");
+    for (const strength of result.strengths) {
+      const params = Object.entries(strength.params)
+        .map(([key, val]) => `${key}=${Array.isArray(val) ? val.join(",") : val}`)
+        .join(", ");
+      lines.push(`- **${strength.id}** (${strength.dimension})${params ? ` [${params}]` : ""}`);
+    }
+    lines.push("");
+  }
+
   lines.push("## Fix list");
   lines.push("");
   if (result.findings.length === 0) {

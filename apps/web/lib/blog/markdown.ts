@@ -33,6 +33,26 @@ function inlineMarkdown(text: string): string {
   return result;
 }
 
+function parseTableRow(line: string): readonly string[] {
+  const cells = line.split("|").slice(1, -1);
+  return cells.map((c) => c.trim());
+}
+
+function isTableSeparator(line: string): boolean {
+  return /^\|[\s:]*-+[\s:]*(\|[\s:]*-+[\s:]*)+\|$/.test(line.trim());
+}
+
+function renderTable(rows: readonly (readonly string[])[]): string {
+  if (rows.length < 2) return "";
+  const header = rows[0] ?? [];
+  const body = rows.slice(2);
+  const thCells = header.map((c) => `<th>${inlineMarkdown(c)}</th>`).join("");
+  const bodyRows = body
+    .map((row) => `<tr>${row.map((c) => `<td>${inlineMarkdown(c)}</td>`).join("")}</tr>`)
+    .join("\n");
+  return `<table><thead><tr>${thCells}</tr></thead><tbody>\n${bodyRows}\n</tbody></table>`;
+}
+
 export function markdownToHtml(markdown: string): string {
   const lines = markdown.split("\n");
   const html: string[] = [];
@@ -40,6 +60,7 @@ export function markdownToHtml(markdown: string): string {
   let inList = false;
   let listType: "ul" | "ol" = "ul";
   let paragraph: string[] = [];
+  let tableRows: string[][] = [];
 
   function flushParagraph() {
     if (paragraph.length > 0) {
@@ -55,10 +76,17 @@ export function markdownToHtml(markdown: string): string {
     }
   }
 
-  for (const line of lines) {
-    const trimmed = line.trim();
+  function flushTable() {
+    if (tableRows.length > 0) {
+      const rendered = renderTable(tableRows);
+      if (rendered) html.push(rendered);
+      tableRows = [];
+    }
+  }
 
-    // Code block
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i]!.trim();
+
     if (trimmed.startsWith("```")) {
       if (inCodeBlock) {
         html.push("</code></pre>");
@@ -66,6 +94,7 @@ export function markdownToHtml(markdown: string): string {
       } else {
         flushParagraph();
         flushList();
+        flushTable();
         html.push("<pre><code>");
         inCodeBlock = true;
       }
@@ -73,18 +102,30 @@ export function markdownToHtml(markdown: string): string {
     }
 
     if (inCodeBlock) {
-      html.push(escapeHtml(line));
+      html.push(escapeHtml(lines[i]!));
       continue;
     }
 
-    // Empty line
     if (trimmed.length === 0) {
       flushParagraph();
       flushList();
+      flushTable();
       continue;
     }
 
-    // Headings
+    if (trimmed.startsWith("|") && trimmed.endsWith("|")) {
+      flushParagraph();
+      flushList();
+      if (isTableSeparator(trimmed)) {
+        tableRows.push([]);
+      } else {
+        tableRows.push([...parseTableRow(trimmed)]);
+      }
+      continue;
+    }
+
+    flushTable();
+
     const headingMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
     if (headingMatch) {
       flushParagraph();
@@ -95,7 +136,6 @@ export function markdownToHtml(markdown: string): string {
       continue;
     }
 
-    // Unordered list
     if (/^[-*+]\s+/.test(trimmed)) {
       flushParagraph();
       if (!inList || listType !== "ul") {
@@ -109,7 +149,6 @@ export function markdownToHtml(markdown: string): string {
       continue;
     }
 
-    // Ordered list
     if (/^\d+\.\s+/.test(trimmed)) {
       flushParagraph();
       if (!inList || listType !== "ol") {
@@ -123,7 +162,6 @@ export function markdownToHtml(markdown: string): string {
       continue;
     }
 
-    // Horizontal rule
     if (/^[-*_]{3,}$/.test(trimmed)) {
       flushParagraph();
       flushList();
@@ -131,13 +169,34 @@ export function markdownToHtml(markdown: string): string {
       continue;
     }
 
-    // Paragraph text
+    if (/^>\s*/.test(trimmed)) {
+      flushParagraph();
+      flushList();
+      flushTable();
+      const bqLines: string[] = [];
+      while (i < lines.length && lines[i]!.trim().startsWith(">")) {
+        bqLines.push(lines[i]!.trim().replace(/^>\s*/, ""));
+        i++;
+      }
+      i--;
+      const isNumberedList = bqLines.every((l) => /^\d+\.\s+/.test(l));
+      if (isNumberedList) {
+        const items = bqLines.map((l) => `<li>${inlineMarkdown(l.replace(/^\d+\.\s+/, ""))}</li>`).join("\n");
+        html.push(`<blockquote><ol>${items}</ol></blockquote>`);
+      } else {
+        const content = bqLines.map((l) => `<p>${inlineMarkdown(l)}</p>`).join("\n");
+        html.push(`<blockquote>${content}</blockquote>`);
+      }
+      continue;
+    }
+
     flushList();
     paragraph.push(trimmed);
   }
 
   flushParagraph();
   flushList();
+  flushTable();
   if (inCodeBlock) {
     html.push("</code></pre>");
   }

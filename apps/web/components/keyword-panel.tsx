@@ -235,6 +235,24 @@ export function KeywordPanel({ report, hints, coverage, cvText, language, embedd
             <p className="mt-6 max-w-measure text-sm leading-relaxed text-muted">{t("pasteAd")}</p>
           </div>
         ) : null}
+
+        {report.overused.length > 0 ? (
+          <div>
+            <h3 className="condensed text-micro font-normal text-muted">{t("overused")}</h3>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {report.overused.map((term) => (
+                <li
+                  key={term.term}
+                  className="rounded-full border border-caution px-3 py-1 font-mono text-micro text-caution"
+                  title={t("overusedTitle", { hits: term.hits })}
+                >
+                  {term.term}
+                  <span className="ml-1">×{term.hits}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
 
       {showCoverage ? (

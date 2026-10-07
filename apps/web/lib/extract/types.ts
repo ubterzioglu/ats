@@ -6,6 +6,12 @@ export interface ExtractionResult {
   readonly source: ExtractionSource;
   readonly fileName: string;
   readonly warning?: string;
+  /** PDF only: each page's text layer, in page order, for the OCR offer. */
+  readonly pageTexts?: readonly string[];
+  /** PDF only: pages whose text layer is empty. */
+  readonly emptyPages?: number;
+  /** PDF only: URLs extracted from link annotations. */
+  readonly links?: readonly string[];
 }
 
 export class UnsupportedFileError extends Error {

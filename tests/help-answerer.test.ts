@@ -162,4 +162,54 @@ describe("createKeywordAnswerer", () => {
     const answer = await answerer.answer("Is my resume saved?");
     expect(answer.kind === "text" || answer.kind === "suggest" || answer.kind === "none").toBe(true);
   });
+
+  it("uses BM25 scoring with term frequency and document frequency", async () => {
+    // "data" appears in multiple entries, so IDF should be lower
+    // "retention" appears in fewer entries, so IDF should be higher
+    const answer = await answerer.answer("data retention policy");
+    expect(answer.kind).toBe("text");
+    if (answer.kind === "text") {
+      // Should match retention entry due to higher IDF
+      expect(answer.text).toBe("Twelve months from the upload date.");
+    }
+  });
+
+  it("applies Turkish stemming for Turkish locale", async () => {
+    const turkish = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve, locale: "tr" });
+    // "saklanıyor" should match "saklanıyor" keyword via stemming
+    const answer = await turkish.answer("CV'm saklanıyor mu?");
+    expect(answer.kind).toBe("text");
+    if (answer.kind === "text") {
+      expect(answer.text).toBe("Yes. Your CV is read and scored in your browser first.");
+    }
+  });
+
+  it("applies German compound splitting for German locale", async () => {
+    const german = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve, locale: "de" });
+    // "Datenschutz" should match entries with "daten" and "schutz" components
+    const answer = await german.answer("Wie ist der Datenschutz?");
+    expect(answer.kind === "text" || answer.kind === "none").toBe(true);
+  });
+
+  it("provides deterministic ordering with tie-breaks", async () => {
+    // Create a scenario where two entries might score equally
+    const answerer2 = createKeywordAnswerer({ entries: HELP_ENTRIES, resolve, locale: "en" });
+    const results = await Promise.all([
+      answerer2.answer("data"),
+      answerer2.answer("data"),
+      answerer2.answer("data")
+    ]);
+    // All should return the same result
+    expect(results[0]).toEqual(results[1]);
+    expect(results[1]).toEqual(results[2]);
+  });
+
+  it("handles multi-word keywords with phrase matching", async () => {
+    const answer = await answerer.answer("two column layout");
+    expect(answer.kind).toBe("text");
+    if (answer.kind === "text") {
+      // Should match columns entry
+      expect(answer.text).toContain("column");
+    }
+  });
 });

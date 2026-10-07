@@ -28,6 +28,13 @@ const ACTION_VERBS = [
 
 const ACTION_VERB_RX = new RegExp(`^(${ACTION_VERBS.join("|")})\\b`, "i");
 
+/**
+ * German CVs often open bullets with a noun describing the work rather than a
+ * verb. These are legitimate openings and should not trigger weak-verbs.
+ */
+const GERMAN_NOUN_OPENINGS_RX =
+  /^(entwicklung|einführung|einfuehrung|konzeption|aufbau|leitung|gestaltung|realisierung|umsetzung|planung|steuerung|analyse|optimierung|migration|automatisierung|test|erstellung|betreuung|verwaltung)\b/i;
+
 const GENERIC_RX =
   /(responsible for|worked on|involved in|assisted with|helped with|duties included|tasks included|verantwortlich fur|verantwortlich für|zustandig fur|zuständig für|(mitgewirkt|unterstutzung bei|unterstützung bei)|sorumluydum|sorumlu oldum|gorev aldim|görev aldım|destek verdim|yer aldim|yer aldım)/gi;
 
@@ -35,7 +42,7 @@ const BUZZWORD_RX =
   /(team player|hard.?working|detail.?oriented|results.?driven|self.?starter|go.?getter|think outside the box|dynamic personality|motivated individual|teamfahig|teamfähig|belastbar|engagiert|zuverlassig|zuverlässig|dinamik|ozverili|özverili|takim oyuncusu|takım oyuncusu|calis?kan|çalışkan)/gi;
 
 const HEDGING_RX =
-  /(familiar with|exposed to|exposure to|some experience with|basic understanding of|working knowledge of|have used|have worked with|helped to|tried to|participated in|took part in|played a role in|had a hand in|got introduced to|contributed somewhat|grundkenntnisse|basiskenntnisse|erste erfahrungen|erste erfahrung|einblicke in|mitgewirkt|unterstutzung bei|unterstützung bei|temel duzeyde|temel düzeyde|temel seviye|asinalik|aşinalık|bilgi sahibi)/i;
+  /(familiar with|exposed to|exposure to|some experience with|basic understanding of|working knowledge of|have used|have worked with|helped to|tried to|participated in|took part in|played a role in|had a hand in|got introduced to|contributed somewhat|grundkenntnisse|basiskenntnisse|erste erfahrungen|erste erfahrung|einblicke in|temel duzeyde|temel düzeyde|temel seviye|asinalik|aşinalık|bilgi sahibi)/i;
 
 const INFLATED_RX =
   /(spearheaded|leveraged|utilized|utilised|harnessed|in order to|tasked with|due to the fact that|on a daily basis)/gi;
@@ -60,7 +67,7 @@ export function scoreImpact(context: ScoreContext): DimensionOutcome {
   const { bullets, raw, stats, lines } = context;
   const drafts: FindingDraft[] = [];
 
-  const quantified = bullets.filter((bullet) => QUANTIFIED_RX.test(bullet));
+  const quantified = bullets.filter((bullet) => QUANTIFIED_RX.test(bullet) && !DATE_RANGE_RX.test(bullet));
   const quantifiedRatio = ratio(quantified.length, bullets.length);
 
   if (bullets.length >= 4) {
@@ -86,9 +93,15 @@ export function scoreImpact(context: ScoreContext): DimensionOutcome {
 
     // Turkish is verb-final: the ownership verb closes the bullet, so the
     // English-anchored check would score every Turkish bullet as verbless.
+    // German CVs often open with a noun (Entwicklung, Einführung, etc.)
+    // rather than a verb; these are legitimate openings.
     const turkish = context.language === "tr";
+    const german = context.language === "de";
     const withVerb = bullets.filter(
-      (bullet) => ACTION_VERB_RX.test(bullet) || (turkish && hasTurkishVerbEnding(bullet))
+      (bullet) =>
+        ACTION_VERB_RX.test(bullet) ||
+        (turkish && hasTurkishVerbEnding(bullet)) ||
+        (german && GERMAN_NOUN_OPENINGS_RX.test(bullet))
     );
     const verbRatio = ratio(withVerb.length, bullets.length);
     if (verbRatio < 0.35) {
@@ -162,6 +175,23 @@ export function scoreImpact(context: ScoreContext): DimensionOutcome {
           detail: `Few bullets and little quantification in the experience section. Claims without a figure read as job descriptions rather than achievements.`,
           fix: "Add scale or outcome to at least a third of the lines: runtime cut from 40 to 12 minutes, 15 testers onboarded, coverage raised to 80%.",
           cost: 6
+        });
+      }
+
+      const withVerb = nonEmptyLines.filter(
+        (line) =>
+          ACTION_VERB_RX.test(line) ||
+          (context.language === "tr" && hasTurkishVerbEnding(line)) ||
+          (context.language === "de" && GERMAN_NOUN_OPENINGS_RX.test(line))
+      );
+      if (nonEmptyLines.length >= 3 && ratio(withVerb.length, nonEmptyLines.length) < 0.35) {
+        drafts.push({
+          id: "impact.weak-verbs",
+          severity: "medium",
+          title: "Experience lines do not open with an action",
+          detail: `Few lines in the experience section start with an ownership verb or action noun.`,
+          fix: "Start each line with what you did: built, migrated, automated, reduced.",
+          cost: 4
         });
       }
     } else if (!/\d/.test(raw)) {

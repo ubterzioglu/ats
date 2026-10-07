@@ -82,34 +82,64 @@
   },
   "hotPaths": [
     {
-      "path": "apps/web/app/[locale]/page.tsx",
-      "accessCount": 11,
-      "lastAccessed": 1791279967788,
-      "type": "file"
-    },
-    {
       "path": "",
-      "accessCount": 8,
-      "lastAccessed": 1791279656669,
-      "type": "directory"
-    },
-    {
-      "path": "tests/motion-and-focus.test.ts",
-      "accessCount": 6,
-      "lastAccessed": 1791279733757,
-      "type": "file"
-    },
-    {
-      "path": "apps/web",
-      "accessCount": 6,
-      "lastAccessed": 1791279992820,
+      "accessCount": 44,
+      "lastAccessed": 1791327086785,
       "type": "directory"
     },
     {
       "path": "apps/web/messages/en.json",
-      "accessCount": 6,
-      "lastAccessed": 1791280000273,
+      "accessCount": 36,
+      "lastAccessed": 1791326132258,
       "type": "directory"
+    },
+    {
+      "path": "apps/web",
+      "accessCount": 30,
+      "lastAccessed": 1791325988149,
+      "type": "directory"
+    },
+    {
+      "path": "MASTERPLAN.md",
+      "accessCount": 27,
+      "lastAccessed": 1791325623463,
+      "type": "directory"
+    },
+    {
+      "path": "apps/web/app/[locale]/page.tsx",
+      "accessCount": 18,
+      "lastAccessed": 1791325312528,
+      "type": "file"
+    },
+    {
+      "path": "tests/motion-and-focus.test.ts",
+      "accessCount": 14,
+      "lastAccessed": 1791283569477,
+      "type": "file"
+    },
+    {
+      "path": "apps/web/components/ui/nav-bar.tsx",
+      "accessCount": 11,
+      "lastAccessed": 1791284120073,
+      "type": "file"
+    },
+    {
+      "path": "apps/web/lib/admin/guard.ts",
+      "accessCount": 8,
+      "lastAccessed": 1791325966182,
+      "type": "file"
+    },
+    {
+      "path": "apps/web/docs/adr-0001-cv-storage.md",
+      "accessCount": 8,
+      "lastAccessed": 1791326274590,
+      "type": "file"
+    },
+    {
+      "path": "apps/web/app/[locale]/about/page.tsx",
+      "accessCount": 8,
+      "lastAccessed": 1791327059194,
+      "type": "file"
     },
     {
       "path": "apps\\web\\lib\\ai\\tasks\\rewrite.ts",
@@ -124,9 +154,9 @@
       "type": "file"
     },
     {
-      "path": "apps/web/lib/admin/guard.ts",
+      "path": "apps/web/middleware.ts",
       "accessCount": 5,
-      "lastAccessed": 1791279628186,
+      "lastAccessed": 1791320733733,
       "type": "file"
     },
     {
@@ -136,15 +166,21 @@
       "type": "file"
     },
     {
-      "path": "apps/web/middleware.ts",
-      "accessCount": 3,
-      "lastAccessed": 1791279955785,
+      "path": "apps/web/app/[locale]/layout.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1791284032992,
       "type": "file"
     },
     {
-      "path": "apps/web/app/[locale]/about/page.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1791279968044,
+      "path": "apps/web/components",
+      "accessCount": 4,
+      "lastAccessed": 1791284074975,
+      "type": "directory"
+    },
+    {
+      "path": "apps/web/app/[locale]/login/actions.ts",
+      "accessCount": 4,
+      "lastAccessed": 1791320693605,
       "type": "file"
     },
     {
@@ -154,10 +190,34 @@
       "type": "directory"
     },
     {
-      "path": "apps/web/components",
+      "path": "apps/web/components/site-credit.tsx",
       "accessCount": 3,
-      "lastAccessed": 1791280008714,
-      "type": "directory"
+      "lastAccessed": 1791283590729,
+      "type": "file"
+    },
+    {
+      "path": "apps/web/i18n/routing.ts",
+      "accessCount": 3,
+      "lastAccessed": 1791284034130,
+      "type": "file"
+    },
+    {
+      "path": "apps/web/lib/supabase/client.ts",
+      "accessCount": 3,
+      "lastAccessed": 1791320697297,
+      "type": "file"
+    },
+    {
+      "path": "apps/web/lib/supabase/server.ts",
+      "accessCount": 3,
+      "lastAccessed": 1791320697648,
+      "type": "file"
+    },
+    {
+      "path": "AGENTS.md",
+      "accessCount": 3,
+      "lastAccessed": 1791325158266,
+      "type": "file"
     },
     {
       "path": "apps\\web\\lib\\tailor\\apply-term.ts",
@@ -190,12 +250,6 @@
       "type": "directory"
     },
     {
-      "path": "MASTERPLAN.md",
-      "accessCount": 2,
-      "lastAccessed": 1791148135441,
-      "type": "directory"
-    },
-    {
       "path": "apps\\web\\docs\\handover-2026-10-03.md",
       "accessCount": 2,
       "lastAccessed": 1791148369399,
@@ -214,15 +268,39 @@
       "type": "file"
     },
     {
-      "path": "apps/web/app/[locale]/layout.tsx",
+      "path": "apps/web/lib/supabase/middleware.ts",
       "accessCount": 2,
-      "lastAccessed": 1791279960805,
+      "lastAccessed": 1791284074835,
       "type": "file"
     },
     {
-      "path": "apps/web/i18n/routing.ts",
+      "path": "apps/web/app/auth/confirm/route.ts",
       "accessCount": 2,
-      "lastAccessed": 1791279989715,
+      "lastAccessed": 1791320693931,
+      "type": "file"
+    },
+    {
+      "path": "supabase",
+      "accessCount": 2,
+      "lastAccessed": 1791320700051,
+      "type": "directory"
+    },
+    {
+      "path": "supabase/migrations/0004_admin_users.sql",
+      "accessCount": 2,
+      "lastAccessed": 1791320702722,
+      "type": "file"
+    },
+    {
+      "path": "apps/web/lib/cv-submission/handle.ts",
+      "accessCount": 2,
+      "lastAccessed": 1791320703827,
+      "type": "file"
+    },
+    {
+      "path": "apps/web/app/[locale]/login/page.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1791320718873,
       "type": "file"
     },
     {
@@ -256,66 +334,6 @@
       "type": "file"
     },
     {
-      "path": "apps/web/components/site-credit.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1791278772257,
-      "type": "file"
-    },
-    {
-      "path": "supabase",
-      "accessCount": 1,
-      "lastAccessed": 1791278906157,
-      "type": "directory"
-    },
-    {
-      "path": "supabase/migrations/0004_admin_users.sql",
-      "accessCount": 1,
-      "lastAccessed": 1791279349795,
-      "type": "file"
-    },
-    {
-      "path": "AGENTS.md",
-      "accessCount": 1,
-      "lastAccessed": 1791279474924,
-      "type": "file"
-    },
-    {
-      "path": "apps/web/lib/supabase/middleware.ts",
-      "accessCount": 1,
-      "lastAccessed": 1791279626919,
-      "type": "file"
-    },
-    {
-      "path": "apps/web/lib/supabase/server.ts",
-      "accessCount": 1,
-      "lastAccessed": 1791279627211,
-      "type": "file"
-    },
-    {
-      "path": "apps/web/lib/supabase/client.ts",
-      "accessCount": 1,
-      "lastAccessed": 1791279628140,
-      "type": "file"
-    },
-    {
-      "path": "apps/web/app/auth/confirm/route.ts",
-      "accessCount": 1,
-      "lastAccessed": 1791279628352,
-      "type": "file"
-    },
-    {
-      "path": "apps/web/app/[locale]/login/actions.ts",
-      "accessCount": 1,
-      "lastAccessed": 1791279629334,
-      "type": "file"
-    },
-    {
-      "path": "apps/web/components/ui/nav-bar.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1791279629433,
-      "type": "file"
-    },
-    {
       "path": "apps/web/app/actions.ts",
       "accessCount": 1,
       "lastAccessed": 1791279633158,
@@ -340,12 +358,6 @@
       "type": "file"
     },
     {
-      "path": "apps/web/app/[locale]/login/page.tsx",
-      "accessCount": 1,
-      "lastAccessed": 1791279641441,
-      "type": "file"
-    },
-    {
       "path": "apps/web/supabase/migrations/0001_ats_reports.sql",
       "accessCount": 1,
       "lastAccessed": 1791279646977,
@@ -355,18 +367,6 @@
       "path": "apps/web/supabase/migrations/0002_revoke_purge_execute.sql",
       "accessCount": 1,
       "lastAccessed": 1791279647458,
-      "type": "file"
-    },
-    {
-      "path": "apps/web/docs/adr-0001-cv-storage.md",
-      "accessCount": 1,
-      "lastAccessed": 1791279649137,
-      "type": "file"
-    },
-    {
-      "path": "apps/web/lib/cv-submission/handle.ts",
-      "accessCount": 1,
-      "lastAccessed": 1791279649222,
       "type": "file"
     },
     {

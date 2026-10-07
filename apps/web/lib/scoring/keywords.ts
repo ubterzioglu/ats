@@ -187,7 +187,7 @@ function proseCapitalCounts(
     const first = line.replace(BULLET_PREFIX_RX, "").match(/^[\p{L}][\p{L}\d+#']*/u)?.[0];
     if (!first) continue;
     if (!/\p{Lu}/u.test(first[0] ?? "")) continue;
-    const lower = first.toLowerCase();
+    const lower = caseFold(first);
     if (!lowercaseVocab.has(lower)) continue;
     counts.set(lower, (counts.get(lower) ?? 0) + 1);
   }
@@ -198,7 +198,7 @@ function buildLowercaseVocab(lines: readonly string[]): Set<string> {
   const vocab = new Set<string>();
   for (const line of lines) {
     for (const word of line.match(LOWERCASE_WORD_RX) ?? []) {
-      vocab.add(word.toLowerCase());
+      vocab.add(caseFold(word));
     }
   }
   return vocab;
@@ -227,8 +227,8 @@ function discoverTerms(
     const trimmed = raw.replace(/^[^\p{L}\d]+|[.,;:!?]+$/gu, "");
     if (trimmed.length < 2) return;
     const term = trimmed.includes(" ")
-      ? PHRASE_ALIASES.get(trimmed.toLowerCase()) ?? canonicalize(trimmed.toLowerCase())
-      : canonicalize(trimmed.toLowerCase());
+      ? PHRASE_ALIASES.get(caseFold(trimmed)) ?? canonicalize(caseFold(trimmed))
+      : canonicalize(caseFold(trimmed));
     if (known(term)) return;
     discovered.set(term, { tier, minFrequency });
   };
@@ -246,20 +246,20 @@ function discoverTerms(
       const span: [number, number] = [match.index, match.index + match[0].length];
       claimed.push(span);
       const words = match[0].split(/\s+/);
-      const firstWord = (words[0] ?? "").toLowerCase();
+      const firstWord = caseFold(words[0] ?? "");
       if (isProseWord(firstWord, language) || lowercaseVocab.has(firstWord)) continue;
-      if (words.some((word) => isProseWord(word.toLowerCase(), language))) continue;
+      if (words.some((word) => isProseWord(caseFold(word), language))) continue;
       offer(match[0], 2, tier);
     }
 
     CAMEL_RX.lastIndex = 0;
     while ((match = CAMEL_RX.exec(line)) !== null) {
-      offer(match[0].toLowerCase(), 1, tier);
+      offer(caseFold(match[0]), 1, tier);
     }
 
     ACRONYM_RX.lastIndex = 0;
     while ((match = ACRONYM_RX.exec(line)) !== null) {
-      const term = match[0].toLowerCase();
+      const term = caseFold(match[0]);
       if (isProseWord(term, language)) continue;
       offer(term, 2, tier);
     }
@@ -270,7 +270,7 @@ function discoverTerms(
       const at = match.index;
       const width = match[0].length;
       if (claimed.some(([start, end]) => at < end && at + width > start)) continue;
-      const term = match[0].toLowerCase();
+      const term = caseFold(match[0]);
       if (isProseWord(term, language)) continue;
       const sentenceStart =
         at === 0 || at === bulletEnd || /[.!?]\s+$/.test(line.slice(0, at));
