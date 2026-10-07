@@ -97,5 +97,20 @@ describe("job ad parsing", () => {
       const flag = result!.redFlags.find(f => f.id === "vague-role");
       expect(flag).toBeDefined();
     });
+
+    it("flags unrealistic requirements when more than 22 mandatory skills are required", () => {
+      const terms = Array.from({ length: 24 }, (_, i) => ({ term: `Skill${i}`, weight: 1, hits: 0, tier: "required" as const }));
+      const result = parseJobAd(ad("Fullstack lead developer needed."), terms);
+      const flag = result!.redFlags.find(f => f.id === "unrealistic-requirements");
+      expect(flag).toBeDefined();
+      expect(flag?.description).toContain("24 mandatory skills");
+    });
+
+    it("flags stale postings or continuous talent pool postings as ghost jobs", () => {
+      const result = parseJobAd(ad("Senior Backend Engineer\nPosted 90+ days ago\nMust have Go experience."), []);
+      const flag = result!.redFlags.find(f => f.id === "ghost-job-stale");
+      expect(flag).toBeDefined();
+      expect(flag?.evidence).toContain("Posted 90+ days ago");
+    });
   });
 });

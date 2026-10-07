@@ -265,6 +265,14 @@ function extractRedFlags(
     });
   }
 
+  // Multiple specialist roles rolled into one
+  if (requiredTerms.length > 22) {
+    flags.push({
+      id: "unrealistic-requirements",
+      description: `The vacancy specifies ${requiredTerms.length} mandatory skills, suggesting multiple specialist roles collapsed into one posting.`
+    });
+  }
+
   // Seniority mismatch
   if (seniority?.level === "junior" && experience && experience.years >= 3) {
     flags.push({
@@ -279,6 +287,19 @@ function extractRedFlags(
     flags.push({
       id: "vague-role",
       description: "The job description is extremely short and may lack important context about the responsibilities.",
+    });
+  }
+
+  // Ghost job or perpetual talent pool signals
+  const GHOST_SIGNALS =
+    /(posted\s+(?:30\+|60\+|90\+|\d{2,}\+?\s*(?:days?|months?))\s+ago|originally\s+posted|continuous\s+recruitment|always\s+looking\s+for|ongoing\s+talent\s+pool|sürekli\s+al[ıi]m|genel\s+ba[şs]vuru|laufende\s+ausschreibung|talent\s+pool\s+only)/i;
+
+  const ghostMatch = text.match(GHOST_SIGNALS);
+  if (ghostMatch) {
+    flags.push({
+      id: "ghost-job-stale",
+      description: "Indicators of a stale posting or continuous talent pool detected. The position may lack an active, funded opening.",
+      evidence: ghostMatch[0]
     });
   }
 

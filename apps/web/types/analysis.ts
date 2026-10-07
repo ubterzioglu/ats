@@ -1,7 +1,12 @@
 export type Severity = "critical" | "high" | "medium" | "low";
 
 export interface JobAdRedFlag {
-  readonly id: "laundry-list" | "seniority-mismatch" | "vague-role";
+  readonly id:
+    | "laundry-list"
+    | "seniority-mismatch"
+    | "vague-role"
+    | "ghost-job-stale"
+    | "unrealistic-requirements";
   readonly description: string;
   readonly evidence?: string;
 }
