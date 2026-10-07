@@ -22,8 +22,11 @@ export async function AdminNav({ locale }: AdminNavProps) {
       <Link href="/admin/users" className="text-sm font-medium text-muted hover:text-iris transition-colors">
         {t("users")}
       </Link>
-      <Link href="/admin/ozellikler" className="text-sm font-medium text-muted hover:text-iris transition-colors">
-        Özellikler
+      <Link href="/admin/features" className="text-sm font-medium text-muted hover:text-iris transition-colors">
+        Features
+      </Link>
+      <Link href="/admin/faq" className="text-sm font-medium text-muted hover:text-iris transition-colors">
+        FAQ
       </Link>
     </nav>
   );
