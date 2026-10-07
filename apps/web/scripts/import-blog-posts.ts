@@ -3,6 +3,28 @@ import { resolve } from "node:path";
 
 import { createClient } from "@supabase/supabase-js";
 
+function loadEnv(): void {
+  const envPath = resolve(__dirname, "../.env.local");
+  try {
+    const content = readFileSync(envPath, "utf-8");
+    for (const line of content.split("\n")) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const eqIdx = trimmed.indexOf("=");
+      if (eqIdx === -1) continue;
+      const key = trimmed.slice(0, eqIdx).trim();
+      const value = trimmed.slice(eqIdx + 1).trim();
+      if (!process.env[key]) {
+        process.env[key] = value;
+      }
+    }
+  } catch {
+    // .env.local may not exist
+  }
+}
+
+loadEnv();
+
 const SOURCE_FILE = resolve(__dirname, "../../../ATS Uyumlu Özgeçmiş Makale Araştırması.md");
 const SLUG_PREFIX = "ats-resume-section";
 
@@ -32,11 +54,10 @@ function extractTitles(fullTitle: string): { trTitle: string; enTitle: string } 
 function parseSections(markdown: string): readonly Section[] {
   const lines = markdown.split("\n");
   const sections: Section[] = [];
-  let currentH2: { line: string; index: number } | null = null;
   const h2Indices: number[] = [];
 
   for (let i = 0; i < lines.length; i++) {
-    if (/^##\s+\d+\\?\./.test(lines[i]!)) {
+    if (/^##\s+\*?\*?\d+\\?\./.test(lines[i]!)) {
       h2Indices.push(i);
     }
   }

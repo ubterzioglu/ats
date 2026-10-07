@@ -49,6 +49,7 @@ const EVERY_LOCALE: readonly string[] = [
   "fixDrafts.quantifyToken",
   // "Blog" is the standard word in German and Turkish as well.
   "blog.title",
+  "nav.blog",
   // Licence credits quoted in the wording ESCO and O*NET prescribe, which is
   // English; the surrounding about.sourcesBody is translated.
   "about.escoCredit",
