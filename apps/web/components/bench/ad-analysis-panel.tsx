@@ -67,6 +67,12 @@ export function AdAnalysisPanel({ jobAd, redFlags, suitability }: AdAnalysisPane
                 </dd>
               </div>
             ) : null}
+            {jobAd.targetAts ? (
+              <div className="flex gap-2">
+                <dt className="font-normal text-muted">{t("targetAts")}:</dt>
+                <dd className="font-normal font-mono text-signal">{jobAd.targetAts.name}</dd>
+              </div>
+            ) : null}
           </dl>
         </div>
       ) : null}

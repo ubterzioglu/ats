@@ -760,6 +760,7 @@
     "languages": "Languages",
     "location": "Location",
     "salary": "Salary",
+    "targetAts": "Target ATS",
     "status": {
       "passed": "Passed",
       "failed": "Not met",
@@ -1193,5 +1194,18 @@
     "backToList": "Back to blog",
     "filterLabel": "Filter by language",
     "availableIn": "Available in:"
+  },
+  "actionVerbPanel": {
+    "heading": "Power Action Verbs",
+    "lede": "Start your experience bullets with strong action verbs to show measurable impact instead of passive task descriptions.",
+    "searchPlaceholder": "Search action verbs...",
+    "categoryAll": "All categories",
+    "categoryLeadership": "Leadership",
+    "categoryImplementation": "Execution & Building",
+    "categoryOptimization": "Optimization",
+    "categoryAnalysis": "Analysis & Research",
+    "categoryCommunication": "Communication",
+    "copied": "Copied to clipboard",
+    "empty": "No action verbs found matching your search."
   }
 }

@@ -760,6 +760,7 @@
     "languages": "Diller",
     "location": "Konum",
     "salary": "Maaş",
+    "targetAts": "Hedef ATS",
     "status": {
       "passed": "Karşılandı",
       "failed": "Karşılanmadı",
@@ -1193,5 +1194,18 @@
     "backToList": "Blog'a dön",
     "filterLabel": "Dile göre filtrele",
     "availableIn": "Şu dillerde de mevcut:"
+  },
+  "actionVerbPanel": {
+    "heading": "Etkili Aksiyon Fiilleri",
+    "lede": "Maddelerinize pasif görev tanımları yerine güçlü aksiyon fiilleriyle başlayarak ölçülebilir etki yaratın.",
+    "searchPlaceholder": "Aksiyon fiillerinde ara...",
+    "categoryAll": "Tüm kategoriler",
+    "categoryLeadership": "Liderlik",
+    "categoryImplementation": "Uygulama ve İnşa",
+    "categoryOptimization": "Optimizasyon",
+    "categoryAnalysis": "Analiz ve Araştırma",
+    "categoryCommunication": "İletişim",
+    "copied": "Panoya kopyalandı",
+    "empty": "Aramanızla eşleşen aksiyon fiili bulunamadı."
   }
 }

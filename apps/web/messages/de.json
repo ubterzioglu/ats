@@ -760,6 +760,7 @@
     "languages": "Sprachen",
     "location": "Standort",
     "salary": "Gehalt",
+    "targetAts": "Ziel-ATS",
     "status": {
       "passed": "Erfüllt",
       "failed": "Nicht erfüllt",
@@ -1193,5 +1194,18 @@
     "backToList": "Zurück zum Blog",
     "filterLabel": "Nach Sprache filtern",
     "availableIn": "Auch verfügbar auf:"
+  },
+  "actionVerbPanel": {
+    "heading": "Starke Aktionsverben",
+    "lede": "Beginnen Sie Stichpunkte mit aktiven Verben, um messbare Ergebnisse statt passiver Aufgabenbeschreibungen zu zeigen.",
+    "searchPlaceholder": "Aktionsverben durchsuchen...",
+    "categoryAll": "Alle Kategorien",
+    "categoryLeadership": "Führung",
+    "categoryImplementation": "Umsetzung & Aufbau",
+    "categoryOptimization": "Optimierung",
+    "categoryAnalysis": "Analyse & Forschung",
+    "categoryCommunication": "Kommunikation",
+    "copied": "In die Zwischenablage kopiert",
+    "empty": "Keine passenden Aktionsverben gefunden."
   }
 }

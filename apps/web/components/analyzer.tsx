@@ -41,6 +41,7 @@ import { AdCompareView } from "./ad-compare";
 import { DataControls } from "./data-controls";
 import { DocumentIntake } from "./document-intake";
 import { KeywordPanel } from "./keyword-panel";
+import { ActionVerbPanel } from "./action-verb-panel";
 import { LearningList } from "./learning-list";
 import { OcrConsent } from "./ocr-consent";
 import { ParserView } from "./parser-view";
@@ -659,6 +660,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                   suitability={result.suitability ?? []}
                 />
               ) : null}
+              <ActionVerbPanel language={result.language} />
               <AiConsent onReady={setEmbedder} />
               <AiStatus onTierChange={setModelTier} />
               <ParserView
