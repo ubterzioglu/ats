@@ -626,7 +626,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               />
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-5 pb-28 lg:pb-32">
               <MeasureRail
                 result={result}
                 previous={previous ?? lastVisit}
@@ -705,7 +705,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               />
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-5 pb-28 lg:pb-32">
               <MeasureRail
                 result={result}
                 previous={previous ?? lastVisit}
@@ -744,7 +744,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               <LearningList cvText={cvText} />
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-5 pb-28 lg:pb-32">
               <MeasureRail
                 result={result}
                 previous={previous ?? lastVisit}
@@ -783,7 +783,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               />
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-5 pb-28 lg:pb-32">
               <MeasureRail
                 result={result}
                 previous={previous ?? lastVisit}
