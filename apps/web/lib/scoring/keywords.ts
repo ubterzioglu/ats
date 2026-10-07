@@ -653,7 +653,7 @@ export function scoreKeywords(context: ScoreContext, jobDescription: string): Ke
       detail: `${overused
         .map((term) => `${term.term} appears ${term.hits} times`)
         .join(", ")}, far more than natural writing would.`,
-      fix: "Keep two or three mentions in context and delete the rest. Recruiters and modern parsers both penalise padding.",
+      fix: "Keep two or three mentions in context and delete the rest. Modern LLM-based parsers treat keyword stuffing as manipulation and silently lower the candidate's ranking.",
       cost: 2,
       evidence: overused.map((term) => term.term)
     });

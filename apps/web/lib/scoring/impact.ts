@@ -14,16 +14,31 @@ const ACTION_VERBS = [
   "coordinated", "mentored", "negotiated", "rolled", "cut", "saved", "shipped",
   "developed", "created", "maintained", "tested", "analysed", "analyzed",
   "managed", "architected", "spearheaded", "orchestrated", "pioneered",
+  "accelerated", "engineered", "streamlined", "transformed", "consolidated",
+  "deployed", "directed", "executed", "formulated", "generated", "maximized",
+  "overhauled", "resolved", "strengthened", "yielded",
   // German
   "entwickelt", "umgesetzt", "eingefuhrt", "eingeführt", "aufgebaut", "verbessert",
   "optimiert", "automatisiert", "reduziert", "gesteigert", "geleitet", "betreut",
   "verantwortet", "konzipiert", "migriert", "erstellt", "eingespart",
-  "gemanagt", "architektonisch", "geleitet",
+  "gemanagt", "architektonisch", "beschleunigt", "koordiniert", "organisiert",
+  "realisiert", "transformiert",
   // Turkish
-  "gelistirdim", "geliştirdim", "kurdum", "tasarladim", "tasarladım", "uyguladim",
-  "uyguladım", "otomatiklestirdim", "otomatikleştirdim", "azalttim", "azalttım",
-  "artirdim", "artırdım", "iyilestirdim", "iyileştirdim", "yonettim", "yönettim",
-  "olusturdum", "oluşturdum", "kurguladim", "kurguladım"
+  "gelistirdim", "geliştirdim", "gelistirdi", "geliştirdi",
+  "kurdum", "kurdu",
+  "tasarladim", "tasarladım", "tasarladi", "tasarladı",
+  "uyguladim", "uyguladım", "uyguladi", "uyguladı",
+  "otomatiklestirdim", "otomatikleştirdim", "otomatiklestirdi", "otomatikleştirdi",
+  "azalttim", "azalttım", "azaltti", "azalttı",
+  "artirdim", "artırdım", "artirdi", "artırdı",
+  "iyilestirdim", "iyileştirdim", "iyilestirdi", "iyileştirdi",
+  "yonettim", "yönettim", "yonetti", "yönetti",
+  "olusturdum", "oluşturdum", "olusturdu", "oluşturdu",
+  "kurguladim", "kurguladım", "kurguladi", "kurguladı",
+  "sagladi", "sağladı", "saglandi", "sağlandı",
+  "yuruttum", "yürüttüm", "yuruttu", "yürüttü",
+  "tamamladim", "tamamladım", "tamamladi", "tamamladı",
+  "yayimladim", "yayımladım", "yayimladi", "yayımladı"
 ];
 
 const ACTION_VERB_RX = new RegExp(`^(${ACTION_VERBS.join("|")})\\b`, "i");
@@ -36,7 +51,7 @@ const GERMAN_NOUN_OPENINGS_RX =
   /^(entwicklung|einführung|einfuehrung|konzeption|aufbau|leitung|gestaltung|realisierung|umsetzung|planung|steuerung|analyse|optimierung|migration|automatisierung|test|erstellung|betreuung|verwaltung)\b/i;
 
 const GENERIC_RX =
-  /(responsible for|worked on|involved in|assisted with|helped with|duties included|tasks included|verantwortlich fur|verantwortlich für|zustandig fur|zuständig für|(mitgewirkt|unterstutzung bei|unterstützung bei)|sorumluydum|sorumlu oldum|gorev aldim|görev aldım|destek verdim|yer aldim|yer aldım)/gi;
+  /(responsible for|worked on|involved in|assisted with|helped with|duties included|tasks included|was tasked with|played a part in|played a role in|contributed to the|verantwortlich fur|verantwortlich für|zustandig fur|zuständig für|habe mitgeholfen|wurde beauftragt|war beteiligt an|(mitgewirkt|unterstutzung bei|unterstützung bei)|sorumluydum|sorumlu oldum|gorev aldim|görev aldım|gorev aldi|görev aldı|destek verdim|destek oldu|yer aldim|yer aldım|yer aldi|yer aldı|yardimci oldum|yardımcı oldum|katilim sagladim|katılım sağladım|katkida bulundum|katkıda bulundum|ile ilgilendim)/gi;
 
 const BUZZWORD_RX =
   /(team player|hard.?working|detail.?oriented|results.?driven|self.?starter|go.?getter|think outside the box|dynamic personality|motivated individual|teamfahig|teamfähig|belastbar|engagiert|zuverlassig|zuverlässig|dinamik|ozverili|özverili|takim oyuncusu|takım oyuncusu|calis?kan|çalışkan)/gi;
