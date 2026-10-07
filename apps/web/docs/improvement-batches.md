@@ -2,7 +2,7 @@
 
 What is left to do, grouped into batches. Research, prompts and analysis already delivered are left out. The reasoning behind each item lives in the older notes: `engine-strengthening-plan.md`, `research-priority-list.md`, `help-assistant-suggestions.md`. The step-by-step brief for the help bubble is `help-assistant-improvement-brief.md`.
 
-Status: A1, A2, A3, A4, A5, A6, A7, B1, B2, B3, B4, B5, B6, C1, C2, C3, C4, C5, D2, D4, D5 done. Blog editor done. D3: pipeline and approval gate done, no synonym approved yet, cost review not yet run (see D3). D6: `pdfjs-dist` done, `@huggingface/transformers` blocked (see D6). O1 decided: not added. O2 decided: `AGENTS.md` wins, copy aligned (see Decisions). O5 done: audited admin user directory (see Decisions). O8 done: OCR infrastructure and UI (see D4). Nothing below has been implemented or approved.
+Status: A1, A2, A3, A4, A5, A6, A7, B1, B2, B3, B4, B5, B6, C1, C2, C3, C4, C5, D2, D4, D5 done. Blog editor done. Migrations consolidated. D3: pipeline and approval gate done, no synonym approved yet, cost review not yet run (see D3). D6: `pdfjs-dist` done, `@huggingface/transformers` blocked (see D6). O1 decided: not added. O2 decided: `AGENTS.md` wins, copy aligned (see Decisions). O5 done: audited admin user directory (see Decisions). O8 done: OCR infrastructure and UI (see D4). Nothing below has been implemented or approved.
 
 ## Rules for every batch
 
