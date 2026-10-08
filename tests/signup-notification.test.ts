@@ -68,12 +68,31 @@ describe("buildSignupMail", () => {
     expect(mail.subject).toBe("Yeni kayıt");
   });
 
-  it("names the email, provider and time in a plain-text body", () => {
+  it("names the email, provider and time in a plain-text fallback", () => {
     const mail = buildSignupMail(userConfirmedSecondsAgo(5), ENV, NOW);
     expect(mail.text).toContain("new@example.com");
     expect(mail.text).toContain("google");
     expect(mail.text).toContain(NOW.toISOString());
-    expect(mail).not.toHaveProperty("html");
+  });
+
+  it("renders the same facts in an HTML body", () => {
+    const mail = buildSignupMail(userConfirmedSecondsAgo(5), ENV, NOW);
+    expect(mail.html).toContain("new@example.com");
+    expect(mail.html).toContain("Google");
+    expect(mail.html).toContain("2026");
+    expect(mail.html).toContain("İstanbul");
+  });
+
+  it("escapes markup in the address inside the HTML body", () => {
+    const user: NotifiableUser = { email: '"><script>alert(1)</script>@x.io' };
+    const mail = buildSignupMail(user, ENV, NOW);
+    expect(mail.html).not.toContain("<script>");
+    expect(mail.html).toContain("&lt;script&gt;");
+  });
+
+  it("shows an unknown provider as given", () => {
+    const user: NotifiableUser = { email: "x@example.com", app_metadata: { provider: "github" } };
+    expect(buildSignupMail(user, ENV, NOW).html).toContain("github");
   });
 
   it("keeps a hostile address out of the subject", () => {

@@ -17,7 +17,7 @@ A notification email carries the new user's account email address to a mail prov
 3. **Send after the response.** The mail is sent inside `after()` from `next/server`, so a slow or failing mail server never delays or breaks a sign-in.
 4. **Zoho SMTP via nodemailer.** The owner already has a Zoho account. Settings come from six runtime-only environment variables (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`, `SIGNUP_NOTIFY_TO`).
 5. **Optional, like all persistence.** If any variable is missing, `getMailEnv()` returns `null` and the notification is skipped without error.
-6. **Minimal content.** The mail is plain text with a fixed subject. The body holds the account email, the sign-in provider (`google` or `email`) and a timestamp. It never contains CV data, scores or profile data, and the user's address is not placed in any header.
+6. **Minimal content.** The mail has a fixed subject and is sent as HTML with a plain-text alternative (`signup-mail-html.ts`). Both hold the same three facts: the account email, the sign-in provider (`google` or `email`) and a timestamp. The HTML escapes every interpolated value. It never contains CV data, scores or profile data, and the user's address is not placed in any header.
 7. **Server-only.** `lib/notify/` starts every file with `import "server-only"`. It imports nothing from `lib/scoring/`.
 
 ## Privacy Impact

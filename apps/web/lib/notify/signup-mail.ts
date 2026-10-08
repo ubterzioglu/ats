@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { MailEnv } from "@/lib/notify/mail-env";
+import { renderSignupHtml } from "@/lib/notify/signup-mail-html";
 
 export interface NotifiableUser {
   readonly email?: string | undefined;
@@ -13,6 +14,7 @@ export interface OutgoingMail {
   readonly to: string;
   readonly subject: string;
   readonly text: string;
+  readonly html: string;
 }
 
 // A user who confirmed their email this recently is treated as new. Later
@@ -33,15 +35,33 @@ export function isNewlyConfirmed(user: NotifiableUser, now: Date): boolean {
   return age >= -CLOCK_SKEW_MS && age <= NEW_WINDOW_MS;
 }
 
+const PROVIDER_LABELS: Readonly<Record<string, string>> = {
+  google: "Google",
+  email: "E-posta"
+};
+
+const TIME_FORMAT = new Intl.DateTimeFormat("tr-TR", {
+  dateStyle: "long",
+  timeStyle: "short",
+  timeZone: "Europe/Istanbul"
+});
+
 export function buildSignupMail(user: NotifiableUser, env: MailEnv, now: Date): OutgoingMail {
   const provider = user.app_metadata?.provider ?? "email";
+  const address = user.email ?? "bilinmiyor";
   const text = [
     "Yeni bir kullanıcı kaydını onayladı.",
     "",
-    `E-posta: ${user.email ?? "bilinmiyor"}`,
+    `E-posta: ${address}`,
     `Sağlayıcı: ${provider}`,
     `Zaman: ${now.toISOString()}`
   ].join("\n");
 
-  return { from: env.from, to: env.to, subject: SUBJECT, text };
+  const html = renderSignupHtml({
+    email: address,
+    providerLabel: PROVIDER_LABELS[provider] ?? provider,
+    timeLabel: `${TIME_FORMAT.format(now)} (İstanbul)`
+  });
+
+  return { from: env.from, to: env.to, subject: SUBJECT, text, html };
 }
