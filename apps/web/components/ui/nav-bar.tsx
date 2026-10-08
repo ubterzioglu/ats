@@ -133,9 +133,12 @@ export function NavBar() {
           className="order-3 -ml-3 flex w-full items-center overflow-x-auto whitespace-nowrap md:order-none md:ml-0 md:w-auto md:flex-1 md:justify-center md:overflow-visible"
         >
           {LINKS.map((link, index) => {
-            const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+            const active = pathname === link.href || pathname.startsWith(`${link.href}/`) || (link.key === "feedback" && pathname.startsWith("/admin/feedback"));
             const isProtected = PROTECTED_PATHS.has(link.href);
-            const href = !signedIn && isProtected ? `/login?next=${encodeURIComponent(link.href)}` : link.href;
+            // Inside the admin panel the Feedback link means the feedback received, not the public form.
+            const inAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+            const target = link.key === "feedback" && inAdmin ? "/admin/feedback" : link.href;
+            const href = !signedIn && isProtected ? `/login?next=${encodeURIComponent(link.href)}` : target;
             const ghost = (
               <GhostLink href={href} active={active} className="px-2 lg:px-2.5">
                 {link.key === "applications" ? common("applications") : nav(link.key)}
