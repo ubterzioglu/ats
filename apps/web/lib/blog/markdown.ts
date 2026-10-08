@@ -13,23 +13,30 @@ function escapeHtml(text: string): string {
     .replace(/'/g, "&#39;");
 }
 
+const SAFE_URL = /^(https?:\/\/|mailto:|\/|#)/i;
+
 function inlineMarkdown(text: string): string {
   let result = escapeHtml(text);
-  
+
+  // Footnote marker: [^12] becomes a superscript.
+  result = result.replace(/\[\^(\d+)\]/g, '<sup class="cite">$1</sup>');
+
   // Bold: **text** or __text__
   result = result.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
   result = result.replace(/__(.+?)__/g, "<strong>$1</strong>");
-  
-  // Italic: *text* or _text_
+
+  // Italic: *text* or _text_. Underscores inside a word (snake_case) are not emphasis.
   result = result.replace(/\*(.+?)\*/g, "<em>$1</em>");
-  result = result.replace(/_(.+?)_/g, "<em>$1</em>");
-  
+  result = result.replace(/(?<![\p{L}\p{N}_])_(?!_)(.+?)(?<!_)_(?![\p{L}\p{N}_])/gu, "<em>$1</em>");
+
   // Code: `code`
   result = result.replace(/`(.+?)`/g, "<code>$1</code>");
-  
-  // Links: [text](url)
-  result = result.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" rel="noopener">$1</a>');
-  
+
+  // Links: [text](url). Only web, mail and site-relative targets become links.
+  result = result.replace(/\[(.+?)\]\((.+?)\)/g, (_match, label: string, url: string) =>
+    SAFE_URL.test(url) ? `<a href="${url}" rel="noopener">${label}</a>` : label,
+  );
+
   return result;
 }
 

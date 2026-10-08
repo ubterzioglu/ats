@@ -107,7 +107,7 @@ export default async function BlogPostPage({
               <span className="text-xs sm:text-sm font-medium text-ash">
                 {t("availableIn")}
               </span>
-              <div className="flex items-center gap-1.5" role="group" aria-label="Available languages">
+              <div className="flex items-center gap-1.5" role="group" aria-label={t("availableIn")}>
                 {sortedVersions.map((v) => {
                   const isCurrent = v.locale === appLocale;
                   return isCurrent ? (

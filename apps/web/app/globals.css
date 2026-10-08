@@ -331,6 +331,14 @@ h3.font-normal {
     font-style: italic;
   }
 
+  .prose sup.cite {
+    margin-left: 0.1em;
+    font-size: 0.7em;
+    line-height: 0;
+    color: rgb(var(--ash));
+    font-variant-numeric: tabular-nums;
+  }
+
   .prose a {
     color: rgb(var(--action));
     text-decoration: underline;

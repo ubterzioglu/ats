@@ -38,7 +38,7 @@ export function BlogList({ posts }: Props) {
                   {post.title}
                 </h2>
                 {post.description && (
-                  <p className="mt-2 text-body text-mist">{post.description}</p>
+                  <p className="mt-2 line-clamp-3 text-body text-mist">{post.description}</p>
                 )}
                 <p className="mt-4 text-caption text-ash">
                   {new Date(post.published_at ?? post.created_at).toLocaleDateString(locale)}
