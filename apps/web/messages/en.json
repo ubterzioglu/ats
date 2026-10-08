@@ -330,8 +330,9 @@
     }
   },
   "login": {
+    "freeBadge": "100% free",
     "heading": "Sign in",
-    "lede": "You need an account to analyze a CV, and it is free. The CV is read and scored in your browser; the file, its text and the result are then stored on our server with your account for 12 months.",
+    "lede": "Creating an account and analyzing your CV are both free. The CV is read and scored in your browser; the file, its text and the result are then stored on our server with your account for 12 months.",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
     "passwordLabel": "Password",

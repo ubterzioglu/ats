@@ -330,8 +330,9 @@
     }
   },
   "login": {
+    "freeBadge": "Komplett kostenlos",
     "heading": "Anmelden",
-    "lede": "Für die Analyse eines Lebenslaufs brauchen Sie ein Konto, und es ist kostenlos. Der Lebenslauf wird in Ihrem Browser gelesen und bewertet; die Datei, ihr Text und das Ergebnis werden danach 12 Monate mit Ihrem Konto auf unserem Server gespeichert.",
+    "lede": "Konto erstellen und Lebenslauf analysieren sind beide kostenlos. Der Lebenslauf wird in Ihrem Browser gelesen und bewertet; die Datei, ihr Text und das Ergebnis werden danach 12 Monate mit Ihrem Konto auf unserem Server gespeichert.",
     "emailLabel": "E-Mail",
     "emailPlaceholder": "sie@beispiel.de",
     "passwordLabel": "Passwort",

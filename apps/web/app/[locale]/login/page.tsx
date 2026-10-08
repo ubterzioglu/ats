@@ -39,7 +39,10 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
         {/* Dala inner-page adaptation: the form has no box; the particle field
             behind it carries the page. */}
-        <h1 className="mt-10 text-heading-sm font-normal">{t("heading")}</h1>
+        <p className="mt-10 inline-flex w-fit items-center border border-saffron px-3 py-1 text-caption uppercase text-saffron">
+          {t("freeBadge")}
+        </p>
+        <h1 className="mt-4 text-heading-sm font-normal">{t("heading")}</h1>
         <p className="mt-4 text-body font-extralight text-mist">{t("lede")}</p>
 
         <form className="mt-10 flex flex-col gap-6">

@@ -330,8 +330,9 @@
     }
   },
   "login": {
+    "freeBadge": "Tamamen ücretsiz",
     "heading": "Giriş yap",
-    "lede": "CV analizi için bir hesap gerekir ve hesap ücretsizdir. CV'niz tarayıcınızda okunur ve puanlanır; ardından dosya, metni ve sonuç hesabınıza bağlı olarak sunucumuzda 12 ay saklanır.",
+    "lede": "Hesap oluşturmak ve CV'nizi analiz etmek ücretsizdir. CV'niz tarayıcınızda okunur ve puanlanır; ardından dosya, metni ve sonuç hesabınıza bağlı olarak sunucumuzda 12 ay saklanır.",
     "emailLabel": "E-posta",
     "emailPlaceholder": "siz@ornek.com",
     "passwordLabel": "Parola",
