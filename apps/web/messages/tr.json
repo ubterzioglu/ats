@@ -13,7 +13,8 @@
     "kvkk": "KVKK",
     "dataRequest": "Veri Talebi",
     "cta": "CV'nizi analiz edin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "feedback": "Geri bildirim"
   },
   "languageSwitcher": {
     "label": "Dil"
@@ -852,7 +853,8 @@
       "overview": "Genel Bakış",
       "requests": "Veri Talepleri",
       "audit": "Denetim Kaydı",
-      "users": "Kullanıcılar"
+      "users": "Kullanıcılar",
+      "feedback": "Geri bildirim"
     },
     "stats": {
       "today": "Bugün",
@@ -981,6 +983,30 @@
       "download": "Dosyayı indir",
       "deleting": "Siliniyor...",
       "delete": "Başvuruyu sil"
+    },
+    "feedback": {
+      "title": "Geri bildirim",
+      "description": "Ziyaretçilerin geri bildirim sayfasından gönderdiği mesajlar.",
+      "all": "Tümü",
+      "empty": "Henüz geri bildirim yok.",
+      "anonymous": "E-posta yok",
+      "updateFailed": "Geri bildirim güncellenemedi. Tekrar deneyin.",
+      "status": {
+        "new": "Yeni",
+        "read": "Okundu",
+        "archived": "Arşivde"
+      },
+      "markAs": {
+        "new": "Yeni olarak işaretle",
+        "read": "Okundu işaretle",
+        "archived": "Arşivle"
+      },
+      "category": {
+        "bug": "Bir şey bozuk",
+        "idea": "Fikir veya istek",
+        "praise": "İşe yarayan",
+        "other": "Diğer"
+      }
     }
   },
   "dataRequest": {
@@ -1229,5 +1255,31 @@
     "noFindings": "Metin katmanında herhangi bir okunabilirlik veya yapı sorunu tespit edilmedi.",
     "fullAnalysisCta": "Tam analiz için giriş yapın",
     "fullAnalysisLede": "İş ilanı anahtar kelime eşleştirmesi, etki ölçümü, iletişim erişilebilirliği ve yerel yapay zeka asistanını açın."
+  },
+  "feedback": {
+    "title": "Geri bildirim",
+    "description": "Neyin bozuk, neyin eksik ya da neyin işe yaradığını bize yazın. Her mesajı okuyoruz.",
+    "categoryLabel": "Tür",
+    "category": {
+      "bug": "Bir şey bozuk",
+      "idea": "Fikir veya istek",
+      "praise": "İşe yarayan",
+      "other": "Diğer"
+    },
+    "messageLabel": "Mesajınız",
+    "messagePlaceholder": "Ne oldu ya da neyi görmek istersiniz?",
+    "emailLabel": "E-posta (isteğe bağlı)",
+    "emailPlaceholder": "eposta@ornek.com",
+    "emailHint": "Yalnızca yanıt istiyorsanız ekleyin. Başka hiçbir şey için kullanılmaz.",
+    "submit": "Geri bildirim gönder",
+    "submitting": "Gönderiliyor...",
+    "success": "Teşekkürler. Geri bildiriminiz gönderildi.",
+    "successDetails": "Her mesajı okuyoruz ama hepsine yanıt veremiyoruz.",
+    "sendAnother": "Bir geri bildirim daha gönder",
+    "error": {
+      "generic": "Geri bildirim gönderilemedi. Biraz sonra tekrar deneyin.",
+      "rateLimit": "Bu bağlantıdan çok fazla mesaj geldi. Daha sonra tekrar deneyin.",
+      "invalid": "Mesajı (10 ile 2000 karakter) ve e-posta adresini kontrol edin."
+    }
   }
 }

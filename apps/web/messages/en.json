@@ -13,7 +13,8 @@
     "kvkk": "KVKK",
     "dataRequest": "Data Request",
     "cta": "Analyze a CV",
-    "blog": "Blog"
+    "blog": "Blog",
+    "feedback": "Feedback"
   },
   "languageSwitcher": {
     "label": "Language"
@@ -852,7 +853,8 @@
       "overview": "Overview",
       "requests": "Data Requests",
       "audit": "Audit Log",
-      "users": "Users"
+      "users": "Users",
+      "feedback": "Feedback"
     },
     "stats": {
       "today": "Today",
@@ -981,6 +983,30 @@
       "download": "Download file",
       "deleting": "Deleting...",
       "delete": "Delete submission"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "description": "Messages visitors sent through the feedback page.",
+      "all": "All",
+      "empty": "No feedback yet.",
+      "anonymous": "No email",
+      "updateFailed": "The feedback could not be updated. Try again.",
+      "status": {
+        "new": "New",
+        "read": "Read",
+        "archived": "Archived"
+      },
+      "markAs": {
+        "new": "Mark as new",
+        "read": "Mark as read",
+        "archived": "Archive"
+      },
+      "category": {
+        "bug": "Something is broken",
+        "idea": "Idea or request",
+        "praise": "What worked",
+        "other": "Other"
+      }
     }
   },
   "dataRequest": {
@@ -1229,5 +1255,31 @@
     "noFindings": "No parseability or structural issues detected in the text layer.",
     "fullAnalysisCta": "Sign in for the complete analysis",
     "fullAnalysisLede": "Unlock keyword matching against job ads, impact measurement, contact reachability and local AI assistance."
+  },
+  "feedback": {
+    "title": "Feedback",
+    "description": "Tell us what is broken, what is missing, or what worked. We read every message.",
+    "categoryLabel": "Type",
+    "category": {
+      "bug": "Something is broken",
+      "idea": "Idea or request",
+      "praise": "What worked",
+      "other": "Other"
+    },
+    "messageLabel": "Your message",
+    "messagePlaceholder": "What happened, or what would you like to see?",
+    "emailLabel": "Email (optional)",
+    "emailPlaceholder": "your.email@example.com",
+    "emailHint": "Only add it if you want a reply. It is used for nothing else.",
+    "submit": "Send feedback",
+    "submitting": "Sending...",
+    "success": "Thank you. Your feedback was sent.",
+    "successDetails": "We read every message, but we cannot reply to all of them.",
+    "sendAnother": "Send more feedback",
+    "error": {
+      "generic": "The feedback could not be sent. Try again in a moment.",
+      "rateLimit": "Too many messages from this connection. Try again later.",
+      "invalid": "Check the message (10 to 2000 characters) and the email address."
+    }
   }
 }

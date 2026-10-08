@@ -19,7 +19,8 @@ const LINKS = [
   { href: "/builder", key: "builder" },
   { href: "/applications", key: "applications" },
   { href: "/blog", key: "blog" },
-  { href: "/about", key: "about" }
+  { href: "/about", key: "about" },
+  { href: "/feedback", key: "feedback" }
 ] as const;
 
 const PROTECTED_PATHS = new Set(["/analyze", "/builder", "/applications"]);

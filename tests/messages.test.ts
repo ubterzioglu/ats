@@ -95,6 +95,11 @@ const VERBATIM: Readonly<Record<string, ReadonlySet<string>>> = {
     "admin.requests.status",
     "admin.detail.subtitle",
     "admin.detail.metadata",
+    // "Feedback" is the German word too.
+    "nav.feedback",
+    "admin.nav.feedback",
+    "admin.feedback.title",
+    "feedback.title",
     // Blog editor technical terms German shares with English.
     "admin.blog.editor.slug",
     "admin.blog.editor.status"

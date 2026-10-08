@@ -13,7 +13,8 @@ export type AdminAction =
   | "blog_update"
   | "blog_publish"
   | "blog_delete"
-  | "user_list";
+  | "user_list"
+  | "feedback_update";
 
 export async function logAdminAction(
   email: string,

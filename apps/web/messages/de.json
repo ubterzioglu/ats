@@ -13,7 +13,8 @@
     "kvkk": "KVKK",
     "dataRequest": "Datenanfrage",
     "cta": "Lebenslauf analysieren",
-    "blog": "Blog"
+    "blog": "Blog",
+    "feedback": "Feedback"
   },
   "languageSwitcher": {
     "label": "Sprache"
@@ -852,7 +853,8 @@
       "overview": "Übersicht",
       "requests": "Datenanfragen",
       "audit": "Prüfprotokoll",
-      "users": "Nutzer"
+      "users": "Nutzer",
+      "feedback": "Feedback"
     },
     "stats": {
       "today": "Heute",
@@ -981,6 +983,30 @@
       "download": "Datei herunterladen",
       "deleting": "Wird gelöscht...",
       "delete": "Einreichung löschen"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "description": "Nachrichten, die Besucher über die Feedback-Seite gesendet haben.",
+      "all": "Alle",
+      "empty": "Noch kein Feedback.",
+      "anonymous": "Keine E-Mail",
+      "updateFailed": "Das Feedback konnte nicht aktualisiert werden. Versuchen Sie es erneut.",
+      "status": {
+        "new": "Neu",
+        "read": "Gelesen",
+        "archived": "Archiviert"
+      },
+      "markAs": {
+        "new": "Als neu markieren",
+        "read": "Als gelesen markieren",
+        "archived": "Archivieren"
+      },
+      "category": {
+        "bug": "Etwas ist kaputt",
+        "idea": "Idee oder Wunsch",
+        "praise": "Was gut funktioniert hat",
+        "other": "Sonstiges"
+      }
     }
   },
   "dataRequest": {
@@ -1229,5 +1255,31 @@
     "noFindings": "Keine Lesbarkeits- oder Strukturprobleme in der Textschicht festgestellt.",
     "fullAnalysisCta": "Für vollständige Analyse anmelden",
     "fullAnalysisLede": "Schalten Sie Stichwortabgleich mit Stellenanzeigen, Wirkungsmessung, Erreichbarkeit und lokale KI frei."
+  },
+  "feedback": {
+    "title": "Feedback",
+    "description": "Sagen Sie uns, was kaputt ist, was fehlt oder was gut funktioniert hat. Wir lesen jede Nachricht.",
+    "categoryLabel": "Art",
+    "category": {
+      "bug": "Etwas ist kaputt",
+      "idea": "Idee oder Wunsch",
+      "praise": "Was gut funktioniert hat",
+      "other": "Sonstiges"
+    },
+    "messageLabel": "Ihre Nachricht",
+    "messagePlaceholder": "Was ist passiert, oder was wünschen Sie sich?",
+    "emailLabel": "E-Mail (optional)",
+    "emailPlaceholder": "ihre.email@beispiel.de",
+    "emailHint": "Nur angeben, wenn Sie eine Antwort möchten. Sie wird für nichts anderes verwendet.",
+    "submit": "Feedback senden",
+    "submitting": "Wird gesendet...",
+    "success": "Danke. Ihr Feedback wurde gesendet.",
+    "successDetails": "Wir lesen jede Nachricht, können aber nicht auf alle antworten.",
+    "sendAnother": "Weiteres Feedback senden",
+    "error": {
+      "generic": "Das Feedback konnte nicht gesendet werden. Versuchen Sie es gleich noch einmal.",
+      "rateLimit": "Zu viele Nachrichten von dieser Verbindung. Versuchen Sie es später erneut.",
+      "invalid": "Prüfen Sie die Nachricht (10 bis 2000 Zeichen) und die E-Mail-Adresse."
+    }
   }
 }
