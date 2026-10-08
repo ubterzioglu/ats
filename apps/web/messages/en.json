@@ -1209,5 +1209,18 @@
     "categoryCommunication": "Communication",
     "copied": "Copied to clipboard",
     "empty": "No action verbs found matching your search."
+  },
+  "quickTest": {
+    "title": "Quick ATS Readability Check",
+    "lede": "Test how well an applicant tracking system can parse your CV in seconds. Runs 100% in your browser without creating an account.",
+    "inputPlaceholder": "Paste your CV text here to check parseability and structure...",
+    "analyzeButton": "Run quick test",
+    "analyzing": "Analyzing...",
+    "scoreHeading": "Technical Readability Score",
+    "scoreOutOf": "out of 45 points (Parseability + Structure)",
+    "findingsHeading": "Key structural findings to fix",
+    "noFindings": "No parseability or structural issues detected in the text layer.",
+    "fullAnalysisCta": "Sign in for the complete analysis",
+    "fullAnalysisLede": "Unlock keyword matching against job ads, impact measurement, contact reachability and local AI assistance."
   }
 }

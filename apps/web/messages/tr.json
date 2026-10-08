@@ -1209,5 +1209,18 @@
     "categoryCommunication": "İletişim",
     "copied": "Panoya kopyalandı",
     "empty": "Aramanızla eşleşen aksiyon fiili bulunamadı."
+  },
+  "quickTest": {
+    "title": "Hızlı ATS Okunabilirlik Testi",
+    "lede": "ATS sistemlerinin CV'nizi ne kadar hatasız okuduğunu saniyeler içinde test edin. Hesap açmadan %100 tarayıcınızda çalışır.",
+    "inputPlaceholder": "Okunabilirlik ve yapı kontrolü için CV metninizi buraya yapıştırın...",
+    "analyzeButton": "Hızlı testi başlat",
+    "analyzing": "Analiz ediliyor...",
+    "scoreHeading": "Teknik Okunabilirlik Skoru",
+    "scoreOutOf": "45 puan üzerinden (Okunabilirlik + Yapı)",
+    "findingsHeading": "Düzeltilmesi gereken temel yapısal bulgular",
+    "noFindings": "Metin katmanında herhangi bir okunabilirlik veya yapı sorunu tespit edilmedi.",
+    "fullAnalysisCta": "Tam analiz için giriş yapın",
+    "fullAnalysisLede": "İş ilanı anahtar kelime eşleştirmesi, etki ölçümü, iletişim erişilebilirliği ve yerel yapay zeka asistanını açın."
   }
 }

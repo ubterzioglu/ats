@@ -1209,5 +1209,18 @@
     "categoryCommunication": "Kommunikation",
     "copied": "In die Zwischenablage kopiert",
     "empty": "Keine passenden Aktionsverben gefunden."
+  },
+  "quickTest": {
+    "title": "Schneller ATS-Lesbarkeitstest",
+    "lede": "Testen Sie in Sekundenschnelle, wie gut ein ATS Ihren Lebenslauf liest. Funktioniert 100% im Browser ohne Kontoerstellung.",
+    "inputPlaceholder": "Fügen Sie hier Ihren Lebenslauftext ein, um Lesbarkeit und Struktur zu prüfen...",
+    "analyzeButton": "Schnelltest starten",
+    "analyzing": "Wird analysiert...",
+    "scoreHeading": "Technischer Lesbarkeitswert",
+    "scoreOutOf": "von 45 Punkten (Lesbarkeit + Struktur)",
+    "findingsHeading": "Wichtigste strukturelle Optimierungspunkte",
+    "noFindings": "Keine Lesbarkeits- oder Strukturprobleme in der Textschicht festgestellt.",
+    "fullAnalysisCta": "Für vollständige Analyse anmelden",
+    "fullAnalysisLede": "Schalten Sie Stichwortabgleich mit Stellenanzeigen, Wirkungsmessung, Erreichbarkeit und lokale KI frei."
   }
 }
