@@ -25,10 +25,10 @@ export function LanguageFilter({ activeLocale, onLocaleChange }: Props) {
           type="button"
           onClick={() => onLocaleChange(locale)}
           className={cx(
-            "px-4 py-2 rounded border-2 text-caption font-normal transition-colors",
+            "px-4 py-2 rounded-xl border-2 font-display text-xs sm:text-sm font-bold transition-all",
             activeLocale === locale
-              ? "border-action bg-action text-void"
-              : "border-bone/20 text-mist hover:border-bone/40"
+              ? "border-lime bg-lime text-void shadow-sm"
+              : "border-bone/20 bg-bench/80 text-mist hover:border-lime/50 hover:text-bone hover:bg-bench-raised"
           )}
         >
           {LOCALE_LABELS[locale]}

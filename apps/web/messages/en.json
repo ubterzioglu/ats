@@ -762,6 +762,12 @@
     "languages": "Languages",
     "location": "Location",
     "salary": "Salary",
+    "benchmarkSalary": "Estimated salary",
+    "benchmarkEstimated": "market benchmark",
+    "yearly": "annual",
+    "monthly": "monthly",
+    "negotiationHeading": "Salary negotiation playbook",
+    "negotiationLede": "Tactical guidelines for negotiating compensation in this target market:",
     "targetAts": "Target ATS",
     "status": {
       "passed": "Passed",

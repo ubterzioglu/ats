@@ -762,6 +762,12 @@
     "languages": "Sprachen",
     "location": "Standort",
     "salary": "Gehalt",
+    "benchmarkSalary": "Geschätztes Gehalt",
+    "benchmarkEstimated": "Markt-Benchmark",
+    "yearly": "jährlich",
+    "monthly": "monatlich",
+    "negotiationHeading": "Gehaltsverhandlungs-Leitfaden",
+    "negotiationLede": "Taktische Leitlinien für Gehaltsverhandlungen im Zielmarkt:",
     "targetAts": "Ziel-ATS",
     "status": {
       "passed": "Erfüllt",

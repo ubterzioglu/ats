@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 
-import type { JobAdRequirements, JobAdRedFlag, SuitabilityCheck } from "@/types/analysis";
+import type { JobAdRequirements, JobAdRedFlag, SuitabilityCheck, DocumentLanguage } from "@/types/analysis";
+import { resolveSalaryBand, getNegotiationTips } from "@/lib/scoring/salary";
 
 import { cx } from "@/lib/ui";
 
@@ -8,6 +9,7 @@ interface AdAnalysisPanelProps {
   readonly jobAd?: JobAdRequirements;
   readonly redFlags: readonly JobAdRedFlag[];
   readonly suitability: readonly SuitabilityCheck[];
+  readonly language?: DocumentLanguage;
 }
 
 const STATUS_STYLES: Readonly<Record<string, string>> = {
@@ -16,10 +18,13 @@ const STATUS_STYLES: Readonly<Record<string, string>> = {
   unknown: "border-caution text-caution",
 };
 
-export function AdAnalysisPanel({ jobAd, redFlags, suitability }: AdAnalysisPanelProps) {
+export function AdAnalysisPanel({ jobAd, redFlags, suitability, language = "en" }: AdAnalysisPanelProps) {
   const t = useTranslations("adAnalysis");
 
   if (!jobAd && redFlags.length === 0 && suitability.length === 0) return null;
+
+  const benchmarkBand = jobAd?.salary ? null : resolveSalaryBand(jobAd?.seniority?.level ?? null, language);
+  const negotiationTips = getNegotiationTips(language);
 
   return (
     <section className="bench">
@@ -64,6 +69,16 @@ export function AdAnalysisPanel({ jobAd, redFlags, suitability }: AdAnalysisPane
                 <dt className="font-normal text-muted">{t("salary")}:</dt>
                 <dd className="font-normal">
                   {jobAd.salary.min.toLocaleString()} - {jobAd.salary.max.toLocaleString()} {jobAd.salary.currency}
+                </dd>
+              </div>
+            ) : benchmarkBand ? (
+              <div className="flex gap-2">
+                <dt className="font-normal text-muted">{t("benchmarkSalary")}:</dt>
+                <dd className="font-normal">
+                  {benchmarkBand.range.min.toLocaleString()} - {benchmarkBand.range.max.toLocaleString()} {benchmarkBand.range.currency}
+                  <span className="ml-1 text-xs text-muted">
+                    ({benchmarkBand.range.period === "yearly" ? t("yearly") : t("monthly")}, {t("benchmarkEstimated")})
+                  </span>
                 </dd>
               </div>
             ) : null}
@@ -123,6 +138,30 @@ export function AdAnalysisPanel({ jobAd, redFlags, suitability }: AdAnalysisPane
           </ul>
         </div>
       ) : null}
+
+      <div className="border-t border-line px-5 py-4 sm:px-6">
+        <details className="group">
+          <summary className="flex cursor-pointer items-center justify-between text-sm font-normal text-ink select-none list-none">
+            <span className="font-medium text-ink flex items-center gap-2">
+              <span className="text-muted font-mono">§</span> {t("negotiationHeading")}
+            </span>
+            <span className="text-xs text-muted group-open:rotate-180 transition-transform duration-200">
+              ▼
+            </span>
+          </summary>
+          <div className="mt-3 space-y-2.5 pt-2">
+            <p className="text-xs text-muted">{t("negotiationLede")}</p>
+            <ul className="space-y-2">
+              {negotiationTips.map((tip, index) => (
+                <li key={index} className="rounded-control border border-line bg-bench/50 p-3 text-xs">
+                  <strong className="block font-medium text-ink">{tip.title}</strong>
+                  <span className="mt-0.5 block text-muted leading-relaxed">{tip.description}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </details>
+      </div>
     </section>
   );
 }

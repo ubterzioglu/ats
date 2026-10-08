@@ -659,6 +659,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                   jobAd={result.jobAd}
                   redFlags={result.jobAd.redFlags}
                   suitability={result.suitability ?? []}
+                  language={result.language}
                 />
               ) : null}
               <ActionVerbPanel language={result.language} />

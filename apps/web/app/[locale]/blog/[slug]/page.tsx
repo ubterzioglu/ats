@@ -68,7 +68,10 @@ export default async function BlogPostPage({
 
   const html = markdownToHtml(post.body_md);
   const allVersions = await getPublishedPostBySlug(slug);
-  const otherVersions = allVersions.filter((v) => v.locale !== appLocale);
+  const orderedLocales: readonly string[] = ["en", "tr", "de"];
+  const sortedVersions = [...allVersions].sort(
+    (a, b) => orderedLocales.indexOf(a.locale) - orderedLocales.indexOf(b.locale)
+  );
 
   const blogPostingJsonLd = buildBlogPostingJsonLd(
     appLocale,
@@ -90,38 +93,52 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify([blogPostingJsonLd, breadcrumbJsonLd]) }}
       />
 
-      <article className="relative mx-auto w-full max-w-3xl px-4 py-12 sm:px-6">
-        <Link
-          href="/blog"
-          className="text-caption text-ash transition-colors hover:text-action"
-        >
-          &larr; {t("backToList")}
-        </Link>
+      <article className="relative mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-bone/10 pb-5 mb-8">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-sm font-medium text-ash transition-colors hover:text-bone"
+          >
+            <span aria-hidden="true">&larr;</span> {t("backToList")}
+          </Link>
 
-        {otherVersions.length > 0 && (
-          <p className="mt-4 text-caption text-ash">
-            {t("availableIn")}{" "}
-            {otherVersions.map((v, i) => (
-              <span key={v.locale}>
-                {i > 0 && ", "}
-                <Link
-                  href={`/blog/${v.slug}`}
-                  className="text-action hover:underline"
-                  locale={v.locale}
-                >
-                  {v.locale.toUpperCase()}
-                </Link>
+          {sortedVersions.length > 1 && (
+            <div className="flex items-center gap-2.5">
+              <span className="text-xs sm:text-sm font-medium text-ash">
+                {t("availableIn")}
               </span>
-            ))}
-          </p>
-        )}
-
-        <header className="mt-8">
-          <h1 className="text-display font-normal text-bone">{post.title}</h1>
-          {post.description && (
-            <p className="mt-4 text-body-lg font-light text-mist">{post.description}</p>
+              <div className="flex items-center gap-1.5" role="group" aria-label="Available languages">
+                {sortedVersions.map((v) => {
+                  const isCurrent = v.locale === appLocale;
+                  return isCurrent ? (
+                    <span
+                      key={v.locale}
+                      className="inline-flex items-center justify-center rounded-lg border-2 border-lime bg-lime/15 px-3 py-1 font-display text-xs sm:text-sm font-bold text-lime shadow-sm"
+                      aria-current="true"
+                    >
+                      {v.locale.toUpperCase()}
+                    </span>
+                  ) : (
+                    <Link
+                      key={v.locale}
+                      href={`/blog/${v.slug}`}
+                      locale={v.locale}
+                      className="inline-flex items-center justify-center rounded-lg border border-bone/20 bg-bench/80 px-3 py-1 font-display text-xs sm:text-sm font-semibold text-mist transition-all hover:border-lime/60 hover:text-bone hover:bg-bench-raised"
+                    >
+                      {v.locale.toUpperCase()}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
           )}
-          <p className="mt-6 text-caption text-ash">
+        </div>
+
+        <header className="mb-8">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-[2.625rem] font-bold text-bone leading-[1.2] tracking-tight">
+            {post.title}
+          </h1>
+          <p className="mt-4 text-xs sm:text-sm font-medium text-ash">
             {new Date(post.published_at ?? post.created_at).toLocaleDateString(locale, {
               year: "numeric",
               month: "long",
@@ -131,7 +148,7 @@ export default async function BlogPostPage({
         </header>
 
         <div
-          className="prose prose-invert mt-12 max-w-none"
+          className="prose prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </article>

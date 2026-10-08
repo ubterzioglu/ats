@@ -50,7 +50,7 @@ function renderTable(rows: readonly (readonly string[])[]): string {
   const bodyRows = body
     .map((row) => `<tr>${row.map((c) => `<td>${inlineMarkdown(c)}</td>`).join("")}</tr>`)
     .join("\n");
-  return `<table><thead><tr>${thCells}</tr></thead><tbody>\n${bodyRows}\n</tbody></table>`;
+  return `<div class="overflow-x-auto my-6"><table><thead><tr>${thCells}</tr></thead><tbody>\n${bodyRows}\n</tbody></table></div>`;
 }
 
 export function markdownToHtml(markdown: string): string {

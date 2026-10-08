@@ -762,6 +762,12 @@
     "languages": "Diller",
     "location": "Konum",
     "salary": "Maaş",
+    "benchmarkSalary": "Tahmini maaş",
+    "benchmarkEstimated": "sektör göstergesi",
+    "yearly": "yıllık",
+    "monthly": "aylık",
+    "negotiationHeading": "Maaş pazarlık rehberi",
+    "negotiationLede": "Hedef pazarda ücret pazarlığı yaparken kullanabileceğiniz taktikler:",
     "targetAts": "Hedef ATS",
     "status": {
       "passed": "Karşılandı",

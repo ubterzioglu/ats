@@ -66,8 +66,8 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
       />
 
       <div className="relative mx-auto w-full max-w-3xl px-4 py-12 sm:px-6">
-        <h1 className="text-heading-lg font-normal text-bone">{t("title")}</h1>
-        <p className="mt-4 max-w-measure text-body font-extralight text-mist">{t("lede")}</p>
+        <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-bone tracking-tight">{t("title")}</h1>
+        <p className="mt-4 max-w-measure text-body text-mist">{t("lede")}</p>
 
         <BlogList posts={posts} />
       </div>
