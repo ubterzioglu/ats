@@ -134,7 +134,7 @@ export function NavBar() {
             return (
               <Fragment key={link.href}>
                 {index > 0 ? <span aria-hidden="true" className="h-4 w-px shrink-0 bg-bone/20" /> : null}
-                <GhostLink href={href} active={active}>
+                <GhostLink href={href} active={active} className="px-2 lg:px-2.5">
                   {link.key === "applications" ? common("applications") : nav(link.key)}
                 </GhostLink>
               </Fragment>
