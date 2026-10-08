@@ -50,6 +50,7 @@ import { TailorMode } from "./tailor/tailor-mode";
 import { VariantComparison } from "./tailor/variant-comparison";
 import { submitCv } from "@/lib/submit-cv";
 import { setResult as setHelpResult } from "@/lib/help/result-holder";
+import { ImportPanel } from "@/components/profile/import-panel";
 
 
 type View = "input" | "report" | "tailor" | "compare" | "interview";
@@ -695,6 +696,7 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
                   language: result.language.toUpperCase()
                 })}
               />
+              <ImportPanel cvText={cvText} sourceName={sourceFile?.name} />
               <DataControls />
             </div>
           </div>
