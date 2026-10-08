@@ -14,8 +14,19 @@ export async function GET(): Promise<Response> {
   const pageLinks = [
     `- [Home](${SITE_URL}/)`,
     ...PUBLIC_PATHS.filter((p) => p !== "/").map((path) => {
-      const key = path === "/about" ? "about" : path === "/privacy" ? "privacy" : path === "/kvkk" ? "kvkk" : "dataRequest";
-      return `- [${key}](${SITE_URL}${path})`;
+      const label =
+        path === "/about"
+          ? "About"
+          : path === "/privacy"
+            ? "Privacy Notice"
+            : path === "/kvkk"
+              ? "KVKK Notice"
+              : path === "/data-request"
+                ? "Data Request"
+                : path === "/blog"
+                  ? "Blog"
+                  : path;
+      return `- [${label}](${SITE_URL}${path})`;
     }),
     `- [FAQ](${SITE_URL}/#faq)`
   ].join("\n");
