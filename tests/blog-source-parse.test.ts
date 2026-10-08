@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { ARTICLE_TABLES } from "@/lib/blog/article-tables";
 import { makeDescription, markCitations, parseArticleSource } from "@/lib/blog/source-parse";
 
 const SOURCE = [
@@ -59,14 +60,33 @@ describe("parseArticleSource", () => {
 
   it("puts each source line in its own paragraph", () => {
     const tr = sections[0]?.tr.body.split("\n\n");
-    expect(tr).toHaveLength(2);
+    expect(tr?.[0]).toContain("Birinci paragraf");
     expect(tr?.[1]).toBe("İkinci paragraf başka bir satırda.");
+    expect(tr?.[2]).toMatch(/^\|/);
   });
 
-  it("attaches the English-only table to the English post alone", () => {
+  it("keeps the English table for EN and uses translated tables for TR and DE", () => {
     expect(sections[0]?.en.body).toContain("| **Bars** | Omitted |");
-    expect(sections[0]?.tr.body).not.toContain("|");
-    expect(sections[0]?.de.body).not.toContain("|");
+    expect(sections[0]?.tr.body).toContain("Beceri İlerleme Çubukları");
+    expect(sections[0]?.de.body).toContain("Fortschrittsbalken");
+    expect(sections[0]?.tr.body).not.toContain("Omitted");
+    expect(sections[0]?.de.body).not.toContain("Omitted");
+  });
+
+  it("has a translated table for every section the English source tables", () => {
+    for (const number of [1, 2, 3, 10]) {
+      expect(ARTICLE_TABLES[number]?.tr).toBeTruthy();
+      expect(ARTICLE_TABLES[number]?.de).toBeTruthy();
+    }
+  });
+
+  it("keeps column and footnote counts equal across languages", () => {
+    const cells = (t: string) => (t.split("\n")[0] ?? "").split("|").length;
+    const notes = (t: string) => (t.match(/\[\^\d+\]/g) ?? []).join(",");
+    for (const [n, t] of Object.entries(ARTICLE_TABLES)) {
+      expect(cells(t.tr), `section ${n} tr`).toBe(cells(t.de));
+      expect(notes(t.tr), `section ${n} notes`).toBe(notes(t.de));
+    }
   });
 
   it("gives the German post a German title rather than the English one", () => {

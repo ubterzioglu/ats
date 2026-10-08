@@ -4,6 +4,8 @@
  * import script owns the file and database access.
  */
 
+import { ARTICLE_TABLES } from "./article-tables";
+
 export type ArticleLocale = "tr" | "de" | "en";
 
 export interface LocaleDraft {
@@ -99,7 +101,7 @@ function toParagraphs(lines: readonly string[]): string {
 function extractTable(lines: readonly string[]): string {
   return lines
     .filter((l) => l.trim().startsWith("|"))
-    .map((l) => unescapeMarkdown(l.trim()))
+    .map((l) => markCitations(unescapeMarkdown(l.trim())))
     .join("\n");
 }
 
@@ -107,8 +109,9 @@ function findHeading(lines: readonly string[], pattern: RegExp): number {
   return lines.findIndex((l) => pattern.test(l.trim()));
 }
 
-function buildDraft(title: string, body: string): LocaleDraft {
-  return { title, body, description: makeDescription(body) };
+function buildDraft(title: string, prose: string, table: string | undefined): LocaleDraft {
+  const body = table ? `${prose}\n\n${table}` : prose;
+  return { title, body, description: makeDescription(prose) };
 }
 
 export function parseArticleSource(markdown: string): readonly ArticleSection[] {
@@ -138,17 +141,16 @@ export function parseArticleSource(markdown: string): readonly ArticleSection[] 
     const deLines = block.slice(deAt + 1, enAt);
     const enLines = block.slice(enAt + 1);
 
-    // The comparison table is written in English only; it stays with the
-    // English post instead of putting English cells into the other two.
+    // The comparison table is written in English only in the source; the
+    // Turkish and German versions come from article-tables.ts.
     const table = extractTable(enLines);
-    const enText = toParagraphs(enLines);
-    const enBody = table ? `${enText}\n\n${table}` : enText;
+    const translated = ARTICLE_TABLES[number];
 
     sections.push({
       number,
-      tr: buildDraft(titles.tr, toParagraphs(trLines)),
-      de: buildDraft(DE_TITLES[number] ?? titles.en, toParagraphs(deLines)),
-      en: buildDraft(titles.en, enBody),
+      tr: buildDraft(titles.tr, toParagraphs(trLines), translated?.tr),
+      de: buildDraft(DE_TITLES[number] ?? titles.en, toParagraphs(deLines), translated?.de),
+      en: buildDraft(titles.en, toParagraphs(enLines), table || undefined),
     });
   });
 
