@@ -661,7 +661,9 @@
   },
   "parserView": {
     "heading": "What the parser read",
-    "truncated": "[…truncated for display]"
+    "truncated": "[…truncated for display]",
+    "copyRaw": "Copy raw text",
+    "copied": "Copied!"
   },
   "coverageMap": {
     "fromModel": "from the local model",

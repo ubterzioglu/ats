@@ -157,7 +157,8 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
               source: extraction.source,
               pages: extraction.pages,
               emptyPages: extraction.emptyPages ?? 0,
-              links: extraction.links ?? []
+              links: extraction.links ?? [],
+              hiddenTextBlocks: extraction.hiddenTextBlocks ?? 0
             }
           : undefined;
         const next = analyzeCv({ cvText, jobDescription: jobAd, market, extraction: extractionMeta });

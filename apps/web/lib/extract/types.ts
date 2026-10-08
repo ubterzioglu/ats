@@ -12,6 +12,8 @@ export interface ExtractionResult {
   readonly emptyPages?: number;
   /** PDF only: URLs extracted from link annotations. */
   readonly links?: readonly string[];
+  /** PDF only: blocks extracted with zero or tiny invisible font size. */
+  readonly hiddenTextBlocks?: number;
 }
 
 export class UnsupportedFileError extends Error {

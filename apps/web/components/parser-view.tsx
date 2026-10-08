@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import { cx } from "@/lib/ui";
 
@@ -52,12 +52,25 @@ export function ParserView({ text, highlights, caption, markedIndex }: ParserVie
   const t = useTranslations("parserView");
   const markedRef = useRef<HTMLSpanElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [copied, setCopied] = useState(false);
   const clipped = text.length > MAX_RENDERED;
   const body = clipped ? text.slice(0, MAX_RENDERED) : text;
   const pattern = buildPattern(highlights);
   const lines = body.split("\n");
 
   const marked = markedIndex ?? -1;
+
+  const copyRaw = async () => {
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      // Degrade gracefully if clipboard permissions restricted
+    }
+  };
 
   useEffect(() => {
     if (marked < 0) return;
@@ -79,9 +92,19 @@ export function ParserView({ text, highlights, caption, markedIndex }: ParserVie
       aria-labelledby="parser-heading"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-5 py-4 sm:px-6">
-        <h2 id="parser-heading" className="text-h3 font-normal">
-          {t("heading")}
-        </h2>
+        <div className="flex items-center gap-3">
+          <h2 id="parser-heading" className="text-h3 font-normal">
+            {t("heading")}
+          </h2>
+          <button
+            type="button"
+            onClick={() => void copyRaw()}
+            className="rounded-control border border-line px-2 py-0.5 font-mono text-micro text-muted transition-colors hover:border-ink hover:text-ink"
+            title={copied ? t("copied") : t("copyRaw")}
+          >
+            {copied ? `✓ ${t("copied")}` : t("copyRaw")}
+          </button>
+        </div>
         <span className="readout">{caption}</span>
       </div>
 

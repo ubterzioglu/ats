@@ -291,6 +291,21 @@ export function scoreParseability(context: ScoreContext): DimensionOutcome {
     }
   }
 
+  // Hidden text or zero-point font manipulation (Makale §6)
+  const hiddenBlocks = context.extraction?.hiddenTextBlocks ?? 0;
+  const invisibleChars = context.zeroWidthCount > 10 ? context.zeroWidthCount : 0;
+  if (hiddenBlocks > 0 || invisibleChars > 0) {
+    const totalHidden = hiddenBlocks + invisibleChars;
+    drafts.push({
+      id: "parse.hidden-text",
+      severity: "critical",
+      title: "Hidden or invisible text detected",
+      detail: `${totalHidden} hidden text blocks or invisible character sequences were detected. Modern ATS parsers and LLM evaluators detect this keyword stuffing technique and flag the document as manipulation.`,
+      fix: "Remove all invisible text, zero-point font injections and hidden characters. Use clean, visible text only.",
+      cost: 5
+    });
+  }
+
   return buildOutcome("parseability", "Parseability", PARSEABILITY_MAX, drafts, (score) =>
     score >= 22
       ? "The text layer is clean and machine-readable."

@@ -83,10 +83,25 @@ export async function extractPdf(file: File): Promise<ExtractionResult> {
     const pages: string[] = [];
     const links: string[] = [];
     let emptyPages = 0;
+    let hiddenTextBlocks = 0;
 
     for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
+
+      for (const rawItem of content.items) {
+        if (typeof rawItem === "object" && rawItem !== null && "str" in rawItem && "transform" in rawItem) {
+          const itemObj = rawItem as { str?: unknown; transform?: unknown; height?: unknown };
+          if (typeof itemObj.str === "string" && itemObj.str.trim().length > 0 && Array.isArray(itemObj.transform)) {
+            const scaleY = Math.abs(Number(itemObj.transform[3]));
+            const height = typeof itemObj.height === "number" ? Math.abs(itemObj.height) : scaleY;
+            if (scaleY > 0 && (scaleY < 2.5 || height < 2.5)) {
+              hiddenTextBlocks++;
+            }
+          }
+        }
+      }
+
       const items = content.items
         .map(toPositioned)
         .filter((item): item is PositionedItem => item !== null);
@@ -131,7 +146,8 @@ export async function extractPdf(file: File): Promise<ExtractionResult> {
       warning,
       pageTexts: pages,
       emptyPages,
-      links
+      links,
+      hiddenTextBlocks
     };
   } finally {
     // pdfjs 6 removed PDFDocumentProxy.destroy; the loading task owns teardown.

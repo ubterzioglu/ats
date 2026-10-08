@@ -230,4 +230,5 @@ export interface ExtractionMetadata {
   readonly pages: number;
   readonly emptyPages: number;
   readonly links: readonly string[];
+  readonly hiddenTextBlocks?: number;
 }

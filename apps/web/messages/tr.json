@@ -661,7 +661,9 @@
   },
   "parserView": {
     "heading": "Ayrıştırıcının okuduğu",
-    "truncated": "[…görüntü için kısaltıldı]"
+    "truncated": "[…görüntü için kısaltıldı]",
+    "copyRaw": "Ham metni kopyala",
+    "copied": "Kopyalandı!"
   },
   "coverageMap": {
     "fromModel": "yerel modelden",

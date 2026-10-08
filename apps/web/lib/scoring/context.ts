@@ -19,6 +19,7 @@ export interface ScoreContext {
   readonly stats: DocumentStats;
   readonly experience: ExperienceReport;
   readonly ligatures: number;
+  readonly zeroWidthCount: number;
   readonly extraction?: ExtractionMetadata;
 }
 
@@ -27,9 +28,11 @@ export interface BuildContextOptions {
 }
 
 const LIGATURE_GLYPHS = /[\uFB00-\uFB06]/g;
+const ZERO_WIDTH_CHARS = /[\u200B\u200C\u200D\uFEFF]/g;
 
 export function buildContext(cvText: string, options?: BuildContextOptions): ScoreContext {
   const ligatures = (cvText.match(LIGATURE_GLYPHS) ?? []).length;
+  const zeroWidthCount = (cvText.match(ZERO_WIDTH_CHARS) ?? []).length;
   const raw = normalizeDocument(cvText);
   const lines = toLines(raw);
   const tokens = tokenize(raw);
@@ -67,6 +70,7 @@ export function buildContext(cvText: string, options?: BuildContextOptions): Sco
     stats,
     experience,
     ligatures,
+    zeroWidthCount,
     ...(options?.extraction ? { extraction: options.extraction } : {})
   };
 }
