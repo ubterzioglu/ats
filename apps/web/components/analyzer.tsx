@@ -111,6 +111,26 @@ export function Analyzer({ sharingEnabled }: AnalyzerProps) {
     setHelpResult(result);
   }, [result]);
 
+  // Read prefilled job ad from extension or URL param
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const prefilled = window.sessionStorage.getItem("ats_prefill_job_ad");
+      if (prefilled) {
+        setJobAd(prefilled);
+        window.sessionStorage.removeItem("ats_prefill_job_ad");
+        return;
+      }
+      const params = new URLSearchParams(window.location.search);
+      const urlJobAd = params.get("jobAd");
+      if (urlJobAd) {
+        setJobAd(decodeURIComponent(urlJobAd));
+      }
+    } catch {
+      // Storage or URL access unavailable in restricted environment
+    }
+  }, []);
+
   const handleFile = useCallback(async (file: File) => {
     setReading(true);
     setError(null);

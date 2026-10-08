@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "ATS Readability — Job Ad Extractor",
+  "version": "1.0.0",
+  "description": "Extract job vacancies from LinkedIn, Indeed, Kariyer.net, StepStone and test ATS CV match in 1-click.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ATS Readability"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://*.indeed.com/*",
+    "*://*.kariyer.net/*",
+    "*://*.stepstone.de/*",
+    "*://*.stepstone.com/*",
+    "*://*.arbeitsagentur.de/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.linkedin.com/jobs/*",
+        "*://*.indeed.com/*",
+        "*://*.kariyer.net/*",
+        "*://*.stepstone.de/*",
+        "*://*.stepstone.com/*",
+        "*://*.arbeitsagentur.de/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

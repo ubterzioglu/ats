@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATS Readability</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <span class="logo-mark">§</span>
+        <span class="logo-text">ATS Readability</span>
+      </div>
+      <span id="platform-badge" class="badge">Detecting...</span>
+    </header>
+
+    <main class="content">
+      <div id="loading-state" class="state-block">
+        <div class="spinner"></div>
+        <p class="muted">Scanning active page for job posting...</p>
+      </div>
+
+      <div id="empty-state" class="state-block hidden">
+        <p class="empty-title">No job vacancy detected</p>
+        <p class="muted small">Navigate to a job posting on LinkedIn, Indeed, Kariyer.net or StepStone.</p>
+      </div>
+
+      <div id="preview-state" class="card hidden">
+        <div class="card-header">
+          <h2 id="job-title" class="job-title">Job Title</h2>
+          <p id="job-company" class="job-company">Company Name</p>
+        </div>
+
+        <div class="meta-row">
+          <div class="meta-item">
+            <span class="meta-label">Words</span>
+            <span id="word-count" class="meta-value">0</span>
+          </div>
+          <div id="target-ats-container" class="meta-item hidden">
+            <span class="meta-label">Target ATS</span>
+            <span id="target-ats" class="meta-value text-signal">None</span>
+          </div>
+        </div>
+
+        <div class="preview-box">
+          <p id="preview-snippet" class="preview-text"></p>
+        </div>
+
+        <div class="actions">
+          <button id="btn-analyze" class="btn btn-primary" type="button">
+            Analyze with my CV
+          </button>
+          <button id="btn-copy" class="btn btn-secondary" type="button">
+            Copy Job Text
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="settings-row">
+        <label for="host-select" class="muted tiny">Platform:</label>
+        <select id="host-select" class="select-host">
+          <option value="https://atsfreeforall.com">atsfreeforall.com</option>
+          <option value="http://localhost:3000">localhost:3000 (Dev)</option>
+        </select>
+      </div>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
