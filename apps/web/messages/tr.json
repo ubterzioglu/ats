@@ -14,7 +14,36 @@
     "dataRequest": "Veri Talebi",
     "cta": "CV'nizi analiz edin",
     "blog": "Blog",
-    "feedback": "Görüş"
+    "feedback": "Görüş",
+    "features": "Özellikler",
+    "quickTest": "Hızlı test",
+    "faq": "SSS"
+  },
+  "features": {
+    "title": "Özellikler",
+    "lead": "Platformun iş arama için yaptığı her şey, her biri kendi sayfasında. Bir özelliği açın, neyi kontrol ettiğini ve nerede kullanacağınızı görün.",
+    "open": "Aracı aç",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "all": "Tüm özellikler",
+    "homeTitle": "Her özellik, ayrıntısıyla",
+    "homeBody": "Platformun her parçasının kendi sayfası var: neyi kontrol ettiği, neyi asla yapmadığı ve nerede bulunduğu.",
+    "moreTools": "Diğer",
+    "linkedin": {
+      "cvLabel": "CV'niz (PDF, DOCX veya metin)",
+      "profileLabel": "LinkedIn dosyası (PDF olarak kaydet çıktısı)",
+      "run": "Karşılaştır",
+      "running": "İki dosya okunuyor",
+      "needBoth": "Önce iki dosyayı da seçin.",
+      "error": "Dosyalardan biri okunamadı: {message}",
+      "resultTitle": "Sonuç",
+      "summary": "{roles} rol eşleştirildi, {skills} beceri karşılaştırıldı.",
+      "none": "İki belge arasında tutarsızlık bulunmadı.",
+      "cvSide": "CV",
+      "profileSide": "Profil",
+      "warningsTitle": "LinkedIn dosyasıyla ilgili notlar",
+      "private": "İki dosya da tarayıcınızda okunur. Bu sayfada hiçbir şey yüklenmez."
+    }
   },
   "languageSwitcher": {
     "label": "Dil"
@@ -88,12 +117,14 @@
     "interview": {
       "label": "Mülakat hazırlığı",
       "title": "Kendi malzemenizle çalışın.",
-      "body": "Hikâye kartları CV'nizden kesilir, hiçbir şey uydurulmaz ve yaygın sorulara eşlenir. Çalışma modu, cevabınıza en uygun kartı önerir. İlandan üretilen sorular, sizin açtığınız bir model gerektirir."
+      "body": "Hikâye kartları CV'nizden kesilir, hiçbir şey uydurulmaz ve yaygın sorulara eşlenir. Çalışma modu, cevabınıza en uygun kartı önerir. İlandan üretilen sorular, sizin açtığınız bir model gerektirir.",
+      "link": "Mülakat hazırlığını incele"
     },
     "report": {
       "label": "Raporlar",
       "title": "Elden verebileceğiniz bir rapor.",
-      "body": "Bulgularınızı dışa aktarın ya da bir bağlantı paylaşın. Paylaşılan rapor yalnızca puan ve önerileri içerir, CV'nizden hiçbir satır taşımaz ve bağlantı 30 gün sonra sona erer."
+      "body": "Bulgularınızı dışa aktarın ya da bir bağlantı paylaşın. Paylaşılan rapor yalnızca puan ve önerileri içerir, CV'nizden hiçbir satır taşımaz ve bağlantı 30 gün sonra sona erer.",
+      "link": "Raporları incele"
     },
     "closing": {
       "title": "CV'nizi ayrıştırıcının gördüğü gibi okuyun.",

@@ -6,7 +6,10 @@ import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
+import type { AppLocale } from "@/i18n/routing";
 import { withLocale } from "@/lib/auth/routes";
+import { FEATURE_SLUGS, featurePath } from "@/lib/features";
+import { getFeatureContent } from "@/lib/features/content";
 import { cx } from "@/lib/ui";
 
 import { LanguageSwitcher } from "../language-switcher";
@@ -18,6 +21,7 @@ const LINKS = [
   { href: "/analyze", key: "analyze" },
   { href: "/builder", key: "builder" },
   { href: "/applications", key: "applications" },
+  { href: "/features", key: "features" },
   { href: "/blog", key: "blog" },
   { href: "/about", key: "about" },
   { href: "/feedback", key: "feedback" }
@@ -89,6 +93,7 @@ export function NavBar() {
     return () => subscription.unsubscribe();
   }, []);
 
+  const featureContent = getFeatureContent(locale as AppLocale);
   const onLanding = pathname === "/";
   const signedIn = userEmail !== null;
 
@@ -131,12 +136,40 @@ export function NavBar() {
             const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
             const isProtected = PROTECTED_PATHS.has(link.href);
             const href = !signedIn && isProtected ? `/login?next=${encodeURIComponent(link.href)}` : link.href;
+            const ghost = (
+              <GhostLink href={href} active={active} className="px-2 lg:px-2.5">
+                {link.key === "applications" ? common("applications") : nav(link.key)}
+              </GhostLink>
+            );
             return (
               <Fragment key={link.href}>
                 {index > 0 ? <span aria-hidden="true" className="h-4 w-px shrink-0 bg-bone/20" /> : null}
-                <GhostLink href={href} active={active} className="px-2 lg:px-2.5">
-                  {link.key === "applications" ? common("applications") : nav(link.key)}
-                </GhostLink>
+                {link.key === "features" ? (
+                  <div className="group relative shrink-0">
+                    {ghost}
+                    <ul className="invisible absolute left-0 top-full z-50 w-72 rounded-2xl border-2 border-lime/30 bg-void/95 p-2 opacity-0 shadow-[0_0_32px_-8px_rgb(var(--lime)/0.45)] backdrop-blur-md transition-opacity group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100 max-md:hidden">
+                      {FEATURE_SLUGS.map((slug) => (
+                        <li key={slug}>
+                          <GhostLink href={featurePath(slug)} className="block w-full px-3 py-1.5 text-left">
+                            {featureContent[slug].title}
+                          </GhostLink>
+                        </li>
+                      ))}
+                      <li className="mt-1 border-t border-bone/15 pt-1">
+                        <GhostLink href="/quick-test" className="block w-full px-3 py-1.5 text-left">
+                          {nav("quickTest")}
+                        </GhostLink>
+                      </li>
+                      <li>
+                        <GhostLink href="/faq" className="block w-full px-3 py-1.5 text-left">
+                          {nav("faq")}
+                        </GhostLink>
+                      </li>
+                    </ul>
+                  </div>
+                ) : (
+                  ghost
+                )}
               </Fragment>
             );
           })}

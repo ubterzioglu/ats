@@ -14,7 +14,36 @@
     "dataRequest": "Data Request",
     "cta": "Analyze a CV",
     "blog": "Blog",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "features": "Features",
+    "quickTest": "Quick test",
+    "faq": "FAQ"
+  },
+  "features": {
+    "title": "Features",
+    "lead": "Everything the platform does for a job search, one page each. Open a feature to see what it checks and where to use it.",
+    "open": "Open the tool",
+    "previous": "Previous",
+    "next": "Next",
+    "all": "All features",
+    "homeTitle": "Every feature, explained",
+    "homeBody": "Each part of the platform has its own page: what it checks, what it never does, and where to find it.",
+    "moreTools": "More",
+    "linkedin": {
+      "cvLabel": "Your CV (PDF, DOCX or text)",
+      "profileLabel": "LinkedIn export (PDF from Save to PDF)",
+      "run": "Compare",
+      "running": "Reading both files",
+      "needBoth": "Choose both files first.",
+      "error": "One of the files could not be read: {message}",
+      "resultTitle": "Result",
+      "summary": "{roles} roles paired, {skills} skills compared.",
+      "none": "No inconsistencies found between the two documents.",
+      "cvSide": "CV",
+      "profileSide": "Profile",
+      "warningsTitle": "Notes on the LinkedIn export",
+      "private": "Both files are read in your browser. Nothing on this page is uploaded."
+    }
   },
   "languageSwitcher": {
     "label": "Language"
@@ -88,12 +117,14 @@
     "interview": {
       "label": "Interview preparation",
       "title": "Practice with your own material.",
-      "body": "Story cards are cut from your CV, never invented, and mapped to common questions. Practice mode suggests the card that best fits your answer. Questions drawn from a job ad need a model you choose to turn on."
+      "body": "Story cards are cut from your CV, never invented, and mapped to common questions. Practice mode suggests the card that best fits your answer. Questions drawn from a job ad need a model you choose to turn on.",
+      "link": "See interview preparation"
     },
     "report": {
       "label": "Reports",
       "title": "A report you can hand over.",
-      "body": "Export your findings, or share a link. A shared report holds scores and advice only; it carries no lines from your CV, and the link expires after 30 days."
+      "body": "Export your findings, or share a link. A shared report holds scores and advice only; it carries no lines from your CV, and the link expires after 30 days.",
+      "link": "See reports"
     },
     "closing": {
       "title": "Read your CV the way the parser does.",

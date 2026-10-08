@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Fragment, type CSSProperties } from "react";
 
 import { FaqSection } from "@/components/faq-section";
+import { FeatureGrid } from "@/components/features/feature-grid";
 import { FeatureVisual, type FeatureVisualKey } from "@/components/home/feature-visuals";
 import { HeroStickers } from "@/components/home/hero-stickers";
 import { SectionBreak } from "@/components/home/section-break";
@@ -16,19 +17,20 @@ import { SectionHeadline } from "@/components/ui/section-headline";
 import { Tag } from "@/components/ui/tag";
 import { Link } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { getFeatureContent } from "@/lib/features/content";
 import { buildFaqJsonLd, buildHomeJsonLd, buildHowToJsonLd, FAQ_IDS, pageAlternates } from "@/lib/seo";
 import { cx } from "@/lib/ui";
 
 interface Feature {
   readonly key: FeatureVisualKey;
-  readonly href?: "/analyze" | "/applications";
+  readonly href: "/analyze" | "/applications" | "/features/interview" | "/features/reports";
 }
 
 const FEATURES: readonly Feature[] = [
   { key: "analyze", href: "/analyze" },
   { key: "tracker", href: "/applications" },
-  { key: "interview" },
-  { key: "report" }
+  { key: "interview", href: "/features/interview" },
+  { key: "report", href: "/features/reports" }
 ];
 
 interface HomePageProps {
@@ -47,6 +49,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const t = await getTranslations("home");
   const metadata = await getTranslations("metadata");
   const faqT = await getTranslations("faq");
+  const featuresT = await getTranslations("features");
 
   const faqItems = FAQ_IDS.map((id) => ({
     id,
@@ -109,11 +112,9 @@ export default async function HomePage({ params }: HomePageProps) {
                 >
                   <p>{t(`${feature.key}.body`)}</p>
                 </SectionHeadline>
-                {feature.href ? (
-                  <GhostLink href={feature.href} className="mt-8 -ml-3">
-                    {t(`${feature.key}.link`)}
-                  </GhostLink>
-                ) : null}
+                <GhostLink href={feature.href} className="mt-8 -ml-3">
+                  {t(`${feature.key}.link`)}
+                </GhostLink>
               </div>
 
               <div
@@ -131,6 +132,23 @@ export default async function HomePage({ params }: HomePageProps) {
 
       <SectionBreak />
 
+      <section
+        aria-labelledby="all-features"
+        className="mx-auto w-full max-w-page px-4 py-section-sm sm:px-6 lg:py-section"
+      >
+        <SectionHeadline id="all-features" title={featuresT("homeTitle")}>
+          <p>{featuresT("homeBody")}</p>
+        </SectionHeadline>
+        <div className="mt-10">
+          <FeatureGrid content={getFeatureContent(locale as AppLocale)} />
+        </div>
+        <GhostLink href="/features" className="mt-6 -ml-3">
+          {featuresT("all")}
+        </GhostLink>
+      </section>
+
+      <SectionBreak flip />
+
       <section className="mx-auto w-full max-w-page px-4 py-section-sm sm:px-6 lg:py-section">
         <div className="bench reveal-up p-6 sm:p-10 lg:p-14">
           <SectionHeadline title={t("how.title")}>
@@ -139,7 +157,7 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
       </section>
 
-      <SectionBreak flip />
+      <SectionBreak />
 
       <section className="mx-auto w-full max-w-page overflow-x-clip px-4 py-section-sm sm:px-6 lg:py-section">
         <div

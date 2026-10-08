@@ -101,11 +101,10 @@ describe("robots output", () => {
 });
 
 describe("sitemap output", () => {
-  it("has 18 entries with lastModified, 4 language keys each and includes legal and blog pages", async () => {
+  it("has one entry per public path and locale, 4 language keys each, and includes legal and blog pages", async () => {
     const { default: sitemap } = await import("@/app/sitemap");
     const entries = await sitemap();
-    // Six public paths in three locales.
-    expect(entries).toHaveLength(18);
+    expect(entries).toHaveLength(PUBLIC_PATHS.length * routing.locales.length);
     const urls = entries.map((e) => e.url);
     expect(urls).toContain(`${SITE_URL}/blog`);
     expect(urls).toContain(`${SITE_URL}/tr/blog`);

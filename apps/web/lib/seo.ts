@@ -1,4 +1,5 @@
 import { routing, type AppLocale } from "@/i18n/routing";
+import { FEATURE_SLUGS, featurePath } from "@/lib/features";
 
 import { SITE_ENTITY } from "@/lib/site-entity";
 
@@ -6,8 +7,19 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
 ).replace(/\/$/, "");
 
-export const PUBLIC_PATHS = ["/", "/about", "/privacy", "/kvkk", "/data-request", "/blog"] as const;
-export type PublicPath = (typeof PUBLIC_PATHS)[number];
+const STATIC_PATHS = [
+  "/",
+  "/about",
+  "/privacy",
+  "/kvkk",
+  "/data-request",
+  "/blog",
+  "/features",
+  "/faq",
+  "/quick-test"
+] as const;
+export type PublicPath = (typeof STATIC_PATHS)[number] | ReturnType<typeof featurePath>;
+export const PUBLIC_PATHS: readonly PublicPath[] = [...STATIC_PATHS, ...FEATURE_SLUGS.map(featurePath)];
 
 export const OPEN_GRAPH_LOCALE: Readonly<Record<AppLocale, string>> = {
   en: "en_US",
