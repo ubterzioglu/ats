@@ -1,8 +1,14 @@
+import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
+import { JsonLd } from "@/components/json-ld";
 import { SiteCredit } from "@/components/site-credit";
 import { type AppLocale } from "@/i18n/routing";
-import { pageAlternates } from "@/lib/seo";
+import { buildAiFaqJsonLd, pageAlternates } from "@/lib/seo";
+
+const TITLE = "ATS Readability: full feature reference";
+const DESCRIPTION =
+  "Long-form description of every ATS Readability feature in Turkish, English and German, written for search and answer engines.";
 
 interface AiFaqPageProps {
   readonly params: Promise<{ readonly locale: string }>;
@@ -11,19 +17,39 @@ interface AiFaqPageProps {
 export async function generateMetadata({ params }: AiFaqPageProps): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: "ATS Readability: full feature reference",
-    description:
-      "Long-form description of every ATS Readability feature in Turkish, English and German, written for search and answer engines.",
+    title: TITLE,
+    description: DESCRIPTION,
     alternates: pageAlternates(locale as AppLocale, "/ai-faq")
   };
 }
 
-export default function AiFaqPage() {
+const SECTIONS = [
+  { lang: "tr", id: "tr", name: "Türkçe" },
+  { lang: "en", id: "en", name: "English" },
+  { lang: "de", id: "de", name: "Deutsch" }
+] as const;
+
+export default async function AiFaqPage({ params }: AiFaqPageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <div className="mx-auto w-full max-w-page px-4 py-8 sm:px-6">
+      <JsonLd data={buildAiFaqJsonLd(locale as AppLocale, TITLE, DESCRIPTION, SECTIONS)} />
+      <header className="mb-10">
+        <h1 className="text-3xl font-bold text-ink">{TITLE}</h1>
+        <p className="mt-3 text-muted">{DESCRIPTION}</p>
+        <nav aria-label="Language" className="mt-4 flex gap-4 text-sm">
+          {SECTIONS.map((section) => (
+            <a key={section.id} href={`#${section.id}`} hrefLang={section.lang} lang={section.lang}>
+              {section.name}
+            </a>
+          ))}
+        </nav>
+      </header>
       {/* ===== TÜRKÇE ===== */}
-      <article className="prose prose-lg max-w-none">
-        <h1>ATS Readability: Adayın İş Arama Sürecini Güçlendiren Özellikler</h1>
+      <article id="tr" lang="tr" className="prose prose-lg max-w-none">
+        <h2>ATS Readability: Adayın İş Arama Sürecini Güçlendiren Özellikler</h2>
 
         <p>
           ATS Readability, iş arayan adayların CV&apos;lerini aday takip sistemlerinin (ATS) okuduğu
@@ -379,8 +405,8 @@ export default function AiFaqPage() {
       <hr className="my-12 border-line" />
 
       {/* ===== ENGLISH ===== */}
-      <article className="prose prose-lg max-w-none">
-        <h1>ATS Readability: Features That Empower Candidates in Their Job Search</h1>
+      <article id="en" lang="en" className="prose prose-lg max-w-none">
+        <h2>ATS Readability: Features That Empower Candidates in Their Job Search</h2>
 
         <p>
           ATS Readability is a comprehensive platform that helps job seekers see their CVs the way
@@ -727,8 +753,8 @@ export default function AiFaqPage() {
       <hr className="my-12 border-line" />
 
       {/* ===== DEUTSCH ===== */}
-      <article className="prose prose-lg max-w-none">
-        <h1>ATS Readability: Funktionen, die Bewerber im Jobsearch stärken</h1>
+      <article id="de" lang="de" className="prose prose-lg max-w-none">
+        <h2>ATS Readability: Funktionen, die Bewerber im Jobsearch stärken</h2>
 
         <p>
           ATS Readability ist eine umfassende Plattform, die Bewerbern hilft, ihre Lebensläufe so

@@ -1,5 +1,5 @@
 import { routing, type AppLocale } from "@/i18n/routing";
-import { FEATURE_SLUGS, featurePath } from "@/lib/features";
+import { FEATURE_SLUGS, featurePath, type FeatureSlug } from "@/lib/features";
 
 import { SITE_ENTITY } from "@/lib/site-entity";
 
@@ -151,6 +151,91 @@ export function buildBreadcrumbJsonLd(
         item: absoluteUrl(locale, path)
       }
     ]
+  };
+}
+
+export function buildFeaturePageJsonLd(
+  locale: AppLocale,
+  slug: FeatureSlug,
+  name: string,
+  description: string,
+  labels: { readonly home: string; readonly features: string }
+): readonly JsonLdNode[] {
+  const url = absoluteUrl(locale, featurePath(slug));
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      name,
+      description,
+      url,
+      inLanguage: locale,
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": ORGANIZATION_ID }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: labels.home, item: absoluteUrl(locale, "/") },
+        { "@type": "ListItem", position: 2, name: labels.features, item: absoluteUrl(locale, "/features") },
+        { "@type": "ListItem", position: 3, name, item: url }
+      ]
+    }
+  ];
+}
+
+export function buildFeatureListJsonLd(
+  locale: AppLocale,
+  name: string,
+  description: string,
+  items: readonly { readonly slug: FeatureSlug; readonly title: string }[]
+): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url: absoluteUrl(locale, "/features"),
+    inLanguage: locale,
+    isPartOf: { "@id": WEBSITE_ID },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: items.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.title,
+        url: absoluteUrl(locale, featurePath(item.slug))
+      }))
+    }
+  };
+}
+
+export function buildAiFaqJsonLd(
+  locale: AppLocale,
+  name: string,
+  description: string,
+  sections: readonly { readonly lang: string; readonly id: string; readonly name: string }[]
+): JsonLdNode {
+  const url = absoluteUrl(locale, "/ai-faq");
+  return {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: name,
+    description,
+    url,
+    inLanguage: locale,
+    dateModified: BUILD_DATE,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": ORGANIZATION_ID },
+    publisher: { "@id": ORGANIZATION_ID },
+    hasPart: sections.map((section) => ({
+      "@type": "WebPageElement",
+      name: section.name,
+      inLanguage: section.lang,
+      url: `${url}#${section.id}`
+    }))
   };
 }
 

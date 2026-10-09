@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { JsonLd } from "@/components/json-ld";
 import { LinkedinCheck } from "@/components/linkedin/linkedin-check";
 import { SiteCredit } from "@/components/site-credit";
 import { GhostLink } from "@/components/ui/ghost-link";
@@ -15,7 +16,7 @@ import {
   neighbours
 } from "@/lib/features";
 import { getFeatureContent } from "@/lib/features/content";
-import { pageAlternates } from "@/lib/seo";
+import { buildFeaturePageJsonLd, pageAlternates } from "@/lib/seo";
 
 interface FeaturePageProps {
   readonly params: Promise<{ readonly locale: string; readonly slug: string }>;
@@ -42,6 +43,7 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
   setRequestLocale(locale);
 
   const t = await getTranslations("features");
+  const tNav = await getTranslations("nav");
   const content = getFeatureContent(locale as AppLocale);
   const entry = content[slug];
   const tool = FEATURE_TOOLS[slug];
@@ -50,6 +52,12 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
   return (
     <div className="mx-auto w-full max-w-page px-4 sm:px-6">
       <main className="py-8 sm:py-10">
+        <JsonLd
+          data={buildFeaturePageJsonLd(locale as AppLocale, slug, entry.title, entry.summary, {
+            home: tNav("home"),
+            features: t("title")
+          })}
+        />
         <GhostLink href="/features" className="-ml-3">
           {t("all")}
         </GhostLink>

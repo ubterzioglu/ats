@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
+import { getFeatureContent } from "@/lib/features/content";
+import { FEATURE_SLUGS, featurePath } from "@/lib/features";
 import { PUBLIC_PATHS, SITE_URL } from "@/lib/seo";
 import { SITE_ENTITY } from "@/lib/site-entity";
 
@@ -9,27 +11,31 @@ export async function GET(): Promise<Response> {
   const metadata = await getTranslations({ locale: "en", namespace: "metadata" });
   const home = await getTranslations({ locale: "en", namespace: "home" });
   const common = await getTranslations({ locale: "en", namespace: "common" });
-  const faq = await getTranslations({ locale: "en", namespace: "faq" });
+
+  const PAGE_LABELS: Readonly<Record<string, string>> = {
+    "/about": "About",
+    "/privacy": "Privacy Notice",
+    "/kvkk": "KVKK Notice",
+    "/data-request": "Data Request",
+    "/blog": "Blog",
+    "/features": "Features overview",
+    "/faq": "Frequently asked questions",
+    "/ai-faq": "Full feature reference (Turkish, English, German)",
+    "/quick-test": "Quick test"
+  };
+  const featureSlugPaths = new Set<string>(FEATURE_SLUGS.map(featurePath));
 
   const pageLinks = [
     `- [Home](${SITE_URL}/)`,
-    ...PUBLIC_PATHS.filter((p) => p !== "/").map((path) => {
-      const label =
-        path === "/about"
-          ? "About"
-          : path === "/privacy"
-            ? "Privacy Notice"
-            : path === "/kvkk"
-              ? "KVKK Notice"
-              : path === "/data-request"
-                ? "Data Request"
-                : path === "/blog"
-                  ? "Blog"
-                  : path;
-      return `- [${label}](${SITE_URL}${path})`;
-    }),
-    `- [FAQ](${SITE_URL}/#faq)`
+    ...PUBLIC_PATHS.filter((p) => p !== "/" && !featureSlugPaths.has(p)).map(
+      (path) => `- [${PAGE_LABELS[path] ?? path}](${SITE_URL}${path})`
+    )
   ].join("\n");
+
+  const features = getFeatureContent("en");
+  const featureLinks = FEATURE_SLUGS.map(
+    (slug) => `- [${features[slug].title}](${SITE_URL}${featurePath(slug)}): ${features[slug].summary}`
+  ).join("\n");
 
   const body = `# ATS readability
 
@@ -39,6 +45,9 @@ ${home("privacyTag")}
 
 ## Pages
 ${pageLinks}
+
+## Features
+${featureLinks}
 
 ## How it works
 ${home("how.body")}

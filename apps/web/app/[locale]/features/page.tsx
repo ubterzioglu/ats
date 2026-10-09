@@ -1,11 +1,13 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
+import { JsonLd } from "@/components/json-ld";
 import { FeatureGrid } from "@/components/features/feature-grid";
 import { SiteCredit } from "@/components/site-credit";
 import { type AppLocale } from "@/i18n/routing";
 import { getFeatureContent } from "@/lib/features/content";
-import { pageAlternates } from "@/lib/seo";
+import { FEATURE_SLUGS } from "@/lib/features";
+import { buildFeatureListJsonLd, pageAlternates } from "@/lib/seo";
 
 interface FeaturesPageProps {
   readonly params: Promise<{ readonly locale: string }>;
@@ -31,6 +33,14 @@ export default async function FeaturesPage({ params }: FeaturesPageProps) {
   return (
     <div className="mx-auto w-full max-w-page px-4 sm:px-6">
       <main className="py-8 sm:py-10">
+        <JsonLd
+          data={buildFeatureListJsonLd(
+            locale as AppLocale,
+            t("title"),
+            t("lead"),
+            FEATURE_SLUGS.map((slug) => ({ slug, title: content[slug].title }))
+          )}
+        />
         <div className="mb-10 max-w-measure">
           <h1 id="features-heading" className="text-heading-sm font-normal">
             {t("title")}

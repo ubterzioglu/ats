@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { routing } from "@/i18n/routing";
 import { FEATURE_SLUGS, featurePath, isFeatureSlug, neighbours } from "@/lib/features";
 import { getFeatureContent } from "@/lib/features/content";
-import { PUBLIC_PATHS } from "@/lib/seo";
+import { PUBLIC_PATHS, buildAiFaqJsonLd, buildFeatureListJsonLd, buildFeaturePageJsonLd } from "@/lib/seo";
 
 describe("feature content", () => {
   for (const locale of routing.locales) {
@@ -50,5 +50,39 @@ describe("feature slugs", () => {
     expect(first && neighbours(first).previous).toBeNull();
     expect(last && neighbours(last).next).toBeNull();
     expect(neighbours("parser-view")).toEqual({ previous: "scoring", next: "job-ad" });
+  });
+});
+
+describe("feature structured data", () => {
+  it("builds a WebPage and a three-level breadcrumb for a feature", () => {
+    const [page, crumbs] = buildFeaturePageJsonLd("tr", "scoring", "Puanlama", "Özet", {
+      home: "Ana sayfa",
+      features: "Özellikler"
+    });
+    expect(page?.["@type"]).toBe("WebPage");
+    expect(page?.inLanguage).toBe("tr");
+    const items = crumbs?.itemListElement as readonly { readonly position: number }[];
+    expect(items.map((item) => item.position)).toEqual([1, 2, 3]);
+  });
+
+  it("lists every feature in the collection ItemList", () => {
+    const content = getFeatureContent("en");
+    const list = buildFeatureListJsonLd(
+      "en",
+      "Features",
+      "All features",
+      FEATURE_SLUGS.map((slug) => ({ slug, title: content[slug].title }))
+    );
+    const entity = list.mainEntity as { readonly itemListElement: readonly unknown[] };
+    expect(entity.itemListElement).toHaveLength(FEATURE_SLUGS.length);
+  });
+
+  it("describes the three language sections of /ai-faq", () => {
+    const article = buildAiFaqJsonLd("en", "Title", "Description", [
+      { lang: "tr", id: "tr", name: "Türkçe" },
+      { lang: "en", id: "en", name: "English" }
+    ]);
+    expect(article["@type"]).toBe("TechArticle");
+    expect(article.hasPart).toHaveLength(2);
   });
 });
