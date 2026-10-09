@@ -16,6 +16,7 @@ const STATIC_PATHS = [
   "/blog",
   "/features",
   "/faq",
+  "/ai-faq",
   "/quick-test"
 ] as const;
 export type PublicPath = (typeof STATIC_PATHS)[number] | ReturnType<typeof featurePath>;
