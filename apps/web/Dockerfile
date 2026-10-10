@@ -22,6 +22,14 @@ ARG NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
 ENV NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
 RUN node scripts/copy-pdf-worker.mjs && npm run build
+# The runner starts /app/server.js. If tracing nests it (a different build
+# context or tracing root), fail here with its real location instead of
+# shipping an image that crash-loops behind a healthcheck.
+RUN test -f .next/standalone/server.js || { \
+      echo "server.js is not at .next/standalone/; found:"; \
+      find .next/standalone -name server.js -not -path "*/node_modules/*"; \
+      exit 1; \
+    }
 
 FROM base AS runner
 ENV NODE_ENV=production
