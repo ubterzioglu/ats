@@ -34,6 +34,13 @@ const nextConfig: NextConfig = {
             value: "camera=(), microphone=(), geolocation=()"
           }
         ]
+      },
+      {
+        // Googlebot fetches fonts and chunks to render pages. noindex keeps
+        // them out of the index reports without blocking that fetch the way
+        // a robots.txt disallow would.
+        source: "/_next/static/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }]
       }
     ];
   },
