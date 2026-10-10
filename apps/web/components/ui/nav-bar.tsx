@@ -101,7 +101,7 @@ export function NavBar() {
     <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-6">
       <div
         className={cx(
-          "relative mx-auto flex w-full max-w-page flex-wrap items-center justify-between gap-x-4 rounded-[1.75rem] border-2 px-3 py-1.5 transition-[background-color,border-color,box-shadow] duration-300 sm:px-4",
+          "relative mx-auto flex w-full max-w-page flex-wrap items-center justify-between gap-x-4 xl:flex-nowrap xl:gap-x-2 rounded-[1.75rem] border-2 px-3 py-1.5 transition-[background-color,border-color,box-shadow] duration-300 sm:px-4",
           scrolled
             ? "nav-sheen border-lime/30 bg-void/95 shadow-[0_0_32px_-8px_rgb(var(--lime)/0.45)] backdrop-blur-md"
             : "border-transparent bg-transparent"
@@ -130,7 +130,7 @@ export function NavBar() {
 
         <nav
           aria-label={nav("label")}
-          className="order-3 -ml-3 flex w-full items-center overflow-x-auto whitespace-nowrap md:order-none md:ml-0 md:w-auto md:flex-1 md:justify-center md:overflow-visible"
+          className="order-3 -ml-3 flex w-full items-center overflow-x-auto whitespace-nowrap md:order-none md:ml-0 md:w-auto md:flex-1 md:justify-center md:overflow-visible xl:min-w-0"
         >
           {LINKS.map((link, index) => {
             const active = pathname === link.href || pathname.startsWith(`${link.href}/`) || (link.key === "feedback" && pathname.startsWith("/admin/feedback"));
@@ -140,7 +140,7 @@ export function NavBar() {
             const target = link.key === "feedback" && inAdmin ? "/admin/feedback" : link.href;
             const href = !signedIn && isProtected ? `/login?next=${encodeURIComponent(link.href)}` : target;
             const ghost = (
-              <GhostLink href={href} active={active} className="px-2 lg:px-2.5">
+              <GhostLink href={href} active={active} className="px-2 lg:px-2.5 xl:px-1.5 2xl:px-2.5">
                 {link.key === "applications" ? common("applications") : nav(link.key)}
               </GhostLink>
             );
@@ -178,14 +178,14 @@ export function NavBar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1 whitespace-nowrap">
           <LanguageSwitcher />
           {signedIn ? (
-            <div className="flex items-center gap-2">
-              <GhostLink href="/account" active={pathname === "/account"}>
+            <div className="flex items-center">
+              <GhostLink href="/account" active={pathname === "/account"} className="px-2">
                 {nav("profile")}
               </GhostLink>
-              <button type="button" className="btn-quiet" onClick={() => void signOut()}>
+              <button type="button" className="btn-quiet px-2" onClick={() => void signOut()}>
                 {common("signOut")}
               </button>
             </div>
@@ -193,7 +193,7 @@ export function NavBar() {
             <GhostLink href="/login">{common("signIn")}</GhostLink>
           )}
           {onLanding ? (
-            <PrimaryButton href={signedIn ? "/analyze" : "/login?next=/analyze"}>
+            <PrimaryButton href={signedIn ? "/analyze" : "/login?next=/analyze"} className="ml-1 whitespace-nowrap px-4">
               {nav("cta")}
             </PrimaryButton>
           ) : null}
