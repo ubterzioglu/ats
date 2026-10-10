@@ -7,7 +7,10 @@ services:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
         NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-}
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:-}
-    container_name: ats_web
+    # No container_name: a fixed name forces the old container to stop before
+    # the new one starts, so every deploy leaves a window of 502s. Production
+    # should use Coolify's Dockerfile build pack, which rolls over on the
+    # Dockerfile HEALTHCHECK; compose deployments never roll.
     restart: unless-stopped
     # Not published to the host. A fixed host port collides with whatever already
     # holds it on the deployment server, and Coolify's proxy reaches the container
