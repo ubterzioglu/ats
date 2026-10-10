@@ -83,7 +83,7 @@ export default async function HomePage({ params }: HomePageProps) {
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
             <PrimaryButton href="/analyze">{t("cta")}</PrimaryButton>
             {/* Plain anchor: an in-page fragment is not a typed route. */}
-            <a href="#tools" className="btn-quiet">
+            <a href="#tools" className="btn-dark">
               {t("toolsCta")}
             </a>
           </div>
