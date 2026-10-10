@@ -26,7 +26,7 @@
     "previous": "Zurück",
     "next": "Weiter",
     "all": "Alle Funktionen",
-    "homeTitle": "Jede Funktion im Detail",
+    "homeTitle": "Werkzeuge",
     "homeBody": "Jeder Teil der Plattform hat eine eigene Seite: was er prüft, was er nie tut und wo Sie ihn finden.",
     "moreTools": "Mehr",
     "linkedin": {
@@ -69,6 +69,7 @@
     "lede": "ATS readability ist ein kostenloses Werkzeug, das einen Lebenslauf so zeigt, wie ein Bewerbermanagementsystem ihn liest: als Text. Es bewertet, was übrig blieb, auf 100 Punkte und listet die Korrekturen nach Wert.",
     "cta": "Lebenslauf analysieren",
     "privacyTag": "Im Browser gelesen, 12 Monate gespeichert",
+    "toolsCta": "Werkzeuge",
     "demo": {
       "label": "Beispielbericht, nicht Ihr Lebenslauf",
       "parse": "Lesbarkeit",

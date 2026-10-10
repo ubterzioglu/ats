@@ -26,7 +26,7 @@
     "previous": "Önceki",
     "next": "Sonraki",
     "all": "Tüm özellikler",
-    "homeTitle": "Her özellik, ayrıntısıyla",
+    "homeTitle": "Araçlar",
     "homeBody": "Platformun her parçasının kendi sayfası var: neyi kontrol ettiği, neyi asla yapmadığı ve nerede bulunduğu.",
     "moreTools": "Diğer",
     "linkedin": {
@@ -69,6 +69,7 @@
     "lede": "ATS readability, bir CV'yi aday takip sisteminin okuduğu gibi gösteren ücretsiz bir araçtır: metin olarak. Geriye kalanı 100 üzerinden puanlar ve düzeltmeleri değerlerine göre sıralar.",
     "cta": "CV'nizi analiz edin",
     "privacyTag": "Tarayıcınızda okunur, 12 ay saklanır",
+    "toolsCta": "Araçlar",
     "demo": {
       "label": "Örnek rapor, sizin CV'niz değil",
       "parse": "Okunabilirlik",

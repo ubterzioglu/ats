@@ -26,7 +26,7 @@
     "previous": "Previous",
     "next": "Next",
     "all": "All features",
-    "homeTitle": "Every feature, explained",
+    "homeTitle": "Tools",
     "homeBody": "Each part of the platform has its own page: what it checks, what it never does, and where to find it.",
     "moreTools": "More",
     "linkedin": {
@@ -69,6 +69,7 @@
     "lede": "ATS readability is a free tool that shows a CV the way an applicant tracking system reads it: as text. It scores what survived out of 100 and lists the fixes in order of value.",
     "cta": "Analyze a CV",
     "privacyTag": "Read in your browser, stored for 12 months",
+    "toolsCta": "Tools",
     "demo": {
       "label": "Example report, not your CV",
       "parse": "Parseability",

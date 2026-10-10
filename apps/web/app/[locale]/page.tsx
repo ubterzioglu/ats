@@ -14,7 +14,6 @@ import { JsonLd } from "@/components/json-ld";
 import { SiteCredit } from "@/components/site-credit";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { SectionHeadline } from "@/components/ui/section-headline";
-import { Tag } from "@/components/ui/tag";
 import { Link } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { getFeatureContent } from "@/lib/features/content";
@@ -83,7 +82,10 @@ export default async function HomePage({ params }: HomePageProps) {
           </SectionHeadline>
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
             <PrimaryButton href="/analyze">{t("cta")}</PrimaryButton>
-            <Tag tone="quiet">{t("privacyTag")}</Tag>
+            {/* Plain anchor: an in-page fragment is not a typed route. */}
+            <a href="#tools" className="btn-quiet">
+              {t("toolsCta")}
+            </a>
           </div>
         </div>
 
@@ -133,8 +135,9 @@ export default async function HomePage({ params }: HomePageProps) {
       <SectionBreak />
 
       <section
+        id="tools"
         aria-labelledby="all-features"
-        className="mx-auto w-full max-w-page px-4 py-section-sm sm:px-6 lg:py-section"
+        className="mx-auto w-full max-w-page scroll-mt-24 px-4 py-section-sm sm:px-6 lg:py-section"
       >
         <SectionHeadline id="all-features" title={featuresT("homeTitle")}>
           <p>{featuresT("homeBody")}</p>
