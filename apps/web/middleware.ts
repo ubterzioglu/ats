@@ -3,12 +3,21 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { routing } from "@/i18n/routing";
 import { requestOrigin } from "@/lib/auth/origin";
+import { canonicalHostRedirect } from "@/lib/canonical-host";
 import { decideAccess } from "@/lib/auth/routes";
 import { updateSession } from "@/lib/supabase/middleware";
 
 const handleLocale = createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
+  const canonical = canonicalHostRedirect({
+    host: request.headers.get("x-forwarded-host") ?? request.headers.get("host"),
+    pathname: request.nextUrl.pathname,
+    search: request.nextUrl.search,
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL
+  });
+  if (canonical) return NextResponse.redirect(canonical, 308);
+
   const localeResponse = handleLocale(request);
   const { response, user } = await updateSession(request, localeResponse);
 
