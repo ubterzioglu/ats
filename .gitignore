@@ -55,3 +55,6 @@ skills-lock.json
 
 # Temp
 /tmp/
+
+# Local-only documents (personal CVs, research drafts). Never pushed.
+/docs/
