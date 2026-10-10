@@ -64,10 +64,6 @@ export function SubmissionDetailClient({ submission, locale }: SubmissionDetailC
             <dt className="text-sm text-muted">{t("language")}</dt>
             <dd className="text-ink">{submission.language ?? "—"}</dd>
           </div>
-          <div>
-            <dt className="text-sm text-muted">{t("driveStatus")}</dt>
-            <dd className="text-ink">{submission.drive_status}</dd>
-          </div>
         </dl>
       </div>
 

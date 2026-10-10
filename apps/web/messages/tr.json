@@ -184,7 +184,7 @@
       },
       "retention": {
         "q": "Verilerim ne kadar süre saklanıyor?",
-        "a": "Yükleme tarihinden itibaren on iki ay. Sonra dosya, çıkarılan metin ve analiz sonucu veritabanından, depolamadan ve Google Drive yedeğinden silinir."
+        "a": "Yükleme tarihinden itibaren on iki ay. Sonra dosya, çıkarılan metin ve analiz sonucu veritabanından ve depolamadan silinir."
       },
       "delete": {
         "q": "Verilerimi nasıl sildiririm?",
@@ -894,7 +894,6 @@
       "month": "Bu Ay",
       "total": "Toplam",
       "avgScore": "Ort Puan",
-      "driveFailures": "Drive Hataları",
       "openRequests": "Açık Talepler"
     },
     "filters": {
@@ -903,9 +902,7 @@
       "band": "Bant",
       "allBands": "Tüm Bantlar",
       "language": "Dil",
-      "allLanguages": "Tüm Diller",
-      "driveStatus": "Drive Durumu",
-      "allStatuses": "Tüm Durumlar"
+      "allLanguages": "Tüm Diller"
     },
     "table": {
       "created": "Oluşturulma",
@@ -913,7 +910,6 @@
       "language": "Dil",
       "score": "Puan",
       "band": "Bant",
-      "drive": "Drive",
       "expires": "Son Kullanma",
       "noSubmissions": "Gönderim bulunamadı"
     },
@@ -997,7 +993,7 @@
     "detail": {
       "title": "Başvuru",
       "subtitle": "Kimlik {id}",
-      "confirmDelete": "Bu başvuru, saklanan dosyası ve Drive kopyası silinsin mi? Bu işlem geri alınamaz.",
+      "confirmDelete": "Bu başvuru ve saklanan dosyası silinsin mi? Bu işlem geri alınamaz.",
       "deleteFailed": "Başvuru silinemedi. Yeniden deneyin.",
       "downloadFailed": "Dosya indirilemedi. Yeniden deneyin.",
       "metadata": "Ayrıntılar",
@@ -1006,7 +1002,6 @@
       "file": "Dosya",
       "size": "Boyut",
       "language": "Dil",
-      "driveStatus": "Drive yedeği",
       "score": "Puan",
       "findings": "Bulgular",
       "cvText": "Çıkarılan CV metni",
@@ -1095,7 +1090,7 @@
     },
     "section5": {
       "title": "5. Veri Aktarımı",
-      "content": "Verileriniz şu kurumlara aktarılır: Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion}); Google LLC (Google Drive yedeği, ABD); barındırma sağlayıcısı (konum: {hostingLocation}); Zoho Corporation (kayıt bildiriminin site sahibine e-posta ile iletilmesi). Yurt dışına aktarımlar KVKK m.9 kapsamında uygun güvencelerle yapılır."
+      "content": "Verileriniz şu kurumlara aktarılır: Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion}); barındırma sağlayıcısı (konum: {hostingLocation}); Zoho Corporation (kayıt bildiriminin site sahibine e-posta ile iletilmesi). Yurt dışına aktarımlar KVKK m.9 kapsamında uygun güvencelerle yapılır."
     },
     "section6": {
       "title": "6. Saklama Süresi",
@@ -1144,7 +1139,6 @@
       "title": "4. Veri Alıcıları",
       "intro": "Verileriniz şu kurumlara aktarılır:",
       "item1": "Supabase (veritabanı ve dosya depolama, bölge: {supabaseRegion})",
-      "item2": "Google LLC (Google Drive yedeği, ABD)",
       "item3": "Barındırma sağlayıcısı (konum: {hostingLocation})",
       "item4": "Microsoft Corporation (Clarity analitiği, ABD, sadece onayınızla)",
       "item5": "Zoho Corporation (kayıt bildiriminin site sahibine e-posta ile iletilmesi; hesap e-posta adresinizi alır)"

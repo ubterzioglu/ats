@@ -11,7 +11,6 @@ export interface Submission {
   language: string | null;
   total: number | null;
   band: string | null;
-  drive_status: string;
   user_id: string | null;
 }
 
@@ -19,7 +18,6 @@ export interface SubmissionsFilters {
   q?: string;
   band?: string;
   language?: string;
-  driveStatus?: string;
   from?: string;
   to?: string;
   page?: number;
@@ -42,7 +40,7 @@ export async function listSubmissions(filters: SubmissionsFilters): Promise<{
 
   let query = supabase
     .from("cv_submissions")
-    .select("id, created_at, expires_at, file_name, file_size, language, total, band, drive_status, user_id", { count: "exact" })
+    .select("id, created_at, expires_at, file_name, file_size, language, total, band, user_id", { count: "exact" })
     .order("created_at", { ascending: false });
 
   if (filters.q) {
@@ -53,9 +51,6 @@ export async function listSubmissions(filters: SubmissionsFilters): Promise<{
   }
   if (filters.language) {
     query = query.eq("language", filters.language);
-  }
-  if (filters.driveStatus) {
-    query = query.eq("drive_status", filters.driveStatus);
   }
   if (filters.from) {
     query = query.gte("created_at", filters.from);

@@ -11,12 +11,11 @@ export async function StatsCards() {
     { label: t("month"), value: stats.monthSubmissions },
     { label: t("total"), value: stats.totalSubmissions },
     { label: t("avgScore"), value: stats.averageScore !== null ? Math.round(stats.averageScore) : "—" },
-    { label: t("driveFailures"), value: stats.driveFailures },
     { label: t("openRequests"), value: stats.openRequests }
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
       {cards.map((card) => (
         <div key={card.label} className="bg-bed border border-line rounded-lg p-4">
           <div className="text-sm text-muted mb-1">{card.label}</div>

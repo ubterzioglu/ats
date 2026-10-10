@@ -148,7 +148,7 @@ export const FEATURES_DE: FeatureContent = {
     points: [
       { text: "Der Lebenslauf wird zuerst in Ihrem Browser gelesen und bewertet." },
       { text: "Bei der Analyse werden Datei, Text und Ergebnis an den Server gesendet und 12 Monate aufbewahrt." },
-      { text: "Nach 12 Monaten werden Datei, extrahierter Text und Ergebnis aus Datenbank, Speicher und Google-Drive-Backup gelöscht." },
+      { text: "Nach 12 Monaten werden Datei, extrahierter Text und Ergebnis aus Datenbank und Speicher gelöscht." },
       { text: "Freigabe-Links speichern Bewertungen und Befunde ohne Nachweise, da Nachweise Zeilen aus dem Dokument enthalten können." },
       { text: "Über das Datenanforderungsformular können Sie die Löschung beantragen." }
     ]

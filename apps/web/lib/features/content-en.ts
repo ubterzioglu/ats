@@ -148,7 +148,7 @@ export const FEATURES_EN: FeatureContent = {
     points: [
       { text: "The CV is first read and scored in your browser." },
       { text: "When you analyse it, the file, its text and the result are sent to the server and kept for 12 months." },
-      { text: "After 12 months the file, extracted text and result are deleted from the database, storage and the Google Drive backup." },
+      { text: "After 12 months the file, extracted text and result are deleted from the database and storage." },
       { text: "Share links keep scores and findings with evidence stripped, because evidence can contain lines lifted from the document." },
       { text: "You can request deletion through the data request form." }
     ]

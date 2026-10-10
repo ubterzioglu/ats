@@ -184,7 +184,7 @@
       },
       "retention": {
         "q": "How long is my data kept?",
-        "a": "Twelve months from the upload date. After that, the file, extracted text and analysis result are deleted from the database, storage and Google Drive backup."
+        "a": "Twelve months from the upload date. After that, the file, extracted text and analysis result are deleted from the database and storage."
       },
       "delete": {
         "q": "How do I delete my data?",
@@ -894,7 +894,6 @@
       "month": "This Month",
       "total": "Total",
       "avgScore": "Avg Score",
-      "driveFailures": "Drive Failures",
       "openRequests": "Open Requests"
     },
     "filters": {
@@ -903,9 +902,7 @@
       "band": "Band",
       "allBands": "All Bands",
       "language": "Language",
-      "allLanguages": "All Languages",
-      "driveStatus": "Drive Status",
-      "allStatuses": "All Statuses"
+      "allLanguages": "All Languages"
     },
     "table": {
       "created": "Created",
@@ -913,7 +910,6 @@
       "language": "Language",
       "score": "Score",
       "band": "Band",
-      "drive": "Drive",
       "expires": "Expires",
       "noSubmissions": "No submissions found"
     },
@@ -997,7 +993,7 @@
     "detail": {
       "title": "Submission",
       "subtitle": "ID {id}",
-      "confirmDelete": "Delete this submission, its stored file and its Drive copy? This cannot be undone.",
+      "confirmDelete": "Delete this submission and its stored file? This cannot be undone.",
       "deleteFailed": "The submission could not be deleted. Try again.",
       "downloadFailed": "The file could not be downloaded. Try again.",
       "metadata": "Details",
@@ -1006,7 +1002,6 @@
       "file": "File",
       "size": "Size",
       "language": "Language",
-      "driveStatus": "Drive backup",
       "score": "Score",
       "findings": "Findings",
       "cvText": "Extracted CV text",
@@ -1095,7 +1090,7 @@
     },
     "section5": {
       "title": "5. Data Transfer",
-      "content": "Your data is transferred to: Supabase (database and file storage, region: {supabaseRegion}); Google LLC (Google Drive backup, USA); hosting provider (location: {hostingLocation}); Zoho Corporation (email delivery of the sign-up notice to the site owner). International transfers are made with appropriate safeguards under KVKK Article 9."
+      "content": "Your data is transferred to: Supabase (database and file storage, region: {supabaseRegion}); hosting provider (location: {hostingLocation}); Zoho Corporation (email delivery of the sign-up notice to the site owner). International transfers are made with appropriate safeguards under KVKK Article 9."
     },
     "section6": {
       "title": "6. Retention Period",
@@ -1144,7 +1139,6 @@
       "title": "4. Data Recipients",
       "intro": "Your data is transferred to:",
       "item1": "Supabase (database and file storage, region: {supabaseRegion})",
-      "item2": "Google LLC (Google Drive backup, USA)",
       "item3": "Hosting provider (location: {hostingLocation})",
       "item4": "Microsoft Corporation (Clarity analytics, USA, only with your consent)",
       "item5": "Zoho Corporation (email delivery of the sign-up notice to the site owner; receives your account email address)"

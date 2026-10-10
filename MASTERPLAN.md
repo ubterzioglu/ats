@@ -74,7 +74,7 @@ decisions already taken that constrain the batches still to come.
 
 The CV is read and scored in the browser. Running an analysis needs sign-in. When a CV is analysed,
 the file, extracted text and result are sent to the server, stored in Supabase (database and private
-bucket), backed up to a Google Drive folder, kept 12 months, then purged; see `AGENTS.md` (privacy
+bucket), kept 12 months, then purged; see `AGENTS.md` (privacy
 contract) and `apps/web/docs/adr-0001-cv-storage.md`. The text an applicant tracking system would
 extract is shown back to the user. A deterministic score out of 100 across five
 dimensions:

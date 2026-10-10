@@ -36,7 +36,7 @@ commit messages.
   the user turns that on; downloading weights is allowed because no CV text is sent.
 - **`lib/supabase/` is server-only.** Every file starts with `import "server-only"`. Service-role client
   bypasses RLS, so validate before writing — see `app/actions.ts` for the boundary check.
-- **`lib/cv-submission/` is server-only.** Handles CV storage, validation and Drive backup. See
+- **`lib/cv-submission/` is server-only.** Handles CV storage and validation. See
   `docs/adr-0001-cv-storage.md` for the decision record.
 - **`lib/help/` is pure and serverless.** The site helper answers from a keyword bank, never sends data to a
   server, never stores anything. A future model answerer will implement the same `HelpAnswerer` interface.
@@ -78,6 +78,6 @@ not claim to predict hiring outcomes, and it does not claim to replicate a named
 
 ## Privacy contract
 
-The CV is read and scored in the browser. When a CV is analysed, the file, extracted text and result are sent to the server, stored in Supabase (database and private bucket) and backed up to a Google Drive folder, kept 12 months, then purged. Submissions and reports are bound to the user's account via `user_id`. Share links persist scores and findings with `evidence` stripped, because evidence can contain lines lifted from the document. Any further use of CV data needs an explicit product decision. See `docs/adr-0001-cv-storage.md` for the decision record.
+The CV is read and scored in the browser. When a CV is analysed, the file, extracted text and result are sent to the server, stored in Supabase (database and private bucket), kept 12 months, then purged. Submissions and reports are bound to the user's account via `user_id`. Share links persist scores and findings with `evidence` stripped, because evidence can contain lines lifted from the document. Any further use of CV data needs an explicit product decision. See `docs/adr-0001-cv-storage.md` for the decision record.
 
 A logged-in user may save a profile from CV analysis extractions. The profile is stored server-side, bound to the account, and retained until the account is deleted. Profile data is never written without explicit user confirmation, and never feeds into `lib/scoring/`. See `docs/adr-0002-user-profile.md` for the decision record.

@@ -19,11 +19,7 @@ export async function deleteSubmissionAction(id: string): Promise<DeleteOutcome>
   }
 
   const result = await deleteSubmissionWithCleanup(
-    {
-      id: submission.id,
-      storage_path: submission.storage_path,
-      drive_file_id: submission.drive_file_id
-    },
+    { id: submission.id, storage_path: submission.storage_path },
     adminEmail
   );
 

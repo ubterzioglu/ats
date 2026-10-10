@@ -12,8 +12,6 @@ export interface SubmissionDetail {
   language: string | null;
   total: number | null;
   band: string | null;
-  drive_status: string;
-  drive_file_id: string | null;
   storage_path: string | null;
   cv_text: string;
   job_description: string | null;

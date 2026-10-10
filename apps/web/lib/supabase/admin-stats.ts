@@ -8,7 +8,6 @@ export interface AdminStats {
   weekSubmissions: number;
   monthSubmissions: number;
   averageScore: number | null;
-  driveFailures: number;
   openRequests: number;
 }
 
@@ -21,7 +20,6 @@ export async function getAdminStats(): Promise<AdminStats> {
       weekSubmissions: 0,
       monthSubmissions: 0,
       averageScore: null,
-      driveFailures: 0,
       openRequests: 0
     };
   }
@@ -37,7 +35,6 @@ export async function getAdminStats(): Promise<AdminStats> {
     weekResult,
     monthResult,
     avgResult,
-    driveFailResult,
     openRequestsResult
   ] = await Promise.all([
     supabase.from("cv_submissions").select("*", { count: "exact", head: true }),
@@ -45,7 +42,6 @@ export async function getAdminStats(): Promise<AdminStats> {
     supabase.from("cv_submissions").select("*", { count: "exact", head: true }).gte("created_at", weekAgo),
     supabase.from("cv_submissions").select("*", { count: "exact", head: true }).gte("created_at", monthAgo),
     supabase.from("cv_submissions").select("total").not("total", "is", null),
-    supabase.from("cv_submissions").select("*", { count: "exact", head: true }).eq("drive_status", "failed"),
     supabase.from("data_requests").select("*", { count: "exact", head: true }).eq("status", "open")
   ]);
 
@@ -60,7 +56,6 @@ export async function getAdminStats(): Promise<AdminStats> {
     weekSubmissions: weekResult.count ?? 0,
     monthSubmissions: monthResult.count ?? 0,
     averageScore,
-    driveFailures: driveFailResult.count ?? 0,
     openRequests: openRequestsResult.count ?? 0
   };
 }

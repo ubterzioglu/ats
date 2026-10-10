@@ -9,7 +9,6 @@ export interface SubmissionRow {
   language: string | null;
   total: number | null;
   band: string | null;
-  drive_status: string;
   file_size: number | null;
 }
 
@@ -17,7 +16,6 @@ export async function getSubmissionsForExport(filters?: {
   q?: string;
   band?: string;
   language?: string;
-  driveStatus?: string;
   from?: string;
   to?: string;
 }): Promise<SubmissionRow[]> {
@@ -26,7 +24,7 @@ export async function getSubmissionsForExport(filters?: {
 
   let query = supabase
     .from("cv_submissions")
-    .select("id, created_at, expires_at, language, total, band, drive_status, file_size")
+    .select("id, created_at, expires_at, language, total, band, file_size")
     .order("created_at", { ascending: false })
     .limit(10000);
 
@@ -38,9 +36,6 @@ export async function getSubmissionsForExport(filters?: {
   }
   if (filters?.language) {
     query = query.eq("language", filters.language);
-  }
-  if (filters?.driveStatus) {
-    query = query.eq("drive_status", filters.driveStatus);
   }
   if (filters?.from) {
     query = query.gte("created_at", filters.from);
@@ -74,7 +69,7 @@ export function escapeCsvCell(value: string | number | null): string {
 }
 
 export function submissionsToCsv(rows: SubmissionRow[]): string {
-  const headers = ["id", "created_at", "expires_at", "language", "total", "band", "drive_status", "file_size"];
+  const headers = ["id", "created_at", "expires_at", "language", "total", "band", "file_size"];
   const lines = [headers.join(",")];
 
   for (const row of rows) {
@@ -85,7 +80,6 @@ export function submissionsToCsv(rows: SubmissionRow[]): string {
       escapeCsvCell(row.language),
       escapeCsvCell(row.total),
       escapeCsvCell(row.band),
-      escapeCsvCell(row.drive_status),
       escapeCsvCell(row.file_size)
     ];
     lines.push(cells.join(","));

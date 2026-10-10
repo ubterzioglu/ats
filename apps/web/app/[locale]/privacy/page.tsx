@@ -54,7 +54,6 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
                 supabaseRegion: LEGAL_ENTITY.supabaseRegion
               })}
             </li>
-            <li>{t("section4.item2")}</li>
             <li>
               {t("section4.item3", {
                 hostingLocation: LEGAL_ENTITY.hostingLocation

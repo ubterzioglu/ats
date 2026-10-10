@@ -61,19 +61,6 @@ export function FiltersBar() {
           <option value="de">Deutsch</option>
         </select>
       </div>
-      <div className="min-w-[150px]">
-        <label className="block text-sm text-muted mb-1">{t("driveStatus")}</label>
-        <select
-          className="w-full bg-bed border border-line rounded px-3 py-2 text-ink text-sm"
-          defaultValue={searchParams.get("driveStatus") ?? ""}
-          onChange={(e) => updateFilter("driveStatus", e.target.value)}
-        >
-          <option value="">{t("allStatuses")}</option>
-          <option value="uploaded">Uploaded</option>
-          <option value="failed">Failed</option>
-          <option value="skipped">Skipped</option>
-        </select>
-      </div>
     </div>
   );
 }

@@ -16,7 +16,6 @@ export async function GET(request: NextRequest) {
       q: searchParams.get("q") ?? undefined,
       band: searchParams.get("band") ?? undefined,
       language: searchParams.get("language") ?? undefined,
-      driveStatus: searchParams.get("driveStatus") ?? undefined,
       from: searchParams.get("from") ?? undefined,
       to: searchParams.get("to") ?? undefined
     };

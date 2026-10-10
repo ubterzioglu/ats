@@ -3,7 +3,7 @@
 Reads a CV the way an applicant tracking system reads it — as text, not as a design — and reports what survives
 parsing, what is missing, and which terms from a job ad never appear in the document.
 
-The CV is parsed and scored in the browser. When a CV is analysed, the file, extracted text and result are sent to the server, stored in Supabase (database and private bucket) and backed up to a Google Drive folder, kept 12 months, then purged. See `docs/adr-0001-cv-storage.md` for the decision record.
+The CV is parsed and scored in the browser. When a CV is analysed, the file, extracted text and result are sent to the server, stored in Supabase (database and private bucket), kept 12 months, then purged. See `docs/adr-0001-cv-storage.md` for the decision record.
 
 ## What it does
 

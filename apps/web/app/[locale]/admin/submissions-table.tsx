@@ -14,7 +14,6 @@ export async function SubmissionsTable({ filters }: SubmissionsTableProps) {
     q: typeof filters.q === "string" ? filters.q : undefined,
     band: typeof filters.band === "string" ? filters.band : undefined,
     language: typeof filters.language === "string" ? filters.language : undefined,
-    driveStatus: typeof filters.driveStatus === "string" ? filters.driveStatus : undefined,
     page,
     pageSize: 25
   });
@@ -32,14 +31,13 @@ export async function SubmissionsTable({ filters }: SubmissionsTableProps) {
               <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("language")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("score")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("band")}</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("drive")}</th>
               <th className="text-left px-4 py-3 text-sm font-medium text-muted">{t("expires")}</th>
             </tr>
           </thead>
           <tbody>
             {submissions.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-muted">
+                <td colSpan={6} className="px-4 py-8 text-center text-muted">
                   {t("noSubmissions")}
                 </td>
               </tr>
@@ -57,9 +55,6 @@ export async function SubmissionsTable({ filters }: SubmissionsTableProps) {
                   <td className="px-4 py-3 text-sm text-ink">{sub.language ?? "—"}</td>
                   <td className="px-4 py-3 text-sm text-ink">{sub.total ?? "—"}</td>
                   <td className="px-4 py-3 text-sm text-ink">{sub.band ?? "—"}</td>
-                  <td className="px-4 py-3 text-sm">
-                    <DriveStatusBadge status={sub.drive_status} />
-                  </td>
                   <td className="px-4 py-3 text-sm text-ink">
                     {new Date(sub.expires_at).toLocaleDateString()}
                   </td>
@@ -88,20 +83,5 @@ export async function SubmissionsTable({ filters }: SubmissionsTableProps) {
         </div>
       )}
     </div>
-  );
-}
-
-function DriveStatusBadge({ status }: { status: string }) {
-  const colors = {
-    uploaded: "bg-good/20 text-good",
-    failed: "bg-caution/20 text-caution",
-    skipped: "bg-muted/20 text-muted",
-    pending: "bg-muted/20 text-muted"
-  };
-
-  return (
-    <span className={`px-2 py-1 rounded text-xs font-medium ${colors[status as keyof typeof colors] ?? colors.pending}`}>
-      {status}
-    </span>
   );
 }

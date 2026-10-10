@@ -148,7 +148,7 @@ export const FEATURES_TR: FeatureContent = {
     points: [
       { text: "CV önce tarayıcınızda okunur ve puanlanır." },
       { text: "Analiz ettiğinizde dosya, metni ve sonuç sunucuya gönderilir ve 12 ay saklanır." },
-      { text: "12 ay sonra dosya, çıkarılan metin ve sonuç veritabanından, depolamadan ve Google Drive yedeğinden silinir." },
+      { text: "12 ay sonra dosya, çıkarılan metin ve sonuç veritabanından ve depolamadan silinir." },
       { text: "Paylaşım bağlantıları puanları ve bulguları kanıtlar çıkarılmış olarak saklar, çünkü kanıtlar belgeden alınmış satırlar içerebilir." },
       { text: "Veri talep formuyla silme talebinde bulunabilirsiniz." }
     ]

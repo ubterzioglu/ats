@@ -6,7 +6,6 @@ import { deleteSubmissionWithCleanup } from "@/lib/admin/delete-submission";
 export interface ExpiredSubmission {
   id: string;
   storage_path: string | null;
-  drive_file_id: string | null;
 }
 
 export async function getExpiredSubmissions(limit = 100): Promise<ExpiredSubmission[]> {
@@ -15,7 +14,7 @@ export async function getExpiredSubmissions(limit = 100): Promise<ExpiredSubmiss
 
   const { data, error } = await supabase
     .from("cv_submissions")
-    .select("id, storage_path, drive_file_id")
+    .select("id, storage_path")
     .lt("expires_at", new Date().toISOString())
     .limit(limit);
 

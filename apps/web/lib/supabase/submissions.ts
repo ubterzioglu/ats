@@ -65,39 +65,6 @@ export async function insertSubmission(
   }
 }
 
-export type MarkDriveStatusOutcome =
-  | { readonly ok: true }
-  | { readonly ok: false; readonly reason: "env-missing" | "error" };
-
-export async function markDriveStatus(
-  id: string,
-  status: "uploaded" | "failed" | "skipped",
-  driveFileId?: string
-): Promise<MarkDriveStatusOutcome> {
-  const supabase = createServiceClient();
-  if (!supabase) return { ok: false, reason: "env-missing" };
-
-  try {
-    const { error } = await supabase
-      .from("cv_submissions")
-      .update({
-        drive_status: status,
-        drive_file_id: driveFileId
-      })
-      .eq("id", id);
-
-    if (error) {
-      console.error("[submissions] update failed", error.message);
-      return { ok: false, reason: "error" };
-    }
-
-    return { ok: true };
-  } catch (cause) {
-    console.error("[submissions] update threw", cause);
-    return { ok: false, reason: "error" };
-  }
-}
-
 export async function countRecentByClient(
   hash: string | null,
   sinceIso: string

@@ -347,8 +347,8 @@ export default async function AiFaqPage({ params }: AiFaqPageProps) {
           <li>CV önce tarayıcınızda okunur ve puanlanır.</li>
           <li>Analiz ettiğinizde dosya, metni ve sonuç sunucuya gönderilir ve 12 ay saklanır.</li>
           <li>
-            12 ay sonra dosya, çıkarılan metin ve analiz sonucu veritabanından, depolamadan ve
-            Google Drive yedeğinden silinir.
+            12 ay sonra dosya, çıkarılan metin ve analiz sonucu veritabanından ve depolamadan
+            silinir.
           </li>
           <li>
             Paylaşım bağlantıları, kanıtları (evidence) çıkarılmış olarak saklanır, çünkü kanıtlar
@@ -697,7 +697,7 @@ export default async function AiFaqPage({ params }: AiFaqPageProps) {
           <li>When analysed, the file, its text, and the result are sent to the server and kept for 12 months.</li>
           <li>
             After 12 months the file, extracted text, and analysis result are deleted from the
-            database, storage, and Google Drive backup.
+            database and storage.
           </li>
           <li>
             Share links persist scores and findings with evidence stripped, because evidence can
@@ -1059,8 +1059,8 @@ export default async function AiFaqPage({ params }: AiFaqPageProps) {
           <li>Der Lebenslauf wird zuerst im Browser gelesen und bewertet.</li>
           <li>Bei der Analyse werden Datei, Text und Ergebnis an den Server gesendet und 12 Monate aufbewahrt.</li>
           <li>
-            Nach 12 Monaten werden Datei, extrahierter Text und Analyseergebnis aus der Datenbank,
-            dem Speicher und dem Google-Drive-Backup gelöscht.
+            Nach 12 Monaten werden Datei, extrahierter Text und Analyseergebnis aus der Datenbank
+            und dem Speicher gelöscht.
           </li>
           <li>
             Freigabe-Links speichernen Bewertungen und Befunde mit entfernten Nachweisen, da

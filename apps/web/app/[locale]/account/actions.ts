@@ -5,7 +5,6 @@ import { getLocale } from "next-intl/server";
 
 import { requireUser } from "@/lib/auth/require-user";
 import { createServiceClient } from "@/lib/supabase/client";
-import { deleteFromDrive } from "@/lib/drive/client";
 import { removeCvFile } from "@/lib/supabase/storage";
 import { deleteSubmissionRow } from "@/lib/supabase/submissions";
 import { deleteProfile } from "@/lib/supabase/profile";
@@ -20,7 +19,7 @@ export async function deleteAccount() {
   // Get all submissions for this user
   const { data: submissions, error } = await supabase
     .from("cv_submissions")
-    .select("id, storage_path, drive_file_id")
+    .select("id, storage_path")
     .eq("user_id", user.id);
 
   if (error) {
@@ -30,12 +29,6 @@ export async function deleteAccount() {
 
   // Delete each submission's files
   for (const submission of submissions ?? []) {
-    if (submission.drive_file_id) {
-      const driveResult = await deleteFromDrive(submission.drive_file_id);
-      if (!driveResult.ok && driveResult.reason !== "not-found") {
-        console.error("[account] drive delete failed for", submission.id);
-      }
-    }
     if (submission.storage_path) {
       const storageResult = await removeCvFile(submission.storage_path);
       if (!storageResult.ok && storageResult.reason !== "not-found") {

@@ -8,16 +8,13 @@ import { isPlausibleResult } from "@/lib/analysis-guard";
 import { validateFile, cvTextSchema } from "@/lib/cv-submission/validate";
 import { MAX_CV_BYTES, RATE_LIMIT_PER_HOUR } from "@/lib/cv-submission/limits";
 import { clientHash } from "@/lib/cv-submission/client-hash";
-import { insertSubmission, markDriveStatus, countRecentByClient, deleteSubmissionRow } from "@/lib/supabase/submissions";
+import { insertSubmission, countRecentByClient, deleteSubmissionRow } from "@/lib/supabase/submissions";
 import { uploadCvFile } from "@/lib/supabase/storage";
-import { uploadToDrive } from "@/lib/drive/client";
 import { getSupabaseEnv } from "@/lib/supabase/client";
 
 interface SubmissionPorts {
   readonly insertSubmission: typeof insertSubmission;
   readonly uploadCvFile: typeof uploadCvFile;
-  readonly uploadToDrive: typeof uploadToDrive;
-  readonly markDriveStatus: typeof markDriveStatus;
   readonly countRecentByClient: typeof countRecentByClient;
   readonly deleteSubmissionRow: typeof deleteSubmissionRow;
 }
@@ -52,8 +49,6 @@ export async function handleSubmission(
   ports: SubmissionPorts = {
     insertSubmission,
     uploadCvFile,
-    uploadToDrive,
-    markDriveStatus,
     countRecentByClient,
     deleteSubmissionRow
   }
@@ -163,21 +158,6 @@ export async function handleSubmission(
     // Rollback: delete the row
     await ports.deleteSubmissionRow(submissionId);
     return { ok: false, status: 502, error: "storage-upload-failed" };
-  }
-
-  // 10. Upload to Drive (fire-and-forget, don't fail the request)
-  const driveResult = await ports.uploadToDrive({
-    name: `${submissionId}.${ext}`,
-    mime: fileMime ?? "text/plain",
-    bytes: fileBytes
-  });
-
-  if (driveResult.ok) {
-    await ports.markDriveStatus(submissionId, "uploaded", driveResult.fileId);
-  } else if (driveResult.reason === "env-missing") {
-    await ports.markDriveStatus(submissionId, "skipped");
-  } else {
-    await ports.markDriveStatus(submissionId, "failed");
   }
 
   return { ok: true, id: submissionId, expiresAt };

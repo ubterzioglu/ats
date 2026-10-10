@@ -184,7 +184,7 @@
       },
       "retention": {
         "q": "Wie lange werden meine Daten aufbewahrt?",
-        "a": "Zwölf Monate ab dem Upload-Datum. Danach werden Datei, extrahierter Text und Analyseergebnis aus der Datenbank, dem Speicher und dem Google Drive-Backup gelöscht."
+        "a": "Zwölf Monate ab dem Upload-Datum. Danach werden Datei, extrahierter Text und Analyseergebnis aus der Datenbank und dem Speicher gelöscht."
       },
       "delete": {
         "q": "Wie lösche ich meine Daten?",
@@ -894,7 +894,6 @@
       "month": "Dieser Monat",
       "total": "Gesamt",
       "avgScore": "Durchschn. Punktzahl",
-      "driveFailures": "Drive-Fehler",
       "openRequests": "Offene Anfragen"
     },
     "filters": {
@@ -903,9 +902,7 @@
       "band": "Band",
       "allBands": "Alle Bänder",
       "language": "Sprache",
-      "allLanguages": "Alle Sprachen",
-      "driveStatus": "Drive-Status",
-      "allStatuses": "Alle Status"
+      "allLanguages": "Alle Sprachen"
     },
     "table": {
       "created": "Erstellt",
@@ -913,7 +910,6 @@
       "language": "Sprache",
       "score": "Punktzahl",
       "band": "Band",
-      "drive": "Drive",
       "expires": "Läuft ab",
       "noSubmissions": "Keine Einreichungen gefunden"
     },
@@ -997,7 +993,7 @@
     "detail": {
       "title": "Einreichung",
       "subtitle": "ID {id}",
-      "confirmDelete": "Diese Einreichung, die gespeicherte Datei und die Drive-Kopie löschen? Das lässt sich nicht rückgängig machen.",
+      "confirmDelete": "Diese Einreichung und die gespeicherte Datei löschen? Das lässt sich nicht rückgängig machen.",
       "deleteFailed": "Die Einreichung konnte nicht gelöscht werden. Bitte erneut versuchen.",
       "downloadFailed": "Die Datei konnte nicht heruntergeladen werden. Bitte erneut versuchen.",
       "metadata": "Details",
@@ -1006,7 +1002,6 @@
       "file": "Datei",
       "size": "Größe",
       "language": "Sprache",
-      "driveStatus": "Drive-Sicherung",
       "score": "Punktzahl",
       "findings": "Befunde",
       "cvText": "Extrahierter Lebenslauftext",
@@ -1095,7 +1090,7 @@
     },
     "section5": {
       "title": "5. Datenübermittlung",
-      "content": "Ihre Daten werden übermittelt an: Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion}); Google LLC (Google Drive Backup, USA); Hosting-Anbieter (Standort: {hostingLocation}); Zoho Corporation (E-Mail-Versand der Registrierungsbenachrichtigung an den Website-Betreiber). Internationale Übermittlungen erfolgen mit geeigneten Garantien gemäß KVKK Artikel 9."
+      "content": "Ihre Daten werden übermittelt an: Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion}); Hosting-Anbieter (Standort: {hostingLocation}); Zoho Corporation (E-Mail-Versand der Registrierungsbenachrichtigung an den Website-Betreiber). Internationale Übermittlungen erfolgen mit geeigneten Garantien gemäß KVKK Artikel 9."
     },
     "section6": {
       "title": "6. Aufbewahrungsfrist",
@@ -1144,7 +1139,6 @@
       "title": "4. Datenempfänger",
       "intro": "Ihre Daten werden übermittelt an:",
       "item1": "Supabase (Datenbank und Dateispeicher, Region: {supabaseRegion})",
-      "item2": "Google LLC (Google Drive Backup, USA)",
       "item3": "Hosting-Anbieter (Standort: {hostingLocation})",
       "item4": "Microsoft Corporation (Clarity-Analytik, USA, nur mit Ihrer Einwilligung)",
       "item5": "Zoho Corporation (E-Mail-Versand der Registrierungsbenachrichtigung an den Website-Betreiber; erhält Ihre Konto-E-Mail-Adresse)"

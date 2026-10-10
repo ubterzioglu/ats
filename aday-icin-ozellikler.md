@@ -136,7 +136,7 @@ Platform, gizliliği ciddiye alır:
 
 - CV önce tarayıcınızda okunur ve puanlanır.
 - Analiz ettiğinizde dosya, metni ve sonuç sunucuya gönderilir ve 12 ay saklanır.
-- 12 ay sonra dosya, çıkarılan metin ve analiz sonucu veritabanından, depolamadan ve Google Drive yedeğinden silinir.
+- 12 ay sonra dosya, çıkarılan metin ve analiz sonucu veritabanından ve depolamadan silinir.
 - Paylaşım bağlantıları, kanıtları (evidence) çıkarılmış olarak saklanır, çünkü kanıtlar belgeden alınmış satırlar içerebilir.
 - Veri talep formu ile silme talebinde bulunabilirsiniz.
 
